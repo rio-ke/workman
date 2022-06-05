@@ -66,7 +66,7 @@ vrrp_instance VI_1 {
 
 ---
 
-Configuration File for SLAVE FILE
+Configuration File for backup file
 
 
 ~~~bash
@@ -83,8 +83,8 @@ global_defs {
 }
 
 vrrp_instance VI_1 {
-    state MASTER
-    interface eth0
+    state backup
+    interface wlp1s0
     virtual_router_id 101
     priority 101
     advert_int 1
@@ -93,7 +93,7 @@ vrrp_instance VI_1 {
         auth_pass 1111
     }
     virtual_ipaddress {
-        192.168.10.102
+        192.168.10.105
     }
 }
 
