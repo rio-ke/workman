@@ -48,7 +48,7 @@ global_defs {
 
 vrrp_instance VI_1 {
     state MASTER
-    interface eth0
+    interface wlp1s0
     virtual_router_id 101
     priority 101
     advert_int 1
@@ -57,7 +57,7 @@ vrrp_instance VI_1 {
         auth_pass 1111
     }
     virtual_ipaddress {
-        192.168.10.101
+        192.168.10.105/32
     }
 }
 
@@ -93,7 +93,7 @@ vrrp_instance VI_1 {
         auth_pass 1111
     }
     virtual_ipaddress {
-        192.168.10.105
+        192.168.10.105/32
     }
 }
 
