@@ -60,6 +60,8 @@ rsync -ravbh dodo@192.168.0.113:/home/dodo/backup  /home/user/storage
 
 ```
 
+**_Use of –include and –exclude Options_**
+
 
 
 
