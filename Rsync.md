@@ -12,6 +12,7 @@
 ```bash
 rsync [options] source [destination]
 ```
+----
 
 **_Copy/Sync Files and Directory Locally_**
 
@@ -50,12 +51,14 @@ rsync -ravh ~/hardlink/hulk dodo@192.168.0.113:/backup
 
 ```
 
-**_*Copy/rsync file from Remote server to a Local Machine*_**
+**_Copy/rsync file from Remote server to a Local Machine_**
 
 
+```bash
 
+rsync -ravbh dodo@192.168.0.113:/home/dodo/backup  /home/user/storage
 
-
+```
 
 
 
