@@ -15,13 +15,13 @@ rsync [options] source [destination]
 
 _**rsync command option:**_
 
- -v, --verbose           increase verbosity
- -r, --recursive         recurse into directories
- -a, --archive           archive mode
- -z, --compress          compress file data during the transfer
- -h, --human-readable    output numbers in a human-readable forma
- -n, --dry-run           perform a trial run with no changes made
- --delete-excluded       also delete excluded files from dest dirs
+ * -v, --verbose           increase verbosity
+ * -r, --recursive         recurse into directories
+ * -a, --archive           archive mode
+ * -z, --compress          compress file data during the transfer
+ * -h, --human-readable    output numbers in a human-readable forma
+ * -n, --dry-run           perform a trial run with no changes made
+ * --delete-excluded       also delete excluded files from dest dirs
 
 ----
 
