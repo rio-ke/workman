@@ -21,6 +21,7 @@ _**rsync command option:**_
  -z, --compress          compress file data during the transfer
  -h, --human-readable    output numbers in a human-readable forma
  -n, --dry-run           perform a trial run with no changes made
+ --delete-excluded       also delete excluded files from dest dirs
 
 ----
 
@@ -71,6 +72,17 @@ rsync -ravbh dodo@192.168.0.113:/home/dodo/backup  /home/user/storage
 ```
 
 **_Use of –include and –exclude Options_**
+
+
+This command is used to remove the content of a destination file that has already been copied and restore the content of a new copy of the file.
+
+```bash
+
+rsync -azvhr --delete-excluded source_file/ kendanick@192.168.0.104:/destination
+
+```
+
+
 
 
 
