@@ -55,6 +55,20 @@ _**disable the firewalld**_
 systemctl stop firewalld
 systemctl disable firewalld
 ```
+ _disble the selinux on both nodes_
+
+```bash setenforce 0 ```
+
+**_Enable the server status for httpd server_**
+
+```bash
+cat <<EOF >> /etc/httpd/conf.d/status.conf
+<Location /server-status>
+    SetHandler server-status
+    Require local
+</Location>
+EOF
+```
 
 _**Configure DRBD on both nodes**_
 
@@ -111,7 +125,9 @@ resource clusterdb {
     meta-disk internal;
   }
 }
+
 ```
+
 
 
 
