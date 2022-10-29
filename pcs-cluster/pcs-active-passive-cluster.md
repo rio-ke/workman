@@ -128,10 +128,52 @@ resource clusterdb {
 
 ```
 
+_**prepare the drbd setup both node1 and node2**_
 
+```bash
+drbdadm create-md clusterdb
+drbdadm up clusterdb
+systemctl start drbd
+systemctl enable drbd
+systemctl status drbd
+```
+**initiate the cluster on node1**
+```bash 
+drbdadm -- --overwrite-data-of-peer primary clusterdb
+```
+_**check the drbd sync status both node1 and node2**_
+```bash
+ cat /proc/drbd
+```
 
+_**create the folder both node1 and node2**_
+```bash
+mkdir /drbd-webdata
+mkdir /drbd-dbdata
+```
 
+**_lvm configuration change both node1 and node2_**
+```bash
+vim /etc/lvm/lvm.conf
+add : filter = [ "r|/dev/sdb|", "r|/dev/disk/*|", "r|/dev/block/*|", "a|.*|" ]      # near 128 line
+edit: write_cache_state = 1 to write_cache_state = 0                                # near 128 line
+edit: use_lvmetad = 1 to  use_lvmetad = 0                                           # 958 line near by
+```
+**_update the lvm configuration on node1 and node2_**
+```bash
+lvmconf --enable-halvm --services --startstopservices
+dracut -H -f /boot/initramfs-$(uname -r).img $(uname -r)
+reboot
+```
 
+**_reconnect both node1 and node2_**
+```bash
+setenforce 0
+cat /proc/drbd
+systemctl start pcsd.service
+systemctl enable pcsd.service
+passwd hacluster
+```
 
 
 
