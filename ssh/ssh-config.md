@@ -81,7 +81,7 @@ systemctl stop sshd
 
 ### reference sites
 
-1) [ssh-config file]https://linuxhint.com/ssh-config-file/
+1) [ssh-config file](https://linuxhint.com/ssh-config-file/)
 2) [shh-key grnerate](https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html)
 
 
