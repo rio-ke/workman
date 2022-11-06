@@ -175,6 +175,149 @@ systemctl enable pcsd.service
 passwd hacluster
 ```
 
+**any one of server you can mark as a primary**
+
+```bash
+# assume that this is node1
+drbdadm primary --force clusterdb
+```
+
+**drbd integrate with pcs cluster**
+
+**open drbd primary node terminal**
+
+```bash
+pvcreate /dev/drbd0
+vgcreate drbd-vg /dev/drbd0
+lvcreate --name drbd-webdata --size 2G drbd-vg
+lvcreate --name drbd-dbdata --size 2G drbd-vg
+mkfs.xfs /dev/drbd-vg/drbd-webdata
+mkfs.xfs /dev/drbd-vg/drbd-dbdata
+# optional: vgchange -ay drbd-vg   #=> active Volume group
+# optional: vgchange -an drbd-vg   #=> Deactive Volume group
+pcs cluster auth node1 node2 -u hacluster -p .
+pcs cluster setup --name fourtimes node1 node2
+pcs cluster start --all
+pcs cluster enable --all
+pcs property set stonith-enabled=false
+pcs property set no-quorum-policy=ignore
+pcs cluster cib drbd_cfg
+pcs -f drbd_cfg resource create drbd_clusterdb ocf:linbit:drbd drbd_resource=clusterdb
+pcs -f drbd_cfg resource master drbd_clusterdb_clone drbd_clusterdb master-max=1 master-node-max=1 clone-max=2 clone-node-max=1 notify=true
+pcs cluster cib-push drbd_cfg
+pcs resource create lvm ocf:heartbeat:LVM volgrpname=drbd-vg
+pcs resource create webdata Filesystem device="/dev/drbd-vg/drbd-webdata" directory="/drbd-webdata" fstype="xfs"
+pcs resource create dbdata Filesystem device="/dev/drbd-vg/drbd-dbdata" directory="/drbd-dbdata" fstype="xfs"
+pcs resource create virtualip ocf:heartbeat:IPaddr2 ip=192.168.0.200 cidr_netmask=24
+pcs resource create webserver ocf:heartbeat:apache configfile=/etc/httpd/conf/httpd.conf statusurl="http://localhost/server-status"
+pcs resource group add resourcegroup virtualip lvm webdata dbdata  webserver
+pcs constraint order promote drbd_clusterdb_clone then start resourcegroup  # INFINITY
+pcs constraint colocation add resourcegroup  with master drbd_clusterdb_clone INFINITY
+pcs resource create ftpserver systemd:vsftpd --group resourcegroup
+```
+
+**MySQL integrated with pcs cluster**
+
+```bash
+mv /etc/my.cnf /drbd-dbdata/my.cnf
+mkdir -p /drbd-dbdata/data
+vim /drbd-dbdata/my.cnf
+datadir=/drbd-dbdata/data
+bind-address=0.0.0.0
+```
+
+**initiate the mysql cluster**
+
+```bash
+mysql_install_db --no-defaults --datadir=/drbd-dbdata/data
+chown -R mysql:mysql /drbd-dbdata/
+pcs resource create dbserver ocf:heartbeat:mysql config="/drbd-dbdata/my.cnf" datadir="/drbd-dbdata/data" pid="/var/lib/mysql/mysql.pid" socket="/var/lib/mysql/mysql.sock" user="mysql" group="mysql" additional_parameters="--user=mysql" --group resourcegroup
+```
+
+**mysql service validation**
+
+```bash
+mysql –h 192.168.0.200 –u root –p
+GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY 'MyDBpassword';
+FLUSH PRIVILEGES;
+CREATE DATABASE rcmsdata;
+```
+
+**drbd issues findings**
+
+**Recover a split brain**
+
+**Secondary node**
+
+```bash
+drbdadm secondary all
+drbdadm disconnect all
+drbdadm -- --discard-my-data connect all
+```
+
+**Primary node**
+
+```bash
+drbdadm primary all
+drbdadm disconnect all
+drbdadm connect all
+```
+
+**On both**
+
+```bash
+drbdadm status
+cat /proc/drbd
+```
+optional
+
+**Monitor the fdrbd resources**
+
+```bash
+cat <<EOF > /drbd-webdata/crm_logger.sh
+#!/usr/bin/env bash
+logger -t "ClusterMon-External" "${CRM_notify_node} ${CRM_notify_rsc} \
+${CRM_notify_task} ${CRM_notify_desc} ${CRM_notify_rc} \
+${CRM_notify_target_rc} ${CRM_notify_status} ${CRM_notify_recipient}";
+exit;
+EOF
+
+chmod 755 /drbd-webdata/crm_logger.sh
+pcs resource create ClusterMon-External ClusterMon user=apache update=10 extra_options="-E /usr/local/bin/crm_logger.sh --watch-fencing" htmlfile=/drbd-webdata/cluster_mon.html pidfile=/var/run/crm_mon-external.pid clone
+```
+
+**stonith configuration**
+
+```bash
+pcs resource defaults resource-stickiness=100
+pcs resource op defaults timeout=240s
+pcs stonith describe fence_ipmilan
+pcs cluster cib stonith_cfg
+pcs -f stonith_cfg stonith create ipmi-fencing fence_ipmilan pcmk_host_list="node1 node2" ipaddr=10.0.0.1 login=testuser passwd=acd123
+pcs -f stonith_cfg property set stonith-enabled=true
+pcs -f stonith_cfg property
+pcs cluster cib-push stonith_cfg --config
+pcs cluster stop node2
+stonith_admin --reboot node2
+```
+
+
+**reference**
+
+```bash
+https://wiki.myhypervisor.ca/books/linux/page/drbd-pacemaker-corosync-mysql-cluster-centos7
+http://isardvdi-the-docs-repo.readthedocs.io/en/latest/setups/ha/active_passive/
+http://blog.zorangagic.com/2016/02/drbd.html
+http://avid.force.com/pkb/articles/en_US/Compatibility/Troubleshooting-DRBD-on-MediaCentral#A
+http://sheepguardingllama.com/2011/06/drbd-error-device-is-held-open-by-someone/
+```
+
+
+**active-active cluster from active-passive cluster**
+
+Configure SONITH. It will help you to fix this issue. or else it is not possible to complete
+
+![image](https://user-images.githubusercontent.com/57703276/197835585-d9ef7962-023a-4755-9b78-3c6af61ff636.png)
 
 
 
