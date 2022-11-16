@@ -338,6 +338,7 @@ mysql -u root -pfirstPassword
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'secondPassword';
 exit
 mysql -u root -psecondPassword
+create database rcmsdata;
 GRANT ALL ON *.* to root@'%' IDENTIFIED BY 'secondPassword';
 mysql -h 192.168.1.180 -u root -psecondPassword
 exit
