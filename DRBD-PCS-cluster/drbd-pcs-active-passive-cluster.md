@@ -327,7 +327,25 @@ Configure SONITH. It will help you to fix this issue. or else it is not possible
 
 
 
+```bash
+# MySQL 5.7
+pcs resource create dbserver ocf:heartbeat:mysql config="/drbd-dbdata/my.cnf" datadir="/drbd-dbdata/data" pid="/var/lib/mysql/mysql.pid" socket="/var/lib/mysql/mysql.sock" user="mysql" group="mysql" binary=/usr/sbin/mysqld additional_parameters="--user=mysql" --group resourcegroup
 
+mysql_secure_installation
+> firstPassword
+> firstPassword
+mysql -u root -pfirstPassword
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'secondPassword';
+exit
+mysql -u root -psecondPassword
+GRANT ALL ON *.* to root@'%' IDENTIFIED BY 'secondPassword';
+mysql -h 192.168.1.180 -u root -psecondPassword
+exit
+mysql -u root -psecondPassword
+CREATE USER 'sqladmin'@'%' IDENTIFIED BY 'dbPassword';
+GRANT ALL ON rcmsdata.* to sqladmin@'%';
+mysql -u sqladmin -pdbPassword
+```
 
 
 
