@@ -32,7 +32,7 @@ rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
 yum install -y kmod-drbd84 drbd84-utils -y
 yum install pacemaker pcs psmisc policycoreutils-python
 yum install httpd -y
-yum install vsftpd -y
+#yum install vsftpd -y
 ```
 
 **Allow ports through firewalld or Diseble the system firewall on both nodes**
@@ -57,7 +57,9 @@ systemctl disable firewalld
 ```
  _disble the selinux on both nodes_
 
-```bash setenforce 0 ```
+```bash 
+setenforce 0 
+```
 
 **_Enable the server status for httpd server_**
 
