@@ -57,3 +57,5 @@ export PATH=/usr/local/bin:$PATH
 cd bashdb-4.4-0.94
 ./configure
 ```
+
+## make installation for configuration
