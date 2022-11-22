@@ -26,7 +26,28 @@ mkdir -p /var/www/html/domain-name/index.html
 
 
 $$
-confirguration-for-apache2-hardening
+Confirguration-for-Apache2-Hardening
 $$
 
+**apache2-httpd configuration file location**
 
+```bash
+sudo vim /etc/httpd/conf/httpd.conf (centOS)
+    
+sudo vim /etc/apache2/apache2.conf (Ubuntu)
+```
+
+
+1. **_Hiding Server Version Banner_**
+
+
+        * Go to /etc/apache/ conf folder
+        * Modify httpd.conf by using the vim editor
+        * Add the following directives to configuration
+
+```bash  
+ServerTokens Prod
+ServerSignature Off
+```
+
+* Restart apache
