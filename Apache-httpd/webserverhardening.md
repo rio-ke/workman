@@ -41,9 +41,9 @@ sudo vim /etc/apache2/apache2.conf (Ubuntu)
 1. **_Hiding Server Version Banner_**
 
 
-        * Go to /etc/apache/ conf folder
-        * Modify httpd.conf by using the vim editor
-        * Add the following directives to configuration
+* Go to /etc/apache/ conf folder
+* Modify httpd.conf by using the vim editor
+* Add the following directives to configuration
 
 ```bash  
 ServerTokens Prod
