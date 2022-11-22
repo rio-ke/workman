@@ -26,7 +26,7 @@ mkdir -p /var/www/html/domain-name/index.html
 
 
 $$
-confirguration for apache hardening
+confirguration-for-apache2-hardening
 $$
 
 
