@@ -21,3 +21,13 @@ _restart the SSH daemon_
 ```bash
 sudo systemctl restart sshd
 ```
+
+2. **_Disable User SSH Passwordless Connection Requests_**
+
+- To reject requests from users without a password, again, head over to the configuration file at /etc/ssh/sshd_config and ensure that you have the directive below
+
+```bash
+PermitEmptyPasswords no
+```
+
+`then restart the deamon`
