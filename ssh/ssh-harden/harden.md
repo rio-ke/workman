@@ -43,7 +43,7 @@ PermitRootLogin no
 ```
 
 ```diff
-!restart deamon red
+!restart deamon
 ```
 
 4. **_Limit SSH Access to Certain Users_**
