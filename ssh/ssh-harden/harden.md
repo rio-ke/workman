@@ -41,5 +41,5 @@ PermitRootLogin no
 ```
 
 ```diff
-restart deamon red
++ restart deamon red
 ```
