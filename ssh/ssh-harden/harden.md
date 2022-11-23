@@ -31,3 +31,13 @@ PermitEmptyPasswords no
 ```
 
 `then restart the deamon`
+
+3. **_Disable SSH Root Logins_**
+
+for some server privacy we need to disable the root login
+
+```bash
+PermitRootLogin no
+```
+
+`restart deamon`
