@@ -40,4 +40,6 @@ for some server privacy we need to disable the root login
 PermitRootLogin no
 ```
 
-`restart deamon`
+```diff
+restart deamon red
+```
