@@ -18,8 +18,8 @@ PasswordAuthentication no
 
 _restart the SSH daemon_
 
-```bash
-sudo systemctl restart sshd
+```diff
+!sudo systemctl restart sshd
 ```
 
 2. **_Disable User SSH Passwordless Connection Requests_**
@@ -30,7 +30,9 @@ sudo systemctl restart sshd
 PermitEmptyPasswords no
 ```
 
-`then restart the deamon`
+```diff
+!restart the deamon
+```
 
 3. **_Disable SSH Root Logins_**
 
@@ -42,4 +44,16 @@ PermitRootLogin no
 
 ```diff
 !restart deamon red
+```
+
+4. **_Limit SSH Access to Certain Users_**
+
+- For an added security layer, you can define the users who require SSH protocol to log in and perform remote tasks on the system. This keeps off any other users who might try to gain entry to your system without your approval.
+
+```bash
+AllowUsers users1 users2 users3 users4
+```
+
+```diff
+!resatrt deamon
 ```
