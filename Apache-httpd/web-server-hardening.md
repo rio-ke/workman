@@ -51,3 +51,23 @@ ServerSignature Off
 ```bash
 sudo yum update httpd
 ```
+
+3. **_Secure Apache From Clickjacking Attacks_**
+
+- User Interface redress attack," is a malicious technique to collect an infected user's clicks
+
+```bash
+sudo vi /etc/httpd/conf/httpd.conf
+```
+
+`Add`
+
+```
+Header append X-FRAME-OPTIONS "SAMEORIGIN"
+```
+
+`restart the services`
+
+
+
+
