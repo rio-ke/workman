@@ -26,14 +26,19 @@ httpd -V | grep MPM
 
 Server MPM:
 
-'error'
+***error in changing the `prefork_MPM` to `event_MPM`***
 
+```bash
 AH00526: Syntax error on line 31 of /etc/httpd/conf.d/php.conf:
+```
 
+**To check php conf file for httpd**
 
-
+```bash
 vi /etc/httpd/conf.d/php.conf
+```
 
-
+```
 php_value session.save_handler "files"
 php_value session.save_path    "/var/lib/php/session"
+```
