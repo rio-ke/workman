@@ -25,3 +25,15 @@ httpd -V | grep MPM
 `output`
 
 Server MPM:
+
+'error'
+
+AH00526: Syntax error on line 31 of /etc/httpd/conf.d/php.conf:
+
+
+
+vi /etc/httpd/conf.d/php.conf
+
+
+php_value session.save_handler "files"
+php_value session.save_path    "/var/lib/php/session"
