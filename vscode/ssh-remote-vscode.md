@@ -66,3 +66,34 @@ ls -ltr | grep pem
 
 **_conf work_**
 
+- Go to vscode main branch
+
+`command`
+
+```
+ctrl + shift + p
+```
+
+`Type`
+
+```diff
+- remote
+```
+
+`select`
+
+```diff
+- Remote-ssh: Open SSH Configuration file
+```
+
+Click `config`
+
+`Edit`
+
+```bash
+Host any-name
+    HostName 192.168.x.xxx
+    User server
+    Port 22
+    IdentityFile /home/server/.ssh/id_rsa
+```
