@@ -10,6 +10,7 @@
 - Downloading remote-ssh in vscode extension
 - Downlaoding remote-development in vscode extension
 - Creating ssh key
+- ssh configuration file edit in vscode
 
 **_ssh downloading_**
 
@@ -45,3 +46,18 @@ ssh-keygen
 ```
 
 **keys**
+
+- created in virtual machine
+
+**go to key conf file**
+
+```bash
+cd ~/.ssh/
+```
+
+_if u create key with seperate file name_
+
+- give file name as `public.pem` and `private.pem`
+- go to /home/$user
+
+_*conf work*_
