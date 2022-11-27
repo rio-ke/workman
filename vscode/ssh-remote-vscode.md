@@ -49,7 +49,7 @@ ssh-keygen
 
 - created in virtual machine
 
-**go to key conf file**
+**_go to key conf file_**
 
 ```bash
 cd ~/.ssh/
@@ -60,4 +60,8 @@ _if u create key with seperate file name_
 - give file name as `public.pem` and `private.pem`
 - go to /home/$user
 
-_*conf work*_
+```bash
+ls -ltr | grep pem
+```
+
+**_conf work_**
