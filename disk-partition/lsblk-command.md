@@ -19,4 +19,9 @@ _to find UUID id in `ubuntu`_
 blkid
 ```
 
-
+```bash
+sudo gdisk
+```
+```bash
+sudo cdisk
+```
