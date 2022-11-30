@@ -25,3 +25,7 @@ sudo gdisk
 ```bash
 sudo cdisk
 ```
+
+```bash
+sudo gdisk -l /dev/sda
+```
