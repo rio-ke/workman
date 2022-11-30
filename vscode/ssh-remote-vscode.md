@@ -97,3 +97,5 @@ Host any-name
     Port 22
     IdentityFile /home/server/.ssh/id_rsa
 ```
+
+how to convert normal key to pem 
