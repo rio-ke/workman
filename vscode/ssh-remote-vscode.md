@@ -98,4 +98,16 @@ Host any-name
     IdentityFile /home/server/.ssh/id_rsa
 ```
 
+<<<<<<< HEAD
 how to convert normal key to pem 
+=======
+* Now Go to `command palette` with `ctrl + shift + p` adn Click 
+
+```bash
+remote connect to host
+```
+
+* Click Host name
+
+`192.168.0.1`
+>>>>>>> 7215544712cddec87461a3514bf03f151cb496f7
