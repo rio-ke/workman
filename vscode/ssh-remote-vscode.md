@@ -86,7 +86,7 @@ ctrl + shift + p
 - Remote-ssh: Open SSH Configuration file
 ```
 
-Click `config`
+* Click `config`
 
 `Edit`
 
@@ -97,3 +97,13 @@ Host any-name
     Port 22
     IdentityFile /home/server/.ssh/id_rsa
 ```
+
+* Now Go to `command palette` with `ctrl + shift + p` adn Click 
+
+```bash
+remote connect to host
+```
+
+* Click Host name
+
+`192.168.0.1`
