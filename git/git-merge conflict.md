@@ -23,7 +23,8 @@ git mergetool
 
 *You will see a vimdiff display in the following format:*
 
-[]()
+![Screenshot from 2022-11-30 15-52-12](https://user-images.githubusercontent.com/88568938/204776308-e51d1fb1-9c67-4233-80ae-aa109db5a60f.png)
+
 
 **These 4 views are**
 
@@ -38,9 +39,12 @@ git mergetool
 
 * You can edit the `MERGED` view like this:
 
+![Screenshot from 2022-11-30 16-14-13](https://user-images.githubusercontent.com/88568938/204776329-62a09d6a-3fd0-4f8f-af79-bbcb98b1793c.png)
+
+
 **If you want to get changes from REMOTE**    
 
-#[`Esc` then `shift+:` ]
+*in keyboard click `Esc` then `shift+:`
 
 ```bash
 diffg RE
