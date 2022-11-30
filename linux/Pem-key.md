@@ -22,3 +22,10 @@ ssh-keygen -f id_rsa.pub -m 'PEM' -e > id_rsa.pub.pem
 *  -f id_rsa.pub: input file
 *  -m 'PEM': output format PEM
 *  -e: output to STDOUT
+
+
+**_Add your public key on your server to authorized_keys_**
+
+```bash
+cat .ssh/id_rsa.pub >> .ssh/authorized_keys
+```
