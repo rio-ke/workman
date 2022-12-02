@@ -85,7 +85,13 @@ ZONE=public
 
 - select the network interface as eth01 or bond0
 
-then 
+then try below commad
+
+```bash
+nmcli conn show eth01
+```
+
+**_To change the network interface UUID_**
 
 ```bash
 uuidgen ifcfg-bond0 
