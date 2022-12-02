@@ -46,24 +46,106 @@ DEVICE=bond0
 NAME=bond0
 TYPE=Bond
 BONDING_MASTER=yes
-IPADDR=192.168.1.150
+IPADDR=192.168.x.11
 PREFIX=24
+GATEWAY=192.168.x.1
+DNS1=192.168.x.x
+DNS2=8.8.8.8
 ONBOOT=yes
 BOOTPROTO=none
-BONDING_OPTS="mode=1 miimon=100"
+BONDING_OPTS="mode=1 primary=em1 miimon=100"
+ZONE=public
 ```
+*bond1 configuration*
+
+```bash
+DEVICE=bond1
+NAME=bond1
+TYPE=Bond
+BONDING_MASTER=yes
+IPADDR=192.168.x.10
+PREFIX=24
+GATEWAY=192.168.x.1
+DNS1=192.168.x.x
+DNS2=8.8.8.8
+ONBOOT=yes
+BOOTPROTO=none
+BONDING_OPTS="mode=1 primary=em3 miimon=100"
+ZONE=public
+```
+
+**Configure Network interfaces**
+
+- we should modify both(emp1 & 1mp3) configuration files
+
+- Edit file in ifcfg-em1 and ifcfg-em3
+
+```bash
+vi /etc/sysconfig/network-scripts/ifcfg-em1
+```
+
+```bash
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=none
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=em1
+UUID=43a594cd-ec25-48c8-83de-86a875413482 #(if changed)
+DEVICE=em1
+ONBOOT=yes
+MASTER=bond0
+SLAVE=yes
+ZONE=public
+```
+* edit-em3 file
+
+```bash
+vi /etc/sysconfig/network-scripts/ifcfg-em1
+```
+
+```bash
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=none
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=em3
+UUID=c8b660e0-4430-49de-8067-f897d1fa7610  #(if changed)
+DEVICE=em3
+ONBOOT=yes
+MASTER=bond1
+SLAVE=yes
+ZONE=public
+```
+
 
 **activate the Network interfaces.**
 
 ```bash
-ifup ifcfg-enp0s8
-ifup ifcfg-enp0s9
+ifup ifcfg-em1
+ifup ifcfg-em3
 ```
 
 * enter the following command to make Network Manager aware the changes.
+
+
 ```bash
 nmcli con reload
 ```
+
 * Restart network service to take effect the changes.
 
 ```bash
@@ -78,3 +160,6 @@ systemctl restart network
 ```bash
 cat /proc/net/bonding/bond0
 ```
+
+`END`
+
