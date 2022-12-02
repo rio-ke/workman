@@ -80,6 +80,20 @@ ZONE=public
 
 - Edit file in ifcfg-em1 and ifcfg-em3
 
+
+**_create UUID for the network interface config_**
+
+- select the network interface as eth01 or bond0
+
+then 
+
+```bash
+uuidgen ifcfg-bond0 
+#
+uuidgen ifcfg-eth01
+```
+- go to configuration folder
+
 ```bash
 vi /etc/sysconfig/network-scripts/ifcfg-em1
 ```
@@ -130,6 +144,7 @@ MASTER=bond1
 SLAVE=yes
 ZONE=public
 ```
+
 
 
 **activate the Network interfaces.**
