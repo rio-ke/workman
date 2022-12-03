@@ -98,10 +98,6 @@ Host any-name
     IdentityFile /home/server/.ssh/id_rsa
 ```
 
-
-_**how to convert normal key to pem**_
-
-
 * Now Go to `command palette` with `ctrl + shift + p` adn Click 
 
 ```bash
