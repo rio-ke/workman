@@ -1,4 +1,4 @@
-# Network bonding configuration
+# Network bonding configuration for CentOS 7
 
 
 **Bonding configuration type**
