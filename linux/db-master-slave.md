@@ -23,9 +23,10 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass';
 create user 'slave_user'@'%' identified by 'PASSWORD';
 
 #Remember to replace 'PASSWORD' with a strong value for security purposes.
-
+```bash
 GRANT REPLICATION SLAVE ON *.* TO 'demo_user'@'%';
 FLUSH PRIVILEGES;
+```
 
 **DB2**
 
