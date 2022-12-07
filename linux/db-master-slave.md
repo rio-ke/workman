@@ -19,7 +19,9 @@ relay_log_index = /var/log/mysql/mysql-relay-bin.index
 sudo service mysql restart
 
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass';
+
 create user 'slave_user'@'%' identified by 'PASSWORD';
+
 #Remember to replace 'PASSWORD' with a strong value for security purposes.
 
 GRANT REPLICATION SLAVE ON _._ TO 'slave_user'@'%';
@@ -38,6 +40,7 @@ relay_log_index = /var/log/mysql/mysql-relay-bin.index
 sudo service mysql restart
 
 stop slave;
+
 CHANGE MASTER TO MASTER_HOST = '192.168.137.214', MASTER_USER = 'slave_user', MASTER_PASSWORD = 'PASSWORD', MASTER_LOG_FILE = 'mysql-bin.000001', MASTER_LOG_POS = 753;
 
 start slave;
@@ -47,5 +50,7 @@ start slave;
 sudo mysql -u root -p
 
 create database replica_demo;
+
 DROP DATABASE replica_demo;
+
 create database master_slave;
