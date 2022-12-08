@@ -55,3 +55,6 @@ create database replica_demo;
 DROP DATABASE replica_demo;
 
 create database master_slave;
+
+
+mysqldump -u root -p demo | gzip -9 > data_name.sql.gz
