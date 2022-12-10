@@ -34,6 +34,6 @@ echo "${FILE}.gz was created:"
 ls -ltrh /$HOME/${FILE}.gz
 
 ##[error] ls: cannot access '//home/rcms-lap-173/new-sql.gz': No such file or directory
-#but the backup file will be in /home/user/ directry 
+#but the backup file will be in /home/user/ directry
 
 # 0 */12   * * *   root   cd /etc/mysql/backup/ && sh backupReleaseShell.sh
