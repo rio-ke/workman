@@ -104,7 +104,7 @@ _Grant ALL privileges to user_
 
 ```bash
 
-GRANT ALL PRIVILEGES ON *.* TO 'developer'@'localhost' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'user'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
 ```
@@ -122,7 +122,7 @@ Restting the root password
 
 ```bash
 
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass';
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'test';
 
 ```
 
@@ -231,7 +231,7 @@ _Insert values to the tables_
 
 ```sql
 
-INSERT INTO users (name,MemberName,MemeberAge) VALUES (3, 'deva1', 2);
+INSERT INTO users (Name,Age,Address) VALUES ('kendanic',26, 'chennai,tamilnadu');
 or 
 INSERT INTO users VALUE('Boys', 'double room', 44665466);
 
@@ -328,7 +328,7 @@ in this section how to restore the bacup tables in single file
 
 ```sql
 
-mysql -u root -p user3data < /home/deva/Table_bak/a3_bak.sql
+mysql -u root -p user3data < /home/username/Table_bak/a3_bak.sql
 
 ```
 
@@ -336,7 +336,7 @@ Multiple table restore
 
 ```sql
 
-mysql -u root -p user3data < /home/deva/Table_bak/all3_bak.sql
+mysql -u root -p user3data < /home/username/Table_bak/all3_bak.sql
 
 ```
 
@@ -348,7 +348,7 @@ create new empty database
 
 ```bash
 
-mysql -u root -p user1data < /home/deva/Mysql_bak/user1data_bak.sql
+mysql -u root -p user1data < /home/username/Mysql_bak/user1data_bak.sql
 
 ```
 
@@ -358,7 +358,7 @@ in this section restore single data base in mysql
 
 ```bash
 
-mysql -u root -p uset1 < /home/deva/Mysql_bak/alldatabase_bak.sql
+mysql -u root -p uset1 < /home/username/Mysql_bak/alldatabase_bak.sql
 
 ```
 
