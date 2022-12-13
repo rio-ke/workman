@@ -156,6 +156,8 @@ SHOW REPLICA STATUS\G;
 
 **_IN Master-server_**
 
+Create Database in master-server
+
 ```bash
 CREATE DATABASE kendanic;
 ```
@@ -170,7 +172,7 @@ show databases;
 sudo mysql
 ```
 
-check added database in master-server
+check if database created in master-server appers in slave-server
 
 ```bash
 show databases;
