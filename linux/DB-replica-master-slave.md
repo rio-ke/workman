@@ -1,3 +1,6 @@
+## mysql replication slave configuration
+
+
 **DB1**
 
 ```bash
