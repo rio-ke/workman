@@ -39,3 +39,111 @@ After adding volume in aws console page go to linux terminal and login linux ins
 
 
 **_Terminal-work_**
+
+**_To extend the file system of EBS volumes_**
+
+a. Connect to your instance.
+
+Resize the partition, if needed. To do so:
+
+b. Check whether the volume has a partition. Use the lsblk command.
+
+```bash
+sudo lsblk 
+```
+It will appear as seen in below
+
+```diff
+NAME    MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+xvda    202:0    0  50G  0 disk
+└─xvda1 202:1    0  40G  0 part /
+```
+
+c. Extend the partition. Use the growpart command and specify the partition to extend.
+
+For example, to extend a partition named xvda1, use the following command.
+
+```bash 
+Important
+Note the space between the device name (xvda) and the partition number (1).
+```
+```bash
+sudo growpart /dev/xvda 1
+```
+
+![growpart](https://user-images.githubusercontent.com/88568938/207843780-03de9d6b-aaad-43d7-a598-30556e14f767.png)
+
+
+d. Verify that the partition has been extended. Use the `lsblk` command. The partition size should now be equal to the volume size.
+
+* The following example output shows that both the volume (xvda) and the partition (xvda1) are the same size (16 GB).
+
+```bash
+sudo lsblk               
+```
+```bash
+NAME    MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+xvda    202:0    0  150G  0 disk
+└─xvda1 202:1    0  145G  0 part /
+```
+
+e.Extend the file system.
+
+* Get the name, size, type, and mount point for the file system that you need to extend. Use the `df -hT` command.
+
+```bash 
+df -Th
+```
+
+* Ext4 file system] Use the resize2fs command and specify the name of the file system that you noted in the previous step.
+
+* For example, to extend a file system mounted named /dev/xvda1, use the following command.
+
+```bash
+sudo resize2fs /dev/xvda1
+```
+
+![resize2fs](https://user-images.githubusercontent.com/88568938/207843870-9dfc0d44-8c69-4a8e-ab94-a5a269f62826.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
