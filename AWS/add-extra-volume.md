@@ -112,7 +112,13 @@ sudo resize2fs /dev/xvda1
 df -Th
 ```
 
+* Using the mount command, mount the file systems sequentially beneath the server's primary root partition to check the fstab.
 
+If there is no error, the mount is functioning properly
+
+```bash
+sudo mount -a
+```
 
 
 **_END_**
