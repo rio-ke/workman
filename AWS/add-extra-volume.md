@@ -25,9 +25,17 @@
 
 * check volume details
 
-* modify "Size (GiB)Info" in addition to the amount requested 
+* modify "Size (GiB)Info" in addition to the amount requested 150GiB
+
+* then click modify 
 
 ![Modify volume EC2 Management Console](https://user-images.githubusercontent.com/88568938/207834118-2bd1b2ae-c1a0-48b8-aebf-5c05f576a2b0.png)
 
+now check web-server instance root `size` changed
 
 ![Volumes EC2 Management Console](https://user-images.githubusercontent.com/88568938/207834139-e994f995-f7be-487d-89fe-4ac47f118535.png)
+
+After adding volume in aws console page go to linux terminal and login linux instance
+
+
+**_Terminal-work_**
