@@ -1,5 +1,7 @@
-eoBoaki!@J2dc2
-eoBoaki!@J1bds
+|09|web-api|api|09-11-2022|web-api|san1-location|web-api|deva|
+|10|rcms|rcmsdata|09-11-2022|dc1nod2|san1-location|dc2nod2|deva|
+|11|bds|bds_rcmsdata|09-11-2022|bds1|san1-location|bds1|deva|
+|12|bds|scanslips|09-11-2022|bds1|san1-location|bds2|deva|
 
 #----------------------------------------------------
 
