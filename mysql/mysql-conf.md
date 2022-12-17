@@ -406,3 +406,8 @@ select count(*) from data_2;
 ```
 
 _**Restore  compressed method**_
+
+
+**_Web-reference_**
+
+1. [mysql-table-cmd](https://linuxize.com/post/show-tables-in-mysql-database/)
