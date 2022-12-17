@@ -180,3 +180,7 @@ check if database created in master-server appers in slave-server
 ```bash
 show databases;
 ```
+
+***web-references***
+
+1. [create User for replication](https://dev.mysql.com/doc/refman/8.0/en/replication-howto-repuser.html)
