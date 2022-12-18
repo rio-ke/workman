@@ -8,7 +8,7 @@
 
 
 _Host entry_
-```bash
+```cmd
 # sudo vi /etc/hosts
 192.168.0.102  node1.example.com
 192.168.0.103  node2.example.com
@@ -19,12 +19,12 @@ _Host entry_
 
 Install the Cluster On both server
 
-```bash
+```cmd
 sudo yum install corosync pacemaker pcs -y
 ```
 enable and start the service
 
-```bash
+```cmd
 sudo systemctl enable pcsd
 sudo systemctl start pcsd
 sudo systemctl status pcsd
@@ -32,24 +32,24 @@ sudo systemctl status pcsd
 
 create the cluster user password
 
-```bash
+```cmd
 sudo passwd hacluster
 ```
 Allow authentication for pcs
 
-```bash
+```cmd
 sudo pcs cluster auth node1.example.com node2.example.com -u hacluster -p . --force
 ```
 
 create a cluster
 
-```bash
+```cmd
 sudo pcs cluster setup --name examplecluster node1.example.com node2.example.com
 ```
 
 enable & start the cluster
 
-```bash
+```cmd
 
 sudo pcs cluster enable --all
 sudo pcs cluster start --all
@@ -57,7 +57,7 @@ sudo pcs cluster start --all
 
 to check status
 
-```bash
+```cmd
 sudo pcs status
 ```
 **Configuring Cluster Options**
@@ -70,7 +70,7 @@ sudo pcs status
 
 * STONITH automatically powers down a node that is not working correctly. An administrator might employ STONITH if one of the nodes in a cluster can not be reached by the other node(s) in the cluster.
 
-```bash
+```cmd
 sudo pcs property set stonith-enabled=false
 ```
 **ignore the Quorum policy**
@@ -80,35 +80,35 @@ sudo pcs property set stonith-enabled=false
 * A quorum policy is composed of one or more quorum policy rules. A quorum policy rule is composed of: Quorum Group: A set of members in the group that are needed to approve an operation. Administrator: Minimum number of administrators that need to approve the operation.
 
  
-```bash
+```cmd
 sudo pcs property set no-quorum-policy=ignore
 ```
 
 To check the property list
 
-```bash
+```cmd
 sudo pcs property list
 ```
 **Adding a Cluster Service**
 
 1.Add floating IP
 
-```bash
+```cmd
 sudo pcs resource create floating_ip ocf:heartbeat:IPaddr2 ip=192.168.10.20 cidr_netmask=24 op monitor interval=60s
 ```
 2.Add http_server
 
-```bash
+```cmd
 sudo pcs resource create http_server ocf:heartbeat:nginx configfile="/etc/nginx/nginx.conf" op monitor timeout="20s" interval="60s"
 ```
 _check the status_
-```bash
+```cmd
 sudo pcs status resources
 ````
 
 If you use firewadd add the service
 
-```bash
+```cmd
 sudo firewall-cmd --permanent --add-service=http
 sudo firewall-cmd --permanent --add-service=high-availability	
 sudo firewall-cmd --reload

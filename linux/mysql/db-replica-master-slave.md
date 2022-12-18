@@ -1,16 +1,15 @@
 ## mysql replication slave configuration
 
-
 **DB1**
 
-```bash
+```sql
 Master server: 192.168.xx.xxx
 Slave server: 192.168.xx.xxx
 ```
 
 **_Install MySQL on Master Nodes_**
 
-```bash
+```sql
 sudo apt update && sudo apt install mysql-server
 ```
 
@@ -18,11 +17,11 @@ sudo apt update && sudo apt install mysql-server
 
 `Edit`
 
-```bash
+```sql
 sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
 ```
 
-```bash
+```sql
 bind-address = master-server-ip
 server-id = 1
 ##
@@ -34,7 +33,7 @@ relay_log_index = /var/log/mysql/mysql-relay-bin.index
 
 **_save the configuration file and restart MySQL service for the changes to take effect on Master node_**
 
-```bash
+```sql
 sudo systemctl restart mysql && sudo systemctl status mysql
 ```
 
@@ -42,7 +41,7 @@ sudo systemctl restart mysql && sudo systemctl status mysql
 
 _log in to the MySQL master-server as shown_.
 
-```bash
+```sql
 sudo mysql -u root -p
 ```
 
@@ -50,19 +49,19 @@ pass: xxxxxxx
 
 _Next, proceed and execute the queries below to create a replica user and grant access to the replication slave. Remember to use your IP address._
 
-```bash
+```sql
 CREATE USER 'demo'@'192.168.xxx.xx' IDENTIFIED BY 'Demo@12pass';  #(add slave ip_address here in remote-users)
 ```
 
-```bash
+```sql
 GRANT REPLICATION SLAVE ON *.* TO 'demo'@'192.168.137.69';  #(add slave ip_address here in remote-users)
 ```
 
-```bash
+```sql
 FLUSH PRIVILEGES;
 ```
 
-```bash
+```sql
 SHOW MASTER STATUS;
 ```
 
@@ -72,7 +71,7 @@ Note the `mysql-bin.000001` value and the Position ID `xxxx`. These values will 
 
 **_Install MySQL on Slave Nodes_**
 
-```bash
+```sql
 sudo apt update && sudo apt install mysql-server
 ```
 
@@ -80,11 +79,11 @@ sudo apt update && sudo apt install mysql-server
 
 `Edit`
 
-```bash
+```sql
 sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
 ```
 
-```bash
+```sql
 bind-address = slave-server-ip
 server-id = 2
 ##
@@ -96,13 +95,13 @@ relay_log_index = /var/log/mysql/mysql-relay-bin.index
 
 **_save the configuration file and restart MySQL service for the changes to take effect on Slave node_**
 
-```bash
+```sql
 sudo systemctl restart mysql && sudo systemctl status mysql
 ```
 
 _log in to the MySQL server as shown_.
 
-```bash
+```sql
 sudo mysql -u root -p
 ```
 
@@ -110,13 +109,13 @@ pass: xxxxxxx
 
 **_stop mysql-replication in slave server_**
 
-```bash
+```sql
 STOP SLAVE;
 ```
 
 **_ADD the cmd lines in Slave node one by one _**
 
-```bash
+```sql
 mysql> CHANGE MASTER TO MASTER_HOST='192.168.137.153', #(master_ip)
 mysql> MASTER_USER='demo',
 mysql> MASTER_PASSWORD='Demo@12pass',
@@ -127,17 +126,17 @@ mysql> SOURCE_SSL=1;
 
 **_start the slave replication slave server_**
 
-```bash
+```sql
 START SLAVE;
 ```
 
 **_show master-slave replica status in slave server_**
 
-```bash
+```sql
 SHOW REPLICA STATUS\G;
 ```
 
-```bash
+```sql
 
 *************************** 1. row ***************************
              Replica_IO_State: Waiting for source to send event
@@ -161,26 +160,26 @@ SHOW REPLICA STATUS\G;
 
 Create Database in master-server
 
-```bash
+```sql
 CREATE DATABASE kendanic;
 ```
 
-```bash
-show databases;
+```sql
+SHOW DATABASES;
 ```
 
 **_IN slave-server_**
 
-```bash
+```cmd
 sudo mysql
 ```
 
 check if database created in master-server appers in slave-server
 
-```bash
-show databases;
+```sql
+SHOW DATABASES;
 ```
 
-***web-references***
+**_web-references_**
 
 1. [create User for replication](https://dev.mysql.com/doc/refman/8.0/en/replication-howto-repuser.html)

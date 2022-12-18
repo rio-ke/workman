@@ -24,7 +24,7 @@ sudo systemctl status ssh
 
 `centOS`
 
-```bash
+```cmd
 sudo yum –y install openssh-server openssh-clients
 sudo systemctl start sshd
 sudo systemctl status sshd
@@ -41,7 +41,7 @@ Download `remote-develpment`
 
 **_Createing ssh keys_**
 
-```bash
+```cmd
 ssh-keygen
 ```
 
@@ -51,7 +51,7 @@ ssh-keygen
 
 **_go to key conf file_**
 
-```bash
+```cmd
 cd ~/.ssh/
 ```
 
@@ -60,7 +60,7 @@ _if u create key with seperate file name_
 - give file name as `public.pem` and `private.pem`
 - go to /home/$user
 
-```bash
+```cmd
 ls -ltr | grep pem
 ```
 
@@ -90,7 +90,7 @@ Click `config`
 
 `Edit`
 
-```bash
+```cmd
 Host any-name
     HostName 192.168.x.xxx
     User server
@@ -98,12 +98,12 @@ Host any-name
     IdentityFile /home/server/.ssh/id_rsa
 ```
 
-* Now Go to `command palette` with `ctrl + shift + p` adn Click 
+- Now Go to `command palette` with `ctrl + shift + p` adn Click
 
-```bash
+```cmd
 remote connect to host
 ```
 
-* Click Host name
+- Click Host name
 
 `192.168.0.1`

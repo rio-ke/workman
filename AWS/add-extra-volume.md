@@ -46,7 +46,7 @@ Resize the partition, if needed. To do so:
 
 2. Check whether the volume has a partition. Use the lsblk command.
 
-```bash
+```cmd
 sudo lsblk
 ```
 
@@ -62,12 +62,12 @@ xvda    202:0    0  50G  0 disk
 
 - For example, to extend a partition named xvda1, use the following command.
 
-```bash
+```cmd
 Important
 Note the space between the device name (xvda) and the partition number (1).
 ```
 
-```bash
+```cmd
 sudo growpart /dev/xvda 1
 ```
 
@@ -77,11 +77,11 @@ sudo growpart /dev/xvda 1
 
 - The following example output shows that both the volume (xvda) and the partition (xvda1) are the same size (16 GB).
 
-```bash
+```cmd
 sudo lsblk
 ```
 
-```bash
+```cmd
 NAME    MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
 xvda    202:0    0  150G  0 disk
 └─xvda1 202:1    0  145G  0 part /
@@ -91,7 +91,7 @@ xvda    202:0    0  150G  0 disk
 
 - Get the name, size, type, and mount point for the file system that you need to extend. Use the `df -hT` command.
 
-```bash
+```cmd
 df -Th
 ```
 
@@ -99,7 +99,7 @@ a. Ext4 file system] Use the resize2fs command and specify the name of the file 
 
 b. For example, to extend a file system mounted named /dev/xvda1, use the following command.
 
-```bash
+```cmd
 sudo resize2fs /dev/xvda1
 ```
 
@@ -107,18 +107,18 @@ sudo resize2fs /dev/xvda1
 
 6. Verify that the file system has been extended. Use the df -hT command and confirm that the file system size is equal to the volume size.
 
-```bash
+```cmd
 df -Th
 ```
 
 - Using the mount command, mount the file systems sequentially beneath the server's primary root partition to check the fstab.
 
-If there is no error, the mount is functioning properly
+_To check mount-wrok run this command_
 
-```bash
+- If there is no error, the mount is functioning properly
+
+```cmd
 sudo mount -a
 ```
 
 **_END_**
-
-> > > > > > > 0767b62ce3b054e98e48ffd29234f19a99d57dec
