@@ -39,10 +39,6 @@ After adding volume in aws console page go to linux terminal and login linux ins
 
 
 **_Terminal-work_**
-<<<<<<< HEAD
-
-||||||| e186253
-=======
 
 **_To extend the file system of EBS volumes_**
 

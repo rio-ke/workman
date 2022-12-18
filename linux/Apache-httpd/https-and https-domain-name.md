@@ -4,7 +4,7 @@
 2. go to the exact path and open in terminal.
 3. list the file
 
-```bash
+```cmd
 ls
 ```
 
