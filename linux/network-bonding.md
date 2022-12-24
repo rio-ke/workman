@@ -41,7 +41,7 @@ vi /etc/sysconfig/network-scripts/ifcfg-bond0
 
 - Add the following lines
 
-```bash
+```conf
 DEVICE=bond0
 NAME=bond0
 TYPE=Bond
@@ -58,7 +58,7 @@ ZONE=public
 ```
 *bond1 configuration*
 
-```bash
+```conf
 DEVICE=bond1
 NAME=bond1
 TYPE=Bond
@@ -87,24 +87,24 @@ ZONE=public
 
 then try below commad
 
-```bash
+```conf
 nmcli conn show eth01
 ```
 
 **_To change the network interface UUID_**
 
-```bash
+```conf
 uuidgen ifcfg-bond0 
 #
 uuidgen ifcfg-eth01
 ```
 - go to configuration folder
 
-```bash
+```conf
 vi /etc/sysconfig/network-scripts/ifcfg-em1
 ```
 
-```bash
+```conf
 TYPE=Ethernet
 PROXY_METHOD=none
 BROWSER_ONLY=no
@@ -130,7 +130,7 @@ ZONE=public
 vi /etc/sysconfig/network-scripts/ifcfg-em1
 ```
 
-```bash
+```conf
 TYPE=Ethernet
 PROXY_METHOD=none
 BROWSER_ONLY=no
