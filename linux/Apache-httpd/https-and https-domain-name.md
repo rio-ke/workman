@@ -12,7 +12,7 @@ ls
 
 **4. Merge the certificate**
 
-```bash
+```cmd
 cat certificate.crt ca_bundle.crt >> certificate.crt
 
 # copy the certificate, paste into  /etc/nginx/ssl-certificate/certificate.crt
@@ -24,7 +24,7 @@ cat private.key
 
 **5. To store the value in nginx**
 
-```bash
+```cmd
 mkdir /etc/nginx/ssl-certificate
 sudo vim /etc/nginx/ssl-certificate/certificate.crt
 sudo vim /etc/nginx/ssl-certificate/private.key
@@ -32,7 +32,7 @@ sudo vim /etc/nginx/ssl-certificate/private.key
 
 **6. configure the https,http domains and redirect conditions**
 
-```bash
+```conf
 vi /etc/nginx/sites-available/fourtimes.ml
 
 add this content:
@@ -66,37 +66,37 @@ server {
 
 **7. Create directory file**
 
-```bash
+```cmd
 mkdir /var/www/fourtimes.ml
 ```
 
 **8. Change the directory**
 
-```bash
+```cmd
 cd /etc/nginx/sites-enabled
 ```
 
 **9. copy the file sites-enabled from site-available**
 
-```bash
+```cmd
 ln -s /etc/nginx/sites-available/fourtimes.ml ./
 ```
 
 **10. Restart the server**
 
-```bash
+```cmd
 systemctl restart nginx
 ```
 
 **11. Status of the server**
 
-```bash
+```cmd
 systemctl status nginx
 ```
 
 **12. Create index.html file and put the information:**
 
-```bash
+```cmd
 vim /var/www/fourtimes.ml/index.html
 
 add this content:
@@ -112,37 +112,37 @@ welcome to the fourtimes.ml domain
 
 **13. To run inside the terminal**
 
-```bash
+```cmd
 curl https://fourtimes.ml
 ```
 
 **14.** **Path routing** - Go to the document root
 
-```bash
+```cmd
 cd /var/www/fourtimes.ml/
 ```
 
 **15. Create new directory**
 
-```bash
+```cmd
 mkdir demo
 ```
 
 **16. Change directory**
 
-```bash
+```cmd
 cd demo
 ```
 
 **17. create index.html file**
 
-```bash
+```cmd
 vim index.html
 ```
 
 **18. Create index.html file and put the information:**
 
-```bash
+```cmd
 vim /var/www/fourtimes.ml/demo/index.html
 
 add this content:
