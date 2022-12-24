@@ -81,6 +81,7 @@ cd /etc/nginx/sites-enabled
 ```bash
 ln -s /etc/nginx/sites-available/fourtimes.ml ./
 ```
+
 **10. Restart the server**
 
 ```bash
@@ -128,13 +129,17 @@ mkdir demo
 ```
 
 **16. Change directory**
+
 ```bash
 cd demo
 ```
+
 **17. create index.html file**
-```bash 
+
+```bash
 vim index.html
 ```
+
 **18. Create index.html file and put the information:**
 
 ```bash
@@ -150,6 +155,7 @@ welcome to the demo path routing
 </body>
 </html>
 ```
+
 **Output**
 
 ![image](https://user-images.githubusercontent.com/91359308/169807444-35b6d132-fa80-4201-9d9e-8198c9cc882f.png)

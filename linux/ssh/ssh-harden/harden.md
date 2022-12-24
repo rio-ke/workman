@@ -8,11 +8,11 @@
 
 _open ssh-config file_
 
-```bash
+```cmd
 sudo vim /etc/ssh/sshd_config
 ```
 
-```bash
+```cmd
 PasswordAuthentication no
 ```
 
@@ -26,7 +26,7 @@ _restart the SSH daemon_
 
 - To reject requests from users without a password, again, head over to the configuration file at /etc/ssh/sshd_config and ensure that you have the directive below
 
-```bash
+```cmd
 PermitEmptyPasswords no
 ```
 
@@ -38,7 +38,7 @@ PermitEmptyPasswords no
 
 for some server privacy we need to disable the root login
 
-```bash
+```cmd
 PermitRootLogin no
 ```
 
@@ -50,7 +50,7 @@ PermitRootLogin no
 
 - For an added security layer, you can define the users who require SSH protocol to log in and perform remote tasks on the system. This keeps off any other users who might try to gain entry to your system without your approval.
 
-```bash
+```cmd
 AllowUsers users1 users2 users3 users4
 ```
 

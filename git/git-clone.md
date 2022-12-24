@@ -2,30 +2,30 @@
 
 _**git clone**_
 
-```bash
+```git
 git clone ssh key fot the repostry
 ```
 
-```bash
+```
 git commit file-name.md
 ```
 
-```bash 
+```git
 git add .
 ```
 
-```bash
-git status 
+```git
+git status
 ```
 
-```bash
+```git
 git commit -am ".added"
 ```
 
-```bash
+```git
 git push
 ```
 
-```bash
+```git
 git status
 ```

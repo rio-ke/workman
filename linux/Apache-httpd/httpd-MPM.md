@@ -18,15 +18,17 @@ sudo vim /etc/httpd/conf.modules.d/00-mpm.conf
 
 **_Check Active MPM in Apache_**
 
-* Now you have successfully enabled Event MPM in your Apache server. To verify current MPM enabled on your server use following command.
+- Now you have successfully enabled Event MPM in your Apache server. To verify current MPM enabled on your server use following command.
+
 ```
 httpd -V | grep MPM
 ```
+
 `output`
 
 Server MPM:
 
-***error in changing the `prefork_MPM` to `event_MPM`***
+**_error in changing the `prefork_MPM` to `event_MPM`_**
 
 ```bash
 AH00526: Syntax error on line 31 of /etc/httpd/conf.d/php.conf:
