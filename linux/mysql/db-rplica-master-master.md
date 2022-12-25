@@ -22,7 +22,24 @@ _Enable mysqld.servicem in server_
 
 **_secure the MySQL installation_**
 
-```cmd
-secure the MySQL installation
+```bash
+sudo mysql_secure_installation utility  # secure the MySQL installation
 ```
 
+**_Allow remote access_**
+
+```cmd
+sudo ufw enable
+sudo ufw allow mysql
+```
+
+_Start the MySQL service_
+
+```cmd
+sudo systemctl start mysql
+```
+Launch at reboot
+
+```cmd
+sudo systemctl enable mysql
+```
