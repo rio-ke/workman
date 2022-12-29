@@ -2,42 +2,17 @@
 
 * Ansible is an agentless automation tool that you install on a single host (referred to as the control node). From the control node, Ansible can manage an entire fleet of machines and other devices (referred to as managed nodes) remotely with SSH, Powershell remoting, and numerous other transports, all from a simple command-line interface with no databases or daemons required
 
-**_Installing and upgrading Ansible_**
-
-* Locating Python
-* Ensuring pip is available
-
-_To verify whether pip is already installed for your preferred Python:_
-
-```cmd
-python3 -m pip -V
-```
-```cmd
-sudo apt install -y pip && sudo apt install ansible -y
-```
+**Installing and upgrading Ansible**
 
 _**install pakages**_
 
-
-* Use pip in your selected Python environment to install the Ansible package of your choice for the current user:
-
 ```cmd
-python3 -m pip install --user ansible
+sudo apt update
+sudo apt install software-properties-common
+sudo apt-add-repository --yes --update ppa:ansible/ansible
+sudo apt install ansible
 ```
 
-* Alternately, you can install a specific version of ansible-core in this Python environment:
-
-```cmd
-python3 -m pip install --user ansible-core==2.12.3
-```
-
-**Upgrading Ansible**
-
-* To upgrade an existing Ansible installation in this Python environment to the latest released version, simply add --upgrade to the command above:
-
-```cmd
-python3 -m pip install --upgrade --user ansible
-```
 
 
 
