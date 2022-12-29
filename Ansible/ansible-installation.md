@@ -13,7 +13,7 @@ _To verify whether pip is already installed for your preferred Python:_
 python3 -m pip -V
 ```
 ```cmd
-sudo apt install -y pip && 
+sudo apt install -y pip && sudo apt install ansible -y
 ```
 
 _**install pakages**_
@@ -21,13 +21,13 @@ _**install pakages**_
 
 * Use pip in your selected Python environment to install the Ansible package of your choice for the current user:
 
-```bash
+```cmd
 python3 -m pip install --user ansible
 ```
 
 * Alternately, you can install a specific version of ansible-core in this Python environment:
 
-```bash
+```cmd
 python3 -m pip install --user ansible-core==2.12.3
 ```
 
@@ -35,7 +35,7 @@ python3 -m pip install --user ansible-core==2.12.3
 
 * To upgrade an existing Ansible installation in this Python environment to the latest released version, simply add --upgrade to the command above:
 
-```bash
+```cmd
 python3 -m pip install --upgrade --user ansible
 ```
 
