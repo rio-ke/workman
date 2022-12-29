@@ -46,10 +46,26 @@ Now check hosts server
 
 ```bash
 [myvirtualmachines]
-192.168.0.104
-ansible_connection=ssh ansible_ssh_user=server ansible_ssh_pass=.  #username #password
+192.168.0.104 ansible_connection=ssh ansible_ssh_user=server ansible_ssh_pass=.  #username #password
 ```
 check hosts connection in terminal with ad-hoc command
 ```bash
 ansible all --list-hosts
 ```
+_ping host server_
+
+```cmd
+ansible -m ping all
+```
+
+
+
+
+
+
+
+
+
+
+
+
