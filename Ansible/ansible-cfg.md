@@ -57,13 +57,13 @@ _ping host server_
 ```cmd
 ansible -m ping all
 ```
+**if error accourd**
 
+![UNREACHABLE!](https://user-images.githubusercontent.com/88568938/209984742-0cae0005-f93b-450d-90e2-db1e0a45b16f.png)
 
+![error-find](https://user-images.githubusercontent.com/88568938/209984748-8a6ca70e-ee82-4bba-acfb-7128a75e2d01.png)
 
-
-
-
-
+* need to add `192.168.0.104 ansible_connection=ssh ansible_ssh_user=server ansible_ssh_pass=.  #username #password` in hosts
 
 
 
