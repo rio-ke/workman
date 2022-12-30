@@ -58,7 +58,12 @@ Add ` ignore_errors: true ` in demo.yaml file in the playbook folder
 6. ![Screenshot from 2022-12-30 14-55-47](https://user-images.githubusercontent.com/88568938/210061013-aa66d0e8-bb6d-4d32-a581-fba01821c5b5.png)
 
 7. ![Screenshot from 2022-12-30 15-09-58](https://user-images.githubusercontent.com/88568938/210061039-559826de-477d-462c-96a7-15975ee74bdd.png)
-
+_resloved_
+* Allows people in group wheel to run all commands without a password
+ ```cfg
+ ## Same thing without a password
+%wheel  ALL=(ALL)       NOPASSWD: ALL
+ ```
 
 
 
