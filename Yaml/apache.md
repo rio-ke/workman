@@ -32,3 +32,17 @@
 
 
 ```
+
+```yml
+
+    - name: start the web-server service
+      service:
+        name: apache2
+        state: stopped
+
+    - name: start the web-server service
+      service:
+        name: apache2
+        state: restarted
+
+```
