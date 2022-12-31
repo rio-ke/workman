@@ -4,7 +4,7 @@
 
 ---
 - name: simple playbook
-  hosts: virtual
+  hosts: v1
   become: true
   # become_user: root
   # become_method: sudo
@@ -25,11 +25,19 @@
         state: present
         dpkg_options: force-confdef
 
+    # - name: Enabling httpd service
+    #   service:
+    #     name: httpd
+    #     enabled: yes
+    - name: Stop the if installed "nginx" web-server service
+      service:
+        name: nginx
+        state: stopped
+
     - name: start the web-server service
       service:
         name: apache2
         state: started
-
 
 ```
 
