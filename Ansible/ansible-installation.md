@@ -1,17 +1,31 @@
 ## Installing ansible in linux server(ubuntu kernel)
 
+**Ubuntu**
+
+* The procedure on Ubuntu is a bit longer. The first thing to do it's to update the apitude repository with sudo apt-get update. After this, install the software-properties-common package with sudo apt-get install software-properties-common and add the Ansible repository running sudo apt-add-repository ppa:ansible/ansible. Update again the repository to fetch Ansible with sudo apt-get update and finally you can install it running sudo apt-get install ansible.
+
 * Ansible is an agentless automation tool that you install on a single host (referred to as the control node). From the control node, Ansible can manage an entire fleet of machines and other devices (referred to as managed nodes) remotely with SSH, Powershell remoting, and numerous other transports, all from a simple command-line interface with no databases or daemons required
 
 **Installing and upgrading Ansible**
 
 _**install pakages**_
 
+_The final commands in the terminal will look like this:_
+
 ```cmd
-sudo apt update
-sudo apt install software-properties-common
-sudo apt-add-repository --yes --update ppa:ansible/ansible
-sudo apt install ansible
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt-get update
+sudo apt-get install ansible
 ```
+
+
+
+
+
+
+
 
 
 
