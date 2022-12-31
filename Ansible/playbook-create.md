@@ -63,13 +63,16 @@ _resloved_
 
 * Allows asible to run all users commands without a password
 * login to ssh user
-* go to `sudoer` file
+* go to `sudoer.d/file_name` file
 * and add below cmd to conf file
 
 ```cfg
  ## Same thing without a password
 username  ALL=(ALL)       NOPASSWD: ALL
  ```
+refer this page
+![passwd previlage-error-correction](https://user-images.githubusercontent.com/88568938/210137199-4540b5a7-a8ac-4adf-a126-aeb16b9448a9.png)
+
 
 
 
