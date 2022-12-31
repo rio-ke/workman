@@ -4,7 +4,7 @@
 
 ---
 - name: simple playbook
-  hosts: v1
+  hosts: v1 #inventory_host_name
   become: true
   # become_user: root
   # become_method: sudo
