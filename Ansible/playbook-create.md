@@ -62,7 +62,7 @@ _resloved_
 * Allows people in group wheel to run all commands without a password
  ```cfg
  ## Same thing without a password
-%wheel  ALL=(ALL)       NOPASSWD: ALL
+username  ALL=(ALL)       NOPASSWD: ALL
  ```
 
 
