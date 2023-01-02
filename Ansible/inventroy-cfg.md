@@ -8,15 +8,15 @@ mkdir ansible
 
 **Generating a sample `ansible.cfg` file**
 
-* You can generate a fully commented-out example ansible.cfg file, for example:
+_**ad-hoc command**_
+
+* You can create a fully commented-out example ansible.cfg file by doing the following:
 
 ```cmd
 ansible-config init --disabled > ansible.cfg
 ```
 
-* You can also have a more complete file that includes existing plugins:
-
-_**ad-hoc command**_
+* You can also have a more complete conf file that includes existing plugins:
 
 ```cmd
 ansible-config init --disabled -t all > ansible.cfg
