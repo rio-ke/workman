@@ -37,7 +37,7 @@ Edit
 
 ```bash
 # (pathlist) Comma separated list of Ansible inventory sources
-inventory=/home/user/ansible/hosts
+inventory=hosts
 ```
 
 Now check hosts server 
