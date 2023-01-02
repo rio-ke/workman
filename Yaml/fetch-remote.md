@@ -3,9 +3,8 @@
 
 ```yml
 ---
-
 - name: fetch files from remote nodes
-  hosts: v
+  hosts: virtual #inventory-host
   become: yes
   # ignore_errors: true
 
@@ -13,7 +12,13 @@
     - name: cpoy file to remote host to ansible local host machine
       fetch:
         src: /home/server/ftp/index.yml
-        dest: /home/rcms-lap-173/Public/
+        dest: /home/username/Public/
         validate_checksum: yes
         flat: yes
+```
+
+_excecution_
+
+``yml
+ansible-playbook virtual fetch.yml
 ```
