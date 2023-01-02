@@ -3,7 +3,20 @@
 0. Linux 
     All concepts
 
-1. ansible
+1. basic networks
+   * networks 
+   * subnet call culations
+   * firewalls
+
+2. shell script
+   * variable
+   * debug
+   * function
+   * while
+   * for
+   * conditional statements
+   
+3. ansible
    * host
    * ansible.cfg
    * adhoc
@@ -12,16 +25,6 @@
    * conditions
    * iteration
    * variable and variable preference
-
-2. terraform
-   * provider
-   * resource
-   * variable
-   * module
-
-3. cloud aws, azure, google cloud
-   * infra as a service
-   * platform as a service
 
 4. git
    * commit
@@ -32,45 +35,44 @@
 
 5. prometheus Grafana
    * installation and configuration
-
-6. elk 
-
-7. python
-   * conditions
-   * iteration
-   * variable and variable preference
-   * function
-   * class
-8. nodejs
-   * conditions
-   * iteration
-   * variable and variable preference
-   * function
-   * class
-
-9. golang
-   * conditions
-   * iteration
-   * variable and variable preference
-   * function
-   * class
-
-10. docker
-
-11. kubernetes
-
-12. basic networks
-   * networks 
-   * subnet call culations
-   * firewalls
-
-13. shell script
+   
+6. terraform
+   * provider
+   * resource
    * variable
-   * debug
+   * module
+
+7. cloud aws, azure, google cloud
+   * infra as a service
+   * platform as a service
+
+8. elk 
+
+9. python
+   * conditions
+   * iteration
+   * variable and variable preference
    * function
-   * while
-   * for
-   * conditional statements
+   * class
+  
+10. nodejs
+   * conditions
+   * iteration
+   * variable and variable preference
+   * function
+   * class
+
+11. golang
+   * conditions
+   * iteration
+   * variable and variable preference
+   * function
+   * class
+
+12. docker
+
+13. kubernetes
+
 
 14. ticketing tools Jira GitHub projects azure devOps kanban Board
 
