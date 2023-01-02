@@ -7,11 +7,12 @@
    * networks 
    * subnet call culations
    * firewalls
+   * routing
 
 2. ansible
    * host
    * ansible.cfg
-   * adhoc
+   * ad-hoc command
    * playbooks
    * roles
    * conditions
@@ -70,13 +71,14 @@
    * class
 
 12. docker
-
+   *
+   
 13. kubernetes
-
-
+   *
+   
 14. ticketing tools Jira GitHub projects azure devOps kanban Board
-
-
+   *
+   
 15. automation
    * GitHub action
    * azure devOps
