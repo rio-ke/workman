@@ -76,8 +76,13 @@
 13. kubernetes
    *
    
-14. ticketing tools Jira GitHub projects azure devOps kanban Board
-   *
+14. ticketing tools 
+   * Jira 
+   * GitHub projects 
+   * azure 
+   * devOps 
+   * kanban 
+   * Board
    
 15. automation
    * GitHub action
