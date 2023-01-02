@@ -8,15 +8,7 @@
    * subnet call culations
    * firewalls
 
-2. shell script
-   * variable
-   * debug
-   * function
-   * while
-   * for
-   * conditional statements
-   
-3. ansible
+2. ansible
    * host
    * ansible.cfg
    * adhoc
@@ -26,6 +18,14 @@
    * iteration
    * variable and variable preference
 
+3. shell script
+   * variable
+   * debug
+   * function
+   * while
+   * for
+   * conditional statements
+   
 4. git
    * commit
    * clone
