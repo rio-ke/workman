@@ -71,11 +71,9 @@
    * class
 
 12. docker
-   *
-   
+      
 13. kubernetes
-   *
-   
+      
 14. ticketing tools 
    * Jira 
    * GitHub projects 
