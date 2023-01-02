@@ -1,6 +1,6 @@
-## moving the file from localhost to remote server
+# File pull method from master ansible node to remote server
 
-
+_Pull_
 
 ```yml
 ---
