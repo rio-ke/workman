@@ -1,13 +1,10 @@
 # Devops-learn
 
 0. Linux 
-    All concepts
+    - All concepts
 
 1. basic networks
-   * networks 
-   * subnet call culations
-   * firewalls
-   * routing
+   * networks, subnet-call-culations, firewalls, routing
 
 2. ansible
    * host
