@@ -1,4 +1,4 @@
-### Configure nginx - http to https
+# Configure nginx - http to https
 
 1. Download the ssl certificate and Extract that.
 2. go to the exact path and open in terminal.
