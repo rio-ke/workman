@@ -92,9 +92,9 @@
 
 
 > Linux + shell script <> prometheus <> git <> ansible (yaml format) 
->  cloud (aws, azure)
-> > python script
-> > >terraform 
-> > > >automation 
-> > > > >nodejs, Golang, 
-> > > > > >ticketing tools
+> > cloud (aws, azure)
+> > > python script
+> > > > terraform 
+> > > > > automation 
+> > > > > > nodejs, Golang, 
+> > > > > > > ticketing tools
