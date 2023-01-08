@@ -13,7 +13,7 @@ _Run shell ansible-modules to run command in ansibe-playbook_
             "lsb_release -a"
       register: result
     - debug:
-        msg: "{{ result.stdout_lines }}"
+        msg: "{{ result.stdout }}"
 ```
 
 _Runing shell ansible-modules to run command in playbook with loop_
@@ -35,7 +35,7 @@ _Runing shell ansible-modules to run command in playbook with loop_
         - groups
     - name: print the result
       debug:
-        msg: "{{ result | json_query('results[].stdout') }}"
+        msg: "{{ result | json_query('results[].stdout_lines') }}"
         # use json_query when you use loop method.....{ "msg": []}
 
 ```
@@ -53,6 +53,7 @@ _Runing shell-modules to call variable in playbook with loop and conditions_
     run_cmd:
       - hostname
       - lsb_release -a
+      - whoami
   tasks:
     - name: check host
       ping:
@@ -65,7 +66,7 @@ _Runing shell-modules to call variable in playbook with loop and conditions_
       loop: "{{ run_cmd }}"
       when: # write and or condition
     - debug:
-        msg: "{{ result|json_query('results[*].stdout') }}"
+        msg: "{{ result|json_query('results[*].stdout_lines') }}"
 
         # use json_query when you use loop method.....{ "msg": []}
 
