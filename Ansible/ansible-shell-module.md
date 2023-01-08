@@ -45,9 +45,9 @@ _Runing shell-modules to call variable in playbook with loop and conditions_
 ```yml
 ---
 - name: shell modules tasks
-  hosts: j
-  become_user: root
-  become_method: sudo
+  hosts: k
+  # become_user: root
+  # become_method: sudo
   vars:
     run_cmd:
       - hostname
@@ -65,6 +65,7 @@ _Runing shell-modules to call variable in playbook with loop and conditions_
       when:
     - debug:
         msg: "{{ result|json_query('results[*].stdout') }}"
+        # use json_query when you use loop method.....{ "msg": []}
 
 ```
 
