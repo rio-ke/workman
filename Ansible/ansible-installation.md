@@ -13,8 +13,8 @@ _**install pakages**_
 _The final commands in the terminal will look like this:_
 
 ```cmd
-sudo apt install software-properties-common &&
-sudo apt-add-repository ppa:ansible/ansible &&
+sudo apt install software-properties-common
+sudo apt-add-repository ppa:ansible/ansible
 sudo apt update && sudo apt install ansible -y 
 ```
 
