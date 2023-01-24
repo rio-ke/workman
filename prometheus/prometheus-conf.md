@@ -1,25 +1,50 @@
-    sudo yum update
-     
-    sudo yum install wget -y
-     
-    sudo useradd --system --no-create-home --shell /usr/sbin/nologin prometheus
-     
-    cat /etc/passwd
-     
-   cd ~/Downloads
-     
-   wget https://github.com/prometheus/prometheus/releases/download/v2.28.0/prometheus-2.28.0.linux-amd64.tar.gz
-  ll
+## Prometheus moniter configuration
 
+**Update the server** 
+```cmd
+sudo yum update
+```
+**Install wget module**
+```cmd
+sudo yum install wget -y
+```
+
+**_Create user for prometheus_**
+
+```cmd
+sudo useradd --system --no-create-home --shell /usr/sbin/nologin prometheus
+```
+---
+
+check user details
+```cmd
+cat /etc/passwd
+```     
+_go to Download dir_
+```cmd
+cd ~/Downloads
+```
+**Download prometheus form third repo**
+```cmd
+wget https://github.com/prometheus/prometheus/releases/download/v2.28.0/prometheus-2.28.0.linux-amd64.tar.gz
+```
+Check downloaded file
+```
+ls -ltrh
+```
+_extract the downloaded file_
+```cmd
 tar xvzf prometheus-2.28.0.linux-amd64.tar.gz
-  ll
-   move the prometheus-2.28.0.linux-amd64 directory to /opt/ directory and rename it to prometheus 
-     sudo mv -v prometheus-2.28.0.linux-amd64 /opt/prometheus
+``` 
+
+- move the prometheus-2.28.0.linux-amd64 directory to /opt/ directory and rename it to prometheus 
+```cmd
+sudo mv -v prometheus-2.28.0.linux-amd64 /opt/prometheus
+```     
+Change the user and group of all the files and directories of the /opt/prometheus/ directory to root
+sudo chown -Rfv root:root /opt/prometheus
      
-   Change the user and group of all the files and directories of the /opt/prometheus/ directory to root
-     sudo chown -Rfv root:root /opt/prometheus
-     
-  Fix the file and directory permissions of all the files and directories of the /opt/prometheus/ directory
+Fix the file and directory permissions of all the files and directories of the /opt/prometheus/ directory
       sudo chmod -Rfv 0755 /opt/prometheus
       
 The configuration file of Prometheus is /opt/prometheus/prometheus.yml.
