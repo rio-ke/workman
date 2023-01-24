@@ -23,7 +23,7 @@ tar xvzf prometheus-2.28.0.linux-amd64.tar.gz
       sudo chmod -Rfv 0755 /opt/prometheus
       
 The configuration file of Prometheus is /opt/prometheus/prometheus.yml.
-        sudo vim /opt/prometheus/prometheus.yml
+      sudo vim /opt/prometheus/prometheus.yml
         
 (optional) If you want, you can remove the comment lines from the configuration file /opt/prometheus/prometheus.yml with the following command:
 
