@@ -30,7 +30,7 @@ yum update -y
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
 yum install -y kmod-drbd84 drbd84-utils -y
-yum install pacemaker pcs psmisc policycoreutils-python
+yum install pacemaker pcs psmisc policycoreutils-python -y
 yum install httpd -y
 #yum install vsftpd -y
 ```
