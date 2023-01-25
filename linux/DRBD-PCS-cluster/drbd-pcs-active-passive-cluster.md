@@ -114,7 +114,7 @@ resource clusterdb {
     al-extents 257;
     on-no-data-accessible io-error;
   }
-  on node1 {
+  on node1 { #insted node1-2 hostname
     device /dev/drbd0;
     disk /dev/sdb;
     address 192.168.0.105:7788;
