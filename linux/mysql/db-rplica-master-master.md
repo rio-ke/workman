@@ -47,7 +47,7 @@ sudo systemctl enable mysql
 
 ```sql
 change master to
-master_host='10.0.0.30',
+master_host='ip_add',
 master_user='repl_user',
 master_password='password',
 master_ssl=1,
