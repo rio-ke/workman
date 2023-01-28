@@ -80,6 +80,17 @@ network:
 
 ```
 
+_service netplan_
+
+```cmd
+sudo netplan apply
+```
+
+_Verify the ip address changes_
+
+```cmd 
+ip add
+```
 
 
 
