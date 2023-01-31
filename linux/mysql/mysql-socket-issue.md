@@ -1,18 +1,14 @@
 
-* After installing mariadb in centos 7
+# After installing mariadb in centos 7
 
 
-1. [passwd issue](https://tecadmin.net/install-mysql-5-7-centos-rhel/)
-
-command 
-
-* install mariadb in centos7 
+**_install mariadb in centos7_** 
 
 ```bash
 sudo yum install mariadb-server
 ```
 
-**enable db**
+_**enable db**_
 
 ```bash
 sudo systemctl enable mariadb
