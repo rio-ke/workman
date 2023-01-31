@@ -101,3 +101,5 @@ _**Make MySQL secure installation**_
 mysql_secure_installation
 ```
 
+1. [passwd issue](https://tecadmin.net/install-mysql-5-7-centos-rhel/)
+
