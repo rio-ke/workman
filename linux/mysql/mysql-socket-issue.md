@@ -74,6 +74,13 @@ _**Don't use 'yum install *.rpm'. It will not work and give error messages**_
 yum install mysql-community-{server,client,common,libs}-* --exclude='*minimal*'
 ```
 
+_OR_
+
+_use this URL method_
+
+1. [passwd issue](https://tecadmin.net/install-mysql-5-7-centos-rhel/)
+
+
 _**Start MySQL**_
 
 ```cmd
@@ -97,5 +104,4 @@ _**Make MySQL secure installation**_
 mysql_secure_installation
 ```
 
-1. [passwd issue](https://tecadmin.net/install-mysql-5-7-centos-rhel/)
 
