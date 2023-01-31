@@ -44,6 +44,7 @@ Launch at reboot
 sudo systemctl enable mysql
 ```
 
+**_Add this command to both masters _**
 
 ```sql
 change master to
