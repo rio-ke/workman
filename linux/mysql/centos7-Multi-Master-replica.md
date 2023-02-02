@@ -66,7 +66,7 @@ FLUSH PRIVILEGES;
 ```
 
 ```sql
-SHOW MASTER STATUS;
+SHOW MASTER STATUS\G;
 ```
 
 Note the `mysql-bin.000001` value and the Position ID `xxxx`. These values will be crucial when setting up the slave server.
@@ -136,26 +136,57 @@ START SLAVE;
 **_show master-slave replica status in slave server_**
 
 ```sql
-SHOW REPLICA STATUS\G;
+SHOW SLAVE STATUS\G;
 ```
 
-```sql
-
-*************************** 1. row ***************************
-             Replica_IO_State: Waiting for source to send event
-                    Source_Host: `Master server_one`
-                   Source_User: demo
-                    Source_Port: 3306
+```bash
+********* 1. row *********
+               Slave_IO_State: Waiting for master to send event
+                  Master_Host: 192.168.3.214
+                  Master_User: demo
+                  Master_Port: 3306
                 Connect_Retry: 60
-             Source_Log_File: mysql-bin.000001
-  Read_Source_Log_Pos: 1114
-               Relay_Log_File: mysql-relay-bin.000002
-               Relay_Log_Pos: 326
-       lay_Source_Log_File: mysql-bin.000001
-            plica_IO_Running: Yes
-         plica_SQL_Running: Yes
+              Master_Log_File: mysql-bin.000002
+          Read_Master_Log_Pos: 995
+               Relay_Log_File: mysql-relay-bin.000004
+                Relay_Log_Pos: 1208
+        Relay_Master_Log_File: mysql-bin.000002
+             Slave_IO_Running: Yes
+            Slave_SQL_Running: Yes
 
 ```
+
+**ERROR**
+
+1. Fatal error: The slave I/O thread stops because master and slave have equal MySQL server UUIDs; these UUIDs must be different for replication to work.
+2. Slave_IO_Running: `connecting`
+
+**Resolved**
+
+_Check auto.cnf_
+
+Go To: sudo -i
+
+```cmd
+cd /var/lib/mysql
+```
+_Rename auto.cnf_
+
+```cmd
+mv auto.cnf auo.cnf.backup 
+```
+-------
+```sql
+START SLAVE;
+```
+```sql
+START SLAVE;
+```
+```sql
+SHOW SLAVE STATUS\G;
+```
+
+---
 
 **Testing the configuration in both master-slave servers**
 
