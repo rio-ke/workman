@@ -160,6 +160,22 @@ _Query statements_
 - Update
 - delete
 
+
+_Deleting a MySQL User Accounts_
+
+_listout user and host_
+
+```sql
+SELECT User, Host FROM mysql.user;
+```
+
+_DROP USER Syntax_
+
+- The basic syntax for the DROP USER statement is:
+
+```sql
+DROP USER 'username'@'host';
+```
 ---
 
 **Create database on Root user Set privilege to specify user**
