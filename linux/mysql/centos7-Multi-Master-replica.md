@@ -262,7 +262,7 @@ pass: xxxxxxx
 STOP SLAVE;
 ```
 
-**_ADD the cmd lines in master-2 node one by one _**
+**_ADD the cmd lines in master-1 node one by one _**
 
 ```sql
 CHANGE MASTER TO
