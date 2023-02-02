@@ -9,8 +9,8 @@
 **DB1**
 
 ```sql
-Master server_one: 192.168.xx.xxx
-Master server_two: 192.168.xx.xxx
+Master-one: 192.168.xx.xxx
+Master-two: 192.168.xx.xxx
 ```
 
 **_Install MySQL on Master Nodes_**
@@ -54,11 +54,11 @@ pass: xxxxxxx
 _Next, proceed and execute the queries below to create a replica user and grant access to the replication slave. Remember to use your IP address._
 
 ```sql
-CREATE USER 'demo'@'192.168.xxx.xx' IDENTIFIED BY 'Demo@12pass';  #(add Master server_two ip_address here in remote-users)
+CREATE USER 'master-two'@'192.168.xxx.xxx' IDENTIFIED BY 'test1';  #(add Master-two ip_address here in remote-users)
 ```
 
 ```sql
-GRANT REPLICATION SLAVE ON *.* TO 'demo'@'192.168.137.69';  #(add Master server_two ip_address here in remote-users)
+GRANT REPLICATION SLAVE ON *.* TO 'master-two'@'192.168.xxx.xxx';  #(add Master-two ip_address here in remote-users)
 ```
 
 ```sql
