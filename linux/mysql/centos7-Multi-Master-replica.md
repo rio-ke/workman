@@ -305,13 +305,7 @@ SHOW SLAVE STATUS\G;
 
 
 
-
-
-
 **_web-references_**
 
 1. [create User for replication](https://dev.mysql.com/doc/refman/8.0/en/replication-howto-repuser.html)
-
-
-
 
