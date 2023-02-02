@@ -240,9 +240,7 @@ TRUNCATE TABLE tablename;
 _view the table structure_
 
 ```sql
-
-describe (table-name):`
-
+describe table-name;
 ```
 
 _Insert values to the tables_
