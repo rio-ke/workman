@@ -56,4 +56,6 @@ master_log_file='mysql-bin.000001',
 master_log_pos=1405;
 ```
 
+blog 
 
+[master-master-workbench](https://hevodata.com/learn/mysql-master-master-replication/)
