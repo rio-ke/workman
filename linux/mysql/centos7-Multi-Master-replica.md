@@ -119,10 +119,10 @@ STOP SLAVE;
 
 ```sql
 CHANGE MASTER TO
-MASTER_HOST='@Master server_one' ,
-MASTER_USER='username' ,
-MASTER_PASSWORD='passwdword' ,
-MASTER_LOG_FILE='mysql-bin.000001' , #from master-one bin-log-file 
+MASTER_HOST='@Master server_one',
+MASTER_USER='username',
+MASTER_PASSWORD='passwdword',
+MASTER_LOG_FILE='mysql-bin.000001', #from master-one bin-log-file 
 MASTER_LOG_POS=154;
 
 ```
@@ -266,10 +266,10 @@ STOP SLAVE;
 
 ```sql
 CHANGE MASTER TO
-MASTER_HOST='@Master server_two' ,
-MASTER_USER='username' ,
-MASTER_PASSWORD='passwdword' ,
-MASTER_LOG_FILE='mysql-bin.000001' , #from master-one bin-log-file 
+MASTER_HOST='@Master server_two',
+MASTER_USER='username',
+MASTER_PASSWORD='passwdword',
+MASTER_LOG_FILE='mysql-bin.000001', #from master-one bin-log-file 
 MASTER_LOG_POS=154;
 
 ```
