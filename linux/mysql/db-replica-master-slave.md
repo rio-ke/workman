@@ -116,12 +116,12 @@ STOP SLAVE;
 **_ADD the cmd lines in Slave node one by one _**
 
 ```sql
-mysql> CHANGE MASTER TO MASTER_HOST='192.168.137.153', #(master_ip)
-mysql> MASTER_USER='demo',
-mysql> MASTER_PASSWORD='Demo@12pass',
-mysql> MASTER_LOG_FILE='mysql-bin.000001', #(master node)
-mysql> MASTER_LOG_POS=1114,
-mysql> SOURCE_SSL=1;
+CHANGE MASTER TO MASTER_HOST='192.168.', #(master_ip)
+MASTER_USER='',
+MASTER_PASSWORD='',
+MASTER_LOG_FILE='mysql-bin.000001', #(master node)
+MASTER_LOG_POS=114,
+SOURCE_SSL=1;
 ```
 
 **_start the slave replication slave server_**
