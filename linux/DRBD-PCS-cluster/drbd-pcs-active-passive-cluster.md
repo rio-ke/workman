@@ -24,15 +24,19 @@ vim /etc/hosts
 
 _**Install packeges for drbd and cluster on both nodes**_
 
+_install packages like httpd, drbd, pcs, vim_
 ```bash
 yum update -y
-# install packages like httpd, drbd, pcs
+yum install httpd -y
+yum install vim -y
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
 yum install -y kmod-drbd84 drbd84-utils -y
 yum install pacemaker pcs psmisc policycoreutils-python -y
-yum install httpd -y
-#yum install vsftpd -y
+rpm -Uvh https://mirror.webtatic.com/yum/el7/epel-release.rpm
+rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+yum install mod_ssl openssl php55w php55w-common php55w-mbstring php55w-xml  php55w-mysqlnd php55w-gd php55w-mcrypt php55w-pdo php55w-curl php55w-cli php55w-opcache -y
+
 ```
 
 **Allow ports through firewalld or Diseble the system firewall on both nodes**
@@ -158,8 +162,8 @@ mkdir /drbd-dbdata
 ```bash
 vim /etc/lvm/lvm.conf
 add : filter = [ "r|/dev/sdb|", "r|/dev/disk/*|", "r|/dev/block/*|", "a|.*|" ]      # near 128 line
-edit: write_cache_state = 1 to write_cache_state = 0                                # near 128 line
-edit: use_lvmetad = 1 to  use_lvmetad = 0                                           # 958 line near by
+edit: write_cache_state = 1 to write_cache_state = 0                                # near 170 line
+edit: use_lvmetad = 1 to  use_lvmetad = 0                                           # near 959 line
 ```
 **_update the lvm configuration on node1 and node2_**
 ```bash
@@ -221,6 +225,9 @@ pcs resource create ftpserver systemd:vsftpd --group resourcegroup
 **MySQL integrated with pcs cluster**
 
 ```bash
+sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+sudo yum localinstall https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm -y
+sudo yum install mysql-community-server -y
 mv /etc/my.cnf /drbd-dbdata/my.cnf
 mkdir -p /drbd-dbdata/data
 vim /drbd-dbdata/my.cnf
