@@ -158,8 +158,8 @@ mkdir /drbd-dbdata
 ```bash
 vim /etc/lvm/lvm.conf
 add : filter = [ "r|/dev/sdb|", "r|/dev/disk/*|", "r|/dev/block/*|", "a|.*|" ]      # near 128 line
-edit: write_cache_state = 1 to write_cache_state = 0                                # near 128 line
-edit: use_lvmetad = 1 to  use_lvmetad = 0                                           # 958 line near by
+edit: write_cache_state = 1 to write_cache_state = 0                                # near 170 line
+edit: use_lvmetad = 1 to  use_lvmetad = 0                                           # near 959 line
 ```
 **_update the lvm configuration on node1 and node2_**
 ```bash
