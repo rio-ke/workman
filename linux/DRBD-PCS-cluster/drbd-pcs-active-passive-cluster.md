@@ -195,8 +195,8 @@ drbdadm primary --force clusterdb
 ```bash
 pvcreate /dev/drbd0
 vgcreate drbd-vg /dev/drbd0
-lvcreate --name drbd-webdata --size 2G drbd-vg
-lvcreate --name drbd-dbdata --size 2G drbd-vg
+lvcreate --name drbd-webdata --size 5G drbd-vg
+lvcreate --name drbd-dbdata --size 5G drbd-vg
 mkfs.xfs /dev/drbd-vg/drbd-webdata
 mkfs.xfs /dev/drbd-vg/drbd-dbdata
 # optional: vgchange -ay drbd-vg   #=> active Volume group
@@ -214,7 +214,7 @@ pcs cluster cib-push drbd_cfg
 pcs resource create lvm ocf:heartbeat:LVM volgrpname=drbd-vg
 pcs resource create webdata Filesystem device="/dev/drbd-vg/drbd-webdata" directory="/drbd-webdata" fstype="xfs"
 pcs resource create dbdata Filesystem device="/dev/drbd-vg/drbd-dbdata" directory="/drbd-dbdata" fstype="xfs"
-pcs resource create virtualip ocf:heartbeat:IPaddr2 ip=192.168.0.200 cidr_netmask=24
+pcs resource create virtualip ocf:heartbeat:IPaddr2 ip=192.168.1.200 cidr_netmask=24
 pcs resource create webserver ocf:heartbeat:apache configfile=/etc/httpd/conf/httpd.conf statusurl="http://localhost/server-status"
 pcs resource group add resourcegroup virtualip lvm webdata dbdata  webserver
 pcs constraint order promote drbd_clusterdb_clone then start resourcegroup  # INFINITY
