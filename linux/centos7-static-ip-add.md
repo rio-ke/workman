@@ -48,7 +48,7 @@ sudo vi /etc/sysconfig/network-scripts/ifcfg-eth0
 TYPE=Ethernet
 BOOTPROTO=none
 # Server IP #
-IPADDR=192.168.xx.xx       #give selected static ip for node
+IPADDR=192.168.1.10       #give selected static ip for node
 # Subnet #
 PREFIX=24
 # Set default gateway IP #
@@ -61,10 +61,10 @@ DEFROUTE=yes
 IPV4_FAILURE_FATAL=no
 # Disable ipv6 #
 IPV6INIT=no
-NAME=eth0
+NAME=bond
 # This is system specific and can be created using 'uuidgen eth0' command #
-UUID=   # use above command to get the UUID in same node
-DEVICE=eth0
+UUID=9fe753d9-15e9-489c-890d-cc0f1e44cd8e   # use above command to get the UUID in same node
+DEVICE=
 ONBOOT=yes
 ```
 
