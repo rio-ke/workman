@@ -181,3 +181,6 @@ Error: Unable to synchronize and save tokens on nodes: hadoop02, hadoop01. Are t
 
 cd /etc/corosync
 rm corosync.conf
+
+
+
