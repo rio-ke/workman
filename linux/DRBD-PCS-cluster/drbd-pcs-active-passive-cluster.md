@@ -31,9 +31,11 @@ EOF
 
 _**Install packeges for drbd and cluster on both nodes**_
 
+```cmd
+yum update -y
+```
 _install packages like httpd, drbd, pcs, vim_
 ```bash
-yum update -y
 yum install httpd -y
 yum install vim -y
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
