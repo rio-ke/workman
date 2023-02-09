@@ -20,7 +20,14 @@ vim /etc/hosts
 |server|ip|host|
 |---|-----|------|
 |server1|192.168.0.1|node1|
-|server2|192.168.0.2|node2|
+|server2|192.168.0.2|node2
+
+```bash
+cat <<EOF >> /etc/hosts
+192.168.1.10 node1
+192.168.1.11 node2
+EOF
+```
 
 _**Install packeges for drbd and cluster on both nodes**_
 
@@ -121,13 +128,13 @@ resource clusterdb {
   on node1 { #insted node1-2 hostname
     device /dev/drbd0;
     disk /dev/sdb;
-    address 192.168.0.105:7788;
+    address 192.168.1.10:7788;
     flexible-meta-disk internal;
   }
  on node2 {
     device /dev/drbd0;
     disk /dev/sdb;
-    address 192.168.0.108:7788;
+    address 192.168.1.11:7788;
     meta-disk internal;
   }
 }
@@ -195,8 +202,8 @@ drbdadm primary --force clusterdb
 ```bash
 pvcreate /dev/drbd0
 vgcreate drbd-vg /dev/drbd0
-lvcreate --name drbd-webdata --size 5G drbd-vg
-lvcreate --name drbd-dbdata --size 5G drbd-vg
+lvcreate --name drbd-webdata --size 3G drbd-vg
+lvcreate --name drbd-dbdata --size 3G drbd-vg
 mkfs.xfs /dev/drbd-vg/drbd-webdata
 mkfs.xfs /dev/drbd-vg/drbd-dbdata
 # optional: vgchange -ay drbd-vg   #=> active Volume group
@@ -224,13 +231,23 @@ pcs resource create ftpserver systemd:vsftpd --group resourcegroup
 
 **MySQL integrated with pcs cluster**
 
-```bash
-sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
-sudo yum localinstall https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm -y
-sudo yum install mysql-community-server -y
+```cmd
+rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+yum localinstall https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm -y
+yum install mysql-community-server -y
+```
+_move cnf file_
+
+```cmd
 mv /etc/my.cnf /drbd-dbdata/my.cnf
 mkdir -p /drbd-dbdata/data
+```
+_add below lines to cnf file_
+
+```cmd 
 vim /drbd-dbdata/my.cnf
+```
+```cnf
 datadir=/drbd-dbdata/data
 bind-address=0.0.0.0
 ```
