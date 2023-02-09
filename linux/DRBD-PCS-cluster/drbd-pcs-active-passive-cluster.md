@@ -74,6 +74,8 @@ setenforce 0
 
 **_Enable the server status for httpd server_**
 
+- For `webserver and webdata` pcs resource error we have to change document-root path in httpd.conf and cleanup the webserver pcs resource
+
 ```bash
 cat <<EOF >> /etc/httpd/conf.d/status.conf
 <Location /server-status>
