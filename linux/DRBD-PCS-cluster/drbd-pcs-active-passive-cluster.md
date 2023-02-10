@@ -1,11 +1,12 @@
 ## Active-Passive cluster
 
-change hostname to both server 
+change hostname to both server
 
 ```bash
 hostnamectl set-hostname node1
 hostnamectl set-hostname node2
 ```
+
 _restart the both nodes_
 
 ```bash
@@ -14,13 +15,14 @@ init 6 or #reboot
 
 **_Host entry to both nodes_**
 
-``` bash
+```bash
 vim /etc/hosts
 ```
-|server|ip|host|
-|---|-----|------|
-|server1|192.168.0.1|node1|
-|server2|192.168.0.2|node2
+
+| server  | ip          | host  |
+| ------- | ----------- | ----- |
+| server1 | 192.168.0.1 | node1 |
+| server2 | 192.168.0.2 | node2 |
 
 ```bash
 cat <<EOF >> /etc/hosts
@@ -34,7 +36,9 @@ _**Install packeges for drbd and cluster on both nodes**_
 ```cmd
 yum update -y
 ```
+
 _install packages like httpd, drbd, pcs, vim_
+
 ```bash
 yum install httpd -y
 yum install vim -y
@@ -51,16 +55,20 @@ yum install mod_ssl openssl php55w php55w-common php55w-mbstring php55w-xml  php
 **Allow ports through firewalld or Diseble the system firewall on both nodes**
 
 **node1**
+
 ```bash
 firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="192.168.0.105" port port="7789" protocol="tcp" accept'
 firewall-cmd --reload
 ```
+
 **node2**
+
 ```bash
 firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="192.168.122.101" port port="7789" protocol="tcp" accept'
 firewall-cmd --reload
 ```
-## or 
+
+## or
 
 _**disable the firewalld**_
 
@@ -68,10 +76,11 @@ _**disable the firewalld**_
 systemctl stop firewalld
 systemctl disable firewalld
 ```
- _disble the selinux on both nodes_
 
-```bash 
-setenforce 0 
+_disble the selinux on both nodes_
+
+```bash
+setenforce 0
 ```
 
 **_Enable the server status for httpd server_**
@@ -89,11 +98,12 @@ EOF
 
 _**Configure DRBD on both nodes**_
 
-```bash 
+```bash
 vi /etc/drbd.d/clusterdb.res
 ```
- * give resource name `clusterdb`
- * change ipaddress on node1 and node2
+
+- give resource name `clusterdb`
+- change ipaddress on node1 and node2
 
 ```bash
 resource clusterdb {
@@ -154,29 +164,37 @@ systemctl start drbd
 systemctl enable drbd
 systemctl status drbd
 ```
+
 **initiate the cluster on node1**
-```bash 
+
+```bash
 drbdadm -- --overwrite-data-of-peer primary clusterdb
 ```
+
 _**check the drbd sync status both node1 and node2**_
+
 ```bash
  cat /proc/drbd
 ```
 
 _**create the folder both node1 and node2**_
+
 ```bash
 mkdir /drbd-webdata
 mkdir /drbd-dbdata
 ```
 
 **_lvm configuration change both node1 and node2_**
+
 ```bash
 vim /etc/lvm/lvm.conf
 add : filter = [ "r|/dev/sdb|", "r|/dev/disk/*|", "r|/dev/block/*|", "a|.*|" ]      # near 128 line
 edit: write_cache_state = 1 to write_cache_state = 0                                # near 170 line
 edit: use_lvmetad = 1 to  use_lvmetad = 0                                           # near 959 line
 ```
+
 **_update the lvm configuration on node1 and node2_**
+
 ```bash
 lvmconf --enable-halvm --services --startstopservices
 dracut -H -f /boot/initramfs-$(uname -r).img $(uname -r)
@@ -184,6 +202,7 @@ reboot
 ```
 
 **_reconnect both node1 and node2_**
+
 ```bash
 setenforce 0
 cat /proc/drbd
@@ -240,17 +259,20 @@ rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
 yum localinstall https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm -y
 yum install mysql-community-server -y
 ```
+
 _move cnf file_
 
 ```cmd
 mv /etc/my.cnf /drbd-dbdata/my.cnf
 mkdir -p /drbd-dbdata/data
 ```
+
 _add below lines to cnf file_
 
-```cmd 
+```cmd
 vim /drbd-dbdata/my.cnf
 ```
+
 ```cnf
 datadir=/drbd-dbdata/data
 bind-address=0.0.0.0
@@ -299,6 +321,7 @@ drbdadm connect all
 drbdadm status
 cat /proc/drbd
 ```
+
 optional
 
 **Monitor the fdrbd resources**
@@ -331,7 +354,6 @@ pcs cluster stop node2
 stonith_admin --reboot node2
 ```
 
-
 **reference**
 
 ```bash
@@ -343,20 +365,11 @@ http://sheepguardingllama.com/2011/06/drbd-error-device-is-held-open-by-someone/
 https://dev.mysql.com/blog-archive/mysql-now-provides-support-for-drbd/
 ```
 
-
 **active-active cluster from active-passive cluster**
 
 Configure SONITH. It will help you to fix this issue. or else it is not possible to complete
 
 ![image](https://user-images.githubusercontent.com/57703276/197835585-d9ef7962-023a-4755-9b78-3c6af61ff636.png)
-
-
-
-
-
-
-
-
 
 ```bash
 # MySQL 5.7
@@ -378,7 +391,3 @@ CREATE USER 'sqladmin'@'%' IDENTIFIED BY 'dbPassword';
 GRANT ALL ON rcmsdata.* to sqladmin@'%';
 mysql -u sqladmin -pdbPassword
 ```
-
-
-
-
