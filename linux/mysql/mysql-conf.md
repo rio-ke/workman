@@ -141,7 +141,7 @@ _view the user permissions_
 
 ```sql
 
-SHOW GRANTS FOR developer@localhost;
+SHOW GRANTS FOR 'developer'@'localhost';
 
 ```
 

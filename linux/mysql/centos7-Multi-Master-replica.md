@@ -60,10 +60,25 @@ CREATE USER 'master-two'@'192.168.xxx.xxx' IDENTIFIED BY 'test1';  #(add Master-
 ```sql
 GRANT REPLICATION SLAVE ON *.* TO 'master-two'@'192.168.xxx.xxx';  #(add Master-two ip_address here in remote-users)
 ```
-
 ```sql
 FLUSH PRIVILEGES;
 ```
+```sql
+CREATE USER 'slave'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'slave'@'localhost' WITH GRANT OPTION;
+CREATE USER 'slave'@'%' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'slave'@'%' WITH GRANT OPTION;
+GRANT REPLICATION SLAVE ON *.* TO 'slave'@'%';
+FLUSH PRIVILEGES;
+```
+
+_To obtain the source's binary log coordinates_
+
+```sql
+FLUSH TABLES WITH READ LOCK;
+````
+
+_To view master status_
 
 ```sql
 SHOW MASTER STATUS\G;
