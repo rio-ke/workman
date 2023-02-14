@@ -1,0 +1,84 @@
+**_cons of mysql replica_**
+
+**What is the disadvantage of replication?**
+
+Large amounts of storage space and equipment are needed to maintain data replication. Replication is expensive, and infrastructure upkeep is complicated to preserve data consistency. Additionally, it exposes additional software components to security and privacy flaws.
+
+**Why MySQL replication is slow?**
+
+This is because the MySQL replication is single threaded (SQL_THREAD), by default. If a high volume of writes to the source DB instance occurs in parallel, then the writes to the read replica are serialized using a single SQL_THREAD. This can cause a lag between the source DB instance and read replica.
+
+**Data replication challenges**
+
+`Money`: Keeping copies of the same data in multiple locations leads to higher storage and processor costs. `Time`: Implementing and managing a data replication system requires dedicated time from an internal team.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
