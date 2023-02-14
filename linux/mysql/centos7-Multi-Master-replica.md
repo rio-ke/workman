@@ -68,6 +68,7 @@ CREATE USER 'slave'@'localhost' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON *.* TO 'slave'@'localhost' WITH GRANT OPTION;
 CREATE USER 'slave'@'%' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON *.* TO 'slave'@'%' WITH GRANT OPTION;
+GRANT REPLICATION SLAVE ON *.* TO 'slave'@'%';
 FLUSH PRIVILEGES;
 ```
 
