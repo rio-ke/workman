@@ -64,6 +64,13 @@ GRANT REPLICATION SLAVE ON *.* TO 'master-two'@'192.168.xxx.xxx';  #(add Master-
 ```sql
 FLUSH PRIVILEGES;
 ```
+_To obtain the source's binary log coordinates_
+
+```sql
+FLUSH TABLES WITH READ LOCK;
+````
+
+_To view master status_
 
 ```sql
 SHOW MASTER STATUS\G;
