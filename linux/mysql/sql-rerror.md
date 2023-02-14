@@ -14,3 +14,5 @@ GRANT ALL PRIVILEGES ON *.* TO 'replica'@'%' WITH GRANT OPTION;
 
 FLUSH PRIVILEGES;
 ```
+
+Error 'Can't find any matching row in the user table' on query. Default database: 'radiant_replica_test'. Query: 'GRANT ALL PRIVILEGES ON `apps`.* TO 'slave'@'%''
