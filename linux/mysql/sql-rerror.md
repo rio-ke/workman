@@ -24,7 +24,9 @@ FLUSH PRIVILEGES;
 * Slave_SQL_Running
 
 ```sql
-
+STOP SLAVE;
+SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1; 
+START SLAVE;
 ```
 
 * Error initializing relay log position: Could not open log file
