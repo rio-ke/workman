@@ -15,4 +15,19 @@ GRANT ALL PRIVILEGES ON *.* TO 'replica'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 ```
 
-Error 'Can't find any matching row in the user table' on query. Default database: 'radiant_replica_test'. Query: 'GRANT ALL PRIVILEGES ON `apps`.* TO 'slave'@'%''
+* Error 'Can't find any matching row in the user table' on query. Default database: 'radiant_replica_test'. Query: 'GRANT ALL PRIVILEGES ON `apps`.* TO 'slave'@'%''
+
+```sql
+
+```
+
+* Slave_SQL_Running
+
+```sql
+
+```
+
+* Error initializing relay log position: Could not open log file
+```sql
+
+```
