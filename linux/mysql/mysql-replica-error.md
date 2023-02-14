@@ -44,6 +44,9 @@ mysql> set persist read_only=ON;
 * ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'read_only=ON' at line 1
 
 ```sql
-
+SET GLOBAL read_only = ON;
+```
+```sql
+SELECT @@global.read_only;
 ```
 
