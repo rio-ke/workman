@@ -33,3 +33,9 @@ START SLAVE;
 ```sql
 
 ```
+
+* ERROR 1223 (HY000): Can't execute the query because you have a conflicting read lock
+
+```sql
+
+```
