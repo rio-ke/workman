@@ -93,10 +93,31 @@ show master status;
 
 
 **************************************************************************************************************************************************
+**_Make Master Readonly: Make master readonly to avoid any update in master before switchover and create replication user in master._**
+
+_Go to old-master and use this command_
+
+
+```sql
+SET GLOBAL read_only = ON;
+```
+
+```sql
+show variables like '%read_only%';
+```
+
+| Variable_name         | Value |
+|-----------------------|-------|
+| innodb_read_only      | OFF   |
+| read_only             | ON    |
+| super_read_only       | OFF   |
+| transaction_read_only | OFF   |
+
+
 
 **To change slave to master conf**
 
-_Go to slave and use this command_
+_Go to old-slave and use this command_
 
 ```sql
 stop slave;
@@ -123,36 +144,44 @@ show variables like '%read_only%';
 | transaction_read_only | OFF   |
 
 
+**_Create replication user for old-slave_** 
+
+```sql
+CREATE USER IF NOT EXISTS 'slave'@'%' IDENTIFIED BY 'Password123#@!';
+```
+```sql
+GRANT REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'slave'@'%';
+```
+```sql
+ ALTER USER 'slave'@'%' IDENTIFIED WITH mysql_native_password BY 'Password123#@!';
+```
+```sql
+flush privileges;
+```
+
 ```sql
 show master status;
 ```
 
 | File          | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set                      |
 |---------------|----------|--------------|------------------|----------------------------------------|
-| binlog.000024 |      196 |              |                  | 13c84508-5014-11eb-af41-000c2997dedd:1 |
+| binlog.000004 |      196 |              |                  | 13c84508-5014-11eb-af41-000c2997dedd:1 |
 
 
+**_Update old-master instance with new-master information_**
 
-
-**To change slave to master conf**
-
-
-```sql
-SET GLOBAL read_only = ON;
-```
+_To change old-slave as master_
 
 ```sql
-show variables like '%read_only%';
+CHANGE MASTER TO
+MASTER_HOST='192.168.1.102',
+MASTER_USER='slave',
+MASTER_PASSWORD='password',
+MASTER_LOG_FILE='mysql-bin.000002', 
+MASTER_LOG_POS=1600;
 ```
 
-| Variable_name         | Value |
-|-----------------------|-------|
-| innodb_read_only      | OFF   |
-| read_only             | ON    |
-| super_read_only       | OFF   |
-| transaction_read_only | OFF   |
-
-
+ 
 
 
 
