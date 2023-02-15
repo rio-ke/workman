@@ -89,21 +89,31 @@ show master status;
 | File | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set|
 |----|----|----|----|----|
 | binlog.000004 | 940 |  |  | 13ecba9c-444a-11eb-a397-000c29f9d9e6:1-35 |
-1 row in set (0.00 sec)
+
 
 
 **************************************************************************************************************************************************
 
-mysql> stop slave;
-Query OK, 0 rows affected, 1 warning (0.05 sec)
- 
-mysql> reset master;
- 
-mysql> set persist read_only=OFF;
-Query OK, 0 rows affected (0.03 sec)
- 
-mysql> show variables like '%read_only%';
+**To change slave to master conf**
 
+_Go to slave and use this command_
+
+```sql
+stop slave;
+```
+_To reset master conf_
+
+```sql
+reset master;
+``` 
+_change master readable only_
+
+```sql
+SET GLOBAL read_only = OFF; 
+``` 
+```sql
+show variables like '%read_only%';
+```
 
 | Variable_name         | Value |
 |-----------------------|-------|
@@ -111,20 +121,36 @@ mysql> show variables like '%read_only%';
 | read_only             | OFF   |
 | super_read_only       | OFF   |
 | transaction_read_only | OFF   |
-4 rows in set (0.07 sec)
- 
-mysql>
-mysql> show master status;
+
+
+```sql
+show master status;
+```
+
 | File          | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set                      |
 |---------------|----------|--------------|------------------|----------------------------------------|
 | binlog.000024 |      196 |              |                  | 13c84508-5014-11eb-af41-000c2997dedd:1 |
-1 row in set (0.00 sec)
 
 
 
 
+**To change slave to master conf**
 
 
+```sql
+SET GLOBAL read_only = ON;
+```
+
+```sql
+show variables like '%read_only%';
+```
+
+| Variable_name         | Value |
+|-----------------------|-------|
+| innodb_read_only      | OFF   |
+| read_only             | ON    |
+| super_read_only       | OFF   |
+| transaction_read_only | OFF   |
 
 
 
