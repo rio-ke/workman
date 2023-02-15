@@ -95,7 +95,7 @@ show master status;
 **************************************************************************************************************************************************
 **_Make Master Readonly: Make master readonly to avoid any update in master before switchover and create replication user in master._**
 
-_Go to old-master and use this command_
+_Go to master and use this command_
 
 
 ```sql
@@ -117,7 +117,7 @@ show variables like '%read_only%';
 
 **To change slave to master conf**
 
-_Go to old-slave and use this command_
+_Go to slave and use this command_
 
 ```sql
 stop slave;
@@ -180,6 +180,8 @@ MASTER_PASSWORD='password',
 MASTER_LOG_FILE='mysql-bin.000002', 
 MASTER_LOG_POS=1600;
 ```
+
+
 
  
 
