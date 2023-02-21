@@ -316,6 +316,10 @@ drbdadm connect all
 ```
 
 **On both**
+_Verify the reconnection was successful:_
+```cmd
+drbd-overview
+```
 
 ```bash
 drbdadm status
