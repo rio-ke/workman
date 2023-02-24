@@ -19,3 +19,8 @@ Follow these steps to configure SSL VPN Client in Ubuntu:
 sudo openvpn --config kendanic__ssl_vpn_config.ovpn
 ```
 5. Enter the username and password.
+
+ 
+ refer-blog
+ 
+ https://support.sophos.com/support/s/article/KB-000036417?language=en_US
