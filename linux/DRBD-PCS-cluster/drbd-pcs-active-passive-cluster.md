@@ -225,8 +225,8 @@ drbdadm primary --force clusterdb
 ```bash
 pvcreate /dev/drbd0
 vgcreate drbd-vg /dev/drbd0
-lvcreate --name drbd-webdata --size 3G drbd-vg
-lvcreate --name drbd-dbdata --size 3G drbd-vg
+lvcreate --name drbd-webdata --size 5G drbd-vg
+lvcreate --name drbd-dbdata --size 5G drbd-vg
 mkfs.xfs /dev/drbd-vg/drbd-webdata
 mkfs.xfs /dev/drbd-vg/drbd-dbdata
 # optional: vgchange -ay drbd-vg   #=> active Volume group
