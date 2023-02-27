@@ -68,7 +68,8 @@ DEVICE=
 ONBOOT=yes
 ```
 _OR_
-```cnf
+
+```cfg
 TYPE="Ethernet"
 PROXY_METHOD="none"
 BROWSER_ONLY="no"
