@@ -67,6 +67,30 @@ UUID=9fe753d9-15e9-489c-890d-cc0f1e44cd8e   # use above command to get the UUID 
 DEVICE=
 ONBOOT=yes
 ```
+_OR_
+```cnf
+TYPE="Ethernet"
+PROXY_METHOD="none"
+BROWSER_ONLY="no"
+BOOTPROTO="none"
+IPADDR=192.168.1.11
+PREFIX=24
+GATEWAY=192.168.1.1
+DNS1=192.168.1.1                       
+DNS2=8.8.8.8
+DNS3=8.8.4.4
+DEFROUTE="yes"
+IPV4_FAILURE_FATAL="no"
+IPV6INIT="yes"
+IPV6_AUTOCONF="yes"
+IPV6_DEFROUTE="yes"
+IPV6_FAILURE_FATAL="no"
+IPV6_ADDR_GEN_MODE="stable-privacy"
+NAME="enp0s3"
+UUID="a42d62dc-fdc9-4214-9cc8-f47eb1ab5881"
+DEVICE="enp0s3"
+ONBOOT="no"
+```
 
 _change default cfg_
 
