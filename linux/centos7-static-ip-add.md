@@ -22,7 +22,7 @@ _default config file_
 
 ```cfg
 DEVICE="enp0s3"  #need to change
-ONBOOT=yes     #need to change yes to no
+ONBOOT=yes     
 NETBOOT=yes
 UUID="41171a6f-bce1-44de-8a6e-cf5e782f8bd6"    #need to change
 IPV6INIT=yes
