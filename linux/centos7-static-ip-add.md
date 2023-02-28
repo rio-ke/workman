@@ -22,7 +22,7 @@ _default config file_
 
 ```cfg
 DEVICE="enp0s3"  #need to change
-ONBOOT=yes     #need to change yes to no
+ONBOOT=yes     
 NETBOOT=yes
 UUID="41171a6f-bce1-44de-8a6e-cf5e782f8bd6"    #need to change
 IPV6INIT=yes
@@ -66,6 +66,24 @@ NAME=bond
 UUID=9fe753d9-15e9-489c-890d-cc0f1e44cd8e   # use above command to get the UUID in same node
 DEVICE=
 ONBOOT=yes
+```
+_OR_
+
+```cfg
+DEVICE=
+HWADDR=
+TYPE=Ethernet
+BOOTPROTO=static
+ONBOOT=yes
+IPADDR=192.168.1.10
+BROADCAST=192.168.1.255
+NETMASK=255.255.255.0
+NETWORK=192.168.1.0
+GATEWAY=192.168.1.1
+DNS1=8.8.8.8
+DNS2=4.4.2.2
+USERCTL=no
+IPV6INIT=no
 ```
 
 _change default cfg_
