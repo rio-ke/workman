@@ -368,6 +368,8 @@ http://blog.zorangagic.com/2016/02/drbd.html
 http://avid.force.com/pkb/articles/en_US/Compatibility/Troubleshooting-DRBD-on-MediaCentral#A
 http://sheepguardingllama.com/2011/06/drbd-error-device-is-held-open-by-someone/
 https://dev.mysql.com/blog-archive/mysql-now-provides-support-for-drbd/
+# DRBD-status
+https://www.ibm.com/docs/en/psfa/7.2.1?topic=administration-monitor-drbd-status
 ```
 
 **active-active cluster from active-passive cluster**
