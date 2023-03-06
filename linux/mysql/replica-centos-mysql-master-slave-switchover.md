@@ -12,7 +12,7 @@ _To check status:_
 ```sql
 show slave status\G;
 ```
-````
+```sql
 mysql> show slave status\G;
 *************************** 1. row ***************************
                Slave_IO_State: Waiting for master to send event
@@ -79,7 +79,7 @@ Master_SSL_Verify_Server_Cert: No
  
 ERROR:
 No query specified
-```` 
+```
 _To check master status in slave to find Gtid_
 
 ```sql

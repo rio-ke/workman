@@ -142,13 +142,13 @@ resource clusterdb {
   on node1 { #insted node1-2 hostname
     device /dev/drbd0;
     disk /dev/sdb;
-    address 192.168.1.10:7788;
+    address 192.168.1.150:7788;
     flexible-meta-disk internal;
   }
  on node2 {
     device /dev/drbd0;
     disk /dev/sdb;
-    address 192.168.1.11:7788;
+    address 192.168.1.151:7788;
     meta-disk internal;
   }
 }
@@ -244,7 +244,7 @@ pcs cluster cib-push drbd_cfg
 pcs resource create lvm ocf:heartbeat:LVM volgrpname=drbd-vg
 pcs resource create webdata Filesystem device="/dev/drbd-vg/drbd-webdata" directory="/drbd-webdata" fstype="xfs"
 pcs resource create dbdata Filesystem device="/dev/drbd-vg/drbd-dbdata" directory="/drbd-dbdata" fstype="xfs"
-pcs resource create virtualip ocf:heartbeat:IPaddr2 ip=192.168.1.200 cidr_netmask=24
+pcs resource create virtualip ocf:heartbeat:IPaddr2 ip=192.168.1.155 cidr_netmask=24
 pcs resource create webserver ocf:heartbeat:apache configfile=/etc/httpd/conf/httpd.conf statusurl="http://localhost/server-status"
 pcs resource group add resourcegroup virtualip lvm webdata dbdata  webserver
 pcs constraint order promote drbd_clusterdb_clone then start resourcegroup  # INFINITY
@@ -317,6 +317,7 @@ drbdadm connect all
 
 **On both**
 _Verify the reconnection was successful:_
+
 ```cmd
 drbd-overview
 ```
@@ -367,6 +368,8 @@ http://blog.zorangagic.com/2016/02/drbd.html
 http://avid.force.com/pkb/articles/en_US/Compatibility/Troubleshooting-DRBD-on-MediaCentral#A
 http://sheepguardingllama.com/2011/06/drbd-error-device-is-held-open-by-someone/
 https://dev.mysql.com/blog-archive/mysql-now-provides-support-for-drbd/
+# DRBD-status
+https://www.ibm.com/docs/en/psfa/7.2.1?topic=administration-monitor-drbd-status
 ```
 
 **active-active cluster from active-passive cluster**

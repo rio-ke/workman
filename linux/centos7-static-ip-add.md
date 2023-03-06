@@ -91,7 +91,7 @@ _change default cfg_
 go to `vi /etc/sysconfig/network-scripts/ifcfg-enp0s3` file and change these options
 
 ```bash
-ONBOOT=no
+ONBOOT=yes
 BOOTPROTO=none
 ```
 - Save and close the file. The system will automatically calculate the network and broadcast address. 
