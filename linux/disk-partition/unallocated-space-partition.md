@@ -20,3 +20,4 @@ partprobe /dev/sda
 
 lsblk
 
+[refer](https://www.decodingdevops.com/how-to-create-partition-in-linux-step-by-step-centos-redhat-rhel/)
