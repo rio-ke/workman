@@ -1,3 +1,8 @@
+MYSQL --initialize error
+
+![node-two](https://user-images.githubusercontent.com/88568938/223636029-8c144753-f6b8-4ac4-9552-53a96b3215a7.png)
+
+
 * The error message indicates that the --initialize flag was used to initialize the MySQL data directory, but the data directory already contained files. 
 
 To solve this error, you can do the following:
