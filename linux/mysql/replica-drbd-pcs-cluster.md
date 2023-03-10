@@ -35,6 +35,7 @@ df -Th
 mysql -h [virtual-ip] -u root -p [passwd]
 ```
 
+
 **_Check log-bin status_**
 
 _View the binary log location_
