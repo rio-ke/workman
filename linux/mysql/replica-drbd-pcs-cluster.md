@@ -72,6 +72,11 @@ sudo pcs cluster stop --all
 sudo pcs cluster start --all
 ```
 
+* To view the list of the binary logs, run the below command in MySQL command line utility:
+
+```sql
+show binary logs;
+```
 
 ![binlog](https://user-images.githubusercontent.com/88568938/224224289-219dae24-1ceb-43f5-aa31-61423409cc10.png)
 
