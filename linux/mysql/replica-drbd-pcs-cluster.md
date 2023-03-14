@@ -61,7 +61,7 @@ _View the binary log location_
 - To view the default location of the binary location, execute the following query:
 
 ```sql
-SHOW VARIABLES LIKE '%log-bin%';
+show variables like "%log_bin%";
 ```
 
 ```sql
