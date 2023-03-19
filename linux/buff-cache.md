@@ -24,7 +24,7 @@ _Or with this command 👈
 free && sync && echo 3 > /proc/sys/vm/drop_caches && free
 ```
 
-_To run command as a user_
+_To run command as a user(non-root)_
 
 ```cmd
 sudo sh -c 'echo 1 > /proc/sys/vm/drop_caches'
