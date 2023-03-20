@@ -284,6 +284,9 @@ bind-address=0.0.0.0
 mysql_install_db --no-defaults --datadir=/drbd-dbdata/data
 chown -R mysql:mysql /drbd-dbdata/
 pcs resource create dbserver ocf:heartbeat:mysql config="/drbd-dbdata/my.cnf" datadir="/drbd-dbdata/data" pid="/var/lib/mysql/mysql.pid" socket="/var/lib/mysql/mysql.sock" user="mysql" group="mysql" additional_parameters="--user=mysql" --group resourcegroup
+
+#pcs mysqlLogs resource
+#pcs resource create mysqlLogs Filesystem device="/dev/drbd-vg/drbd-dbdata" directory="/drbd-dbdata/mysqlLogs" fstype="xfs"
 ```
 
 **mysql service validation**
