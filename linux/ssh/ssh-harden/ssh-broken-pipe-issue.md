@@ -37,3 +37,58 @@ _restart the service_
 systemctl restart sshd.service
 ```
 
+## Increase SSH connection timeout using client side configuration
+
+```cmd
+sudo vi ~/.ssh/ssh_config
+```
+
+_modify values_
+
+```cmd
+ServerAliveInterval 15
+ServerAliveCountMax 3
+```
+
+_restart the service_
+
+```cmd
+systemctl restart sshd.service
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
