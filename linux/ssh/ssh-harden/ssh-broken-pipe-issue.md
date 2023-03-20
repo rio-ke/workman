@@ -56,8 +56,11 @@ _restart the service_
 systemctl restart sshd.service
 ```
 
+_reference_
 
-
+```
+https://www.cyberciti.biz/tips/open-ssh-server-connection-drops-out-after-few-or-n-minutes-of-inactivity.html#:~:text=This%20is%20usually%20the%20result,only%20occurred%20with%20version%202.
+```
 
 
 
