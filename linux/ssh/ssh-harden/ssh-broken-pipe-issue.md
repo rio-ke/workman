@@ -34,7 +34,7 @@ ClientAliveCountMax 5
 _restart the service_
 
 ```cmd
-systemctl restart sshd.service
+sudo systemctl restart sshd.service
 ```
 
 ## Increase SSH connection timeout using client side configuration
