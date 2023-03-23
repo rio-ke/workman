@@ -1,26 +1,23 @@
-# mysql replica conf for master and slave
+# mysql replica conf-tuning for master and slave
 
 **_Master node_**
 
 
 ```cnf
-# BINARY LOGGING # 
+# BINARY LOGGING #
 
-user             = mysql
-symbolic-links   = 0
-binlog_format    = ROW
-max_binlog_size  = 500
-expire-logs-days = 7
-slow_query_log   =
-##
-server_id                     = 1 
-log_bin                       = /drbd-dbdata/Binlog-file/mysql-bin 
-log_bin_index                 = /drbd-dbdata/Binlog-file/mysql-bin 
-binlog_do_db                  = replicadb1
-binlog_do_db                  = replicadb2
-expire_logs_days              = 2 
-sync_binlog                   = 1 
-#binlog_format                 = row 
+server_id                      = 1 
+log_bin                        = /drbd-dbdata/Binlog-file/mysql-bin 
+log_bin_index                  = /drbd-dbdata/Binlog-file/mysql-bin 
+binlog_do_db                   = replicadb1
+binlog_do_db                   = replicadb2
+max_binlog_size                = 500M
+expire_logs_days               = 2 
+sync_binlog                    = 1
+#binlog_format                 = row
+user                           = mysql
+symbolic-links                 = 0
+#slow_query_log                =
 #gtid-mode                     = on 
 #enforce-gtid-consistency      = true 
 master-info-repository         = TABLE 
@@ -37,6 +34,7 @@ log_slave_updates              = 1
 
 ```cnf
 # BINARY LOGGING # 
+
 server_id                      = 2 
 log_bin                        = /drbd-dbdata/Binloglog-file/mysql-bin  
 log_bin_index                  = /drbd-dbdata/Binlog-file/mysql-bin
@@ -60,5 +58,4 @@ slave-sql-verify-checksum      = 1
 binlog-rows-query-log_events   = 1
 log-slave-updates              = 1
 #binlog_format                 = mixed
-
 ```
