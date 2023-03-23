@@ -1,5 +1,5 @@
 
-**_how to increase the pcs lvm volume_**
+$$How-to-increase-the pcs-lvm-volume$$
 
 ```shell
 lvextend  -L+1G /dev/drbd-vg/drbd-webdata
