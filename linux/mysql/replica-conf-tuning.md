@@ -4,23 +4,20 @@
 
 
 ```cnf
-
-server-id = 1
-log-bin=path/mysql-bin.log
-binlog_do_db=replicadb
-
-sync_binlog=1
-user=mysql
-symbolic-links=0
-binlog_format = ROW
-max_binlog_size = 500
-expire-logs-days = 7
-slow_query_log
-##
 # BINARY LOGGING # 
+
+user             = mysql
+symbolic-links   = 0
+binlog_format    = ROW
+max_binlog_size  = 500
+expire-logs-days = 7
+slow_query_log   =
+##
 server_id                     = 1 
 log_bin                       = /drbd-dbdata/Binlog-file/mysql-bin 
 log_bin_index                 = /drbd-dbdata/Binlog-file/mysql-bin 
+binlog_do_db                  = replicadb1
+binlog_do_db                  = replicadb2
 expire_logs_days              = 2 
 sync_binlog                   = 1 
 #binlog_format                 = row 
@@ -42,7 +39,9 @@ log_slave_updates              = 1
 # BINARY LOGGING # 
 server_id                      = 2 
 log_bin                        = /drbd-dbdata/Binloglog-file/mysql-bin  
-log_bin_index                  = /drbd-dbdata/Binlog-file/mysql-bin 
+log_bin_index                  = /drbd-dbdata/Binlog-file/mysql-bin
+binlog_do_db                   = replicadb1
+binlog_do_db                   = replicadb2
 expire_logs_days               = 2 
 sync_binlog                    = 1 
 binlog_format                  = row 
@@ -59,4 +58,7 @@ relay-log-info-repository      = TABLE
 master-verify-checksum         = 1 
 slave-sql-verify-checksum      = 1 
 binlog-rows-query-log_events   = 1
+log-slave-updates              = 1
+#binlog_format                 = mixed
+
 ```
