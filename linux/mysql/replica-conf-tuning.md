@@ -11,6 +11,9 @@ log_bin                        = /drbd-dbdata/Binlog-file/mysql-bin
 log_bin_index                  = /drbd-dbdata/Binlog-file/mysql-bin 
 binlog_do_db                   = replicadb1
 binlog_do_db                   = replicadb2
+binlog_ignore_db               = bds_rcms
+binlog_ignore_db               = information_schema
+
 max_binlog_size                = 500M
 expire_logs_days               = 2 
 sync_binlog                    = 1
@@ -46,6 +49,9 @@ log_bin                        = /drbd-dbdata/Binloglog-file/mysql-bin
 log_bin_index                  = /drbd-dbdata/Binlog-file/mysql-bin
 binlog_do_db                   = replicadb1
 binlog_do_db                   = replicadb2
+binlog_ignore_db               = bds_rcms
+binlog_ignore_db               = information_schema
+
 expire_logs_days               = 2 
 sync_binlog                    = 1 
 binlog_format                  = row 
