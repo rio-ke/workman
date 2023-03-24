@@ -7,8 +7,8 @@
 # BINARY LOGGING #
 
 server_id                      = 1 
-log_bin                        = /drbd-dbdata/Binlog-file/mysql-bin 
-log_bin_index                  = /drbd-dbdata/Binlog-file/mysql-bin 
+log_bin                        = /drbd-dbdata/Bin_log/mysql-bin 
+log_bin_index                  = /drbd-dbdata/Bin_log/mysql-bin 
 binlog_do_db                   = replicadb1
 binlog_do_db                   = replicadb2
 binlog_ignore_db               = mysql
@@ -18,6 +18,7 @@ max_binlog_size                = 500M
 expire_logs_days               = 2 
 sync_binlog                    = 1
 #binlog_format                 = row
+relay_log                      = /drbd-dbdata/Relay_log/mysql-relay-bin
 user                           = mysql
 symbolic-links                 = 0
 #slow_query_log                =
@@ -45,8 +46,8 @@ thread_cache_size           = 8
 # BINARY LOGGING # 
 
 server_id                      = 2 
-log_bin                        = /drbd-dbdata/Binloglog-file/mysql-bin  
-log_bin_index                  = /drbd-dbdata/Binlog-file/mysql-bin
+log_bin                        = /drbd-dbdata/Bin_log/mysql-bin  
+log_bin_index                  = /drbd-dbdata/Bin_log/mysql-bin
 binlog_do_db                   = replicadb1
 binlog_do_db                   = replicadb2
 binlog_ignore_db               = mysql
@@ -55,7 +56,7 @@ binlog_ignore_db               = information_schema
 expire_logs_days               = 2 
 sync_binlog                    = 1 
 binlog_format                  = row 
-relay_log                      = /drbd-dbdata/relaylog-file/mysql-relay-bin 
+relay_log                      = /drbd-dbdata/Relay_log/mysql-relay-bin 
 log_slave_updates              = 1 
 read_only                      = 1
 slave-skip-errors 		         = 1032,1062
