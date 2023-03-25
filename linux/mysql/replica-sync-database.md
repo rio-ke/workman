@@ -1,3 +1,7 @@
+# Mysql replication database sync
+
+
+
 * Replicating MySQL databases without binlog files can be challenging since binlog files are the primary source of information for replication. However, it is still possible to replicate MySQL databases without binlog files by using other techniques.
 
 * One such technique is to use a tool like mysqldump to create a snapshot of the database at a specific point in time and then use that snapshot to replicate the database. This technique involves the following steps:
