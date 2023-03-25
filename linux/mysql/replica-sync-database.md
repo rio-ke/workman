@@ -4,7 +4,7 @@
 
 Use mysqldump to create a snapshot of the database on the master server:
 
-```sql
+```css
 mysqldump --single-transaction --master-data=2 --all-databases > dump.sql
 ```
 
