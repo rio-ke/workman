@@ -55,3 +55,16 @@ mknod -m 666 "$TARGET_DIR"/dev/urandom c 1 9
 mknod -m 666 "$TARGET_DIR"/dev/zero c 1 5
 
 rpm --root "$TARGET_DIR" --initdb
+
+yumdownloader --destdir=/var/tmp centos-release
+
+rpm --root $TARGET_DIR -ivh --nodeps /var/tmp/centos-release*.rpm
+
+YUM_BASE_OPTS="yum -c /etc/yum.conf --installroot $TARGET_DIR"
+
+YUM_OPTS="$YUM_BASE_OPTS install -y"
+
+for PKG in $PACKAGES
+do
+  YUM_OPTS="$YUM_OPTS $PKG"
+done
