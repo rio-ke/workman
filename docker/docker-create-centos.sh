@@ -85,3 +85,10 @@ rm -rf $TARGET_DIR/usr/share/{man,doc,info,gnome/help}
 rm -rf $TARGET_DIR/usr/share/cracklib
 rm -rf $TARGET_DIR/usr/share/i18n
 rm -rf $TARGET_DIR/var/cache/yum/*
+
+
+mkdir -p --mode=0755 "${TARGET_DIR}/var/cache/yum"
+
+cp $TARGET_DIR/etc/skel/.bash* $TARGET_DIR/root/
+
+tar czf $DISTRIB${OS_VER}.tar.gz -C $TARGET_DIR .
