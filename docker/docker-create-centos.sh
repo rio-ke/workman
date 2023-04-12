@@ -92,3 +92,15 @@ mkdir -p --mode=0755 "${TARGET_DIR}/var/cache/yum"
 cp $TARGET_DIR/etc/skel/.bash* $TARGET_DIR/root/
 
 tar czf $DISTRIB${OS_VER}.tar.gz -C $TARGET_DIR .
+
+
+
+
+
+
+
+
+
+
+
+
