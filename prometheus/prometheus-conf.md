@@ -63,37 +63,37 @@ So, create a new directory data/ in the /opt/prometheus/ directory as follows
 sudo mkdir -v /opt/prometheus/data
 
 sudo chown -Rfv prometheus:prometheus /opt/prometheus/data
-  sudo vim /etc/systemd/system/prometheus.service
-   sudo systemctl daemon-reload
-   sudo systemctl start prometheus.service
-   sudo systemctl enable prometheus.service
-   sudo systemctl status prometheus.service
-   hostname -I
-   ip a
-   cat /etc/hosts
-   wget https://github.com/prometheus/node_exporter/releases/download/v1.1.2/node_exporter-1.1.2.linux-amd64.tar.gz
-   ll
-   tar xzf node_exporter-1.1.2.linux-amd64.tar.gz
-   ll
-   sudo mv -v node_exporter-1.1.2.linux-amd64/node_exporter /usr/local/bin/
-   sudo chown root:root /usr/local/bin/node_exporter
-   node_exporter --version
-  sudo vim /etc/systemd/system/node-exporter.servic
-    sudo systemctl daemon-reload 
-    sudo systemctl start node-exporter.service
-    sudo vim /etc/systemd/system/node-exporter.servic
-    $ sudo nano /etc/systemd/system/node-exporter.service
-    sudo vim /etc/systemd/system/node-exporter.service
-    sudo systemctl daemon-reload 
-    sudo systemctl start node-exporter.service
-    cd /etc/
-    cd systemd/system/
-    ll
-     sudo rm node-exporter.servic
-     ll
-     sudo systemctl status node-exporter.service 
-     sudo systemctl enable node-exporter.service
-     sudo systemctl status node-exporter.service 
+sudo vim /etc/systemd/system/prometheus.service
+sudo systemctl daemon-reload
+sudo systemctl start prometheus.service
+sudo systemctl enable prometheus.service
+sudo systemctl status prometheus.service
+hostname -I
+ip a
+cat /etc/hosts
+wget https://github.com/prometheus/node_exporter/releases/download/v1.1.2/node_exporter-1.1.2.linux-amd64.tar.gz
+ll
+tar xzf node_exporter-1.1.2.linux-amd64.tar.gz
+ll
+sudo mv -v node_exporter-1.1.2.linux-amd64/node_exporter /usr/local/bin/
+sudo chown root:root /usr/local/bin/node_exporter
+node_exporter --version
+sudo vim /etc/systemd/system/node-exporter.servic
+sudo systemctl daemon-reload 
+sudo systemctl start node-exporter.service
+sudo vim /etc/systemd/system/node-exporter.servic
+$ sudo nano /etc/systemd/system/node-exporter.service
+sudo vim /etc/systemd/system/node-exporter.service
+sudo systemctl daemon-reload 
+sudo systemctl start node-exporter.service
+cd /etc/
+cd systemd/system/
+ll
+sudo rm node-exporter.servic
+ll
+sudo systemctl status node-exporter.service 
+sudo systemctl enable node-exporter.service
+sudo systemctl status node-exporter.service 
 
 
 
