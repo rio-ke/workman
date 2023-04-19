@@ -68,7 +68,7 @@ Docker volume ls
 
 To inspect 
 ```bash
-docker  inspect (contaier or volume)name
+docker inspect (contaier or volume)name
 ```
 
 To find nerwork
