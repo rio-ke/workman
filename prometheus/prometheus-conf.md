@@ -41,16 +41,23 @@ tar xvzf prometheus-2.28.0.linux-amd64.tar.gz
 ```cmd
 sudo mv -v prometheus-2.28.0.linux-amd64 /opt/prometheus
 ```     
-Change the user and group of all the files and directories of the /opt/prometheus/ directory to root
+* Change the user and group of all the files and directories of the /opt/prometheus/ directory to root
+
+```cmd
 sudo chown -Rfv root:root /opt/prometheus
-     
-Fix the file and directory permissions of all the files and directories of the /opt/prometheus/ directory
-      sudo chmod -Rfv 0755 /opt/prometheus
-      
-The configuration file of Prometheus is /opt/prometheus/prometheus.yml.
-      sudo vim /opt/prometheus/prometheus.yml
-        
-(optional) If you want, you can remove the comment lines from the configuration file /opt/prometheus/prometheus.yml with the following command:
+```
+
+* Fix the file and directory permissions of all the files and directories of the /opt/prometheus/ directory
+```cmd
+sudo chmod -Rfv 0755 /opt/prometheus
+```      
+* The configuration file of Prometheus is /opt/prometheus/prometheus.yml.
+
+```cmd
+sudo vim /opt/prometheus/prometheus.yml
+```
+
+* (optional) If you want, you can remove the comment lines from the configuration file /opt/prometheus/prometheus.yml with the following command:
 
 ```cmd
 egrep -v '(^[ ]*#)|(^$)' /opt/prometheus/prometheus.yml | sudo tee /opt/prometheus/prometheus.yml
