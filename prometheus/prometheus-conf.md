@@ -56,15 +56,26 @@ The configuration file of Prometheus is /opt/prometheus/prometheus.yml.
 egrep -v '(^[ ]*#)|(^$)' /opt/prometheus/prometheus.yml | sudo tee /opt/prometheus/prometheus.yml
 ```
 
-Prometheus needs a directory where it can store the metrics that it had collected. In this article, I will store it in the /opt/prometheus/data/ directory.
+* Prometheus needs a directory where it can store the metrics that it had collected. In this article, I will store it in the /opt/prometheus/data/ directory.
 
-So, create a new directory data/ in the /opt/prometheus/ directory as follows
+* create a new directory data/ in the /opt/prometheus/ directory as follows
 
+```cmd
 sudo mkdir -v /opt/prometheus/data
+```
 
+```cmd
 sudo chown -Rfv prometheus:prometheus /opt/prometheus/data
+```
+
+```cmd
 sudo vim /etc/systemd/system/prometheus.service
+```
+
+```cmd
 sudo systemctl daemon-reload
+```
+
 sudo systemctl start prometheus.service
 sudo systemctl enable prometheus.service
 sudo systemctl status prometheus.service
