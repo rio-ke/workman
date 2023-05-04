@@ -75,37 +75,48 @@ sudo vim /etc/systemd/system/prometheus.service
 ```cmd
 sudo systemctl daemon-reload
 ```
-
+```cmd
 sudo systemctl start prometheus.service
 sudo systemctl enable prometheus.service
 sudo systemctl status prometheus.service
+```
+
+```cmd
 hostname -I
 ip a
 cat /etc/hosts
+```
+```cmd
 wget https://github.com/prometheus/node_exporter/releases/download/v1.1.2/node_exporter-1.1.2.linux-amd64.tar.gz
-ll
+```
+```bash
 tar xzf node_exporter-1.1.2.linux-amd64.tar.gz
-ll
-sudo mv -v node_exporter-1.1.2.linux-amd64/node_exporter /usr/local/bin/
+```
+```sudo mv -v node_exporter-1.1.2.linux-amd64/node_exporter /usr/local/bin/
 sudo chown root:root /usr/local/bin/node_exporter
 node_exporter --version
 sudo vim /etc/systemd/system/node-exporter.servic
 sudo systemctl daemon-reload 
 sudo systemctl start node-exporter.service
 sudo vim /etc/systemd/system/node-exporter.servic
-$ sudo nano /etc/systemd/system/node-exporter.service
+sudo nano /etc/systemd/system/node-exporter.service
 sudo vim /etc/systemd/system/node-exporter.service
 sudo systemctl daemon-reload 
 sudo systemctl start node-exporter.service
+```
+```cmd
 cd /etc/
 cd systemd/system/
 ll
 sudo rm node-exporter.servic
 ll
+```
+
+```cmd
 sudo systemctl status node-exporter.service 
 sudo systemctl enable node-exporter.service
 sudo systemctl status node-exporter.service 
-
+```
 
 
 
