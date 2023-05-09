@@ -36,7 +36,9 @@ vi /etc/fstab
 
 - Paste below given content in /etc/fstab file
 
+```cmd
 /swapfile-additional swap swap    0   0
+```
 
 ### Now mount the swap area, run below given command.
 
