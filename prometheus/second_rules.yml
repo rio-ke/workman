@@ -84,3 +84,42 @@
       description: "{{$labels.device}} mounted on {{$labels.mountpoint}} on {{$labels.instance}} is 90% filled."
 
 
+
+#  - alert: Disk_Will_Fill_In_2_Hours
+#    expr:  predict_linear(node_filesystem_free{fstype!~"rootfs|tmpfs|fuse.lxcfs"}[1h], 2*3600)
+#    for: 20m
+#    labels:
+#      severity: "warning"
+#    annotations:
+#      summary: "Instance {{$labels.instance}}: disk {{$labels.device}} filling up"
+#      description: "{{$labels.device}} mounted on {{$labels.mountpoint}} on {{$labels.instance}} will fill up within 2 hours."
+
+
+  - alert: Site_DOWN
+    expr: probe_success < 1
+    for: 2m
+    labels:
+      severity: "critical"
+    annotations:
+      summary: "{{$labels.instance}} is down"
+      description: "site {{$labels.instance}} is down from 2min."
+
+  - alert: Website_DOWN
+    expr: probe_success < 1
+    for: 4m
+    labels:
+      severity: "websiteDown"
+    annotations:
+      summary: "{{$labels.instance}} is down"
+      description: "site {{$labels.instance}} is down/unreachable."
+
+  - alert: Blackbox_Exporter_Down
+    expr: count(up{job="blackbox"} == 1) < 1
+    for: 1m
+    labels:
+      severity: "warning"
+    annotations:
+      summary: "blackbox_exporter is not up"
+      description: "blackbox_exporter is not up for 1min."
+
+
