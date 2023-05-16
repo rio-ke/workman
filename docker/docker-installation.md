@@ -64,8 +64,21 @@ sudo systemctl enable docker
 
 ```bash
 sudo usermod -aG docker $USER
-
-#reboot the system
 ```
+* **reboot the system**
+
+* If you want to avoid typing sudo whenever you run the docker command, add your username to the docker group:
+
+```cmd
+sudo usermod -aG docker $(whoami)
+```
+* You will need to log out of the Droplet and back in as the same user to enable this change.
+
+* If you need to add a user to the docker group that you’re not logged in as, declare that username explicitly using:
+```cmd
+sudo usermod -aG docker username
+```
+* **reboot the system**
+
 
 docker document reference pls visit --> https://docs.docker.com/reference/
