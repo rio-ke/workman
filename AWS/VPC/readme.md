@@ -2,4 +2,10 @@
 2. app server
 3. DB server
 
-[Ref-youtube](https://www.youtube.com/watch?v=TUTqYEZZUdc)
+_**Ref**_
+
+[youtube](https://www.youtube.com/watch?v=TUTqYEZZUdc)
+
+_Round-tables_
+
+[ref](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html)
