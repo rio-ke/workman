@@ -1,0 +1,5 @@
+---
+- name: INstall rsyslog server
+  hosts: node
+  roles:
+  - role: rsys

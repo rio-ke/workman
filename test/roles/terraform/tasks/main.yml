@@ -1,0 +1,14 @@
+---
+- name: install zip packges
+  yum:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - "{{ zip_package }}"
+- name: Unarchive a file that is already on the remote machine
+  unarchive:
+    src: "{{ terraform_url }}"
+    dest: "{{ item }}"
+    remote_src: yes
+  with_items:
+    - "{{ location }}"

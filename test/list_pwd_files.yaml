@@ -1,0 +1,9 @@
+---
+- name: Install play
+  hosts: master
+  tasks:
+  - name: List the files
+    shell: ls -la .
+    register: jino
+  - debug:
+      msg: "{{jino.stdout_lines}}"

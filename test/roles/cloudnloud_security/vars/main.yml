@@ -1,0 +1,118 @@
+---
+sudo_log: /var/log/sudo.log
+
+# User Accounts and Environment
+user_sccounts:
+  - PASS_MAX_DAYS
+  - PASS_MIN_DAYS
+  - PASS_WARN_AGE
+  - PASS_MIN_LEN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+check_files:
+    - ~root/.rhosts # If the file exists: Read access only by root; write access only by root
+    - ~root/.netrc  # If the file exists: Read access only by root; write access only by root
+    - /      # Settings for other on this directory must be r-x or more restrictive.
+    - /usr   # Settings for other on this directory must be r-x or more restrictive.
+    - /var   # Settings for other on this directory must be r-x or more restrictive.
+    - /etc   # Settings for other on this directory must be r-x or more restrictive.
+    - /tmp   # 1777 permission
+    - /var/tmp   # 1777 permission
+    - /etc/security/opasswd  # The file must exist, and File permissions must be set  * rw- --- ---
+    - /etc/shadow            # The file must exist, and File permissions must be set  * rw- --- ---
+    - /var/log
+    - /var/log/faillog  #  rw- --- ---
+    - /var/log/tallylog #  rw- --- ---
+    - /var/log/wtmp     #  rwx r-x r-x
+    - /var/log/secure   #  * rwx r-x ---
+    - /var/log/auth.log #  * rwx r-x ---
+    - /var/log/faillog
+    - /var/log/tallylog
+# Non-Debian: /var/log/messages  Debian: /var/log/syslog
+    - /var/log/wtmp
+    - /var/log/secure
+    - /etc/profile.d/IBMsinit.sh
+    - /etc/profile.d/IBMsinit.csh
+    - /etc/inittab
+    - /etc/inittab
+    - /etc/inittab
+    - /var/spool/cron/root
+    - /var/spool/cron/root
+    - /var/spool/cron/root
+    - /etc/crontab
+    - /etc/crontab
+    - /etc/crontab
+    - /etc/xinetd.conf
+    - /etc/xinetd.conf
+    - /etc/xinetd.conf
+    - /etc/init.d/rc0.d
+    - /etc/init.d/rc1.d
+    - /etc/init.d/rc2.d
+    - /etc/init.d/rc3.d
+    - /etc/init.d/rc4.d
+    - /etc/init.d/rc5.d
+    - /etc/init.d/rc6.d
+    - /etc/init.d/rcS.d
+    - /etc/rc.d/rc0.d
+    - /etc/rc.d/rc1.d
+    - /etc/rc.d/rc2.d
+    - /etc/rc.d/rc3.d
+    - /etc/rc.d/rc4.d
+    - /etc/rc.d/rc5.d
+    - /etc/rc.d/rc6.d
+    - /etc/rc.d/rcS.d
+    - /etc/init.d/rc0.d
+    - /etc/init.d/rc1.d
+    - /etc/init.d/rc2.d
+    - /etc/init.d/rc3.d
+    - /etc/init.d/rc4.d
+    - /etc/init.d/rc5.d
+    - /etc/init.d/rc6.d
+    - /etc/init.d/rcS.d
+    - /etc/rc.d/rc0.d
+    - /etc/rc.d/rc1.d
+    - /etc/rc.d/rc2.d
+    - /etc/rc.d/rc3.d
+    - /etc/rc.d/rc4.d
+    - /etc/rc.d/rc5.d
+    - /etc/rc.d/rc6.d
+    - /etc/rc.d/rcS.d
+    - /etc/init.d/
+    - /etc/rc.d/
+    - /etc/init.d/
+    - /etc/rc.d/
+    - /etc/cron.d/
+    - /etc/cron.d/
+    - /etc/cron.d/
+    - /var/spool/cron/tabs/root
+    - /var/spool/cron/tabs/root
+    - /var/spool/cron/tabs/root
+    - /opt
+    - /var
+    - /usr/local
+    - /tmp                          # directory and its sub-directories
+    - $HOME
+    - /etc/login.defs
+    - /etc/profile.d/IBMsinit.sh
+    - /etc/profile.d/IBMsinit.csh
+    - /etc/profile
+    - /etc/csh.login
+    - /etc/skel/.cshrc
+    - /etc/skel/.login
+    - /etc/skel/.profile
+    - /etc/skel/.bashrc
+    - /etc/skel/.bash_profile
+    - /etc/skel/.bash_login
+    - /etc/skel/.tcshrc

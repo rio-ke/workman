@@ -1,0 +1,6 @@
+---
+- include_tasks: ping_local.yml
+  when: ping_response == "1"
+
+- include_tasks: target_host.yml
+  when: ping_response == "2"

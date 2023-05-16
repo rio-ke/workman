@@ -1,0 +1,8 @@
+---
+smtp_username: jinojoe@gmail.com
+smtp_password: KULANDAI.29
+smtp_port: 587
+smtp_host: smtp.gmail.com
+client_name: JINO
+email_from: jinojoe@gmail.com
+email_to: jinojoe@gmail.com

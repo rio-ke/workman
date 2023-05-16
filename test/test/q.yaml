@@ -1,0 +1,5 @@
+---
+- name: q play
+  hosts: node1 node2
+  roles:
+  - role: q

@@ -1,0 +1,16 @@
+---
+- hosts: "{{ groups.vagrant | random }}"
+  # - hosts: "{{ groups['vagrant'] | random }}"
+  tasks:
+  - name: "User based MEM utilization"
+    shell:  ps aux | awk 'NR != 1 {x[$1] += $4} END{ for(z in x) {print z, x[z]"%"}}' | column -t
+    register: user_based_memory
+
+  - name: "show User based %MEM utilization Report"
+    debug:
+      msg: "{{user_based_memory.stdout_lines}}"
+
+      #  - name: "show User based MEM utilization Report"
+      #    debug:
+      #      msg: "{% for i in user_based_memory.stdout_lines -%}, {{loop.index}}-{{i}} {%- endfor %}"
+      #

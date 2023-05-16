@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  tasks:
+  - debug:
+      msg: "this is httpd installtion tasks"
+  - yum:
+      name: httpd
+      state: present
+  - service:
+      name: httpd
+      state: started
+  - include: 1.yaml

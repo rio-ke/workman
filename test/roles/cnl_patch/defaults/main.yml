@@ -1,0 +1,3 @@
+---
+# defaults file for roles/cnl_patch
+exclude_packages: httpd*,vsftpd*

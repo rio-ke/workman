@@ -1,0 +1,11 @@
+---
+- name: play for ntp
+  hosts: vag
+  pre_tasks:
+  - debug:
+      msg: "I Beginning patch starting server.."
+  roles:
+  - { role: patch }
+  post_tasks:
+  - debug:
+      msg: " Done configuring patching server...' "

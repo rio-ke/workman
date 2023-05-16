@@ -1,0 +1,20 @@
+---
+- name: install rsyslog server
+  yum:
+    name: rsyslog
+    state: present
+- name: Backup the file
+  copy:
+    src: /etc/rsyslog.conf
+    dest: /etc/rsyslog.conf_backup
+- name: start the service
+  service:
+    name: rsyslog
+    state: restarted
+    enabled: yes
+- name: configure the rsyslog file
+  template:
+    src: templates/rsyslog.conf.j2
+    dest: /etc/rsyslog.conf
+  notify:
+    - restart rsyslog

@@ -1,0 +1,4 @@
+---
+bind_packages:
+  - bind
+  - bind-utils

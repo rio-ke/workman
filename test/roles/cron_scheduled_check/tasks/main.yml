@@ -1,0 +1,10 @@
+---
+- name: "Execute user cron check"
+  script: user_cron.sh
+  register: result
+
+- name: "Copy the Disk usage precentage"
+  template:
+    src: result.j2
+    dest: /tmp/cronjob.txt
+  delegate_to: "{{ delegate_host | default('localhost') }}"

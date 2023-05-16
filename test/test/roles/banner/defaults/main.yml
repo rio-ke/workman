@@ -1,0 +1,3 @@
+---
+# defaults file for roles/banner
+warning_banner: Authorized uses only. All activity may be monitored and reported.

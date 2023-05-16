@@ -1,0 +1,32 @@
+---
+- name: play for user creation Topic-13
+  hosts: localhost
+  tasks:
+
+  - name: user create for ubuntu
+    user:
+      name: jino
+      shell: /bin/bash
+      state: present
+
+  - name: user depend with group
+    user:
+      name: jino
+      shell: /bin/bash
+      group: root
+      uid: 1040
+      append: yes
+      createhome: yes
+      state: present
+
+  - name: user depends multiple groups
+    user:
+      name: jino
+      shell: /bin/bash
+      groups: admins,developers
+      append: yes
+      createhome: yes
+      system: no
+      home: /home/james
+
+

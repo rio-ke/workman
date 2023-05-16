@@ -1,0 +1,11 @@
+---
+# vars file for docker
+package:
+       - yum-utils
+       - device-mapper-persistent-data
+       - lvm2
+
+docker_yum_repo_url: https://download.docker.com/linux/{{ (ansible_distribution == "Fedora") | ternary("fedora","centos") }}/docker-{{ docker_edition }}.repo
+rpm_key_value: https://download.docker.com/linux/{{ (ansible_distribution == "Fedora") | ternary("fedora","centos") }}/gpg
+docker_package: "docker-{{ docker_edition }}"
+

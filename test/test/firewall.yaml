@@ -1,0 +1,8 @@
+---
+- name: "FIrewall Whitelist"
+  hosts: node1 node2
+  tasks:
+  roles:
+    - role: firewall
+      firewall_service_name: http,https
+      firewall_service_port: 21/tcp

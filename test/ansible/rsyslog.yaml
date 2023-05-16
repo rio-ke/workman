@@ -1,0 +1,6 @@
+---
+- name: install rsyslog server
+  hosts: vag
+  tasks:
+  roles:
+  - role: rsyslog

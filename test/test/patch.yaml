@@ -1,0 +1,14 @@
+---
+- name: play for ntp
+  hosts: master
+  pre_tasks:
+  - debug:
+      msg: "I Beginning patch starting server.."
+  - yum:
+      name: net-tools
+      state: present
+  roles:
+  - { role: JINO }
+  post_tasks:
+  - debug:
+      msg: " Done configuring patching server...' "

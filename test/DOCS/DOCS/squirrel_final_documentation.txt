@@ -1,0 +1,424 @@
+Packages Need to Install
+sudo yum install postfix dovecot mysql-server
+sudo yum install dovecot-mysql httpd php php-mysql php-imap php-mbstring php-common php-mcrypt php-dba
+
+user and group creation:
+sudo useradd -r -u 5001 -g mail -d /var/vmail -s /sbin/nologin -c "Virtual mailbox" vmail
+
+create directorys:
+to store postfix tls certificate
+sudo mkdir /etc/postfix/ssl/
+
+if you are planned to use self signed certificate then execute below command to create certificates.
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/postfix/ssl/mycentserver_com.key -out /etc/postfix/ssl/mycentserver_com.crt -subj "/C=IN/ST=TamilNadu/L=Chennai/O=Example Company/CN=mycentserver.com"
+
+sudo cp /etc/postfix/ssl /etc/dovecot/ssl
+
+to store mysql configuration for postfix sql integration
+sudo mkdir /etc/postfix/sql
+
+to store user mails
+sudo mkdir -p /var/vmail
+sudo chmod -R 770 /var/vmail
+sudo chown -R vmail.mail /var/vmail
+
+CREATE DATABASE postfixadmin;
+GRANT ALL PRIVILEGES ON postfixadmin.* TO 'postfixadmin'@'localhost' IDENTIFIED BY 'strong_password';
+FLUSH PRIVILEGES;
+
+
+Install PostfixAdmin
+wget -q -O - "https://downloads.sourceforge.net/project/postfixadmin/postfixadmin/postfixadmin-3.0.2/postfixadmin-3.0.2.tar.gz" | tar -xzf - -C /var/www/html
+
+cd /var/www/html
+mv postfixadmin-3.0.2 postfixadmin
+cd postfixadmin
+sudo vim config.inc.php
+$CONF['configured'] = true;
+$CONF['database_type'] = 'mysqli';
+$CONF['database_host'] = 'localhost';
+$CONF['database_user'] = 'postfixadmin';
+$CONF['database_password'] = 'strong_password';
+$CONF['database_name'] = 'postfixadmin';
+
+$CONF['domain_path'] = 'NO';
+$CONF['domain_in_mailbox'] = 'YES';
+
+
+chown -R apache: /var/www/html/postfixadmin
+
+To populate the database go to https://Your_IP_Address/postfixadmin/setup.php and you should see something like below:
+Testing database connection - OK - mysqli://postfixadmin:xxxxx@localhost/postfixadmin
+Everything seems fine... attempting to create/update database structure
+
+Create a new admin user:
+sudo bash /var/www/html/postfixadmin/scripts/postfixadmin-cli admin add admin@mycentserver.com --password nvops01+ --password2 nvops01+ --superadmin 1 --active 1
+
+postfix configuration:
+before making changes need to take backup postfix configuration files [main.cf,master.cf]
+cp /etc/postfix/main.cf{,_OBackup}
+cp /etc/postfix/master.cf{,_OBackup}
+
+sudo vim /etc/postfix/main.cf
+------------------------------------------------
+queue_directory = /var/spool/postfix
+command_directory = /usr/sbin
+daemon_directory = /usr/libexec/postfix
+data_directory = /var/lib/postfix
+mail_owner = postfix
+myhostname = mail.mycentserver.com
+mydomain = mycentserver.com
+myorigin = $mydomain
+inet_interfaces = all
+inet_protocols = all
+mydestination = localhost.$mydomain, localhost
+unknown_local_recipient_reject_code = 550
+mynetworks = 10.0.0.0/16, 127.0.0.0/8, [::1]/128
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+home_mailbox = Maildir/
+smtpd_banner = $myhostname ESMTP 
+debug_peer_level = 2
+debugger_command =
+	 PATH=/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin
+	 ddd $daemon_directory/$process_name $process_id & sleep 5
+sendmail_path = /usr/sbin/sendmail.postfix
+newaliases_path = /usr/bin/newaliases.postfix
+mailq_path = /usr/bin/mailq.postfix
+setgid_group = postdrop
+html_directory = no
+manpage_directory = /usr/share/man
+sample_directory = /usr/share/doc/postfix-2.10.1/samples
+readme_directory = /usr/share/doc/postfix-2.10.1/README_FILES
+biff=no
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_type = dovecot
+smtpd_sasl_security_options = noanonymous
+smtpd_sasl_tls_security_options = $smtpd_sasl_security_options
+broken_sasl_auth_clients = yes
+smtpd_sasl_authenticated_header = yes
+smtpd_sasl_path = private/auth
+smtpd_sasl_local_domain = mycentserver.com
+smtpd_recipient_restrictions = permit_mynetworks,permit_sasl_authenticated,reject_unauth_destination
+smtpd_tls_security_level = may 
+smtpd_tls_auth_only = yes
+smtpd_tls_received_header = yes 
+smtpd_tls_loglevel = 1
+smtp_tls_loglevel = 1
+smtpd_tls_key_file = /etc/postfix/ssl/mycentserver_com.key
+smtpd_tls_cert_file = /etc/postfix/ssl/mycentserver_com.crt
+smtp_tls_note_starttls_offer = yes 
+smtp_tls_note_starttls_offer = yes
+smtpd_tls_session_cache_timeout = 3600s
+smtpd_use_tls = yes
+tls_random_source = dev:/dev/urandom
+virtual_alias_maps = proxy:mysql:/etc/postfix/sql/virtual_alias_maps.cf,proxy:mysql:/etc/postfix/sql/virtual_alias_domains_maps.cf
+virtual_alias_domains = proxy:mysql:/etc/postfix/sql/virtual_alias_domains.cf
+virtual_mailbox_domains = proxy:mysql:/etc/postfix/sql/virtual_mailbox_domains.cf
+virtual_mailbox_maps = proxy:mysql:/etc/postfix/sql/virtual_mailbox_maps.cf
+virtual_mailbox_base = /var/vmail/
+virtual_mailbox_limit = 512000000
+virtual_minimum_uid = 5001
+virtual_transport = dovecot
+virtual_uid_maps = static:5001
+virtual_gid_maps = static:12
+local_recipient_maps = $virtual_mailbox_maps
+======================================================
+
+add below lines to master.cf files
+sudo vim /etc/postfix/master.cf
+
+smtps     inet  n       -       n       -       -       smtpd
+      -o smtpd_sasl_auth_enable=yes
+      -o smtpd_reject_unlisted_sender=yes
+      -o smtpd_recipient_restrictions=permit_sasl_authenticated,reject
+      -o broken_sasl_auth_clients=yes
+      -o smtpd_tls_wrappermode=yes
+      -o milter_macro_daemon_name=ORIGINATING
+submission inet n - n - - smtpd
+  -o smtpd_tls_security_level=encrypt
+  -o smtpd_sasl_auth_enable=yes
+  -o smtpd_sasl_type=dovecot
+  -o smtpd_sasl_path=private/auth
+  -o smtpd_sasl_security_options=noanonymous
+  -o smtpd_sasl_local_domain=$myhostname
+  -o smtpd_client_restrictions=permit_sasl_authenticated,reject
+  -o smtpd_sender_login_maps=hash:/etc/postfix/virtual
+  -o smtpd_sender_restrictions=reject_sender_login_mismatch
+  -o smtpd_recipient_restrictions=reject_non_fqdn_recipient,reject_unknown_recipient_domain,permit_sasl_authenticated,reject
+
+dovecot   unix  -       n       n       -       -       pipe
+    flags=DRhu user=vmail:mail argv=/usr/libexec/dovecot/deliver -f ${sender} -d ${recipient}
+
+======================================================
+
+Postfix sql configuration:
+sudo vim /etc/postfix/sql/virtual_alias_domains.cf 
+user = postfix
+password = psmtp
+hosts = localhost
+dbname = postfix
+query = SELECT alias_domain FROM alias_domain WHERE alias_domain='%s' AND active = '1'
+
+sudo vim /etc/postfix/sql/virtual_alias_domains_maps.cf 
+user = postfix
+password = psmtp
+hosts = localhost
+dbname = postfix
+query = SELECT goto FROM alias,alias_domain WHERE alias_domain.alias_domain = '%d' and alias.address = CONCAT('%u', '@', alias_domain.target_domain) AND alias.active = 1 AND alias_domain.active='1'
+
+sudo vim /etc/postfix/sql/virtual_alias_maps.cf 
+user = postfix
+password = psmtp
+hosts = localhost
+dbname = postfix
+table = alias
+select_field = goto
+where_field = address
+
+sudo vim /etc/postfix/sql/virtual_mailbox_domains.cf 
+user = postfix
+password = psmtp
+hosts = localhost
+dbname = postfix
+table = domain
+select_field = domain
+where_field = domain
+
+sudo vim /etc/postfix/sql/virtual_mailbox_maps.cf
+user = postfix
+password = psmtp
+hosts = localhost
+dbname = postfix
+table = mailbox
+select_field = maildir
+where_field = username
+
+
+Dovecot Configuration:
+make dovecot configuration files
+sudo cp /etc/dovecot/dovecot.conf{,_OBackup}
+sudo cp /etc/dovecot/conf.d/10-auth.conf{,_OBackup}
+sudo cp /etc/dovecot/conf.d/10-logging.conf{,_OBackup}
+sudo cp /etc/dovecot/conf.d/10-mail.conf{,_OBackup}
+sudo cp /etc/dovecot/conf.d/10-master.conf{,_OBackup}
+sudo cp /etc/dovecot/conf.d/10-ssl.conf{,_OBackup}
+sudo cp /etc/dovecot/conf.d/15-lda.conf{,_OBackup}
+sudo cp /etc/dovecot/conf.d/auth-sql.conf.ext{,_OBackup}
+
+uncommand below line on dovecot.conf
+sudo vim /etc/dovecot/dovecot.conf
+protocols = imap pop3 lmtp
+
+uncommand below line on 10-auth.conf
+sudo vim /etc/dovecot/conf.d/10-auth.conf
+auth_mechanisms = plain login    #####login key word is need to add here
+disable_plaintext_auth = yes
+!include auth-sql.conf.ext
+
+uncommand below line on 10-logging.conf
+sudo vim /etc/dovecot/conf.d/10-logging.conf
+log_path = syslog
+
+edit 10-mail.conf file like below
+sudo vim /etc/dovecot/conf.d/10-mail.conf
+mail_location = maildir:/var/vmail/%d/%n/Maildir
+namespace inbox {
+  inbox = yes
+}
+mail_uid = vmail
+mail_gid = mail
+mail_privileged_group = mail
+first_valid_uid = 5001
+last_valid_uid = 5001
+maildir_copy_with_hardlinks = yes
+mbox_write_locks = fcntl
+
+edit 10-master.conf file like below
+sudo vim /etc/dovecot/conf.d/10-master.conf
+service imap-login {
+  inet_listener imap {
+    port = 143
+  }
+  inet_listener imaps {
+    port = 993
+    ssl = yes
+  }
+}
+service pop3-login {
+  inet_listener pop3 {
+    port = 110
+  }
+  inet_listener pop3s {
+    port = 995
+    ssl = yes
+  }
+}
+service lmtp {
+  unix_listener /var/spool/postfix/private/dovecot-lmtp {
+    mode = 0600
+    user = postfix
+    group = postfix
+   }
+}
+service imap {
+}
+service pop3 {
+}
+service auth {
+  unix_listener auth-userdb {
+    mode = 0600
+    user = vmail
+    group = mail
+  }
+  # Postfix smtp-auth
+  unix_listener /var/spool/postfix/private/auth {
+    mode = 0660
+    user = postfix
+    group = postfix
+  }
+  user = dovecot
+}
+service auth-worker {
+  user = vmail
+}
+service dict {
+  unix_listener dict {
+    mode = 0600
+    user = vmail
+    group = mail 
+  }
+}
+
+uncommand below line on 10-ssl.conf
+sudo vim /etc/dovecot/conf.d/10-ssl.conf
+ssl = yes
+ssl_cert = </etc/dovecot/ssl/mycentserver_com.crt
+ssl_key = </etc/dovecot/ssl/mycentserver_com.key
+
+set postmaster_address key value on 15-lda.conf file
+sudo vim /etc/dovecot/conf.d/15-lda.conf
+postmaster_address = postmaster@mycentserver.com
+
+set dovecot sql configuration
+sudo vim /etc/dovecot/conf.d/auth-sql.conf.ext
+passdb {
+  driver = sql
+  args = /etc/dovecot/dovecot-sql.conf.ext
+}
+userdb {
+  driver = static
+  args = uid=vmail gid=mail home=/var/vmail/%d/%n/Maildir 
+}
+
+
+Now create a file /etc/dovecot/dovecot-sql.conf.ext
+sudo vim /etc/dovecot/dovecot-sql.conf.ext
+driver = mysql
+connect = host=localhost dbname=postfix user=postfix password=psmtp
+default_pass_scheme = SHA512-CRYPT
+user_query = SELECT '/var/vmail/%d/%n' as home, 'maildir:/var/vmail/%d/%n/Maildir' as mail, 5001 AS uid, 12 AS gid, concat('dirsize:storage=',  quota) AS quota FROM mailbox WHERE username = '%u' AND active = '1'
+password_query = SELECT username as user, password, '/var/vmail/%d/%n' as userdb_home, 'maildir:/var/vmail/%d/%n/Maildir' as userdb_mail, 5001 as  userdb_uid, 5001 as userdb_gid FROM mailbox WHERE username = '%u' AND active = '1'
+
+
+set permission
+sudo chown -R vmail:dovecot /etc/dovecot
+sudo chmod -R o-rwx /etc/dovecot
+
+Check all are working fine by using:
+  openssl s_client -connect localhost:143 -starttls smtp
+	once connected enter--->   ehlo localhost
+  openssl s_client -connect localhost:25 -starttls smtp
+	once connected enter--->   ehlo localhost
+  openssl s_client -showcerts -connect localhost:993
+  openssl s_client -showcerts -connect localhost:995
+  openssl s_client -showcerts -connect localhost:465
+
+
+
+
+Squirrelmail Plugins Installation:
+cd /opt/
+sudo wget https://squirrelmail.org/countdl.php?fileurl=http%3A%2F%2Fwww.squirrelmail.org%2Fplugins%2Fchange_sqlpass-3.3-1.2.tar.gz
+sudo wget http://squirrelmail.org/countdl.php?fileurl=http%3A%2F%2Fwww.squirrelmail.org%2Fplugins%2Fcompatibility-2.0.16-1.0.tar.gz
+
+now rename this files:
+sudo mv countdl.php\?fileurl\=http\:%2F%2Fwww.squirrelmail.org%2Fplugins%2Fchange_sqlpass-3.3-1.2.tar.gz change_sqlpass-3.3-1.2.tar.gz
+sudo mv countdl.php\?fileurl\=http\:%2F%2Fwww.squirrelmail.org%2Fplugins%2Fcompatibility-2.0.16-1.0.tar.gz compatibility-2.0.16-1.0.tar.gz
+
+now extract this files to plugins directory:
+sudo tar -zxvf /opt/change_sqlpass-3.3-1.2.tar.gz -C /usr/share/squirrelmail/plugins/
+sudo tar -zxvf /opt/compatibility-2.0.16-1.0.tar.gz -C /usr/share/squirrelmail/plugins/
+
+sudo yum install php-pear-DB patch
+
+cd /usr/share/squirrelmail/plugins/compatibility/
+patch -p0 < patches/compatibility_patch-1.4.4.diff
+now its asks to enter file name:
+   ../../functions/strings.php
+
+Now go one directory and instal pear DB
+cd ../
+pear install PEAR-1.10.0
+
+Now Change the configuration file of change_sqlpass plugin
+cd /usr/share/squirrelmail/plugins/change_sqlpass
+sudo cp config.php.sample config.php
+
+edit below lines 
+sudo vim config.php
+$csp_dsn = 'mysql://postfix:psmtp@localhost/postfix';
+$lookup_password_query = 'SELECT count(*) FROM mailbox WHERE username = "%1" AND password = %4';
+$password_update_queries = array(
+            'UPDATE mailbox SET password = %4 WHERE username = "%1"',
+
+$password_encryption = 'MD5CRYPT';
+$csp_salt_query = 'SELECT SUBSTRING(password, 4, 8) FROM mailbox WHERE username = "%1"';
+
+
+Now edit functions.php file: find below line [line number 667]
+case strtolower(PASSWORD_ENCRYPTION_MD5CRYPT):
+         return '"' . md5crypt($password, $salt) . '"';
+
+and change that line to below:
+case strtolower(PASSWORD_ENCRYPTION_MD5CRYPT):
+         include_once(SM_PATH . 'plugins/change_sqlpass/md5crypt.php');
+         return '"' . md5crypt($password, $salt) . '"';
+
+
+enable plugins on squirrelmail:
+execute below command
+sudo /usr/share/squirrelmail/config/conf.pl
+
+now enter number 8 and press enter
+
+it will show unloaded plugins under Available Plugins: pane 
+enter the number of the plugin you want to enable and press s and enter
+after that press r and enter
+now press s and enter
+again press enter
+now press q and enter
+
+Install and configure Spamassassin:
+sudo yum install spamassassin
+sudo groupadd spam
+sudo useradd -g spamd -s /bin/false -d /var/log/spamassassin spamd
+sudo chown spamd:spamd /var/log/spamassassin
+
+sudo vim /etc/postfix/master.cf
+change
+smtp      inet  n       -       n       -       -       smtpd
+with
+smtp      inet  n       -       n       -       -       smtpd -o content_filter=spamassassin
+
+add the following line at the end of the file:
+spamassassin unix - n n - - pipe flags=R user=spamd argv=/usr/bin/spamc -e /usr/sbin/sendmail -oi -f ${sender} ${recipient}
+
+Enable and restart the spamassassin service
+systemctl enable spamassassin 
+systemctl restart spamassassin 
+
+Restart the postfix service
+systemctl restart postfix
+
+

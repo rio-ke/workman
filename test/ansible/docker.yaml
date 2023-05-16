@@ -1,0 +1,6 @@
+---
+- name: play the docker
+  hosts: vag
+  tasks:
+  roles:
+  - role: docker

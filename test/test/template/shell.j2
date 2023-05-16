@@ -1,0 +1,2 @@
+{% for jino in result.results | json_query('[]') %} {{loop.index}} - {{jino.item}} - {{jino.stdout}}, {% endfor %}
+

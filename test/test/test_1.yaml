@@ -1,0 +1,9 @@
+---
+- name: "Memory Calculate"
+  hosts: localhost
+  tasks:
+  - assert:
+      that:
+      - ansible_memfree_mb > ansible_memtotal_mb|float * 0.50
+      msg: Memory has reached 85% threshold
+

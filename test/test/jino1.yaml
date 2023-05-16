@@ -1,0 +1,5 @@
+---
+- name: "install pages"
+  hosts: localhost
+  tasks:
+  - ping:

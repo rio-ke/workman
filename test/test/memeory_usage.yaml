@@ -1,0 +1,34 @@
+---
+- name: "Increase memory usage menuall test"
+  hosts: master
+  tasks:
+  - name: "Check Memory Usage"
+    shell: free -mh
+    register: mem_usage
+
+  - name: "Display the memory usage"
+    debug:
+      msg: "{{mem_usage.stdout_lines}}"
+
+  - name: "Check openssl install or not"
+    shell: rpm -qa | grep openssl
+    register: package_result
+
+  - name: "Install package"
+    yum:
+      name: openssl
+      state: present
+    when: package_result.stdout == ""
+
+  - name: "Put Load"
+    raw: >
+      openssl rand -base64 $((1024*1024*1324))
+
+  - name: "Check after Mem Load"
+    shell: free -mh
+    register : mem_usage_result
+
+  - name: "Display the memory usage after Mem Load"
+    debug:
+      msg: "{{mem_usage_result.stdout_lines}}"
+

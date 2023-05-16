@@ -1,0 +1,44 @@
+---
+- name: "Install packages"
+  yum:
+    name: "{{item}}"
+    state: present
+  loop:
+    - "{{ntp_package}}"
+
+- name: "Restart service"
+  service:
+    name: "{{ntp_service}}"
+    state: started
+    enabled: yes
+
+- name: "Ensure ntp is configured | modify /etc/sysconfig/ntpd"
+  lineinfile:
+    dest: /etc/sysconfig/ntpd
+    regexp: "^(#)?OPTIONS"
+    line: "OPTIONS=\"-u ntp:ntp\""
+
+- name: "Configure NTP"
+  template:
+    src: ntp.conf.j2
+    dest: /etc/ntp.conf
+    backup: yes
+  notify:
+    - restart ntpd
+
+- name: "Dync date and time"
+  shell: ntpq -p
+  register: status
+
+  #- name: "Firewalld service Status"
+  #  service:
+  #    name: firewalld
+  #  register: firewalld_status
+  #
+  #- name: "Allow firewall service"
+  #  firewalld:
+  #    state: enabled
+  #    service: ntp
+  #    immediate: yes
+  #    permanent: yes
+  #  when: firewalld_status.status.ActiveState == "active"

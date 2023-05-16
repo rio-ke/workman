@@ -1,0 +1,9 @@
+---
+PASS_MAX_DAYS: 60
+PASS_MIN_DAYS: 60
+PASS_MIN_LEN: 1
+iminlen: 14 # password must be 14 characters or more
+dcredit: -1 # provide at least 1 digit
+ucredit: -1 # provide at least one uppercase character
+ocredit: -1 # provide at least one special character
+lcredit: -1

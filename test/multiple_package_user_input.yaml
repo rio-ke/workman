@@ -1,0 +1,13 @@
+---
+- name: Multiple package install user input
+  hosts: master
+  vars_prompt:
+  - name: package_name
+    prompt: Enter package Name(httpd,vsftpd,git,curl)
+    private: no
+  tasks:
+  - name: Installing Mentioned Packages
+    yum:
+      name: "{{item}}"
+      state: present
+    with_items: "{{package_name.split(',')}}"

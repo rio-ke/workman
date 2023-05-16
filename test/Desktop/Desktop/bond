@@ -1,0 +1,74 @@
+vim ifcfg-bond0
+cat /etc/sysconfig/network-scripts/ifcfg-bond0
+DEVICE=bond0
+NAME=bond0
+TYPE=Bond
+BONDING_MASTER=yes
+IPADDR=172.17.1.50
+PREFIX=24
+GATEWAY=172.17.1.100
+DNS1=172.17.1.100
+DNS2=8.8.8.8
+ONBOOT=yes
+BOOTPROTO=none
+BONDING_OPTS="mode=1 primary=enp1s0f0 miimon=100"
+ZONE=public
+
+stop slave;          !Hz^o^!yH#E0
+CHANGE MASTER TO MASTER_HOST='192.168.5.211', MASTER_USER='repli', MASTER_PASSWORD='MCe$h6*2j22v1', MASTER_LOG_FILE='mysql-bin.000001', MASTER_LOG_POS=196024;
+start slave;
+
+grant replication slave on *.* TO repli@'%' identified by 'MCe$h6*2j22v1';
+
+grant replication slave on *.* TO repli@'%' identified by 'MCe$h6*2j22v1';
+mysql> flush privileges;
+
+[root@rgs-server ~]# cat /etc/sysconfig/network-scripts/ifcfg-enp1s0f0
+TYPE="Ethernet"
+PROXY_METHOD="none"
+BROWSER_ONLY="no"
+BOOTPROTO="none"
+#BOOTPROTO="dhcp"
+DEFROUTE="yes"
+IPV4_FAILURE_FATAL="no"
+IPV6INIT="yes"
+IPV6_AUTOCONF="yes"
+IPV6_DEFROUTE="yes"
+IPV6_FAILURE_FATAL="no"
+IPV6_ADDR_GEN_MODE="stable-privacy"
+NAME="enp1s0f0"
+UUID="0f36353d-1ec6-4fce-9b00-9e3b5838f114"
+DEVICE="enp1s0f0"
+#ONBOOT=no
+ONBOOT="yes"
+MASTER="bond0"
+SLAVE="yes"
+
+ZONE=public
+
+
+[root@rgs-server ~]# cat /etc/sysconfig/network-scripts/ifcfg-enp1s0f1
+TYPE="Ethernet"
+PROXY_METHOD="none"
+BROWSER_ONLY="no"
+BOOTPROTO="none"
+#BOOTPROTO="dhcp"
+DEFROUTE="yes"
+IPV4_FAILURE_FATAL="no"
+IPV6INIT="yes"
+IPV6_AUTOCONF="yes"
+IPV6_DEFROUTE="yes"
+IPV6_FAILURE_FATAL="no"
+IPV6_ADDR_GEN_MODE="stable-privacy"
+NAME="enp1s0f1"
+UUID="7aca9a91-cd12-4de4-a6c5-866f58bf076f"
+DEVICE="enp1s0f1"
+#ONBOOT="yes"
+ONBOOT="yes"
+MASTER="bond0"
+SLAVE="yes"
+ZONE=public
+
+
+
+

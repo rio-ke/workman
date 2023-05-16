@@ -1,0 +1,5 @@
+---
+- hosts: node1
+  tasks:
+  roles:
+    - role: j_install

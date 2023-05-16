@@ -1,0 +1,1653 @@
+{% if repo_list_result.results[0].stdout != "" %}
+Repo List:
+----------
+{{repo_list_result.results[0].stdout}}
+
+{% else %}
+Repo List:
+----------
+No repolist found.
+{{repo_list_result.results[0].stdout}}
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+{% if repo_list_result.results[1].stdout != "" %}
+
+Repo Key_Result:
+---------------
+{{ repo_list_result.results[1].stdout}}
+
+{% else%}
+Repo Key_Result:
+----------------
+No Repo_Key found.
+{{ repo_list_result.results[1].stdout}}
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+{% if repo_list_result.results[2].stdout != "" %}
+gpgcheck enable in /etc/yum.repos.d/:
+-------------------------------------
+{{repo_list_result.results[2].stdout}}
+
+{% else %}
+gpgcheck enable in /etc/yum.repos.d/:
+-------------------------------------
+No gpgcheck found.
+{{repo_list_result.results[2].stdout}}
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+{% if repo_list_result.results[3].stdout != "" %}
+gpgcheck enable in /etc/yum.conf Result:
+----------------------------------------
+{{repo_list_result.results[3].stdout}}
+
+{% else %}
+gpgcheck enable in /etc/yum.conf:
+---------------------------------
+Gpgcheck not enable in /etc/yum.conf found.
+{{repo_list_result.results[3].stdout}}
+
+{% endif %}
+
+
+------------------------------------------------------------------------------------
+{% if repo_list_result.results[4].stdout != "" %}
+Authentication required for single user mode Result (rescue):
+------------------------------------------------------------
+Condition    : Success
+{{repo_list_result.results[4].stdout}}
+
+{% else %}
+
+Authentication required for single user mode Result (rescue):
+---------------------------------------------------------------
+Condition    : failed.
+Remidiation  : make entry in /usr/lib/systemd/system/emergency.service --> ExecStart=-/bin/sh -c "/sbin/sulogin; /usr/bin/systemctl --fail --no-block default"
+current_value: {{repo_list_result.results[4].stdout}}
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+{% if repo_list_result.results[5].stdout != "" %}
+Authentication required for single user mode Result (emergency):
+---------------------------------------------------------------
+Condition    : Success
+{{repo_list_result.results[5].stdout}}
+
+{% else %}
+
+Authentication required for single user mode Result (emergency):
+---------------------------------------------------------------
+Condition    : failed.
+Remidiation  : make entry in /usr/lib/systemd/system/emergency.service --> ExecStart=-/bin/sh -c "/sbin/sulogin; /usr/bin/systemctl --fail --no-block default"
+Current_value: {{repo_list_result.results[5].stdout}}
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+{% if repo_list_result.results[6].stdout != "" and repo_list_result.results[7].stdout != "" %}
+
+Condition  : Success
+File status: bootloader password is set
+
+{% else %}
+Condition  : Failed
+File status: bootloader password is not set
+Remediation:
+  Create an encrypted password with grub-mkpasswd-pbkdf2:
+ #grub2-mkpasswd-pbkdf2
+      Enter password: <password>
+      Reenter password: <password>
+      Your PBKDF2 is <encrypted-password>
+ Add the following into /etc/grub.d/01_users or a custom /etc/grub.d configuration file:
+        cat <<EOF
+        set superusers="<username>"
+        password_pbkdf2 <username> <encrypted-password> EOF
+ Run the following command to update the grub2 configuration:
+ #grub2-mkconfig > /boot/grub2/grub.cfg
+
+{% endif %}
+------------------------------------------------------------------------------------
+
+{% if repo_list_result.results[8].stdout != "" %}
+Ensure core dumps are restricted:
+---------------------------------
+Condition    : Success
+Current_value: {{repo_list_result.results[8].stdout}}
+
+{% else %}
+
+Ensure core dumps are restricted:
+---------------------------------
+Condition    : failed.
+Remidiation  : Add the following line to the /etc/security/limits.conf file or a /etc/security/limits.d/* file = * hard core 0
+Current_value: {{repo_list_result.results[8].stdout}}
+
+{% endif %}
+
+
+{% for no_option in  ssh_no_option_result.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+{% if no_option.stdout  == "" %}
+
+file_name  : {{ no_option.item }} results:
+**************************************
+Audit      : {{no_option.item}} - condition not found  in /etc/ssh/sshd_config
+Remediation: "{{no_option.item}} no" in /etc/ssh/sshd_config
+
+{% else %}
+{% if no_option.stdout  == "no" %}
+
+file_name: {{ no_option.item }} results:
+************************************
+Audit      : {{no_option.item}} {{no_option.stdout}}
+condition  : success
+
+{% else %}
+
+file_name  : {{ no_option.item }} results:
+***************************************
+Audit      : {{no_option.item}} {{no_option.stdout}}
+condition  : failed. Check your configuration report
+
+{% endif %}
+{% endif %}
+{% endfor %}
+
+{% for yes_option in  ssh_yes_option_result.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+{% if yes_option.stdout  == "" %}
+
+file_name  : {{ yes_option.item }} results:
+**************************************
+Audit      : {{yes_option.item}} - condition not found  in /etc/ssh/sshd_config
+Remediation: "{{yes_option.item}} yes" in /etc/ssh/sshd_config
+
+{% else %}
+{% if yes_option.stdout  == "yes" %}
+
+file_name: {{ yes_option.item }} results:
+************************************
+Audit      : {{yes_option.item}} {{yes_option.stdout}}
+Condition  : success
+
+{% else %}
+
+file_name  : {{ yes_option.item }} results:
+***************************************
+Audit      : {{yes_option.item}} {{yes_option.stdout}}
+condition  : failed. Check your configuration report
+
+{% endif %}
+{% endif %}
+{% endfor %}
+
+------------------------------------------------------------------------------------
+
+ssh {{ssh_results.results[0].item}} result:
+++++++++++++++++++++++++++++++++++++++++
+{% if ssh_results.results[0].stdout == "" %}
+Audit      :  LogLevel is not enabled
+Remediation: {{ssh_results.results[0].item}} INFO
+condition  : kindly update remidiation report in /etc/ssh/sshd_config
+
+{% else %}
+
+Auditn     : {{ssh_results.results[0].item}} {{ssh_results.results[0].stdout}}
+Condition  : success
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+ssh {{ssh_results.results[1].item}} result:
+---------------------------------------------
+{% if ssh_results.results[1].stdout == "" %}
+Audit      :  LoginGraceTime is not enabled
+Remediation: {{ssh_results.results[1].item}} 60
+condition  : kindly update remidiation report in /etc/ssh/sshd_config
+
+{% else %}
+
+Audit      : {{ssh_results.results[1].item}} {{ssh_results.results[1].stdout}}
+Condition  : success
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+ssh {{ssh_results.results[2].item}} result:
+------------------------------------------
+{% if ssh_results.results[2].stdout == "" %}
+Audit      :  MaxAuthTries is not enabled
+Remediation: {{ssh_results.results[2].item}} 4
+condition  : kindly update remidiation report in /etc/ssh/sshd_config
+
+{% else %}
+
+{% if ssh_results.results[2].stdout <= "4" %}
+Audit      : {{ssh_results.results[2].item}} {{ssh_results.results[2].stdout}}
+Condition  : success
+
+{% else %}
+
+Audit      : {{ssh_results.results[2].item}} {{ssh_results.results[2].stdout}}
+Condition  : Failed. (To set <= 4)
+
+{% endif %}
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+ssh {{ssh_results.results[3].item}} result:
+-------------------------------------------
+{% if ssh_results.results[3].stdout != "" %}
+{% if ssh_results.results[3].stdout >= "2" %}
+
+Audit      : Protocol was found.
+Remediation: success
+Result     : Protocol {{ ssh_results.results[3].stdout }}.
+
+{% else %}
+
+Audit      : Protocol was found.
+Remediation: Failed
+Result     : Protocol {{ ssh_results.results[3].stdout }} is mismatch (2 is match)
+{% endif %}
+{% else %}
+
+Audit      : Protocol was not found.
+condition  : kindly update remidiation report in /etc/ssh/sshd_config
+Remediation: {{ssh_results.results[3].item}} 2
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+ssh {{ssh_results.results[5].item}} result:
+------------------------------------------
+{% if ssh_results.results[5].stdout == "" %}
+Audit      : {{ssh_results.results[5].item}} is not enabled
+Remediation: {{ssh_results.results[5].item}} 0
+condition  : kindly update remidiation report in /etc/ssh/sshd_config
+
+{% else %}
+
+{% if ssh_results.results[5].stdout == "0" %}
+Audit      : {{ssh_results.results[5].item}} {{ssh_results.results[5].stdout}}
+Condition  : success
+
+{% else %}
+
+Audit      : {{ssh_results.results[5].item}} {{ssh_results.results[5].stdout}}
+Remediation: Failed. (To set 0)
+
+{% endif %}
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+ssh {{ssh_results.results[6].item}} result:
+---------------------------------------------
+{% if ssh_results.results[6].stdout == "" %}
+Audit      : {{ssh_results.results[6].item}} is not enabled
+Remediation: {{ssh_results.results[6].item}} 300
+condition  : kindly update remidiation report in /etc/ssh/sshd_config
+
+{% else %}
+
+{% if ssh_results.results[6].stdout <= "300" %}
+Audit      : {{ssh_results.results[6].item}} {{ssh_results.results[6].stdout}}
+Condition  : success
+
+{% else %}
+
+Audit      : {{ssh_results.results[6].item}} {{ssh_results.results[6].stdout}}
+Remediation: Failed. (To set 300)
+
+{% endif %}
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+ssh {{ssh_results.results[4].item}} result:
+-------------------------------------------
+{% if ssh_results.results[4].stdout != "" %}
+
+Audit      : Banner was found.
+Remediation: success
+Result     : {{ssh_results.results[4].item}} {{ ssh_results.results[4].stdout }}
+
+{% else %}
+
+Audit      : Banner was not found.
+Remediation: kindly update remidiation report in /etc/ssh/sshd_config
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+ssh {{ssh_mac_option_result.results[0].item}} result:
+---------------------------------------------------
+{% if ssh_mac_option_result.results[0].stdout != "" %}
+
+Audit      : MAC's was found.
+Condition  : success
+Result     : Protocol {{ssh_mac_option_result.results[0].item}} {{ssh_mac_option_result.results[0].stdout}}
+
+{% else %}
+
+Audit      : {{ssh_mac_option_result.results[0].item}} was not found.
+Remediation: kindly update remidiation report in /etc/ssh/sshd_config. MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
+
+{% endif %}
+
+
+ssh {{ssh_ciphers_option_result.results[0].item}} result:
+---------------------------------------------------------
+{% if ssh_ciphers_option_result.results[0].stdout != "" %}
+
+Audit      : Ciphers's was found.
+Condition  : success
+Result     : {{ssh_ciphers_option_result.results[0].item}} {{ssh_ciphers_option_result.results[0].stdout}}
+
+{% else %}
+
+Audit      : {{ssh_ciphers_option_result.results[0].item}} was not found.
+Remediation: kindly update remidiation report in /etc/ssh/sshd_config. Ciphers aes256-ctr,aes192-ctr,aes128-ctr
+
+{% endif %}
+{% for jjj in ssh_env_variable_result.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+
+{% if jjj.stdout != "" %}
+Condition : Warning
+File State: AcceptEnv was found
+value     : {{jjj.stdout}}
+keys      : {{ jjj.item }}
+reminder  : Must not contain variables matching any of the following patterns: TERM, PATH, HOME, MAIL, SHELL, LOGNAME, USER, USERNAME, _RLD*, DYLD_*, LD_*, LDR_*, LIBPATH, SHLIB_PATH
+
+{% else %}
+Condition : success
+File State: AcceptEnv {{ jjj.item }} was not found
+
+{% endif %}
+{% endfor %}
+
+{% for jjino in  ssh_host_check_file_results.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+
+{% if jjino.stat.exists  == true %}
+
+file_name: {{ jjino.item }} results:
+-----------------------------------
+File Status: Directory was found
+Notice - Host-based authentication allows access based on a list of trusted hosts in combination with successful client-key authentication.
+
+{% if jjino.stat.mode == "0775" or jjino.stat.mode < "0775" and  jjino.stat.gr_name == "root" and jjino.stat.pw_name == "root" %}
+
+File Path  : {{ jjino.stat.path }}
+File Owner : {{ jjino.stat.gr_name }}
+File group : {{ jjino.stat.pw_name }}
+File Mode  : {{ jjino.stat.mode }}
+
+{% else %}
+
+File Path  : {{ jjino.stat.path }}
+File Owner : {{ jjino.stat.gr_name }}
+File group : {{ jjino.stat.pw_name }}
+File Mode  : {{ jjino.stat.mode }}
+Warning - File permissions is mismatch.
+The OSR {{ jjino.item }} has permissions set on other that are r-x or more restrictive
+
+{% endif %}
+{% else %}
+
+file_name: {{ jjino.item }} results:
+-----------------------------------
+File Status: Directory was not found
+
+{% endif %}
+{% endfor %}
+
+
+{% for jino in  ssh_check_file_results.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+
+{% if jino.stat.exists  == true %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was found
+
+{% if jino.stat.mode == "0775" or jino.stat.mode < "0775" and  jino.stat.gr_name == "root" and jino.stat.pw_name == "root" %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+
+{% else %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+Warning - File permissions is mismatch.
+The OSR {{ jino.item }} has permissions set on other that are r-x or more restrictive
+
+{% endif %}
+{% else %}
+
+file_name  : {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was not found
+
+{% endif %}
+{% endfor %}
+
+
+---------------------------------------------------------------------------------------------
+{% if user_sccounts_results.results[0].stdout != "" %}
+{% if user_sccounts_results.results[0].stdout != PASS_MAX_DAYS  %}
+Audit      : {{user_sccounts_results.results[0].item}} {{user_sccounts_results.results[0].stdout}}
+remidiation: User Password PASS_MAX_DAYS days is huge.. (set {{PASS_MAX_DAYS}} dys)
+Condition  : Failed
+{% else %}
+
+Audit    : {{user_sccounts_results.results[0].item}} {{user_sccounts_results.results[0].stdout}}
+condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+---------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results.stdout == "" %}
+
+Audit    : all user's password PASS_MAX_DAYS is {{PASS_MAX_DAYS}}.
+condition: success.
+
+{% else %}
+
+Audit    : Here mentioned user's password PASS_MAX_DAYS is not equal to {{PASS_MAX_DAYS}}.
+Condition: failed.
+
+{% for pass_max_days in user_accounts_expiriation_results.stdout_lines %}
+{{loop.index}} - {{pass_max_days}}
+{% endfor %}
+{% endif %}
+
+
+---------------------------------------------------------------------------------------------
+
+{% if user_sccounts_results.results[1].stdout != "" %}
+{% if user_sccounts_results.results[1].stdout !=  PASS_MIN_DAYS %}
+Audit      : {{user_sccounts_results.results[1].item}} {{user_sccounts_results.results[1].stdout}}
+Remidiation: User Password PASS_MIN_DAYS days is differ .. (set {{PASS_MIN_DAYS}} days)
+Condition  : Failed
+{% else %}
+
+Audit    : {{user_sccounts_results.results[1].item}} {{user_sccounts_results.results[1].stdout}}
+condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results1.stdout == "" %}
+
+Audit    : all user's password PASS_MIN_DAYS is {{PASS_MIN_DAYS}}.
+condition: success.
+
+{% else %}
+Audit      : Here mentioned user's password PASS_MIN_DAYS is not equal to {{PASS_MIN_DAYS}}.
+Remediation: failed.
+
+{% for pass_min_days in user_accounts_expiriation_results1.stdout_lines %}
+{{loop.index}} - {{pass_min_days}}
+{% endfor %}
+{% endif %}
+
+-------------------------------------------------------------------------------------------
+
+{% if user_sccounts_results.results[2].stdout != "" %}
+{% if user_sccounts_results.results[2].stdout != PASS_WARN_AGE %}
+Audit      : {{user_sccounts_results.results[2].item}} {{user_sccounts_results.results[2].stdout}}
+remidiation: User Password PASS_WARN_AGE days is differ .. (set {{PASS_WARN_AGE}} days)
+Condition  : Failed
+{% else %}
+
+Audit    : {{user_sccounts_results.results[2].item}} {{user_sccounts_results.results[2].stdout}}
+Condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results2.stdout == "" %}
+
+Audit    : all user's password PASS_WARN_DAYS is {{PASS_WARN_AGE}}.
+condition: success.
+
+{% else %}
+Audit    : Here mentioned user's password PASS_WARN_DAYS is not equal to {{PASS_WARN_AGE}}.
+Condition: failed.
+
+{% for pass_warn_days in user_accounts_expiriation_results2.stdout_lines %}
+{{loop.index}} - {{pass_warn_days}}
+{% endfor %}
+{% endif %}
+
+-------------------------------------------------------------------------------------------
+
+{% if user_sccounts_results.results[3].stdout != "" %}
+{% if user_sccounts_results.results[3].stdout != PASS_MIN_LEN  %}
+Audit      : {{user_sccounts_results.results[3].item}} {{user_sccounts_results.results[3].stdout}}
+remidiation: User Password PASS_MIN_LEN days is differ .. (set {{PASS_MIN_LEN}} days)
+Condition  : Failed
+{% else %}
+
+Audit : {{user_sccounts_results.results[3].item}} {{user_sccounts_results.results[3].stdout}}
+condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results3.results[0].stdout == PASS_INACTIVE %}
+Audit: Password inactive date is enough
+condition: success
+
+{% else %}
+Audit: Password inactive is not satisfy {{PASS_INACTIVE}}
+condition: Failed (set password inactive date {{PASS_INACTIVE}})
+
+{% endif %}
+--------------------------------------------------------------------------------------------
+
+Audit: Users password change details History
+
+{% for user_last_change in user_last_pass_change_results.results | json_query('[]')  %}
+{{loop.index}} - Username: {{user_last_change.item}} - {{user_last_change.stdout | replace('\t\t\t\t\t', ' ') }}
+
+{% endfor %}
+
+--------------------------------------------------------------------------------------------
+
+{% if non_login_results.stdout == "" %}
+
+Audit: system accounts are non-login in shell
+Condition: success
+
+{% else %}
+
+Audit: system accounts users are login in shell
+Remediation: Kindly change the shell "usermod -s /sbin/nologin username"
+Condition: Failed
+
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if root_uid_results.stdout == "0" %}
+
+Audit    : root uid is equal to 0
+condition: Sucess
+
+{% else %}
+
+Audit      : root uid is equal to 0
+Remediation: kindly change to 0
+Condition  : Failed
+
+{% endif %}
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results3.results[1].stdout == "" %}
+
+Audit      : TMOUT is not set in  /etc/bashrc
+Remediation: TMOUT=600 in /etc/bashrc
+Condition  : Failed
+
+{% else %}
+
+Audit      : TMOUT is set in /etc/bashrc
+Condition  : success
+
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results3.results[2].stdout == "" %}
+Audit      : TMOUT is not set in  /etc/profile
+Remediation: TMOUT=600 in /etc/profile
+Condition  : Failed
+
+{% else %}
+
+Audit      : TMOUT is set in /etc/profile
+Condition  : success
+
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results3.results[3].stdout == "" %}
+Audit      : su command is not restricted.
+Remediation: Add "auth required pam_wheel.so use_uid  --> /etc/pam.d/su "
+Condition  : Failed
+
+{% else %}
+
+Audit      : su command is restricted {{user_accounts_expiriation_results3.results[3].stdout}}
+Condition  : success
+
+{% endif %}
+
+
+{% for jino in checking_scripts_results.results | json_query('[]') %}
+--------------------------------------------------------------------------------------------
+
+{% if jino.stdout == "" %}
+
+Audit    : No Entries in {{jino.item}}.
+Condition: success.
+
+{% else %}
+
+Audit    : {{jino.item}} Found.
+Condition: failed
+{{jino.stdout}}
+
+{% endif %}
+{% endfor %}
+
+
+{% for j in lagacy_results.results | json_query('[]') %}
+--------------------------------------------------------------------------------------------
+{% if j.stdout == "" %}
+
+Audit    : No legacy "+" entries exist in {{j.item}}.
+Condition: success.
+
+{% else %}
+Audit    : {{j.item}} Found.
+Condition: failed
+{{j.stdout}}
+
+{% endif %}
+{% endfor %}
+
+
+{% for jino in  system_main_file_result.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+
+{% if jino.stat.exists  == true %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was found
+Condition  : Success
+{% if jino.stat.mode == 0644 and jino.stat.gr_name == "root" and jino.stat.pw_name == "root" %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+
+{% else %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+Condition  : Warning - File permissions is mismatch.
+The OSR {{ jino.item }} has permissions set on 0644 and user root and group root
+
+{% endif %}
+{% else %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was not found
+Condition  : Warning.
+{% endif %}
+{% endfor %}
+
+
+
+{% for jino in  system_main_file_result1.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+
+{% if jino.stat.exists  == true %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was found
+
+{% if jino.stat.mode == 0600 and jino.stat.gr_name == "root" and jino.stat.pw_name == "root" %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+
+{% else %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+Warning - File permissions is mismatch.
+The OSR {{ jino.item }} has permissions set on 0600 and user root and group root
+
+{% endif %}
+{% else %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was not found
+
+{% endif %}
+{% endfor %}
+
+
+{% for jino in  system_main_file_result2.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+
+{% if jino.stat.exists  == true %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was found
+
+{% if jino.stat.mode == "0000" and jino.stat.gr_name == "root" and jino.stat.pw_name == "root" %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+
+{% else %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+Warning - File permissions is mismatch.
+The OSR {{ jino.item }} has permissions set on 0000 and user root and group root
+
+{% endif %}
+{% else %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was not found
+
+{% endif %}
+{% endfor %}
+
+---------------------------------------------------------------------------------
+
+{% if system_main_file_result3.results[0].stdout == "" %}
+
+Audit: No world writable files exist
+Condition: Success
+
+{% else %}
+Audit      : world writable files exist
+Remediation: Removing write access for the “other” category (chmod o-w <filename>) is advisable, but always consult relevant vendor documentation to avoid breaking any application dependencies on a given file. 
+{% for jino in system_main_file_result3.results[0].stdout_lines %}
+{{loop.index}}-{{jino}}
+{% endfor %}
+{% endif %}
+
+---------------------------------------------------------------------------------
+
+{% if system_main_file_result3.results[1].stdout == "" %}
+
+Audit: No ungrouped files or directories exist
+Condition: Success
+
+{% else %}
+Audit      : Ungrouped files or directories exist
+Remediation: Locate files that are owned by users or groups not listed in the system configuration files, and reset the ownership of these files to some active user on the system as appropriate.
+{% for jino in system_main_file_result3.results[1].stdout_lines %}
+{{loop.index}}-{{jino}}
+{% endfor %}
+{% endif %}
+
+---------------------------------------------------------------------------------
+
+{% if system_main_file_result3.results[2].stdout == "" %}
+
+Audit: SGID executables
+Condition: Success
+
+{% else %}
+Audit: SGID executables was found
+Remediation: Ensure that no rogue SUID programs have been introduced into the system. Review the files returned by the action in the Audit section and confirm the integrity of these binaries.
+{% for jino in system_main_file_result3.results[2].stdout_lines %}
+{{loop.index}}-{{jino}}
+{% endfor %}
+{% endif %}
+
+---------------------------------------------------------------------------------
+
+{% if system_main_file_result3.results[3].stdout == "" %}
+
+Audit: SGID executables
+Condition: Success
+
+{% else %}
+Audit: SGID executables was found
+Remediation: Ensure that no rogue SGID programs have been introduced into the system. Review the files returned by the action in the Audit section and confirm the integrity of these binaries.
+{% for jino in system_main_file_result3.results[3].stdout_lines %}
+{{loop.index}}-{{jino}}
+{% endfor %}
+{% endif %}
+
+--------------------------------------------------------------------------------
+
+{% if system_main_file_result3.results[4].stdout == "" %}
+
+Audit: No unowned files or directories exist
+Condition: Success
+
+{% else %}
+Audit      : Unowned files or directories exist
+Remediation: Locate files that are owned by users or groups not listed in the system configuration files, and reset the ownership of these files to some active user on the system as appropriate.
+{% for jino in system_main_file_result3.results[4].stdout_lines %}
+{{loop.index}}-{{jino}}
+{% endfor %}
+{% endif %}
+
+
+{% for jino in  unwanted_files_result.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+
+{% if jino.stat.exists  == true %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was found
+
+{% if jino.stat.mode == 0600 and jino.stat.gr_name == "root" and jino.stat.pw_name == "root" %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+Remediation: kindly remove this file.
+{% else %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+Warning - File permissions is mismatch.
+Remediation: kindly remove this file.
+The OSR {{ jino.item }} has permissions set on 0000 and user root and group root
+
+{% endif %}
+{% else %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was not found
+condition: Sucess
+
+{% endif %}
+{% endfor %}
+
+{% for jino in  wanted_files_result.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+
+{% if jino.stat.exists  == true %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was found
+
+{% if jino.stat.mode == 0600 and jino.stat.gr_name == "root" and jino.stat.pw_name == "root" %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+Condition  : Success
+{% else %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+Condition  : Warning - File permissions is mismatch.
+The OSR {{ jino.item }} has permissions set on 0600 and user root and group root
+
+{% endif %}
+{% else %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was not found
+Remediation: kindly create this file.
+Condition  : Failed
+{% endif %}
+{% endfor %}
+
+
+{% for jino in enabled_service_result.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+
+{% if jino.stdout == "enabled" %}
+Service Name  : {{jino.item}}
+Service Status: {{jino.stdout}}
+Condition     : Success
+
+{% else %}
+Service Name  : {{jino.item}}
+Service Status: {{jino.stdout}}
+Remediation   : kindly enable {{jino.item}}
+
+{% endif %}
+{% endfor %}
+
+
+{% for jino in network_parameters1_result.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+
+{% if jino.stdout == "0" %}
+
+Audit    : Sysctl parameters correct
+condiion : Success
+result   : {{jino.item}} {{jino.stdout}}
+
+{% else %}
+
+Audit        : Sysctl parameters is incorrect
+Condition    : Failed
+current value: {{jino.item}} {{jino.stdout}}
+Remidiation  : make entry in /etc/sysctl.conf {{jino.item}} 0
+
+{% endif %}
+
+{% endfor %}
+
+{% for jino in network_parameters2_result.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+
+{% if jino.stdout == "1" %}
+
+Audit    : Sysctl parameters correct
+condiion : Success
+result   : {{jino.item}} {{jino.stdout}}
+
+{% else %}
+
+Audit        : Sysctl parameters is incorrect
+Condition    : Failed
+current value: {{jino.item}} {{jino.stdout}}
+Remidiation  : make entry in /etc/sysctl.conf {{jino.item}} 1
+
+{% endif %}
+
+{% endfor %}
+
+------------------------------------------------------------------------------------
+
+{% for jino in network_parameters3_result.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+
+{% if jino.stdout == "2" %}
+
+Audit    : Sysctl parameters correct
+condiion : Success
+result   : {{jino.item}} {{jino.stdout}}
+
+{% else %}
+
+Audit        : Sysctl parameters is incorrect
+Condition    : Failed
+current value: {{jino.item}} {{jino.stdout}}
+Remidiation  : make entry in /etc/sysctl.conf {{jino.item}} 2
+
+{% endif %}
+
+{% endfor %}
+
+------------------------------------------------------------------------------------
+{% if ipv6_disble_result.stdout != "" %}
+
+Audit     : IPV6 disbled
+Condition : Success
+
+{% else %}
+
+Audit      : IPV6 enabled
+Condition  : Failed
+Remediation: make entry in /etc/modprobe.d/CIS.conf --  options ipv6 disable=1
+
+{% endif %}
+
+
+{% for jino in unwanted_protocols_result.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+{% if jino.stdout != "" %}
+
+Protocol name: {{jino.item}}
+Audit        : Unwanted protocol {{jino.item}} disabled.
+Condition    : Success
+
+{% else %}
+
+Protocol name: {{jino.item}}
+Audit        : Unwanted protocol {{jino.item}} enabled.
+Condition    : Failed
+Remediation  : make entry in /etc/modprobe.d/CIS.conf install {{jino.item}} /bin/true
+
+{% endif %}
+{% endfor %}
+
+
+{% for jino in unwanted_service_result.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+{% if jino.stdout == "disabled" %}
+
+Service name: {{jino.item}}
+Audit        : Unwanted Service {{jino.item}} disabled.
+Condition    : Success
+
+{% else %}
+
+{% if jino.stdout == "enabled" %}
+
+Service name: {{jino.item}}
+Audit        : Unwanted service {{jino.item}} enabled.
+Condition    : Failed
+Remediation  : Kindly disable the service - {{jino.item}} 
+
+{% else %}
+
+Service name: {{jino.item}}
+Audit        : Unwanted service {{jino.item}} not found.
+Condition    : Success. Failed to get unit file state for {{jino.item}}.service
+
+{% endif %}
+{% endif %}
+{% endfor %}
+
+
+{% for jino in unwanted_packages_result.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+{% if jino.stdout == "" %}
+
+Package name : {{jino.item}}
+Audit        : Unwanted Package {{jino.item}} is not found
+Condition    : Success
+
+{% else %}
+
+Package name : {{jino.item}}
+Audit        : Unwanted Package {{jino.item}} is found.
+Condition    : Failed.
+Remediation  : Kindly remove it. yum remove {{jino.item}}
+
+{% endif %}
+{% endfor %}
+
+{% for jino in banner_list_result.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+{% if jino.stdout != "" %}
+
+File name    : {{jino.item}}
+Audit        : Unwanted information {{jino.item}} is not found
+Condition    : Success
+File State   : {{jino.stdout}}
+
+{% else %}
+
+File name    : {{jino.item}}
+Audit        : Unwanted information {{jino.item}} was found.
+Condition    : Failed.
+File State   : {{jino.stdout}}
+Remediation  : echo "Authorized uses only. All activity may be monitored and reported." > {{jino.item}}
+
+{% endif %}
+{% endfor %}
+
+
+------------------------------------------------------------------------------------
+{% if sudo_permission_user_result1.stdout == "" %}
+
+File name    : /etc/sudoers and /etc/sudoers.d/*
+Audit        : User sharing privileges is not found
+Condition    : Success
+
+{% else %}
+
+File name    : /etc/sudoers and /etc/sudoers.d/*
+Audit        : User sharing privileges was found.
+Condition    : Failed.
+Users list:
+-----------
+{% for jino in sudo_permission_user_result1.stdout_lines %}
+{{loop.index}} - {{jino}}
+{% endfor %}
+Remediation  : Kindly restrict it.
+
+{% endif %}
+------------------------------------------------------------------------------------
+
+{% if sudo_permission_user_result2.stdout == "" %}
+
+File name    : /etc/sudoers and /etc/sudoers.d/*
+Audit        : sudo log file is not found
+Condition    : Failed
+
+{% else %}
+
+File name    : /etc/sudoers and /etc/sudoers.d/*
+Audit        : Sudo log file was found.
+Condition    : Success
+File State   : {{sudo_permission_user_result2.stdout}}
+Remediation  : Kindly enable it.
+
+{% endif %}
+------------------------------------------------------------------------------------
+
+{% if sudo_permission_user_result3.stdout == "" %}
+
+File name    : /etc/sudoers and /etc/sudoers.d/*
+Audit        : sudo include dir is not found
+Condition    : Success
+
+{% else %}
+
+File name    : /etc/sudoers and /etc/sudoers.d/*
+Audit        : Sudo include Directoryc was found.
+Condition    : Failed.
+File State   : {{sudo_permission_user_result3.stdout_lines}}
+Remediation  : Kindly restrict it.
+
+{% endif %}
+
+
+------------------------------------------------------------------------------------
+
+{% if audit_conf_result.results[0].stdout == "keep_logs" %}
+
+File name    : {{audit_conf_result.results[0].item}} /etc/audit/auditd.conf = {{audit_conf_result.results[0].stdout}}
+Audit        : audit file was found
+Condition    : Success
+
+{% else %}
+
+File name    : {{audit_conf_result.results[0].item}} /etc/audit/auditd.conf = {{audit_conf_result.results[0].stdout}}
+Audit        : entry is mismatch.
+Condition    : Failed.
+Remediation  : {{audit_conf_result.results[0].item}} /etc/audit/auditd.conf = keep_logs
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_conf_result.results[1].stdout == "email" %}
+
+File name    : {{audit_conf_result.results[1].item}} /etc/audit/auditd.conf = {{audit_conf_result.results[1].stdout}}
+Audit        : audit file was found
+Condition    : Success
+
+{% else %}
+
+File name    : {{audit_conf_result.results[1].item}} /etc/audit/auditd.conf = {{audit_conf_result.results[1].stdout}}
+Audit        : entry is mismatch.
+Condition    : Failed.
+Remediation  : {{audit_conf_result.results[1].item}} /etc/audit/auditd.conf = email
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_conf_result.results[2].stdout == "root" %}
+
+File name    : {{audit_conf_result.results[2].item}} /etc/audit/auditd.conf = {{audit_conf_result.results[2].stdout}}
+Audit        : audit file was found
+Condition    : Success
+
+{% else %}
+
+File name    : {{audit_conf_result.results[2].item}} /etc/audit/auditd.conf = {{audit_conf_result.results[2].stdout}}
+Audit        : entry is mismatch.
+Condition    : Failed.
+Remediation  : {{audit_conf_result.results[2].item}} /etc/audit/auditd.conf = root
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_conf_result.results[3].stdout == "halt" %}
+
+File name    : {{audit_conf_result.results[3].item}} /etc/audit/auditd.conf = {{audit_conf_result.results[3].stdout}}
+Audit        : audit file was found
+Condition    : Success
+
+{% else %}
+
+File name    : {{audit_conf_result.results[3].item}} /etc/audit/auditd.conf = {{audit_conf_result.results[3].stdout}}
+Audit        : entry is mismatch.
+Condition    : Failed.
+Remediation  : {{audit_conf_result.results[3].item}} /etc/audit/auditd.conf = halt
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_conf_result.results[4].stdout != "" %}
+
+File name    : {{audit_conf_result.results[4].item}} /etc/audit/auditd.conf = {{audit_conf_result.results[4].stdout}}
+Audit        : audit file was found. Ensure is assign MB.
+Condition    : Success
+
+{% else %}
+
+File name    : {{audit_conf_result.results[4].item}} /etc/audit/auditd.conf = {{audit_conf_result.results[4].stdout}}
+Audit        : entry is mismatch.
+Condition    : Failed.
+Remediation  : {{audit_conf_result.results[4].item}} /etc/audit/auditd.conf = 50MB (value is mentioned ur infra)
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_check_rules_result.results[0].stdout != "" %}
+
+File name    : {{audit_check_rules_result.results[0].item}} /etc/audit/audit.rules
+Audit        : audit file was found
+Condition    : Success
+File State   :
+
+{{audit_check_rules_result.results[0].stdout}}
+
+{% else %}
+
+File name    : {{audit_check_rules_result.results[0].item}} /etc/audit/audit.rules
+Audit        : Audit file was not found.
+Condition    : Failed.
+Remediation  : Kindly restrict it. Add this condent in /etc/audit/audit.rules
+
+-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change 
+-a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change 
+-a always,exit -F arch=b64 -S clock_settime -k time-change 
+-a always,exit -F arch=b32 -S clock_settime -k time-change 
+-w /etc/localtime -p wa -k time-change
+
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_check_rules_result.results[1].stdout != "" %}
+
+File name    : {{audit_check_rules_result.results[1].item}} /etc/audit/audit.rules
+Audit        : audit file was found
+Condition    : Success
+File State   :
+
+{{audit_check_rules_result.results[1].stdout}}
+
+{% else %}
+
+File name    : {{audit_check_rules_result.results[1].item}} /etc/audit/audit.rules
+Audit        : Audit file was not found.
+Condition    : Failed.
+Remediation  : Kindly restrict it. Add this condent in /etc/audit/audit.rules
+
+-w /etc/group -p wa -k identity
+-w /etc/passwd -p wa -k identity
+-w /etc/gshadow -p wa -k identity
+-w /etc/shadow -p wa -k identity
+-w /etc/security/opasswd -p wa -k identity
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_check_rules_result.results[2].stdout != "" %}
+
+File name    : {{audit_check_rules_result.results[2].item}} /etc/audit/audit.rules
+Audit        : audit file was found
+Condition    : Success
+File State   :
+
+{{audit_check_rules_result.results[2].stdout}}
+
+{% else %}
+
+File name    : {{audit_check_rules_result.results[2].item}} /etc/audit/audit.rules
+Audit        : Audit file was not found.
+Condition    : Failed.
+Remediation  : Kindly restrict it. Add this condent in /etc/audit/audit.rules
+
+-a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale
+-a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale
+-w /etc/issue -p wa -k system-locale
+-w /etc/issue.net -p wa -k system-locale
+-w /etc/hosts -p wa -k system-locale
+-w /etc/sysconfig/network -p wa -k system-locale
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_check_rules_result.results[3].stdout != "" %}
+
+File name    : {{audit_check_rules_result.results[3].item}} /etc/audit/audit.rules
+Audit        : audit file was found
+Condition    : Success
+File State   :
+
+{{audit_check_rules_result.results[3].stdout}}
+
+{% else %}
+
+File name    : {{audit_check_rules_result.results[3].item}} /etc/audit/audit.rules
+Audit        : Audit file was not found.
+Condition    : Failed.
+Remediation  : Kindly restrict it. Add this condent in /etc/audit/audit.rules
+
+-w /etc/selinux/ -p wa -k MAC-policy
+
+{% endif %}
+
+
+------------------------------------------------------------------------------------
+
+{% if audit_check_rules_result.results[4].stdout != "" %}
+
+File name    : {{audit_check_rules_result.results[4].item}} /etc/audit/audit.rules
+Audit        : audit file was found
+Condition    : Success
+File State   :
+
+{{audit_check_rules_result.results[4].stdout}}
+
+{% else %}
+
+File name    : {{audit_check_rules_result.results[4].item}} /etc/audit/audit.rules
+Audit        : Audit file was not found.
+Condition    : Failed.
+Remediation  : Kindly restrict it. Add this condent in /etc/audit/audit.rules
+
+-w /var/log/lastlog -p wa -k logins 
+-w /var/run/faillock/ -p wa -k logins
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_check_rules_result.results[5].stdout != "" %}
+
+File name    : {{audit_check_rules_result.results[5].item}} /etc/audit/audit.rules
+Audit        : audit file was found
+Condition    : Success
+File State   :
+
+{{audit_check_rules_result.results[5].stdout}}
+
+{% else %}
+
+File name    : {{audit_check_rules_result.results[5].item}} /etc/audit/audit.rules
+Audit        : Audit file was not found.
+Condition    : Failed.
+Remediation  : Kindly restrict it. Add this condent in /etc/audit/audit.rules
+
+-w /var/run/utmp -p wa -k session 
+-w /var/log/wtmp -p wa -k session 
+-w /var/log/btmp -p wa -k session
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_check_rules_result.results[6].stdout != "" %}
+
+File name    : {{audit_check_rules_result.results[6].item}} /etc/audit/audit.rules
+Audit        : audit file was found
+Condition    : Success
+File State   : 
+
+{{audit_check_rules_result.results[6].stdout}}
+
+{% else %}
+
+File name    : {{audit_check_rules_result.results[6].item}} /etc/audit/audit.rules
+Audit        : Audit file was not found.
+Condition    : Failed.
+Remediation  : Kindly restrict it. Add this condent in /etc/audit/audit.rules
+
+-a always,exit -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod 
+-a always,exit -F arch=b32 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod 
+-a always,exit -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b32 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod 
+-a always,exit -F arch=b64 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod 
+-a always,exit -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_check_rules_result.results[7].stdout != "" %}
+
+File name    : {{audit_check_rules_result.results[7].item}} /etc/audit/audit.rules
+Audit        : audit file was found
+Condition    : Success
+File State   : 
+
+{{audit_check_rules_result.results[7].stdout}}
+
+{% else %}
+
+File name    : {{audit_check_rules_result.results[7].item}} /etc/audit/audit.rules
+Audit        : Audit file was not found.
+Condition    : Failed.
+Remediation  : Kindly restrict it. Add this condent in /etc/audit/audit.rules
+
+-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access 
+-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access 
+-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access 
+-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+
+{% endif %}
+
+
+------------------------------------------------------------------------------------
+
+{% if audit_check_rules_result.results[8].stdout != "" %}
+
+File name    : {{audit_check_rules_result.results[8].item}} /etc/audit/audit.rules
+Audit        : audit file was found
+Condition    : Success
+File State   : 
+
+{{audit_check_rules_result.results[8].stdout}}
+
+{% else %}
+
+File name    : {{audit_check_rules_result.results[8].item}} /etc/audit/audit.rules
+Audit        : Audit file was not found.
+Condition    : Failed.
+Remediation  : Kindly restrict it. Add this condent in /etc/audit/audit.rules
+
+-a always,exit -F arch=b64 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts
+-a always,exit -F arch=b32 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_check_rules_result.results[9].stdout != "" %}
+
+File name    : {{audit_check_rules_result.results[9].item}} /etc/audit/audit.rules
+Audit        : audit file was found
+Condition    : Success
+File State   : 
+
+{{audit_check_rules_result.results[9].stdout}}
+
+{% else %}
+
+File name    : {{audit_check_rules_result.results[9].item}} /etc/audit/audit.rules
+Audit        : Audit file was not found.
+Condition    : Failed.
+Remediation  : Kindly restrict it. Add this condent in /etc/audit/audit.rules
+
+-a always,exit -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete 
+-a always,exit -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_check_rules_result.results[10].stdout != "" %}
+
+File name    : {{audit_check_rules_result.results[10].item}} /etc/audit/audit.rules
+Audit        : audit file was found
+Condition    : Success
+File State   : 
+
+{{audit_check_rules_result.results[10].stdout}}
+
+{% else %}
+
+File name    : {{audit_check_rules_result.results[10].item}} /etc/audit/audit.rules
+Audit        : Audit file was not found.
+Condition    : Failed.
+Remediation  : Kindly restrict it. Add this condent in /etc/audit/audit.rules
+
+-w /etc/sudoers -p wa -k scope 
+-w /etc/sudoers.d -p wa -k scope
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_check_rules_result.results[11].stdout != "" %}
+
+File name    : {{audit_check_rules_result.results[11].item}} /etc/audit/audit.rules
+Audit        : audit file was found
+Condition    : Success
+File State   : 
+
+{{audit_check_rules_result.results[11].stdout}}
+
+{% else %}
+
+File name    : {{audit_check_rules_result.results[11].item}} /etc/audit/audit.rules
+Audit        : Audit file was not found.
+Condition    : Failed.
+Remediation  : Kindly restrict it. Add this condent in /etc/audit/audit.rules
+
+-w /var/log/sudo.log -p wa -k actions
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_check_rules_result.results[12].stdout != "" %}
+
+File name    : {{audit_check_rules_result.results[12].item}} /etc/audit/audit.rules
+Audit        : audit file was found
+Condition    : Success
+File State   :
+
+{{audit_check_rules_result.results[12].stdout}}
+
+{% else %}
+
+File name    : {{audit_check_rules_result.results[12].item}} /etc/audit/audit.rules
+Audit        : Audit file was not found.
+Condition    : Failed.
+Remediation  : Kindly restrict it. Add this condent in /etc/audit/audit.rules
+
+-w /sbin/insmod -p x -k modules 
+-w /sbin/rmmod -p x -k modules 
+-w /sbin/modprobe -p x -k modules 
+-a always,exit arch=b64 -S init_module -S delete_module -k modules
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_check_result.results[0].stdout != "" %}
+
+File name    : auditing for processes that start prior to auditd is enabled
+Audit        : audit file was found
+Condition    : Success
+File State   : {{audit_check_result.results[0].stdout}}
+
+{% else %}
+
+File name    : {{audit_check_result.results[0].item}}
+Audit        : Audit file was not found.
+Condition    : Failed.
+Remediation  :
+
+    Edit /etc/default/grub and add audit=1 to GRUB_CMDLINE_LINUX:
+        GRUB_CMDLINE_LINUX="audit=1"
+    Run the following command to update the grub2 configuration:
+        grub2-mkconfig > /boot/grub2/grub.cfg
+
+{% endif %}
+
+------------------------------------------------------------------------------------
+
+{% if audit_check_result.results[1].stdout == "-e 2" %}
+
+File name    : audit configuration is immutable enabled.
+Audit        : audit file was found
+Condition    : Success
+File State   : {{audit_check_result.results[1].stdout}}
+
+{% else %}
+
+File name    : {{audit_check_result.results[1].item}}
+Audit        : Audit file was not found.
+Condition    : Failed.
+Remediation  : Add the following line to the end of the/etc/audit/audit.rules file
+
+             -e 2
+
+{% endif %}
+
+
+{#{% for jino in checking_scripts1_results.results | json_query('[]') %}
+#--------------------------------------------------------------------------------------------
+#
+#{% if jino.stdout == "" %}
+#
+#Audit: No Entries in {{jino.item}}.
+#Condition: success.
+#
+#{% else %}
+#
+#Audit: Result Found.
+#Condition: failed
+#{{jino.stdout}}
+#
+#{% endif %}
+#{% endfor %}
+#}

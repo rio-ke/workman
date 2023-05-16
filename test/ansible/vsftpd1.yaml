@@ -1,0 +1,60 @@
+---
+- name: ansible play for os hardening
+  hosts: bds2
+  vars:
+    assign:
+      assign1: lucifer #username
+      assign2: vsftpd #service name
+      assign3: /var/www/html/BDS #ftp path
+  tasks:
+  - name: install vsftpd packages
+    yum: name="{{assign.assign2}}" state=present
+  - name: file changes in vsftpd conf file
+    lineinfile: path=/etc/vsftpd/vsftpd.conf backup=yes regexp={{item.ex}} line={{item.lin}}
+    with_items:
+      - { ex: 'anonymous_enable=YES', lin: 'anonymous_enable=NO' }
+      - { ex: '#ascii_upload_enable=YES', lin: 'ascii_upload_enable=YES' }
+      - { ex: '#ascii_download_enable=YES', lin: 'ascii_download_enable=YES' }
+      - { ex: '#ftpd_banner=Welcome to blah FTP service.', lin: 'ftpd_banner=Welcome to FTP service.' }
+      - { ex: 'listen=NO', lin: 'listen=YES' }
+      - { ex: 'listen_ipv6=YES', lin: 'listen_ipv6=NO' }
+      - { ex: 'xferlog_std_format=YES', lin: 'xferlog_std_format=NO' }
+      - { ex: '#chroot_local_user=YES', lin: 'chroot_local_user=YES' }
+    when: ansible_distribution_major_version == "7" or ansible_distribution == "CentOS"
+  - name: add the file in vsftpd location
+    blockinfile:
+      path: /etc/vsftpd/vsftpd.conf
+      block: |
+        use_localtime=YES
+        user_config_dir=/etc/vsftpd/users
+        allow_writeable_chroot=YES
+        vsftpd_log_file=/var/log/vsftpd.log
+        log_ftp_protocol=YES
+
+  - name: create the user for ftpd
+    user: name="{{assign.assign1}}" shell=/sbin/nologin state=present
+  - name: assign password for the user
+    shell: echo "{{assign.assign1}}:{{assign.assign1}}" | chpasswd
+  - name: cretae directory
+    file: path=/etc/vsftpd/users state=directory mode=0600
+  - name: directory assign file permission
+    file: path={{assign.assign3}} owner={{assign.assign1}} group={{assign.assign1}} mode=0754 recurse=yes
+  - name: touch file create depends on user
+    file: path=/etc/vsftpd/users/{{assign.assign1}} state=touch
+  - name: create log file 
+    file: path=/var/log/vsftpd.log state=touch owner={{assign.assign1}} group={{assign.assign1}}
+  - name: add the file in vsftpd user location
+    blockinfile:
+      path: /etc/vsftpd/users/{{assign.assign1}}
+      block: |
+        local_root={{assign.assign3}}
+  - name: start the service
+    systemd: name="{{assign.assign2}}" state=started enabled=yes
+  - name: add the service to firewalld
+    firewalld: service="{{assign.assign1}}" permanent=true state=enabled
+  - name: restart the service
+    systemd: name="{{item}}" state=restarted
+    with_items:
+      - vsftpd
+      - firewalld
+

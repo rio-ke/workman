@@ -1,0 +1,11 @@
+---
+- hosts: local
+  tasks:
+  - name: Sending message to slack channel
+    slack:
+      token: "TCYQDFEPR/BCYBD8ENR/RgAvFE7Zw27aPRb1DfEbf7rM"
+      channel: "#general"
+      domain: "jino-workspace.slack.com"
+      parse: "full"
+      color: "good"
+      msg: 'The blah playbook was ran on {{ inventory_hostname }}.'

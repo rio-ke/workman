@@ -1,0 +1,22 @@
+---
+- name: "splunk install use rpm file"
+  yum:
+    name: "{{rpm_fiule_name}}"
+    state: present
+
+-	name: "Set Splunk export"
+	shell: export SPLUNK_HOME=/opt/splunk
+
+-	name: "start the splunk sevice without usernameand password"
+	shell: $SPLUNK_HOME/bin/splunk start --answer-yes --accept-license --no-prompt
+
+-	name: "stop splunk service"
+	shell: $SPLUNK_HOME/bin/splunk stop
+
+-	name: "create username and password"
+	template:
+		src: auth.j2
+		dest: $SPLUNK_HOME/etc/system/local/user-seed.conf
+
+-	name: "start the splunk sevice without usernameand password"
+	shell: $SPLUNK_HOME/bin/splunk start --answer-yes

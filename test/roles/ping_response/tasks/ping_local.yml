@@ -1,0 +1,21 @@
+---
+- name: "to find uptime"
+  ping:
+  register: ping_result
+
+- name: "create uptime template"
+  template:
+    src: temp2.j2
+    dest: /tmp/ping_response.txt
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+
+- name: "Mail the uptime condent"
+  mail:
+    to: "{{email_to}}"
+    cc: "{{email_cc}}"
+    subject: Ping status Report
+    attach:
+      - /tmp/ping_response.txt
+    body: System has been generated memory report successfully.
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  run_once: True

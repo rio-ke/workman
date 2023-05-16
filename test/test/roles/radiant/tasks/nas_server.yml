@@ -1,0 +1,38 @@
+---
+- name: "get timestatmp"
+  shell: date +%Y-%m-%d --date="1 day ago"
+  register: rcmsdc2_result
+
+- name: "create directory"
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "/home/admin/Database/RCMS/{{ lastday_date }}"
+    - "/home/admin/Database/ATM/{{ lastday_date }}"
+
+- name: "rcms DB move nas device"
+  copy:
+    src: "/jino/{{ item }}"
+    dest: "/home/admin/Database/RCMS/{{ lastday_date }}/"
+    remote_src: no
+  loop: "{{ radiant_dbs }}"
+  register: rcms_nas
+  ignore_errors: true
+
+- name: "atm DB move nas device"
+  copy:
+    src: /jino/rcms_atm.gz
+    dest: "/home/admin/Database/ATM/{{ lastday_date }}/"
+    remote_src: no
+  register: atm_nas
+  ignore_errors: true
+
+- name: "success mail notification"
+  mail:
+    to: "{{to_address}}"
+    cc: "{{cc_address}}"
+    from: "ansible@{{ansible_nodename}}"
+    subject: "{{ansible_hostname}} - Ansible Report"
+    body: "all DB's move to nas device"
+  ignore_errors: True

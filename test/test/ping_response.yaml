@@ -1,0 +1,10 @@
+---
+- name: "Security Check"
+  hosts: localhost
+  vars_prompt:
+  - name: ping_response
+    prompt: "Which linux server do you want to deploy?\n1 - Ping server use ansible\n2 - Ping target hostserver\n"
+    private: no
+  tasks:
+  roles:
+    - role: ping_response

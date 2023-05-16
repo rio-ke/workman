@@ -1,0 +1,14 @@
+---
+- hosts: master
+  tasks:
+  - name: install
+    shell: yum check-update -y
+    register: jino
+  - debug:
+      msg: "{{jino.stdout}}"
+
+  - name: update
+    yum:
+      name: httpd
+      state: present
+      exclude: "{{default(omit)}}"

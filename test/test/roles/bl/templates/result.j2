@@ -1,0 +1,6 @@
+SERVER NAME; NETWORK DETAILS; DNS DETAILS
+{% for host in play_hosts %}
+{% for j in hostvars[host].result.results | json_query('[].msg[]') %}
+{{j}}
+{%endfor%}
+{%endfor%}

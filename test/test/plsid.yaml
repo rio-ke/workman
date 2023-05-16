@@ -1,0 +1,10 @@
+---
+- name: sndksnk
+  hosts: all
+  tasks:
+    - name: jkdsfbkjsdnf
+      shell: hostname
+      when: ansible_hostname == "node2"
+      register: j
+    - debug:
+        msg: "{{j.stdout}}"

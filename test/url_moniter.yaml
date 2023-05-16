@@ -1,0 +1,8 @@
+---
+- name: "url monitering"
+  hosts: localhost
+  roles:
+  - role: url_moniter
+    delegate_host: localhost
+    email_to: jinojoe@gmail.com
+    email_cc: jinojoe@rediffmail.com

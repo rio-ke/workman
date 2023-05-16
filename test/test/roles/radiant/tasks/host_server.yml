@@ -1,0 +1,55 @@
+---
+- name: "host server timestamp"
+  command: date +%d%b%Y --date="1 day ago"
+  register: host_timestamp
+
+- name: "host DB"
+  fetch:
+    src: "/hddbackup/mysqldb/{{host_dir_timestamp1}}/{{item}}"
+    dest: /jino
+    flat: yes
+    fail_on_missing: yes
+  loop: "{{host_dbs}}"
+  ignore_errors: True
+  register: host_result1
+
+
+- name: "optional host DB"
+  fetch:
+    src: "/hddbackup/mysqldb/{{host_dir_timestamp2}}/{{item}}"
+    dest: /jino
+    flat: yes
+    fail_on_missing: yes
+  loop: "{{host_dbs}}"
+  ignore_errors: True
+  register: host_result2
+  when:
+    - host_result1 is failed
+
+- name: "success mail notification"
+  mail:
+    to: "{{to_address}}"
+    cc: "{{cc_address}}"
+    from: "ansible@{{ansible_nodename}}"
+    subject: "{{ansible_hostname}} - Ansible Report"
+    body: "HOST DB are transferred to ansible server"
+  ignore_errors: True
+  when: host_result1 is succeeded
+  register: mail_result
+
+- name: "failure mail notification"
+  mail:
+    to: "{{to_address}}"
+    cc: "{{cc_address}}"
+    from: "ansible@{{ansible_nodename}}"
+    subject: "{{ansible_hostname}} - Failure Ansible Report"
+    body: "ATM DB are not transferred to ansible server"
+  ignore_errors: True
+  when: mail_result is failed
+
+- name: "rsync host data into nas device"
+  shell: "{{item}}"
+  loop:
+    - rsync -avzpP --delete /var/www/html/ATM/* admin@180.151.48.123:/home/admin/Application/UpdateApplications/ATM/
+    - rsync -avzpP  /var/www/html/ATM/* admin@180.151.48.123:/home/admin/Application/atmdata/ATM/
+  register: atm_application_data

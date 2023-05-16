@@ -1,0 +1,7 @@
+---
+- name: "Install Rsyslog_client"
+  hosts: cent
+  roles:
+  - role: rsyslog_client
+    rsyslog_server: 192.168.0.22
+    rsyslog_port: 514

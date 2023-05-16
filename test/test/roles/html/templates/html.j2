@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table.tb {
+  font-family: "Courier New", Courier, monospace;
+  border: 3px solid #7700B3;
+  background-color: #EEEEEE;
+  width: 40%;
+  text-align: center;
+  border-collapse: collapse;
+}
+table.tb td, table.tb th {
+  border: 1px solid #AAAAAA;
+  padding: 2px 3px;
+}
+table.tb tbody td {
+  font-size: 13px;
+}
+table.tb thead {
+  background: #7700B3;
+  background: -moz-linear-gradient(top, #9940c6 0%, #8419ba 66%, #7700B3 100%);
+  background: -webkit-linear-gradient(top, #9940c6 0%, #8419ba 66%, #7700B3 100%);
+  background: linear-gradient(to bottom, #9940c6 0%, #8419ba 66%, #7700B3 100%);
+  border-bottom: 2px solid #444444;
+}
+table.tb thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: left;
+}
+table.tb tfoot td {
+  font-size: 14px;
+}
+table.tb tfoot .links {
+  text-align: right;
+}
+table.tb tfoot .links a{
+  display: inline-block;
+  background: #1C6EA4;
+  color: #FFFFFF;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+</style>
+</head>
+<table class="tb">
+<thead>
+<tr>
+<th colspan="2">{{ansible_hostname}}</th>
+</tr>
+</thead>
+<tbody>
+{% for l, k in jino.ansible_facts.ansible_default_ipv4.items() %}
+<tr>
+<td>{{l}}</td>
+<td>{{k}}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</body>
+</html>
+

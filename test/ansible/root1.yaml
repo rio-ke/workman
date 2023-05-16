@@ -1,0 +1,16 @@
+---
+- hosts: atm
+  tasks:
+    - name: Test disk space available
+      assert:
+        that:
+          - "{{ item.mount == '/' and item.size_available > (item.size_total|float * 0.4) }}"
+            #- item.mount != '/'  {{ item.mount == '/' and item.size_available > (item.size_total|float * 0.4) }}
+      with_items: '{{ ansible_mounts }}'
+      ignore_errors: yes
+      register: disk_free
+
+    - name: Fail when disk space needs attention
+      fail:
+         msg: 'Disk space needs attention.'
+      when: disk_free is failed

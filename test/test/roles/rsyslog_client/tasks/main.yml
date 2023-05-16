@@ -1,0 +1,27 @@
+---
+- name: Install rsyslog server
+  yum:
+    name: rsyslog
+    state: present
+- name: "state the rsyslog service"
+  service:
+    name: rsyslog
+    state: started
+    enabled: yes
+- name: "Uncomment configuration files"
+  replace:
+    path: /etc/rsyslog.conf
+    regexp: "{{item.exp}}"
+    replace: "{{item.line}}"
+    backup: yes
+  with_items:
+    - { exp: '#\$ModLoad imtcp',                line: '$ModLoad imtcp'}
+    - { exp: '#\$InputTCPServerRun 514',        line: '$InputTCPServerRun 514'}
+    - { exp: '#\$ActionQueueFileName fwdRule1', line: '$ActionQueueFileName fwdRule1'}
+    - { exp: '#\$ActionQueueMaxDiskSpace 1g',   line: '$ActionQueueMaxDiskSpace 1g'}
+    - { exp: '#\$ActionQueueSaveOnShutdown on', line: '$ActionQueueSaveOnShutdown on'}
+    - { exp: '#\$ActionQueueType LinkedList',   line: '$ActionQueueType LinkedList'}
+    - { exp: '#\$ActionResumeRetryCount -1',    line: '$ActionResumeRetryCount -1'}
+    - { exp: '#\*\.\* @@remote-host:514',       line: '*.* @@{{rsyslog_server}}:{{rsyslog_port}}'}
+  notify:
+    - restart rsyslog

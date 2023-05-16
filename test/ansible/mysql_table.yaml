@@ -1,0 +1,25 @@
+---
+- hosts: dc2-node1
+  tasks:
+  - name: show the table
+    shell: mysql -u root rcms_atm -e "show tables" | grep -Ev "(Tables_in_rcmsdata|Tables_in_rcms_atm)"
+    register: jino
+  - debug: msg="{{jino.stdout_lines}}"
+  - name: show the table
+    shell: mysql -u root rcms_atm -e "select count(*) from {{ item}}"
+    with_items:
+      - "{{ jino.stdout_lines}}"
+    ignore_errors: yes
+    register: result2
+  - debug:
+      msg: "{{ lookup('template', 'template/result2.j2') }}"
+  - name: Notification message via Slack
+    slack:
+      token: TCYQDFEPR/BCYBD8ENR/RgAvFE7Zw27aPRb1DfEbf7rM
+      msg: "{{ lookup('template', 'template/result2.j2') }}"
+      channel: '#general'
+    delegate_to: localhost
+
+
+      #db Size >>>>>>>>> SELECT table_schema AS "Database", ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) AS "Size (MB)" FROM information_schema.TABLES GROUP BY table_schema;
+      #table Size >>>>>> SELECT table_name AS "Table", ROUND(((data_length + index_length) / 1024 / 1024), 2) AS "Size (MB)" FROM information_schema.TABLES WHERE table_schema = "database_name" ORDER BY (data_length + index_length) DESC;

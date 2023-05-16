@@ -1,0 +1,16 @@
+- name: dummy
+  hosts: master
+  tasks:
+  - name: create file
+    shell: "{{item}}"
+    with_items:
+      - hostname
+      - uname -r
+    register: result
+  - debug:
+      msg: "{{lookup('template','template/shell.j2')}}"
+  - debug:
+      msg: >
+        {% for jino in result.results | json_query('[]') %}
+        {{jino.item}} = {{jino.stdout}},
+        {% endfor %}

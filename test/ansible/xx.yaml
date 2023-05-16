@@ -1,0 +1,6 @@
+---
+- name: install jdc
+  hosts: localhost
+  tasks:
+  - name: Create the bonding iface
+    template: src=template/el_ifcfg-bond.j2 dest=/home/mike/Desktop/ifcfg-bond2

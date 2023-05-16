@@ -1,0 +1,21 @@
+---
+- name: Install rsyslog server
+  yum:
+    name: rsyslog
+    state: present
+- name: "state the rsyslog service"
+  service:
+    name: rsyslog
+    state: started
+    enabled: yes
+- name: "Uncomment configuration files"
+  replace:
+    path: /etc/rsyslog.conf
+    regexp: "{{item.exp}}"
+    replace: "{{item.line}}"
+    backup: yes
+  with_items:
+    - { exp: '#\$ModLoad imudp', line: '$ModLoad imudp'}
+    - { exp: '#\$ModLoad imtcp', line: '$ModLoad imtcp'}
+  notify:
+    - restart rsyslog

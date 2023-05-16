@@ -1,0 +1,30 @@
+
+[root@rcms-node ~]# rpm -qa| grep ykc*
+ykclient-2.15-1.el7.x86_64
+ykpers-1.19.0-1.el7.x86_64
+[root@rcms-node ~]# rpm -qa| grep *yubi*
+[root@rcms-node ~]# rpm -qa| grep pam_yubi*
+pam_yubico-2.26-1.el7.x86_64
+[root@rcms-node ~]#  ykpersonalize -2 -ochal-resp -ochal-hmac -ohmac-lt64 -oserial-api-visible
+Firmware version 4.3.7 Touch level 517 Program sequence 1
+
+Configuration data to be written to key configuration 2:
+
+fixed: m:
+uid: n/a
+key: h:f03198846f5b90318837f229ca50bca5564a4631
+acc_code: h:000000000000
+OATH IMF: h:0
+ticket_flags: CHAL_RESP
+config_flags: CHAL_HMAC|HMAC_LT64
+extended_flags: SERIAL_API_VISIBLE
+
+Commit? (y/n) [n]: y
+[root@rcms-node ~]# ykpamcfg -2
+Stored initial challenge and expected response in '/root/.yubico/challenge-7307800'.
+[root@rcms-node ~]# cat /root/.yubico/challenge-7307800
+v2:b5bcb707518bdc82ec1f5dc9e79c51692f6359421bbf49e1376c35d21cb7a013d818ae1945c0065cbeea54ac3278eed9e3856419e06ae58fdd4630ea3c6043:48bedeb159a37a1ca412cb8018e8c905b290d10b:fbc5bed6f7f9c69adb777090ec4f278bbfdcc4e9a39613eacd2abd7d99b4a3cc:10000:2
+[root@rcms-node ~]# reboot
+Connection to 192.168.5.252 closed by remote host.
+Connection to 192.168.5.252 closed.
+

@@ -1,0 +1,79 @@
+---
+- name: To find some information for rollback your kernel
+  shell: "{{item}}"
+  with_items:
+    - cat /etc/default/grub | grep saved
+    - cat /boot/grub2/grubenv | grep saved
+    - cat /etc/sysconfig/kernel | egrep -i "^default|update"
+    - awk -F\' /^menuentry/{print\$2} /etc/grub2.cfg | awk '{print $3}' | sed 's/(//g' | sed 's/)//g'
+  register: kernel_rollback_requirements
+  ignore_errors: true
+  no_log: true
+
+- name: "To display our requitements-0"
+  debug:
+    msg: "{{kernel_rollback_requirements.results[0].stdout}}"
+
+- name: "To display our requitements-1"
+  debug:
+    msg: "{{kernel_rollback_requirements.results[1].stdout}}"
+
+- name: "To display our requitements-2"
+  debug:
+    msg: "{{kernel_rollback_requirements.results[2].stdout}}"
+
+- name: "To display our requitements-3"
+  debug:
+    msg: "{{kernel_rollback_requirements.results[3].stdout}}"
+
+- name: "update kernerl version"
+  shell: grub2-set-default 1
+  when:
+    - kernel_rollback_requirements.results[0].stdout != ""
+    - kernel_rollback_requirements.results[1].stdout != ""
+    - kernel_rollback_requirements.results[2].stdout != ""
+    - kernel_rollback_requirements.results[3].stdout != ""
+  register: update_kernel
+
+- name: "verify the newdefault kernerl"
+  shell: cat /boot/grub2/grubenv | grep saved
+  when:
+    - kernel_rollback_requirements.results[0].stdout != ""
+    - kernel_rollback_requirements.results[1].stdout != ""
+    - kernel_rollback_requirements.results[2].stdout != ""
+    - kernel_rollback_requirements.results[3].stdout != ""
+  register: new_default_kernel
+
+- name: "rebuild GRUB"
+  shell: grub2-mkconfig -o /boot/grub2/grub.cfg
+  register: rebuild_grub
+  when:
+    - kernel_rollback_requirements.results[0].stdout != ""
+    - kernel_rollback_requirements.results[1].stdout != ""
+    - kernel_rollback_requirements.results[2].stdout != ""
+    - kernel_rollback_requirements.results[3].stdout != ""
+
+- name: "Restart server"
+  shell: sleep 1 && shutdown -r now "Reboot triggered by Ansible" && sleep 1
+  async: 1
+  poll: 0
+  ignore_errors: true
+  register: restart_state
+  when:
+    - kernel_rollback_requirements.results[0].stdout != ""
+    - kernel_rollback_requirements.results[1].stdout != ""
+    - kernel_rollback_requirements.results[2].stdout != ""
+    - kernel_rollback_requirements.results[3].stdout != ""
+
+- name: "This play will wait for 3 minutes for system to come up"
+  pause: minutes=1
+  register: result_pause_state
+  when:
+    - kernel_rollback_requirements.results[0].stdout != ""
+    - kernel_rollback_requirements.results[1].stdout != ""
+    - kernel_rollback_requirements.results[2].stdout != ""
+    - kernel_rollback_requirements.results[3].stdout != ""
+
+- name: check the client uptime
+  shell: uptime
+  register: up_time

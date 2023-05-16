@@ -1,0 +1,526 @@
+---
+banner_message: welcome to {{ansible_hostname}}
+PASS_WARN_AGE: 7
+PASS_MAX_DAYS: 90
+PASS_MIN_DAYS: 1
+PASS_MIN_LEN: 8
+PASS_REUSE: 7
+PASS_INACTIVE: 30
+#Dynamic value
+
+system_main_file:  #0644
+  - /etc/passwd
+  - /etc/group
+  - /etc/motd
+  - /etc/issue
+  - /etc/issue.net
+
+system_main_file1: #0600
+  - /etc/passwd-
+  - /etc/group-
+  - /etc/gshadow-
+  - /etc/shadow-
+  - /etc/crontab
+  - /etc/cron.hourly
+  - /etc/cron.daily
+  - /etc/cron.weekly
+  - /etc/cron.monthly
+  - /etc/cron.d
+  - /boot/grub2/grub.cfg
+
+system_main_file2: #0000
+  - /etc/shadow
+  - /etc/gshadow
+
+system_main_file3:
+  - df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002
+  - df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup
+  - df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -4000
+  - df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -2000
+  - df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser
+
+
+ssh_no_option:
+  - X11Forwarding
+  - HostbasedAuthentication
+  - PermitRootLogin
+  - PermitEmptyPasswords
+  - PermitUserEnvironment
+  - PubkeyAuthentication
+  - GatewayPorts
+
+ssh_yes_option:
+  - PrintMotd
+  - StrictModes
+  - TCPKeepAlive
+  - KeepAlive
+  - IgnoreRhosts
+
+#static value
+ssh_config_parameters:
+  - LogLevel             #0
+  - LoginGraceTime       #1
+  - MaxAuthTries         #2
+  - Protocol             #3
+  - Banner               #4
+  - ClientAliveCountMax  #5
+  - ClientAliveInterval  #6
+ssh_mac_option:
+  - MACs                 #0
+ssh_ciphers_option:
+  - Ciphers
+
+ssh_env_variable:
+  - TERM
+  - PATH
+  - HOME
+  - MAIL
+  - SHELL
+  - LOGNAME
+  - USER
+  - USERNAME
+  - _RLD*
+  - DYLD_*
+  - LD_*
+  - LDR_*
+  - LIBPATH
+  - SHLIB_PATH
+
+ssh_host_file_check:
+  - /etc/hosts.equiv
+  - /etc/shosts.equiv
+
+ssh_file_check:
+  - /bin/openssl
+  - /bin/scp
+  - /bin/scp2
+  - /bin/sftp
+  - /bin/sftp2
+  - /bin/sftp-server
+  - /bin/sftp-server2
+  - /bin/slogin
+  - /bin/ssh
+  - /bin/ssh2
+  - /bin/ssh-add
+  - /bin/ssh-add2
+  - /bin/ssh-agent
+  - /bin/ssh-agent2
+  - /bin/ssh-askpass
+  - /bin/ssh-askpass2
+  - /bin/ssh-certenroll2
+  - /bin/ssh-chrootmgr
+  - /bin/ssh-dummy-shell
+  - /bin/ssh-keygen
+  - /bin/ssh-keygen2
+  - /bin/ssh-keyscan
+  - /bin/ssh-pam-client
+  - /bin/ssh-probe
+  - /bin/ssh-probe2
+  - /bin/ssh-pubkeymgr
+  - /bin/ssh-signer
+  - /bin/ssh-signer2
+  - /lib/libcrypto.a
+  - /lib/libssh.a
+  - /lib/libssl.a
+  - /lib/libz.a
+  - /lib-exec/openssh/sftp-server
+  - /lib-exec/openssh/ssh-keysign
+  - /lib-exec/openssh/ssh-askpass
+  - /lib-exec/sftp-server
+  - /lib-exec/ssh-keysign
+  - /lib-exec/ssh-rand-helper
+  - /libexec/openssh/sftp-server
+  - /libexec/openssh/ssh-keysign
+  - /libexec/openssh/ssh-askpass
+  - /libexec/sftp-server
+  - /libexec/ssh-keysign
+  - /libexec/ssh-rand-helper
+  - /sbin/sshd
+  - /sbin/sshd2
+  - /sbin/sshd-check-conf
+  - /lib/svc/method/sshd
+  - /usr/lib/ssh/sshd
+  - /etc/openssh/sshd_config
+  - /etc/ssh/sshd_config
+  - /etc/ssh/sshd2_config
+  - /etc/ssh2/sshd_config
+  - /etc/ssh2/sshd2_config
+  - /etc/sshd_config
+  - /etc/sshd2_config
+  - /usr/local/etc/sshd_config
+  - /usr/local/etc/sshd2_config
+  - /usr/lib/ssh/ssh-keysign
+
+audit_check:
+  - grep "^\s*linux" /boot/grub2/grub.cfg | grep -i audit
+  - grep "-e 2" /etc/audit/audit.rules | tail -1
+# - grep "^\s*[^#]" /etc/audit/audit.rules | tail -1
+
+audit_check_rules:
+  - time-change
+  - identity
+  - system-locale
+  - MAC-policy
+  - logins
+  - session
+  - perm_mod
+  - access
+  - mounts
+  - delete
+  - scope
+  - actions
+  - modules
+
+audit_conf:
+  - max_log_file_action
+  - space_left_action
+  - action_mail_acct
+  - admin_space_left_action
+  - max_log_file
+
+checking_scripts1:
+  - check_1_1_1_1_To_1_1_13_4
+  - check_1_2_1_1_To_1_2_6
+  - check_1_4_1_To_1_4_5
+  - check_1_5_1_1_To_1_5_14_4
+  - check_1_8_2_1_To_1_8_14_3
+  - cron_check_18_15_1_To_2_1_4
+  - check_ssh
+
+checking_scripts:
+  - all_groups_in_etc_passwd
+  - all_users_home_directories_exist
+  - duplicate_GIDs_exist
+  - duplicate_GIDs
+  - duplicate_group_names
+  - duplicate_UIDs
+  - duplicate_usernames_names
+  - root_PATH_Integrity
+  - users_dot_files_are_not_group_or_world_writable
+  - users_dot_netrc_Files_are_not_group_or_world_accessible
+  - users_have_dot_forward_files
+  - users_have_dot_netrc_files
+  - users_have_dot_rhosts_files
+  - users_home_directories_permissions_are_750_or_more_restrictive
+  - users_own_their_home_directories
+
+lagacy_path_check:
+  - /etc/group
+  - /etc/passwd
+
+unwanted_files:
+  - /etc/cron.deny
+  - /etc/at.deny
+
+wanted_files:
+  - /etc/cron.allow
+  - /etc/at.allow
+
+enabled_service:
+  - crond
+  - sshd
+  - rsyslog
+  - auditd
+
+network_parameters1: #0
+  - net.ipv4.ip_forward
+  - net.ipv4.conf.all.send_redirects
+  - net.ipv4.conf.default.send_redirects
+  - net.ipv4.conf.all.accept_source_route
+  - net.ipv4.conf.default.accept_source_route
+  - net.ipv4.conf.all.accept_redirects
+  - net.ipv4.conf.default.accept_redirects
+  - net.ipv4.conf.all.secure_redirects
+  - net.ipv4.conf.default.secure_redirects
+  - net.ipv6.conf.all.accept_ra
+  - net.ipv6.conf.default.accept_ra
+  - net.ipv6.conf.all.accept_redirects
+  - net.ipv6.conf.default.accept_redirects
+  - fs.suid_dumpable
+
+network_parameters2: #1
+  - net.ipv4.conf.all.log_martians
+  - net.ipv4.conf.default.log_martians
+  - net.ipv4.icmp_echo_ignore_broadcasts
+  - net.ipv4.icmp_ignore_bogus_error_responses
+  - net.ipv4.conf.all.rp_filter
+  - net.ipv4.conf.default.rp_filter
+  - net.ipv4.tcp_syncookies
+
+network_parameters3: #2
+  - kernel.randomize_va_space
+
+unwanted_protocols:
+  - dccp
+  - sctp
+  - rds
+  - tipc
+  - cramfs
+  - freevxfs
+  - jffs2
+  - hfs
+  - hfsplus
+  - squashfs
+  - udf
+  - vfat
+
+repo_list:   #static value
+  - yum repolist
+  - rpm -q gpg-pubkey --qf '%{name}-%{version}-%{release} --> %{summary}\n'
+  - grep ^gpgcheck /etc/yum.repos.d/* | uniq
+  - grep ^gpgcheck /etc/yum.conf
+  - grep /sbin/sulogin /usr/lib/systemd/system/rescue.service
+  - grep /sbin/sulogin /usr/lib/systemd/system/emergency.service
+  - grep "^set superusers" /boot/grub2/grub.cfg
+  - grep "^password" /boot/grub2/grub.cfg
+  - grep -i ^*.*core /etc/security/limits.conf /etc/security/limits.d/* | uniq
+  #- grep "hard core" /etc/security/limits.conf /etc/security/limits.d/* | uniq
+
+unwanted_service: #os version 7
+  - ntalk
+  - rsyncd
+  - tftp.socket
+  - telnet.socket
+  - rsh.socket
+  - rlogin.socket
+  - rexec.socket
+  - ypserv
+  - snmpd
+  - squid
+  - smb
+  - dovecot
+  - named
+  - nfs
+  - rpcbind
+  - slapd
+  - dhcpd
+  - cups
+  - avahi-daemon
+  - autofs
+
+unwanted_service1: #os version6
+  - chargen-dgram
+  - chargen-stream
+  - daytime-dgram
+  - daytime-stream
+  - discard-dgram
+  - discard-stream
+  - echo-dgram
+  - echo-stream
+  - time-dgram
+  - time-stream
+  - tftp
+  - xinetd
+
+unwanted_packages:
+  - ypbind
+  - talk
+  - rsh
+  - telnet
+  - openldap-clients
+  - prelink
+
+wanted_packages:
+  - openssl
+  - openssh-server
+
+version_checks:
+  - gpg --version | head -1
+
+banner_list:
+  - /etc/motd
+  - /etc/issue
+  - /etc/issue.net
+
+
+
+
+#======================================================================================================#
+
+authentication:
+  PASS_MAX_DAYS: 90
+  PASS_MIN_DAYS: 1
+  PASS_WARN_AGE: 7
+  PASS_MIN_LEN: 8
+  INACTIVE: 29
+
+centos7_sshd:
+  clientalivecountmax: 0
+  clientaliveinterval: 300
+  mac : MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
+  ciphers: Ciphers aes256-ctr,aes192-ctr,aes128-ctr
+  MaxAuthTries: 3
+  LoginGraceTime: 60
+  allowusers: root vagrant
+  # allowgroups: systems dba
+  # denyusers:
+  # denygroups:
+
+audit_log:
+  max_log_file: 15  #MB
+  admin_space_left_action: halt
+  max_log_file_action: keep_logs
+  space_left_action: email
+  action_mail_acct: root
+
+
+permission:
+  etc_passwd: 0644
+  etc_shadow: 0000
+  etc_gshadow: 0000
+  etc_group: 0644
+  etc_shadow-: 0600
+  etc_passwd-: 0600
+  etc_group-: 0600
+  etc_gshadow-: 0600
+
+
+centos7_notauto: false
+centos7_section1: true
+centos7_section2: true
+centos7_section3: true
+centos7_section4: true
+centos7_section5: true
+centos7_section6: true
+#--------------------------------------------------------------
+#audit service
+centos7_skip_for_audit: false
+
+centos7_selinux_disable: false
+# SELinux policy
+centos7_selinux_pol: targeted
+# Service configuration booleans set true to keep service
+
+centos7_allow_autofs: false
+centos7_tftp_server: false
+centos7_avahi_server: false
+centos7_cups_server: false
+centos7_dhcp_server: false
+centos7_ldap_server: false
+centos7_telnet_server: false
+centos7_nfs_server: false
+centos7_rpc_server: false
+centos7_named_server: false
+centos7_dovecot_server: false
+centos7_httpd_server: false
+centos7_vsftpd_server: false
+centos7_snmp_server: false
+centos7_squid_server: false
+centos7_is_mail_server: false
+centos7_smb_server: false
+centos7_rsh_server: false
+centos7_rsyncd_server: false
+centos7_ntalk_server: false
+centos7_nfs_rpc_server: false
+centos7_nis_server: false
+
+centos7_rhnsd_required: false
+centos7_xinetd_required: false
+
+
+#custom
+centos7_openldap_clients_required: false
+centos7_telnet_required: false
+centos7_talk_required: false
+centos7_rsh_required: false
+centos7_ypbind_required: false
+
+
+#Network Filtering
+centos7_firewall: firewalld
+# centos7_firewall: iptables
+
+
+#Add firewall services here
+centos7_firewall_services:
+    - ssh
+    - dhcpv6-client
+
+logfile_location_permission_change: true
+
+
+#ipv4 forward
+centos7_is_IP_foreward: false
+#ipv6 required if not want assign false
+centos7_ipv6_required: true
+# Warning Banner Content in issue, issue.net, motd
+centos7_warning_banner: |
+    Authorized uses only. All activity may be monitored and reported.
+
+# Whether or not to run tasks related to auditing/patching the desktop environment
+centos7_gui: no
+
+
+# Set to 'true' if X Windows is needed in your environment
+centos7_xwindows_required: no
+
+
+# Time Synchronization
+centos7_time_synchronization: chrony
+#centos7_time_synchronization: ntp
+
+# AIDE
+centos7_config_aide: true
+ubuntu_config_aide: true
+# AIDE cron settings (centos)
+centos7_aide_cron:
+  cron_user: root
+  cron_file: /etc/crontab
+  aide_job: '/usr/sbin/aide --check'
+  aide_minute: 0
+  aide_hour: 5
+  aide_day: '*'
+  aide_month: '*'
+  aide_weekday: '*'
+
+# AIDE cron settings (ubuntu)
+ubuntu_aide_cron:
+  cron_user: root
+  cron_file: /etc/crontab
+  aide_job: '/usr/bin/aide.wrapper --config /etc/aide/aide.conf --check'
+  aide_minute: 0
+  aide_hour: 5
+  aide_day: '*'
+  aide_month: '*'
+  aide_weekday: '*'
+
+#Ensure /etc/hosts.allow is configured
+#Ensure /etc/hosts.allow is configured
+centos7_host_allow:
+  - "10.0.0.0/255.0.0.0"
+  - "172.16.0.0/255.240.0.0"
+  - "192.168.0.0/255.255.0.0"
+
+centos7_time_synchronization_servers:
+    - 0.pool.ntp.org
+    - 1.pool.ntp.org
+    - 2.pool.ntp.org
+    - 3.pool.ntp.org
+#--------------------------------------------------------------
+#centos7_bind: false
+
+#centos7_vsftpd: true
+#centos7_httpd: true
+#centos7_dovecot: false
+#centos7_samba: false
+#centos7_squid: false
+#centos7_net_snmp: false
+# xinetd required
+
+# centos7_bootloader_password: random
+# centos7_set_boot_pass: false
+# System network parameters (host only OR host and router)
+# centos7_is_router: false
+# IPv6 required
+
+# Syslog centrolized log system
+centos7_syslog: rsyslog
+ubuntu_syslog: rsyslog
+# centos7_syslog: syslog-ng
+
+centos7_vartmp:
+  source: /tmp
+  fstype: none
+  opts: "defaults, nodev, nosuid, noexec, bind"
+  enabled: no
+

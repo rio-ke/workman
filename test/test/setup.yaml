@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  tasks:
+    - setup:
+      register: jino
+    - template:
+        src: ./setup_temp1.j2
+        dest: ./setup.txt

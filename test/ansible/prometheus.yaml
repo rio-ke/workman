@@ -1,0 +1,26 @@
+---
+- name: install prometheous
+  hosts: localhost
+  vars:
+    - user_name: "{{prometheus}}"
+    - prometheus_listen: "{{42000}}"
+    prometheous_directory:
+      - /var/prometheus
+      - /etc/prometheus
+  tasks:
+  - name: create directory
+    file:
+      path: "{{item}}"
+      state: directory
+    with_items:
+      - "{{prometheous_directory}}"
+  - name: create user
+    user:
+      name: "{{user_name}}"
+      shell: nologin
+      create_home: no
+      state: present
+  - name: unarchive
+    unarchive:
+      
+

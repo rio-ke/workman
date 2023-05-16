@@ -1,0 +1,10 @@
+---
+- name: "Security Check"
+  hosts: cent
+  vars_prompt:
+  - name: LINUX_SERVER
+    prompt: "Which linux server do you want to deploy?\n1 - Security Check\n2 - Existing server\n"
+    private: no
+  tasks:
+  roles:
+    - role: cloudnloud_security

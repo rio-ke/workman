@@ -1,0 +1,6 @@
+---
+- name: "Install Java"
+  hosts: node1
+  roles:
+  - role: java
+    java_packages: java-1.8.0-openjdk

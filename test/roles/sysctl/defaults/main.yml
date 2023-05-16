@@ -1,0 +1,3 @@
+---
+centos7_ipv6_required: false
+centos7_is_IP_foreward: false

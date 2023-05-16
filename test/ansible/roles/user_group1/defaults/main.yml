@@ -1,0 +1,5 @@
+---
+user_name: root
+group_name: root
+uid_num: 0
+shell_type: /bin/bash

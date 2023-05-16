@@ -1,0 +1,284 @@
+PermitEmptyPasswords results:
+------------------------------
+{% if ssh_results.results[0].stdout != "" %}
+success - {{ansible_hostname}} - PermitEmptyPasswords is enabled.
+{% if ssh_results.results[1].stdout != "" %}
+value: PermitEmptyPasswords no
+{% else %}
+value: PermitEmptyPasswords is differ. kindly set with "NO"
+{% endif %}
+{% else %}
+warning - {{ansible_hostname}} - PermitEmptyPasswords is not enabled. kindly enable it.
+{% endif %}
+===========================================================================
+ssh LogLevel result:
+-------------------
+{% if ssh_results.results[2].stdout != "" %}
+success - {{ansible_hostname}} - LogLevel is enabled.
+{% if ssh_results.results[3].stdout != "" %}
+value: LogLevel INFO
+{% elif ssh_results.results[4].stdout != "" %}
+value: LogLevel DEBUG If any DEBUG level is specified, the resultant log files must be accessible only by the superuser (e.g. root or administrator) account in order to maintain privacy of user data.
+{% else %}
+{% endif %}
+{% else %}
+warning - {{ansible_hostname}} - LogLevel DEBUG is not enabled. kindly enable it.
+{% endif %}
+===========================================================================
+ssh QuietMode result:
+---------------------
+{% if ssh_results.results[5].stdout != "" %}
+Success - {{ansible_hostname}} - QuietMode already enabled.
+{% if ssh_results.results[6].stdout != "" %}
+value: QuietMode no
+{% else %}
+value: QuietMode {{ssh_results.results[6].stdout}}
+{% endif %}
+{% else %}
+warining - {{ansible_hostname}} - QuietMode not enabled
+{% endif %}
+=================================================================================
+ssh KeepAlive result:
+---------------------
+{% if ssh_results.results[7].stdout != "" %}
+Success - {{ansible_hostname}} - KeepAlive was found.
+value: {{ ssh_results.results[7].stdout }}
+{% else %}
+warining - {{ansible_hostname}} - keepAlive was not found.
+{% endif %}
+=================================================================================
+ssh TCPKeepAlive result:
+------------------------
+{% if ssh_results.results[8].stdout != "" %}
+Success - {{ansible_hostname}} - TCPKeepAlive was found.
+value: {{ ssh_results.results[8].stdout }}
+{% else %}
+warining - {{ansible_hostname}} - TCPkeepAlive was not found.
+{% endif %}
+=================================================================================
+ssh grep LoginGraceTime result:
+--------------------------------
+{% if ssh_results.results[9].stdout != "" %}
+Success - {{ansible_hostname}} - LoginGraceTime was found.
+value: {{ ssh_results.results[9].stdout }}. If value is above 120s or 2m change it.
+{% else %}
+warining - {{ansible_hostname}} - LoginGraceTime was not found.
+{% endif %}
+=================================================================================
+ssh grep MaxAuthTries result:
+--------------------------------
+{% if ssh_results.results[10].stdout != "" %}
+Success - {{ansible_hostname}} - MaxAuthTries was found.
+{% if ssh_results.results[10].stdout <= "5" %}
+value: MaxAuthTries {{ ssh_results.results[10].stdout }}.
+{% else %}
+value: MaxAuthTries {{ ssh_results.results[10].stdout }}. kindly change the value below 5 or less(Warning).
+{% endif %}
+{% else %}
+warining - {{ansible_hostname}} - MaxAuthTries was not found.
+{% endif %}
+=================================================================================
+ssh Protocol result:
+--------------------
+{% if ssh_results.results[11].stdout != "" %}
+Success - {{ansible_hostname}} - Protocol was found.
+{% if ssh_results.results[11].stdout >= "2" %}
+value: Protocol {{ ssh_results.results[11].stdout }}.
+{% else %}
+value: Protocol {{ ssh_results.results[11].stdout }}. kindly change the value 2 (Warning).
+{% endif %}
+{% else %}
+warining - {{ansible_hostname}} - Protocol was not found.
+{% endif %}
+=================================================================================
+ssh GatewayPorts result:
+--------------------------------
+{% if ssh_results.results[12].stdout == "" %}
+Success - {{ansible_hostname}} - GatewayPorts was not found.
+{% else %}
+warining - {{ansible_hostname}} - GatewayPorts was found. kindly disable it.
+value:  {{ ssh_results.results[12].stdout }}
+{% endif %}
+=================================================================================
+ssh PermitRootLogin result:
+---------------------------
+{% if ssh_results.results[13].stdout != "" %}
+Success - {{ansible_hostname}} - PermitRootLogin was found.
+{% if ssh_results.results[13].stdout == yes %}
+value: PermitRootLogin {{ ssh_results.results[13].stdout }}
+{% else %}
+value: PermitRootLogin {{ ssh_results.results[13].stdout }}. Kindly disable this option. Dont use no option.
+{% endif %}
+{% else %}
+warining - {{ansible_hostname}} - PermitRootLogin was not found.
+{% endif %}
+=================================================================================
+ssh PermitEmptyPasswords result:
+---------------------------------
+{% if ssh_results.results[14].stdout != "" %}
+Success - {{ansible_hostname}} - PermitEmptyPasswords was found.
+{% if ssh_results.results[14].stdout == "no" %}
+value: PermitEmptyPasswords {{ ssh_results.results[14].stdout }}
+{% else %}
+value: PermitEmptyPasswords {{ ssh_results.results[14].stdout }}. Kindly disable this option. Dont use yes option.
+{% endif %}
+{% else %}
+warining - {{ansible_hostname}} - PermitEmptyPasswords was not found.
+{% endif %}
+=================================================================================
+ssh PubkeyAuthentication result:
+---------------------------------
+{% if ssh_results.results[15].stdout != "" %}
+Success - {{ansible_hostname}} - PubkeyAuthentication was found.
+{% if ssh_results.results[15].stdout == "no" %}
+value: PubkeyAuthentication {{ ssh_results.results[15].stdout }}.This server not enable PubkeyAuthentication 
+{% else %}
+value: PubkeyAuthentication {{ ssh_results.results[15].stdout }}. PubkeyAuthentication is enabled
+{% endif %}
+{% else %}
+warining - {{ansible_hostname}} - PubkeyAuthentication was not found.
+{% endif %}
+=================================================================================
+ssh StrictModes result:
+---------------------------
+{% if ssh_results.results[16].stdout != "" %}
+Success - {{ansible_hostname}} - StrictModes was found.
+{% if ssh_results.results[16].stdout == yes %}
+value: StrictModes {{ ssh_results.results[16].stdout }}
+{% else %}
+value: StrictModes {{ ssh_results.results[16].stdout }}. Kindly disable this option. Dont use no option.
+{% endif %}
+{% else %}
+warining - {{ansible_hostname}} - StrictModes was not found.
+{% endif %}
+================================================================================
+ssh PermitUserEnvironment result:
+---------------------------------
+{% if ssh_results.results[17].stdout != "" %}
+Success - {{ansible_hostname}} - PermitUserEnvironment was found.
+{% if ssh_results.results[17].stdout == no %}
+value: PermitUserEnvironment {{ ssh_results.results[17].stdout }}
+{% else %}
+value: PermitUserEnvironment {{ ssh_results.results[17].stdout }}. Kindly disable this option. Dont use yes option.
+{% endif %}
+{% else %}
+warining - {{ansible_hostname}} - PermitUserEnvironment was not found.
+{% endif %}
+================================================================================
+ssh HostbasedAuthentication result:
+-----------------------------------
+{% if ssh_results.results[18].stdout != "" %}
+Success - {{ansible_hostname}} - HostbasedAuthentication was found.
+{% if ssh_results.results[18].stdout == no %}
+value: HostbasedAuthentication {{ ssh_results.results[18].stdout }}
+{% else %}
+value: HostbasedAuthentication {{ ssh_results.results[18].stdout }}. If set to "yes", the requirements in the "Host-Based Authentication" section must be applied.
+{% endif %}
+{% else %}
+warining - {{ansible_hostname}} - HostbasedAuthentication was not found.
+{% endif %}
+
+=================================================================================
+ssh PrintMotd result:
+---------------------
+{% if ssh_results.results[19].stdout != "" %}
+Success - {{ansible_hostname}} - PrintMotd was found.
+{% if ssh_results.results[19].stdout == yes %}
+value: PrintMotd {{ ssh_results.results[19].stdout }}
+{% else %}
+value: PrintMotd {{ ssh_results.results[19].stdout }}. Kindly disable this option. Dont use no option.
+{% endif %}
+{% else %}
+warining - {{ansible_hostname}} - PrintMotd was not found.
+{% endif %}
+=================================================================================
+ssh Banner result:
+---------------------
+{% if ssh_results.results[20].stdout != "" %}
+Success - {{ansible_hostname}} - banner was found.
+{% if ssh_results.results[20].stdout == none %}
+value: Banner {{ ssh_results.results[20].stdout }}
+{% else %}
+value: Banner {{ ssh_results.results[20].stdout }}. The "Session - Banner message file" setting must be set to the path of a file that contains the required business use notice.
+{% endif %}
+{% else %}
+warining - {{ansible_hostname}} - Banner was not found.
+{% endif %}
+
+{% for jjj in ssh_env_variable_result.results | json_query('[]') %}
+===================================================================
+{% if jjj.stdout != "" %}
+Warning - AcceptEnv was found
+value: {{jjj.stdout}}
+keys : {{ jjj.item }}
+reminder: Must not contain variables matching any of the following patterns: TERM, PATH, HOME, MAIL, SHELL, LOGNAME, USER, USERNAME, _RLD*, DYLD_*, LD_*, LDR_*, LIBPATH, SHLIB_PATH
+
+{% else %}
+success - AcceptEnv {{ jjj.item }} was not found
+
+{% endif %}
+{% endfor %}
+
+{% for jjino in  ssh_host_check_file_results.results | json_query('[]') %}
+=================================================================================
+{% if jjino.stat.exists  == true %}
+file_name: {{ jjino.item }} results:
+-----------------------------------
+File Status: Directory was found
+Notice - Host-based authentication allows access based on a list of trusted hosts in combination with successful client-key authentication.
+
+{% if jjino.stat.mode == "0775" or jjino.stat.mode < "0775" and  jjino.stat.gr_name == "root" and jjino.stat.pw_name == "root" %}
+File Path  : {{ jjino.stat.path }}
+File Owner : {{ jjino.stat.gr_name }}
+File group : {{ jjino.stat.pw_name }}
+File Mode  : {{ jjino.stat.mode }}
+{% else %}
+File Path  : {{ jjino.stat.path }}
+File Owner : {{ jjino.stat.gr_name }}
+File group : {{ jjino.stat.pw_name }}
+File Mode  : {{ jjino.stat.mode }}
+Warning - File permissions is mismatch.
+The OSR {{ jjino.item }} has permissions set on other that are r-x or more restrictive
+{% endif %}
+{% else %}
+file_name: {{ jjino.item }} results:
+-----------------------------------
+File Status: Directory was not found
+
+{% endif %}
+{% endfor %}
+
+
+{% for jino in  ssh_check_file_results.results | json_query('[]') %}
+=================================================================================
+{% if jino.stat.exists  == true %}
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was found
+
+{% if jino.stat.mode == "0775" or jino.stat.mode < "0775" and  jino.stat.gr_name == "root" and jino.stat.pw_name == "root" %}
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+{% else %}
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+Warning - File permissions is mismatch.
+The OSR {{ jino.item }} has permissions set on other that are r-x or more restrictive
+{% endif %}
+{% else %}
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was not found
+
+{% endif %}
+{% endfor %}
+
+
+
+
+
+

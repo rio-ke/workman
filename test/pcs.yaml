@@ -1,0 +1,6 @@
+---
+- name: configure pcs cluster
+  hosts: pcs
+  roles:
+  - role: epel
+  - role: pcs

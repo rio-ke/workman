@@ -1,0 +1,25 @@
+---
+- name: play for three diffrent ports
+  hosts: local
+  vars:
+    - domain_1: jino.com
+    - domain_2: jino.in
+    - domain_3: jino.co
+  tasks:
+  - name: install httpd
+    yum:
+      name: httpd
+      state: present
+  - name: crate directory
+    file:
+      path: "{{item}}"
+      owner: apache
+      group: apache
+      mode: 755
+      state: directory
+    with_items:
+      -"{{ domain_1 }}"
+  - name:
+
+
+

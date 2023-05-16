@@ -1,0 +1,30 @@
+---
+- hosts: localhost
+  tasks:
+  - name: "VPN Information"
+    ec2_vpc_vpn_facts:
+      aws_secret_key: noNNdcpUzR45VZ/0bnfwx4D7Holk993YLc7GS0z5
+      aws_access_key: AKIA6DTHLTSBJZH5LJTZ
+      region: us-east-1
+    #  vpn_connection_ids:
+    #    - vpn-0c32629592ec70968
+      # filters:
+      #  vpn-gateway-id: vgw-0832a847f2998ae2c
+    register: results
+
+  - name: Fact1
+    set_fact:
+      dict: "{{ results.vpn_connections[0] }}"
+
+  - name: Fact2
+    set_fact:
+      dict2: "{{ dict | combine({item.key: item.value}) }}"
+    when: "{{ item.key.find('customer_gateway_configuration') }}"
+    with_dict: "{{ dict }}"
+  - debug:
+      var: dict2
+
+  - name: "template for vpn monitering"
+    template:
+      src: skylark_vpn_monitering_template.j2
+      dest: /tmp/sky_vpn_info.txt

@@ -1,0 +1,5 @@
+{% for details in jino.ansible_facts %}
+{% for i, j in details.items() %}
+{{i.rjust(25)}} : {{j}}
+{% endfor %}
+{% endfor %}

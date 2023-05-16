@@ -1,0 +1,23 @@
+---
+- name: "to find uptime"
+  shell: "ping -c4 {{ target_host }} | egrep -v 'PING'"
+  register: ping_result
+
+- name: "create uptime template"
+  template:
+    src: temp1.j2
+    dest: /tmp/ping_response.txt
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  when: ping_result.stdout != ""
+
+- name: "Mail the uptime condent"
+  mail:
+    to: "{{email_to}}"
+    cc: "{{email_cc}}"
+    subject: Ping status Report
+    attach:
+      - /tmp/ping_response.txt
+    body: System has been generated memory report successfully.
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  when: ping_result.stdout != ""
+  run_once: True

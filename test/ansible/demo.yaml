@@ -1,0 +1,4 @@
+- hosts: test
+  tasks:
+    - debug:
+        msg: "{{ lookup('template', 'template/loop.j2') }}"

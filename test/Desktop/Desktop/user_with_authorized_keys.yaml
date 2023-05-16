@@ -1,0 +1,40 @@
+---
+- name: key file
+  hosts: localhost
+  vars_prompt:
+    - name: username
+      prompt: "Enter Your username"
+      private: no
+  tasks:
+  - name: password for user jino - its default
+    debug:
+      msg: "{{ 'jino' | password_hash('sha512', 'mysecretsalt') }}"
+    register: jino
+  - name: user create
+    user:
+      name: "{{username}}"
+      password: "{{ jino.msg }}"
+      generate_ssh_key: yes
+      ssh_key_bits: 2048
+      ssh_key_file: .ssh/id_rsa
+      state: present
+  - name: Set authorized key took from file
+    authorized_key:
+      user: "{{username}}"
+      state: present
+      key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    register: kaj
+  - debug:
+      msg: "{{kaj.keyfile}}"
+  - name: Backup Copy from Aapp
+    fetch:
+      src: "{{kaj.keyfile}}"
+      dest: "~/{{ username }}.pem"
+      flat: yes
+      fail_on_missing: yes
+    ignore_errors: True
+  - name: ssh process
+    debug:
+      msg: "please make ssh this way ssh -i ~/{{ username }}.pem {{username}}@{{ansible_default_ipv4.address}}"
+
+

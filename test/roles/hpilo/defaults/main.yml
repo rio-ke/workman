@@ -1,0 +1,5 @@
+---
+hpilo_ip: 192.168.10.105
+hpilo_username: Administrator
+hpilo_password: Admin@123
+template_staorage_path: /home/jino/Desktop/hpilo.html

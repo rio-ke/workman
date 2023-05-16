@@ -1,0 +1,16 @@
+---
+- name: play for entry
+  hosts: localhost
+  tasks:
+  - name: update /etc/hosts file
+    lineinfile:
+      dest: /etc/hosts
+      line: "{{ lookup('template', 'template/hosts.j2') }}"
+      state: present
+      # delegate_to: localhost
+
+      #  - name: update /etc/hosts file
+      #    blockinfile:
+      #      dest: /etc/hosts
+      #      content: "{{ lookup('template', 'template/hosts.j2') }}"
+      #      state: present

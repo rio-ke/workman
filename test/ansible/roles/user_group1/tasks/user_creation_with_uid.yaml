@@ -1,0 +1,10 @@
+---
+- name: user create with Uid
+  user:
+    name: "{{user_name}}"
+    shell: "{{shell_type}}"
+    uid: "{{uid_num}}"
+    state: present
+  tags:
+    - user_creation_with_uid
+

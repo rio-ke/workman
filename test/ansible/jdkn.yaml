@@ -1,0 +1,19 @@
+---
+- name: install 
+  hosts: localhost
+  tasks:
+  - name:
+    shell: "{{item}}"
+    with_items:
+      - hostname
+      - cat /home/mike/Desktop/j.txt | grep jino
+      - id
+    register: jino
+    ignore_errors: true
+  - debug:
+      msg: "{{jino.results}}"
+  - shell: hostname
+    when: ( jino.results[1].rc == 1 )
+  - shell: hostname
+    when: ( jino.results[0].rc == 1 )
+

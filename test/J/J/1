@@ -1,0 +1,39 @@
+---
+- name: to create ec2 instance
+  hosts: localhost
+  vars:
+    - key_name: JINO_N
+    - image_name: ami-0ac019f4fcb7cb7e6
+    - count: 1
+    - instance_type: t2.micro
+    - assign_public_ip: yes
+    - security_group: "{{ security_group_name }}"
+    - vpc_subnet_id: subnet-f5d94692
+    - region: us-east-1
+    - security_group_name: my_security_group
+    - vpc_id: vpc-d12a82ab
+    - port_list: 80, 22
+  tasks:
+  - ec2_group:
+      name: "{{ security_group_name }}"
+      region: "{{ region }}"
+      vpc_id: "{{ vpc_id }}"
+      description: "{{ security_group_name }}"
+      rules:
+        - proto: tcp
+          from_port: 22
+          to_port: 22
+          cidr_ip: 0.0.0.0/0
+  - name: create instance in aws
+    ec2:
+      region: "{{ region }}"
+      key_name: "{{ key_name }}"
+      instance_type: "{{ instance_type }}"
+      wait: yes
+      assign_public_ip: "{{ assign_public_ip }}"
+      vpc_subnet_id: "{{ vpc_subnet_id }}"
+      count: "{{ count | int('1') }}"
+      security_group: "{{ security_group_name }}"
+      instance_tags:
+        Name: JINO
+      image: "{{ image_name }}"

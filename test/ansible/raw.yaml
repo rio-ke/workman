@@ -1,0 +1,10 @@
+---
+- hosts: dc1-node-T
+  tasks:
+  - name: copy the database to the development server
+    raw: rsync -azv --delete  --password-file=/mnt/password.txt /webdata/RCMS/* root@125.99.157.10:/webadata/RCMS/
+    register: jino
+  - name: deb
+    debug:
+      msg: "{{jino}}"
+

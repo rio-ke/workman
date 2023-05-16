@@ -1,0 +1,10 @@
+---
+- name: AD.1.1.1.1 - Password Requirements - Password Maximum Days
+  shell: >
+    cat /etc/login.defs |grep "^PASS_MAX_DAYS" | awk '{print $2}'
+  register: password_maximum_days
+
+- name: Display the password
+  debug:
+    msg: "{{password_maximum_days.stdout_lines}}"
+  register: password_maximum_days_result

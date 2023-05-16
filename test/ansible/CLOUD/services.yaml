@@ -1,0 +1,54 @@
+---
+- name: services yaml file
+  hosts: vag
+  tasks:
+  - name: check it if package installed or not
+    yum:
+      list: "{{item}}"
+    with_items:
+      - telnet-server
+      - telnet
+      - rsh-server
+      - rsh
+      - ypbind
+      - ypserv
+      - tftp
+      - tftp-server
+      - talk
+      - talk-server
+      - xinetd
+    register: Installed_packages
+  - name: display the content msg
+    debug:
+      #  msg: "Packege installed"
+      msg: "{{ Installed_packages.results | json_query('[].item[]')}}"
+    when: ( Installed_packages.results | json_query('[].results[].yumstate[]') != "installed")
+  - name: remove the packages
+    yum:
+      name: "{{item}}"
+      state: absent
+    with_items:
+      - "{{ Installed_packages.results | json_query('[].item[]')}}"
+    register: removed_packages
+    when: ( Installed_packages.results | json_query('[].results[].yumstate[]') == "installed" )
+  - name: remove package list
+    debug:
+      msg: "{{removed_packages.results | json_query('[].results[]')}}" 
+  - name: Disable services for automatic start
+    service:
+      name: "{{ item }}"
+      enabled: no
+    with_items:
+      - chargen-stream
+      - chargen-dgram
+      - daytime-dgram
+      - daytime-stream
+      - echo-dgram
+      - echo-stream
+      - tcpmux-server
+    register: disable_packages
+    ignore_errors: true
+  - name: debug service
+    debug:
+      msg: "{{disable_packages.results | json_query('[].msg[]') }}"
+

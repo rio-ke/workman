@@ -1,0 +1,5 @@
+---
+- name: "html"
+  hosts: localhost
+  roles:
+    - role: html

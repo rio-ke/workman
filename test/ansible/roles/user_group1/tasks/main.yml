@@ -1,0 +1,17 @@
+---
+- import_tasks: user_creation.yaml
+  tags:
+    - user_creation
+- import_tasks: group_creation.yaml
+  tags:
+    - group_creation
+- import_tasks: user_delete.yaml
+  tags:
+    - user_delete
+- import_tasks: user_creation_with_multiple_group.yaml
+  tags:
+    - user_creation_with_multiple_group
+- import_tasks: user_creation_with_uid.yaml
+  tags:
+    - user_creation_with_uid
+

@@ -1,0 +1,95 @@
+---
+- name: Install PCS package
+  yum:
+    name: "{{item}}"
+    state: present
+  with_items: "{{pcs_pack}}"
+
+- name: disable selinux
+  selinux:
+    state: disabled
+
+- name:  to set password for hacluster
+  shell: "echo {{hacluster}} | passwd --stdin {{hacluster_user}}"
+  tags:
+    jino
+- name: Add hosts to /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    regexp: "{{ hostvars[item]['ansible_default_ipv4']['address'] }} "
+    line: "{{ hostvars[item]['ansible_default_ipv4']['address'] }} {{ hostvars[item]['ansible_fqdn'].split('.')[0] }}"
+  with_items: "{{ play_hosts }}"
+
+- name: to set hostname
+  hostname:
+    name: "{{inventory_hostname}}"
+
+- name: start the pcsd
+  service:
+    name: pcsd
+    state: started
+    enabled: yes
+- name: Disk create
+  parted:
+    device: "/dev/{{disk_name}}"
+    number: 1
+    flags: [ lvm ]
+    state: present
+    part_end: "{{disk_size}}"
+
+- name: "Create a volume group on top of /dev/{{disk_name}} with physical extent size {{disk_size}}"
+  lvg:
+    vg: "{{vg_name}}"
+    pvs: /dev/sdb1
+
+- name: Create a logical volume of 512m
+  lvol:
+    vg: "{{vg_name}}"
+    lv: "{{lv_name}}"
+    size: 100%FREE
+  tags:
+    jino
+
+- name: configure the pcs cluster either one node
+  shell: "{{item}}"
+  with_items: "{{pcs_conf}}"
+  when: ansible_hostname == node1_name
+  tags:
+    jino
+
+- template:
+    src: templates/resource.res.j2
+    dest: /etc/drbd.d/{{resource_name}}.res
+
+- name: Load derbd kernel module
+  modprobe:
+    name: drbd
+    state: present
+
+- name: To create drbd disk
+  shell: "{{item}}"
+  with_items:
+    - drbdadm create-md wwwdata
+    - drbdadm up wwwdata
+  when: ansible_hostname == node1_name
+
+- name: to create drbd disk
+  shell: "{{item}}"
+  with_items:
+    - drbdadm create-md wwwdata
+    - drbdadm up wwwdata
+  when: ansible_hostname == node2_name
+
+- name: start drbd
+  service:
+    name: drbd
+    state: started
+    enabled: yes
+
+- name: to create drbd disk
+  shell: drbdadm primary --force wwwdata
+  when: ansible_hostname == node1_name
+
+  - name: sleep for 300 seconds and continue with play
+    wait_for:
+      timeout: 300

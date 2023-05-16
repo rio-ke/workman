@@ -1,0 +1,12 @@
+---
+- name: INstall
+  hosts: node2
+  tasks:
+  - name: dfhbvjsdfb
+    shell: "{{item}}"
+    with_items:
+      - df -Th
+      - hostname
+    register: jino
+  - debug:
+      msg: "{{jino.results[*].stdout_lines}}"

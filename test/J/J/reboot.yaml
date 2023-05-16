@@ -1,0 +1,9 @@
+---
+- hosts: master
+  tasks:
+  - name: "Check if services need restarting"
+    command: needs-restarting -s
+    changed_when: "needs_service_restart.stdout_lines | length > 0"
+    register: needs_service_restart
+  - debug:
+      msg: "{{ needs_service_restart }}"

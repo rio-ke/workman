@@ -1,0 +1,6 @@
+---
+- name: install php
+  hosts: node1
+  roles:
+  - role: epel
+  - role: php

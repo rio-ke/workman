@@ -1,0 +1,150 @@
+---
+- name: Configure PAM - Ensure password creation requirements are configured
+  shell: "{{item}}"
+  with_items: "{{ password_creation_requirements }}"
+  ignore_errors: true
+  register: password_creation_requirements_result
+  no_log: true
+
+- name: Ensure lockout for failed password attempts is configured
+  shell: cat /etc/pam.d/password-auth | grep -E "{{item}}"
+  with_items: "{{ failed_password_attempts_is_configured_cmd }}"
+  register: failed_password_attempts_is_configured_result
+  ignore_errors: true
+  no_log: true
+
+- name: If content missing add Ensure password creation requirements results
+  lineinfile:
+    path: "{{ password_auth_file }}"
+    line: "{{item}}"
+  with_items: "{{ failed_password_attempts_is_configured[0] }}"
+  when:
+    - ( failed_password_attempts_is_configured_result.results[0].stdout_lines == [] )
+
+- name: If content missing add Ensure password creation requirements results
+  lineinfile:
+    path: "{{ password_auth_file }}"
+    line: "{{item}}"
+  with_items: "{{ failed_password_attempts_is_configured[1] }}"
+  when:
+    - ( failed_password_attempts_is_configured_result.results[1].stdout_lines == [] )
+
+- name: If content missing add Ensure password creation requirements results
+  lineinfile:
+    path: "{{ password_auth_file }}"
+    line: "{{item}}"
+  with_items: "{{ failed_password_attempts_is_configured[2] }}"
+  when:
+    - ( failed_password_attempts_is_configured_result.results[2].stdout_lines == [] )
+
+- name: If content missing add Ensure password creation requirements results
+  lineinfile:
+    path: "{{ password_auth_file }}"
+    line: "{{item}}"
+  with_items: "{{ failed_password_attempts_is_configured[3] }}"
+  when:
+    - ( failed_password_attempts_is_configured_result.results[3].stdout_lines == [] )
+
+- name: If content missing add Ensure password creation requirements results
+  lineinfile:
+    path: "{{ password_auth_file }}"
+    line: "{{item}}"
+  with_items: "{{ failed_password_attempts_is_configured[4] }}"
+  when:
+    - ( failed_password_attempts_is_configured_result.results[4].stdout_lines == [] )
+
+- name: Ensure lockout for failed system attempts is configured
+  shell: cat /etc/pam.d/system-auth | grep -E "{{item}}"
+  with_items: "{{ failed_password_attempts_is_configured_cmd }}"
+  register: failed_system_attempts_is_configured_result
+  ignore_errors: true
+  no_log: true
+
+- name: If content missing add Ensure password creation requirements results
+  lineinfile:
+    path: "{{ system_auth_file }}"
+    line: "{{item}}"
+  with_items: "{{ failed_password_attempts_is_configured[0] }}"
+  when:
+    - ( failed_system_attempts_is_configured_result.results[0].stdout_lines == [] )
+
+- name: If content missing add Ensure password creation requirements results
+  lineinfile:
+    path: "{{ system_auth_file }}"
+    line: "{{item}}"
+  with_items: "{{ failed_password_attempts_is_configured[1] }}"
+  when:
+    - ( failed_system_attempts_is_configured_result.results[1].stdout_lines == [] )
+
+- name: If content missing add Ensure password creation requirements results
+  lineinfile:
+    path: "{{ system_auth_file }}"
+    line: "{{item}}"
+  with_items: "{{ failed_password_attempts_is_configured[2] }}"
+  when:
+    - ( failed_system_attempts_is_configured_result.results[2].stdout_lines == [] )
+
+- name: If content missing add Ensure password creation requirements results
+  lineinfile:
+    path: "{{ system_auth_file }}"
+    line: "{{item}}"
+  with_items: "{{ failed_password_attempts_is_configured[3] }}"
+  when:
+    - ( failed_system_attempts_is_configured_result.results[3].stdout_lines == [] )
+
+- name: If content missing add Ensure password creation requirements results
+  lineinfile:
+    path: "{{ system_auth_file }}"
+    line: "{{item}}"
+  with_items: "{{ failed_password_attempts_is_configured[4] }}"
+  when:
+    - ( failed_password_attempts_is_configured_result.results[4].stdout_lines == [] )
+
+- name: Ensure password expiration is {{PASS_MAX_DAYS}} days or less
+  shell: "{{item}}"
+  with_items:
+    - grep ^PASS_MAX_DAYS /etc/login.defs  | awk '{print $2}'
+    - grep ^PASS_MIN_DAYS /etc/login.defs  | awk '{print $2}'
+  register: password_days
+
+- name: set factors for condition apply
+  set_fact:
+    password_maximum_days: "{{password_days.results[0].stdout_lines}}"
+
+- name: set factors for condition apply
+  set_fact:
+    password_maximum_days_assign: "{{PASS_MAX_DAYS}}"
+- name: Ensure password expiration is {{PASS_MAX_DAYS}} days or less
+  shell: grep ^PASS_MAX_DAYS /etc/login.defs # | awk '{print $2}'
+  register: password_max_days
+  when:
+    - '"password_days.results[0].stdout_lines" != "PASS_MAX_DAYS"'
+
+- name: Change the password maximum passsword expiration date
+  lineinfile:
+    path: '/etc/login.defs'
+    regexp: "{{ password_max_days.stdout }}" #'{{password_max_days.stdout}}'
+    state: absent
+  when:
+    - 'password_maximum_days_assign != "password_maximum_days"'
+
+- name: Change the password maximum passsword expiration date
+  lineinfile:
+    path: '/etc/login.defs'
+    line: 'PASS_MAX_DAYS {{PASS_MAX_DAYS}}'
+    state: present
+  when:
+    - '"password_maximum_days" != "password_maximum_days_assign"'
+
+- name: Ensure password minimum days is 1 days or less
+  shell: grep ^PASS_MIN_DAYS /etc/login.defs # | awk '{print $2}'
+  register: password_min_days
+
+- name: Verify all users with a password maximum days between password change
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | cut -d: -f1
+  register: user_max_pass_details
+
+- name: change
+  shell: "chage --maxdays {{PASS_MAX_DAYS }} {{ item }}"
+  with_items: "{{ user_max_pass_details.stdout_lines }}"

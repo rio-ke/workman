@@ -1,0 +1,6 @@
+---
+- name: install epel release
+  hosts: vag
+  tasks:
+  roles:
+  - epel

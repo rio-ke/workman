@@ -1,0 +1,15 @@
+---
+- name: "install vsftpd"
+  hosts: node1
+  roles:
+    - role: user_group
+      user_name: jake
+      user_password: jake
+      shell_name: /bin/bash
+    - role: vsftpd
+      Document_path: /var/www/html
+      user_name: jake
+    - role: firewall
+      firewall_service_name: ftp
+
+

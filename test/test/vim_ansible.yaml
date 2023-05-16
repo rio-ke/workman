@@ -1,0 +1,5 @@
+---
+- name: install ansible vim Custominzation
+  hosts: master
+  roles:
+    - { role: vim_anisble }

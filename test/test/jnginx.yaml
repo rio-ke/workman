@@ -1,0 +1,5 @@
+---
+- name: install nginx
+  hosts: vagrant
+  roles:
+    - role: jnginx

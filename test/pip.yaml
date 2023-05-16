@@ -1,0 +1,6 @@
+---
+- name: install pip packages
+  hosts: node1 node2
+  roles:
+  - role: epel
+  - role: pip

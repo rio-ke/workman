@@ -1,0 +1,7 @@
+---
+region: us-east-1
+vpc_cidr_block: 10.0.0.0/16
+public_subnet: 10.0.0.0/24
+private_subnet: 10.0.1.0/24
+private_zone: "{{region}}a"
+public_zone: "{{region}}a"

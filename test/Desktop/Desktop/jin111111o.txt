@@ -1,0 +1,104 @@
+driftfile /var/lib/ntp/drift
+
+server 0.pool.ntp.org
+server 1.pool.ntp.org
+server 2.pool.ntp.org
+
+anonymous_enable=NO
+local_enable=YES
+write_enable=YES
+local_umask=022
+dirmessage_enable=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+xferlog_std_format=NO
+ascii_upload_enable=YES
+ascii_download_enable=YES
+ftpd_banner=Welcome to FTP service.
+chroot_local_user=YES
+listen=YES
+listen_ipv6=NO
+
+pam_service_name=vsftpd
+userlist_enable=YES
+tcp_wrappers=YES
+use_localtime=YES
+user_config_dir=/etc/vsftpd/users
+allow_writeable_chroot=YES
+
+ssl_enable=YES
+allow_anon_ssl=NO
+force_local_data_ssl=YES
+force_local_logins_ssl=YES
+
+ssl_tlsv1=YES
+ssl_sslv2=NO
+ssl_sslv3=NO
+
+rsa_cert_file=/etc/ssl/private/vsftpd.pem
+rsa_private_key_file=/etc/ssl/private/vsftpd.pem
+
+openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout /etc/ssl/private/vsftpd.pem -out /etc/ssl/private/vsftpd.pem
+
+kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+
+
+   41  yum search php
+   42  yum install php
+   43  yum install php56w-fpm php56w-opcache
+   47  yum install php56w-fpm php56w-opcache
+   48  yum install php56w
+   49  php --version
+   50  yum install php56w-mysqlnd
+   51  yum install php56w-pear
+   52  yum install php56w-gd php56w-mbstring php56w-pdo -y
+   53  echo "<?php phpinfo(); ?>" > /var/www/html/info.php
+   55  cat /var/www/html/info.php 
+   56  vi /var/www/html/index.php 
+  275  php --version
+  294  vim /etc/php.ini 
+  418  rm -rf /var/www/html/info.php 
+  494  mv /home/bdsuser/phpMyAdmin-4.8.1-all-languages.zip /backup/
+  497  unzip phpMyAdmin-4.8.1-all-languages.zip 
+  499  mv phpMyAdmin-4.8.1-all-languages /var/www/html/JJINO
+  507  yum install php56w-pdo php56w-gd php56w-mbstring -y
+  604  mv index.php index.1php
+  747  history | grep php
+  750  history | grep php
+
+
+
+
+# create new
+
+# specify domain name
+
+option domain-name "node1.cnl.com";
+# specify name server's hostname or IP address
+
+option domain-name-servers dlp.srv.world;
+# default lease time
+
+default-lease-time 600;
+# max lease time
+
+max-lease-time 7200;
+# this DHCP server to be declared valid
+
+authoritative;
+# specify network address and subnet mask
+
+subnet 10.0.0.0 netmask 255.255.255.0 {
+    # specify the range of lease IP address
+
+    range dynamic-bootp 10.0.0.200 10.0.0.254;
+    # specify broadcast address
+
+    option broadcast-address 10.0.0.255;
+    # specify default gateway
+
+    option routers 10.0.0.1;
+}
+[root@dlp ~]# systemctl start dhcpd
+
+[root@dlp ~]# systemctl enable dhcpd 

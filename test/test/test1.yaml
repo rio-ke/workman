@@ -1,0 +1,7 @@
+---
+- hosts: all
+  tasks:
+    - name: count our fruit
+      debug:
+        msg: "{{ ansible_user }}"
+

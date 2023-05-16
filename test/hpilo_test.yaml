@@ -1,0 +1,5 @@
+---
+- name: "Prepare HPiLO Information"
+  hosts: localhost
+  roles:
+    - role: hpilo

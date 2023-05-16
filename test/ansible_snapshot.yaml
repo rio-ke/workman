@@ -1,0 +1,10 @@
+---
+- name: "play for aws snapshot"
+  hosts: localhost
+  tasks:
+  - name: "snapshot id"
+    ec2_snapshot_facts:
+      snapshot_ids:
+        - snap-0b49992f6f4bc862f
+    register: jino
+  - debug: msg="{{jino}}"

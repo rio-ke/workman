@@ -1,0 +1,12 @@
+---
+- name:
+  hosts: node2
+  roles:
+    - role: epel
+    - role: httpd
+    - role: firewall
+      service_name: http
+    - role: nagios_server
+      nagios_url: nagios
+      nagios_pass: nagiosadmin
+      nagios_email_alert: jinojoe@gmail.com

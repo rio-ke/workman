@@ -1,0 +1,20 @@
+---
+- name: Toc create ec2 instance
+  ec2:
+    key_name: "{{ key_name }}"
+    instance_type: "{{ instance_type}}"
+    image: "{{ ami_id }}"
+    wait: yes
+    count: 1
+    region: "{{ aws_region }}"
+    vpc_subnet_id: "{{ vpc_id }}"
+    assign_public_ip: yes
+    count_tag:
+      Name: JINO
+    instance_tags:
+      Name: JINO
+  register: ec2
+- debug:
+    msg: "{{ ec2 }}"
+
+

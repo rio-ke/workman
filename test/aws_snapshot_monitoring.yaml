@@ -1,0 +1,5 @@
+---
+- name: "ansible snap monitering"
+  hosts: localhost
+  roles:
+    - role: aws_snapshot_monitoring

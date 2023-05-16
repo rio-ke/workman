@@ -1,0 +1,5 @@
+{% for w in [ansible_memfree_mb,ansible_memtotal_mb]%}
+{{(w/1024|pow(1))|round|int}}
+{%endfor%}
+
+

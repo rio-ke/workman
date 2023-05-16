@@ -1,0 +1,4 @@
+---
+- hosts: jk
+  roles:
+    - role: bl

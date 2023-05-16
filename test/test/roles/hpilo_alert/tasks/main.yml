@@ -1,0 +1,40 @@
+---
+# tasks file for roles/hpilo_alert
+- name: "collect HPiLO information"
+  hpilo_facts:
+    host: "{{hpilo_ip}}"
+    login: "{{hpilo_username}}"
+    password: "{{hpilo_password}}"
+  register: result
+  when:
+    - hpilo_password is defined
+    - hpilo_username is defined
+    - hpilo_ip is defined
+
+- name: "show the error Msg"
+  debug:
+    msg: "please check username password and ipaddress details"
+  when:
+    - result is skipped
+
+- name: "Save HPiLO information use template"
+  template:
+    src: hpilo_alert.j2
+    dest: ~/hpilo_alert.html
+  when:
+  - result is succeeded
+
+- name: "Mail URL HPiLO Down Information"
+  mail:
+    host: "{{smtp_host}}"
+    port: "{{smtp_port}}" # 587
+    username: "{{smtp_username}}"
+    password: "{{smtp_password}}"
+    to: "{{email_to}}"
+    cc: "{{email_cc}}"
+    from: "{{email_from}}"
+    subject: "{{ client_name }} HPiLO HARDWARE DOWN ALERT!!!"
+    subtype: html
+    body: "{{ lookup('file', '~/hpilo_alert.html') }}"
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  run_once: True

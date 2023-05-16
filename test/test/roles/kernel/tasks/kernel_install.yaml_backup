@@ -1,0 +1,54 @@
+---
+- name: To show current kernel version
+  shell: uname -r
+  register: kernel_version
+
+- name: Next version of kernel
+  shell: rpm -q kernel rpm -q kernel|tail -n 1 | sed 's/kernel-//g'
+  register: update_kernel_version
+
+- debug:
+    msg: "Kernel version are upto date. Current version is - {{update_kernel_version.stdout}}"
+  when: update_kernel_version.stdout == kernel_version.stdout
+
+- debug:
+    msg: "Kernel Versions are available. Please Update!!!!!!!"
+  when: update_kernel_version.stdout != kernel_version.stdout
+
+- name: Next version of kernel
+  shell: rpm -q kernel|tail -n 1 | awk -F- '{print $2}'
+  register: update_kernel_version1
+
+- name: Next version of kernel
+  shell: rpm -q kernel|tail -n 1 | awk -F- '{print $3}'
+  register: update_kernel_version2
+
+- set_fact:
+    one_fact: "{{update_kernel_version1.stdout}}-{{update_kernel_version2.stdout}}"
+
+- debug:
+    msg: "{{one_fact}}"
+  when: one_fact != kernel_version.stdout
+
+- name: Update the kernel
+  yum:
+    name: kernel
+    state: latest
+  when: one_fact != kernel_version.stdout
+
+- name: Restart server
+  shell: sleep 1 && shutdown -r now "Reboot triggered by Ansible" && sleep 1
+  async: 1
+  poll: 0
+  ignore_errors: true
+  register: restart_state
+  when: one_fact != kernel_version.stdout
+
+- name: "This play will wait for 3 minutes for system to come up"
+  pause: minutes=1
+  register: result_pause_state
+  when: one_fact != kernel_version.stdout
+
+- name: check the client uptime
+  shell: uptime
+  register: up_time

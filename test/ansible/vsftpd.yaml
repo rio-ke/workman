@@ -1,0 +1,9 @@
+---
+- name: Play for vsftpd
+  hosts: node
+  tasks:
+  roles:
+    - { role: user_group, user_name: test, username_password: test, shell_name: /sbin/nologin }
+    - { role: vsftpd, vsftpd_service_name: vsftpd, Document_path: /var/www/html/TEST, user_name: test }
+    - { role: firewall, firewall_service_name: ftp }
+

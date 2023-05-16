@@ -1,0 +1,39 @@
+---
+- name: "Show memory usage"
+  shell: "{{memory_usage}}"
+  register: result1
+  when: ansible_swaptotal_mb != 0
+
+- name: "show user based mem usgae"
+  shell: "{{user_based_memory_usage}}"
+  register: result2
+  when: ansible_swaptotal_mb != 0
+
+- name: "show user based MEM and CPU usgae"
+  shell: "{{memory_cpu_usage}}"
+  register: result3
+  when: ansible_swaptotal_mb != 0
+
+- name: "Copy the (user) Memeory usage precentage"
+  template:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+  with_items:
+    - { src: temp1.j2, dest: /tmp/memory_usage.txt }
+    - { src: temp2.j2, dest: /tmp/user_based_memory_usage.txt }
+    - { src: temp3.j2, dest: /tmp/memory_usage_process.txt }
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  when: ansible_swaptotal_mb != 0
+
+- name: "Mail the Condent"
+  mail:
+    to: linuxadmin@radiantcashservices.com
+    subject: Memory Report
+    attach:
+      - /tmp/memory_usage.txt
+      - /tmp/user_based_memory_usage.txt
+      - /tmp/memory_usage_process.txt
+    body: System has been generated memory report successfully.
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  when: ansible_swaptotal_mb != 0
+  run_once: True

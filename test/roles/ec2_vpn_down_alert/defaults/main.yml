@@ -1,0 +1,15 @@
+---
+delegate_host: localhost
+email_to: jinojoe@gmail.com
+email_cc: jinojoe@rediffmail.com
+template_storage_path: /tmp/ec2_vpn_info.txt
+client_name: Skylark
+
+#Alert Genarate
+slack_alert: true
+mail_alert: true
+#mail details
+smtp_host:
+smtp_port:
+smtp_username:
+smtp_password:

@@ -1,0 +1,2442 @@
+---
+- name: "Ensure mounting of cramfs filesystems is disabled"
+  lineinfile:
+    dest: /etc/modprobe.d/CIS.conf
+    regexp: "^(#)?install cramfs(\\s|$)"
+    line: "install cramfs /bin/true"
+    create: yes
+  when:
+    - configure_filesystem == true
+
+- name: "Ensure mounting of freevxfs filesystems is disabled"
+  lineinfile:
+    dest: /etc/modprobe.d/CIS.conf
+    regexp: "^(#)?install freevxfs(\\s|$)"
+    line: "install freevxfs /bin/true"
+    create: yes
+  when: configure_filesystem == true
+
+- name: "Ensure mounting of jffs2 filesystems is disabled"
+  lineinfile:
+    dest: /etc/modprobe.d/CIS.conf
+    regexp: "^(#)?install jffs2(\\s|$)"
+    line: "install jffs2 /bin/true"
+    create: yes
+  when: configure_filesystem == true
+
+- name: "Ensure mounting of hfs filesystems is disabled"
+  lineinfile:
+    dest: /etc/modprobe.d/CIS.conf
+    regexp: "^(#)?install hfs(\\s|$)"
+    line: "install hfs /bin/true"
+    create: yes
+  when: configure_filesystem == true
+
+- name: "Ensure mounting of hfsplus filesystems is disabled"
+  lineinfile:
+    dest: /etc/modprobe.d/CIS.conf
+    regexp: "^(#)?install hfsplus(\\s|$)"
+    line: "install hfsplus /bin/true"
+    create: yes
+  when: configure_filesystem == true
+
+- name: "Ensure mounting of squashfs filesystems is disabled"
+  lineinfile:
+    dest: /etc/modprobe.d/CIS.conf
+    regexp: "^(#)?install squashfs(\\s|$)"
+    line: "install squashfs /bin/true"
+  when: configure_filesystem == true
+
+- name: "Ensure mounting of udf filesystems is disabled"
+  lineinfile:
+    dest: /etc/modprobe.d/CIS.conf
+    regexp: "^(#)?install udf(\\s|$)"
+    line: "install udf /bin/true"
+  when: configure_filesystem == true
+
+- name: "Ensure mounting of FAT filesystems is disabled"
+  lineinfile:
+    dest: /etc/modprobe.d/CIS.conf
+    regexp: "^(#)?install vfat(\\s|$)"
+    line: "install vfat /bin/true"
+    create: yes
+  when: configure_filesystem == true
+
+- name: "Ensure separate partition exists for /var/log"
+  shell: mount | grep "on /var/log "
+  register: var_log_mounted
+  changed_when: no
+  failed_when: no
+  when: configure_filesystem == true
+
+- name: "/var/log seperate partition found"
+  debug:
+    msg: /var/log partition found.
+  when: configure_filesystem == true and var_log_mounted.stdout != ""
+
+- name: "/var/log seperate partition not found"
+  debug:
+    msg: /var/log partition not found.
+  when: configure_filesystem == true and var_log_mounted.stdout == ""
+
+- name: "Ensure separate partition exists for /home"
+  shell: mount | grep "on /home "
+  register: home_mounted
+  changed_when: no
+  failed_when: no
+  when: configure_filesystem == true
+
+- name: "/home seperate partition found"
+  debug:
+    msg: /home partition found.
+  when: configure_filesystem == true and home_mounted.stdout != ""
+
+- name: "/home seperate partition not found"
+  debug:
+    msg: /home partition not found.
+  when: configure_filesystem == true and home_mounted.stdout == ""
+
+- name: "Ensure separate partition exists for /var/log/audit"
+  shell: mount | grep "on /var/log/audit "
+  register: var_log_audit_mounted
+  changed_when: no
+  failed_when: no
+  when: configure_filesystem == true
+
+- name: "/var/log/audit seperate partition found"
+  debug:
+    msg: /var/log/audit partition found.
+  when: configure_filesystem == true and var_log_audit_mounted.stdout != ""
+
+- name: "/var/log/audit seperate partition not found"
+  debug:
+    msg: /var/log/audit partition not found.
+  when: configure_filesystem == true and var_log_audit_mounted.stdout == ""
+
+- name: "Ensure separate partition exists for /var"
+  shell: mount | grep "on /var "
+  register: var_mounted
+  changed_when: no
+  failed_when: no
+  when: configure_filesystem == true
+
+- name: "/var seperate partition found"
+  debug:
+    msg: /var partition found.
+  when: configure_filesystem == true and var_mounted.stdout != ""
+
+- name: "/var seperate partition not found"
+  debug:
+    msg: /var partition not found.
+  when: configure_filesystem == true and var_mounted.stdout == ""
+
+- name: "Ensure separate partition exists for /var/tmp"
+  shell: mount | grep "on /var/tmp "
+  register: var_tmp_mounted
+  changed_when: no
+  failed_when: no
+  when: configure_filesystem == true
+
+- name: "/var/tmp seperate partition found"
+  debug:
+    msg: /var/tmp partition found.
+  when: configure_filesystem == true and var_tmp_mounted.stdout != ""
+
+- name: "/var/tmp seperate partition not found"
+  debug:
+    msg: /var/tmp partition not found.
+  when: configure_filesystem == true and var_tmp_mounted.stdout == ""
+
+- name: " Ensure nodev option set on /var/tmp partition | Ensure nosuid option set on /var/tmp partition | Ensure noexec option set on /var/tmp partition"
+  mount:
+    name: /var/tmp
+    src: "{{ vartmp.source }}"
+    state: mounted
+    fstype: "{{ vartmp.fstype }}"
+    opts: "{{ vartmp.opts }}"
+  when: configure_filesystem == true and var_tmp_mounted.stdout != "" and enable_vartmp == true
+
+- name: "Ensure gpgcheck is globally activated"
+  replace:
+    name: /etc/yum.conf
+    regexp: "^gpgcheck=0"
+    replace: "gpgcheck=1"
+  when: configure_software_updates == true
+
+- name: "Ensure gpgcheck is globally activated"
+  find:
+    paths: /etc/yum.repos.d
+    patterns: "*.repo"
+  register: yum_repos
+  changed_when: no
+  when: configure_software_updates == true
+
+- name: "Ensure gpgcheck is globally activated"
+  replace:
+    name: "{{ item.path }}"
+    regexp: "^gpgcheck=0"
+    replace: "gpgcheck=1"
+  no_log: true
+  with_items:
+    - "{{ yum_repos.files }}"
+  when: configure_software_updates == true
+
+- name: "Ensure AIDE is installed"
+  yum:
+    name: aide
+    state: present
+  when: configure_filesystem_integrity_check == true
+
+- name: "Ensure AIDE is installed (cent)"
+  command: /usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz'
+  args:
+    creates: /var/lib/aide/aide.db.gz
+  changed_when: no
+  failed_when: no
+  async: 45
+  poll: 0
+  when: configure_filesystem_integrity_check == true
+
+- name: "Ensure filesystem integrity is regularly checked (centos)"
+  cron:
+    name: Run AIDE integrity check weekly
+    cron_file: "{{ cron_file }}"
+    user: "{{ cron_user }}"
+    minute: "{{ aide_minute | default('0') }}"
+    hour: "{{ aide_hour | default('5') }}"
+    day: "{{ aide_day | default('*') }}"
+    month: "{{ aide_month | default('*') }}"
+    weekday: "{{ aide_weekday | default('*') }}"
+    job: "{{ aide_job }}"
+  when: configure_filesystem_integrity_check == true
+
+- name: "Ensure core dumps are restricted"
+  lineinfile:
+    state: present
+    dest: /etc/security/limits.conf
+    regexp: '^#?\\*.*core'
+    line: '*                hard    core            0'
+    insertbefore: '^# End of file'
+  when: configure_process_hardening == true
+
+- name: "Ensure address space layout randomization (ASLR) is enabled"
+  sysctl:
+    name: kernel.randomize_va_space
+    value: 2
+    state: present
+    reload: yes
+    sysctl_set: yes
+    ignoreerrors: yes
+  when: configure_process_hardening == true
+
+- name: "Check if prelink package is installed"
+  command: rpm -q prelink
+  register: prelink_installed
+  changed_when: no
+  failed_when: no
+  check_mode: no
+
+- name: "Ensure prelink is disabled"
+  command: prelink -ua
+  when:
+    - prelink_installed.rc == 0
+    - configure_process_hardening == true
+
+- name: "Ensure prelink is disabled (centos)"
+  yum:
+    name: prelink
+    state: absent
+  when: configure_process_hardening == true
+
+- name: "Ensure SELinux is not disabled in bootloader configuration"
+  shell: grep "^\s*linux" /boot/grub2/grub.cfg
+  ignore_errors: true
+  failed_when: no
+  changed_when: no
+  when:
+    - mandatory_access_control == true
+    - Enable_selinux == true
+
+- name: "Ensure the SELinux state is enforcing"
+  selinux:
+    state: disabled
+  when:
+    - mandatory_access_control == true
+    - Disable_selinux == true
+
+- name: "Ensure the SELinux state is enforcing | Ensure SELinux policy is configured"
+  selinux:
+    conf: /etc/selinux/config
+    policy: "{{selinux_type}}"
+    state: "{{selinux_mode}}"
+  when:
+    - mandatory_access_control == true
+    - Enable_selinux == true
+
+- name: "Ensure SETroubleshoot is not installed"
+  yum:
+    name: setroubleshoot
+    state: absent
+  when:
+    - mandatory_access_control == true
+    - Enable_selinux == true
+
+- name: "Ensure the MCS Translation Service (mcstrans) is not installed"
+  yum:
+    name: mcstrans
+    state: absent
+  when:
+    - mandatory_access_control == true
+    - Enable_selinux == true
+
+- name: "Ensure no unconfined daemons exist"
+  shell: >
+    ps -eZ | egrep "initrc" | egrep -vw "tr|ps|egrep|bash|awk" | tr ':' ' ' | awk '{ print $NF }'
+  ignore_errors: true
+  when:
+    - mandatory_access_control == true
+    - Enable_selinux == true
+
+- name: "check if SELinux is installed"
+  shell: rpm -qa libselinux
+  register: libselinux
+  failed_when: no
+  changed_when: no
+
+#- name: "Ensure SELinux is installed"
+#  yum:
+#    name: libselinux
+#    state: absent
+#  when:
+#    - mandatory_access_control == true
+#    - Enable_selinux == true
+#    - libselinux.stdout != ""
+
+- name: "Ensure message of the day is configured properly"
+  template:
+    src: motd.j2
+    dest: /etc/motd
+    owner: root
+    group: root
+    mode: 0644
+  when: configure_banners == true
+
+- name: "Ensure local login warning banner is configured properly"
+  template:
+    src: issue.j2
+    dest: /etc/issue
+    owner: root
+    group: root
+    mode: 0644
+  when: configure_banners == true
+
+- name: "Ensure remote login warning banner is configured properly"
+  template:
+    src: issue.net.j2
+    dest: /etc/issue.net
+    owner: root
+    group: root
+    mode: 0644
+  when: configure_banners == true
+
+- name: "Ensure GDM login banner is configured"
+  lineinfile:
+    dest: "{{ item.file }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    create: yes
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - { file: '/etc/dconf/profile/gdm', regexp:  'user-db', line: 'user-db:user' }
+    - { file: '/etc/dconf/profile/gdm', regexp:  'system-db', line: 'system-db:gdm' }
+    - { file: '/etc/dconf/profile/gdm', regexp:  'file-db', line: 'file-db:/usr/share/gdm/greeter-dconf-defaults' }
+    - { file: '/etc/dconf/db/gdm.d/01-banner-message', regexp:  '\[org\/gnome\/login-screen\]', line: '[org/gnome/login-screen]' }
+    - { file: '/etc/dconf/db/gdm.d/01-banner-message', regexp:  'banner-message-enable', line: 'banner-message-enable=true' }
+    - { file: '/etc/dconf/db/gdm.d/01-banner-message', regexp:  'banner-message-text', line: "banner-message-text='{{ warning_banner }}' " }
+  when: banner_gui == true and configure_banners == true
+
+- name: "Ensure updates, patches, and additional security software are installed"
+  yum:
+    name: "*"
+    state: latest
+  when: configure_yum_update == true
+
+- name: "Ensure chargen services are not enabled chargen-dgram"
+  stat:
+    path: /etc/xinetd.d/chargen-dgram
+  register: chargen_dgram_service
+
+- name: "Ensure chargen services are not enabled chargen-dgram"
+  command: chkconfig chargen-dgram off
+  notify: restart xinetd
+  when:
+    - chargen_dgram_service.stat.exists
+    - configure_inetd_service == true
+    - disable_chargen_dgram == true
+
+- name: "Ensure chargen services are not enabled chargen-stream"
+  stat:
+    path: /etc/xinetd.d/chargen-stream
+  register: chargen_stream_service
+
+- name: "Ensure chargen services are not enabled chargen-stream"
+  command: chkconfig chargen-stream off
+  notify: restart xinetd
+  when:
+    - chargen_stream_service.stat.exists
+    - configure_inetd_service == true
+    - disable_chargen_stream == true
+
+- name: "Ensure daytime services are not enabled daytime-dgram"
+  stat:
+    path: /etc/xinetd.d/daytime-dgram
+  register: daytime_dgram_service
+
+- name: "Ensure daytime services are not enabled daytime-dgram"
+  command: chkconfig daytime-dgram off
+  notify: restart xinetd
+  when:
+    - daytime_dgram_service.stat.exists
+    - configure_inetd_service == true
+    - disable_daytime_dgram == true
+
+- name: "Ensure daytime services are not enabled daytime-stream"
+  stat:
+    path: /etc/xinetd.d/daytime-stream
+  register: daytime_stream_service
+
+- name: "Ensure daytime services are not enabled daytime-stream"
+  command: chkconfig daytime-stream off
+  notify: restart xinetd
+  when:
+    - daytime_stream_service.stat.exists
+    - configure_inetd_service == true
+    - disable_daytime_stream == true
+
+- name: "Ensure discard services are not enabled discard-dgram"
+  stat:
+    path: /etc/xinetd.d/discard-dgram
+  register: discard_dgram_service
+
+- name: "Ensure discard services are not enabled discard-dgram"
+  command: chkconfig discard-dgram off
+  notify: restart xinetd
+  when:
+    - discard_dgram_service.stat.exists
+    - configure_inetd_service == true
+    - disable_discard_dgram == true
+
+- name: "Ensure discard services are not enabled discard-stream"
+  stat:
+    path: /etc/xinetd.d/discard-stream
+  register: discard_stream_service
+
+- name: "Ensure discard services are not enabled discard-stream"
+  command: chkconfig discard-stream off
+  notify: restart xinetd
+  when:
+    - discard_stream_service.stat.exists
+    - configure_inetd_service == true
+    - disable_discard_stream == true
+
+- name: "Ensure echo services are not enabled echo-dgram"
+  stat:
+    path: /etc/xinetd.d/echo-dgram
+  register: echo_dgram_service
+
+- name: "Ensure echo services are not enabled - echo-dgram"
+  command: chkconfig echo-dgram off
+  notify: restart xinetd
+  when:
+    - echo_dgram_service.stat.exists
+    - configure_inetd_service == true
+    - disable_echo_dgram == true
+
+- name: "Ensure echo services are not enabled echo-stream"
+  stat:
+    path: /etc/xinetd.d/echo-stream
+  register: echo_stream_service
+
+- name: "Ensure echo services are not enabled echo-stream"
+  command: chkconfig echo-stream off
+  notify: restart xinetd
+  when:
+    - echo_stream_service.stat.exists
+    - configure_inetd_service == true
+    - disable_echo_stream == true
+
+- name: "Ensure time services are not enabled time-dgram"
+  stat:
+    path: /etc/xinetd.d/time-dgram
+  register: time_dgram_service
+
+- name: "Ensure time services are not enabled time-dgram"
+  command: chkconfig time-dgram off
+  notify: restart xinetd
+  when:
+    - time_dgram_service.stat.exists
+    - configure_inetd_service == true
+    - disable_time_dgram == true
+
+- name: "Ensure time services are not enabled time-stream"
+  stat:
+    path: /etc/xinetd.d/time-stream
+  register: time_stream_service
+
+- name: "Ensure time services are not enabled time-stream"
+  command: chkconfig time-stream off
+  notify: restart xinetd
+  when:
+    - time_stream_service.stat.exists
+    - configure_inetd_service == true
+    - disable_time_stream == true
+
+- name: "Ensure tftp server is not enabled"
+  stat:
+    path: /etc/xinetd.d/tftp
+  register: tftp_service
+
+- name: "Ensure tftp server is not enabled"
+  command: chkconfig tftp off
+  notify: restart xinetd
+  when:
+    - tftp_service.stat.exists
+    - disable_tftp_server == true
+    - configure_inetd_service == true
+
+- name: "Check for xinetd service"
+  shell: "systemctl show xinetd | grep LoadState | cut -d = -f 2"
+  register: xinetd_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure xinetd is not enabled"
+  service:
+    name: xinetd
+    state: stopped
+    enabled: no
+  when:
+    - xinetd_service_status.stdout == "loaded"
+    - xinetd_required == false
+    - configure_inetd_service == true
+
+- name: "Check for ntpd service"
+  shell: systemctl show ntpd | grep LoadState | cut -d = -f 2
+  register: ntpd_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Check for chronyd service"
+  shell: systemctl show chronyd | grep LoadState | cut -d = -f 2
+  register: chronyd_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure time synchronization is in use - service stop ntp"
+  service:
+    name: ntpd
+    state: stopped
+    enabled: no
+  when: time_synchronization == "chrony" and ntpd_service_status.stdout == "loaded" and configure_special_purpose_services == true
+
+- name: "Ensure time synchronization is in use - service stop ntp"
+  service:
+    name: chronyd
+    state: stopped
+    enabled: no
+  when: time_synchronization == "ntp" and chrony_service_status.stdout == "loaded" and configure_special_purpose_services == true
+
+- name: "Ensure time synchronization is in use - service install"
+  yum:
+    name: "{{ time_synchronization }}"
+    state: present
+  when:
+    - configure_special_purpose_services == true
+
+- name: "Ensure time synchronization is in use - service start"
+  service:
+    name: "{{ time_synchronization }}d"
+    state: started
+    enabled: yes
+  when:
+    - configure_special_purpose_services == true
+
+- name: "Ensure ntp is configured | modify /etc/ntp.conf"
+  template:
+    src: cent_ntp.conf.j2
+    dest: /etc/ntp.conf
+    owner: root
+    group: root
+    mode: 0644
+  when:
+    - configure_special_purpose_services == true
+    - time_synchronization == "ntp"
+
+- name: "Ensure ntp is configured | modify /etc/sysconfig/ntpd"
+  lineinfile:
+    dest: /etc/sysconfig/ntpd
+    regexp: "^(#)?OPTIONS"
+    line: "OPTIONS=\"-u ntp:ntp\""
+  when:
+    - configure_special_purpose_services == true
+    - time_synchronization == "ntp"
+
+- name: "Ensure ntp is configured - modifyi /usr/lib/systemd/system/ntpd.service"
+  lineinfile:
+    dest: /usr/lib/systemd/system/ntpd.service
+    regexp: "^(#)?ExecStart"
+    line: "ExecStart=/usr/sbin/ntpd -u ntp:ntp $OPTIONS"
+  when:
+  - configure_special_purpose_services == true
+  - time_synchronization == "ntp"
+
+- name: "Ensure chrony is configured"
+  template:
+    src: cent_chrony.conf.j2
+    dest: /etc/chrony.conf
+    owner: root
+    group: root
+    mode: 0644
+  when:
+    - configure_special_purpose_services == true
+    - time_synchronization == "chrony"
+
+- name: "Ensure chrony is configured | modify /etc/sysconfig/chronyd | 1"
+  lineinfile:
+    dest: /etc/sysconfig/chronyd
+    regexp: "^(#)?OPTIONS"
+    line: "OPTIONS=\"-u chrony\""
+    state: present
+    create: yes
+  when:
+    - time_synchronization == "chrony"
+    - configure_special_purpose_services == true
+
+- name: "Check for avahi-daemon service"
+  shell: systemctl show avahi-daemon | grep LoadState | cut -d = -f 2
+  register: avahi_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure Avahi Server is not enabled"
+  service:
+    name: avahi-daemon
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_avahi_daemon == true
+    - avahi_service_status.stdout == "loaded"
+
+- name: "Check for cups service"
+  shell: "systemctl show cups | grep LoadState | cut -d = -f 2"
+  register: cups_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure CUPS is not enabled"
+  service:
+    name: cups
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_cups_server == true
+    - cups_service_status.stdout == "loaded"
+
+- name: "Check for dhcpd service"
+  shell: "systemctl show dhcpd | grep LoadState | cut -d = -f 2"
+  register: dhcpd_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure DHCP Server is not enabled"
+  service:
+    name: dhcpd
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_dhcpd_server == true
+    - dhcpd_service_status.stdout == "loaded"
+
+- name: "Check for slapd service"
+  shell: "systemctl show slapd | grep LoadState | cut -d = -f 2"
+  register: slapd_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure LDAP server is not enabled"
+  service:
+    name: slapd
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_slapd_server == true
+    - slapd_service_status.stdout == "loaded"
+
+- name: "Check for nfs service"
+  shell: "systemctl show nfs | grep LoadState | cut -d = -f 2"
+  register: nfs_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure NFS and RPC are not enabled"
+  service:
+    name: nfs
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_nfs_server == true
+    - nfs_service_status.stdout == "loaded"
+
+- name: "Check for rpcbind service"
+  shell: "systemctl show rpcbind | grep LoadState | cut -d = -f 2"
+  register: rpcbind_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure NFS and RPC are not enabled"
+  service:
+    name: rpcbind
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_rpcbind_server == true
+    - rpcbind_service_status.stdout == "loaded"
+
+- name: "Check for named service"
+  shell: "systemctl show named | grep LoadState | cut -d = -f 2"
+  register: named_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure DNS Server is not enabled"
+  service:
+    name: named
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_named_server == true
+    - named_service_status.stdout == "loaded"
+
+- name: "Check for vsftpd service"
+  shell: "systemctl show vsftpd | grep LoadState | cut -d = -f 2"
+  register: vsftpd_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure FTP Server is not enabled"
+  service:
+    name: vsftpd
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_vsftpd_server == true
+    - vsftpd_service_status.stdout == "loaded"
+
+- name: "Check for httpd service"
+  shell: "systemctl show httpd | grep LoadState | cut -d = -f 2"
+  register: httpd_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure HTTP server is not enabled"
+  service:
+    name: httpd
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_httpd_server == true
+    - httpd_service_status.stdout == "loaded"
+
+- name: "Check for dovecot service"
+  shell: "systemctl show dovecot | grep LoadState | cut -d = -f 2"
+  register: dovecot_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure IMAP and POP3 server is not enabled"
+  service:
+    name: dovecot
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_dovecot_server == true
+    - dovecot_service_status.stdout == "loaded"
+
+- name: "Check for smb service"
+  shell: "systemctl show smb | grep LoadState | cut -d = -f 2"
+  register: smb_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure Samba is not enabled"
+  service:
+    name: smb
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_smb_server == true
+    - smb_service_status.stdout == "loaded"
+
+- name: "Check for squid service"
+  shell: "systemctl show squid | grep LoadState | cut -d = -f 2"
+  register: squid_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure HTTP Proxy Server is not enabled"
+  service:
+    name: squid
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_squid_server == true
+    - squid_service_status.stdout == "loaded"
+
+- name: "Check for snmpd service"
+  shell: "systemctl show snmpd | grep LoadState | cut -d = -f 2"
+  register: snmpd_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure SNMP Server is not enabled"
+  service:
+    name: snmpd
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_snmpd_server == true
+    - snmpd_service_status.stdout == "loaded"
+
+- name: "Check if postfix package is installed"
+  command: rpm -q postfix
+  register: postfix_installed
+  changed_when: no
+  failed_when: no
+  check_mode: no
+
+- name: "Ensure mail transfer agent is configured for local-only mode"
+  lineinfile:
+    dest: /etc/postfix/main.cf
+    regexp: "^(#)?inet_interfaces"
+    line: "inet_interfaces = localhost"
+  when:
+    - configure_special_purpose_services == true
+    - stop_postfix_server == false
+    - postfix_installed.rc == 0
+
+- name: "Check for postfix service"
+  shell: systemctl show postfix | grep LoadState | cut -d = -f 2
+  register: postfix_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure postfix Server is not enabled"
+  service:
+    name: postfix
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_postfix_server == true
+    - postix_service_status.stdout == "loaded"
+
+- name: "Check for ypserv service"
+  shell: systemctl show ypserv | grep LoadState | cut -d = -f 2
+  register: ypserv_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure NIS Server is not enabled"
+  service:
+    name: ypserv
+    state: stopped
+    enabled: no
+  when:
+    - stop_nis_server == true
+    - ypserv_service_status.stdout == "loaded"
+    - configure_special_purpose_services == true
+
+- name: "Check for rsh.socket service"
+  shell: systemctl show rsh.socket | grep LoadState | cut -d = -f 2
+  register: rsh_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure rsh server is not enabled | rsh"
+  service:
+    name: rsh.socket
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_rsh_server == true
+    - rsh_service_status.stdout == "loaded"
+
+- name: "Check for rlogin.socket service"
+  shell: systemctl show rlogin.socket | grep LoadState | cut -d = -f 2
+  register: rlogin_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure rsh server is not enabled | rlogin"
+  service:
+    name: rlogin.socket
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_rsh_server == true
+    - rlogin_service_status.stdout == "loaded"
+
+- name: "Check for rexec.socket service"
+  shell: systemctl show rexec.socket | grep LoadState | cut -d = -f 2
+  register: rexec_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure rsh server is not enabled | rexec"
+  service:
+    name: rexec.socket
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_rsh_server == true
+    - rexec_service_status.stdout == "loaded"
+
+- name: "Check for telnet service"
+  shell: systemctl show telnet | grep LoadState | cut -d = -f 2
+  register: telnet_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure telnet server is not enabled"
+  service:
+    name: telnet
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_telnet_server == true
+    - telnet_service_status.stdout == "loaded"
+
+- name: "Check for tftp service"
+  shell: systemctl show tftp | grep LoadState | cut -d = -f 2
+  register: tftp_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure tftp server is not enabled"
+  service:
+    name: tftp
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_tftp_server == true
+    - tftp_service_status.stdout == "loaded"
+
+- name: "Check for rsyncd service"
+  shell: systemctl show rsyncd | grep LoadState | cut -d = -f 2
+  register: rsyncd_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure rsync service is not enabled "
+  service:
+    name: rsyncd
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_rsyncd_server == true
+    - rsyncd_service_status.stdout == "loaded"
+
+- name: "Check for ntalk service"
+  shell: systemctl show ntalk | grep LoadState | cut -d = -f 2
+  register: ntalk_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure talk server is not enabled"
+  service:
+    name: ntalk
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_ntalk_server == true
+    - ntalk_service_status.stdout == "loaded"
+
+- name: "Check for rhnsd service"
+  shell: systemctl show rhnsd | grep LoadState | cut -d = -f 2
+  register: rhnsd_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Disable the rhnsd Daemon"
+  service:
+    name: rhnsd
+    state: stopped
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_rhnsd_server == true
+    - rhnsd_service_status.stdout == "loaded"
+
+- name: "Check for autofs service"
+  shell: systemctl show autofs | grep LoadState | cut -d = -f 2
+  register: autofs_service_status
+  changed_when: no
+  check_mode: no
+
+- name: "Disable Automounting"
+  service:
+    name: autofs
+    enabled: no
+  when:
+    - configure_special_purpose_services == true
+    - stop_autofs_service == true
+    - autofs_service_status.stdout == "loaded"
+
+- name: "Ensure NIS Client is not installed"
+  yum:
+    name: ypbind
+    state: absent
+  when:
+    - remove_package_ypbind == true
+    - configure_service_clients == true
+
+- name: "Ensure rsh client is not installed"
+  yum:
+    name: rsh
+    state: absent
+  when:
+    - remove_package_rsh == true
+    - configure_service_clients == true
+    - stop_rsh_server == true
+
+- name: "Ensure talk client is not installed"
+  yum:
+    name: talk
+    state: absent
+  when:
+    - remove_package_talk == true
+    - configure_service_clients == true
+    - stop_ntalk_server == true
+
+- name: "Ensure telnet client is not installed"
+  yum:
+    name: telnet
+    state: absent
+  when:
+    - remove_package_telnet == true
+    - configure_service_clients == true
+    - stop_telnet_server == true
+
+- name: "Ensure LDAP client is not installed"
+  yum:
+    name: openldap-clients
+    state: absent
+  when:
+    - remove_package_openldap_clients == true
+    - configure_service_clients == true
+
+- name: "Ensure IP forwarding is disabled"
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 0
+    state: present
+    reload: yes
+    ignoreerrors: yes
+  when: IP_forward == true and configure_network_parameters_host == true
+  notify:
+      - sysctl flush ipv4 route table
+
+- name: "Ensure packet redirect sending is disabled"
+  sysctl:
+    name: '{{ item.name }}'
+    value: '{{ item.value }}'
+    sysctl_set: yes
+    state: present
+    reload: yes
+    ignoreerrors: yes
+  with_items:
+    - { name: net.ipv4.conf.all.send_redirects, value: 0 }
+    - { name: net.ipv4.conf.default.send_redirects, value: 0 }
+  when: IP_forward == true and configure_network_parameters_host == true
+  notify:
+    - sysctl flush ipv4 route table
+
+- name: "Ensure source routed packets are not accepted"
+  sysctl:
+    name: '{{ item.name }}'
+    value: '{{ item.value }}'
+    sysctl_set: yes
+    state: present
+    reload: yes
+    ignoreerrors: yes
+  with_items:
+    - { name: net.ipv4.conf.all.accept_source_route, value: 0 }
+    - { name: net.ipv4.conf.default.accept_source_route, value: 0 }
+  notify:
+    - sysctl flush ipv4 route table
+  when: configure_network_parameters_host_network == true
+
+- name: "Ensure ICMP redirects are not accepted"
+  sysctl:
+    name: '{{ item.name }}'
+    value: '{{ item.value }}'
+    sysctl_set: yes
+    state: present
+    reload: yes
+    ignoreerrors: yes
+  with_items:
+    - { name: net.ipv4.conf.all.accept_redirects, value: 0 }
+    - { name: net.ipv4.conf.default.accept_redirects, value: 0 }
+  notify:
+    - sysctl flush ipv4 route table
+  when: configure_network_parameters_host_network == true
+
+- name: "Ensure secure ICMP redirects are not accepted"
+  sysctl:
+    name: '{{ item.name }}'
+    value: '{{ item.value }}'
+    sysctl_set: yes
+    state: present
+    reload: yes
+    ignoreerrors: yes
+  with_items:
+    - { name: net.ipv4.conf.all.secure_redirects, value: 0 }
+    - { name: net.ipv4.conf.default.secure_redirects, value: 0 }
+  notify:
+    - sysctl flush ipv4 route table
+  when: configure_network_parameters_host_network == true
+
+- name: "Ensure suspicious packets are logged"
+  sysctl:
+    name: '{{ item.name }}'
+    value: '{{ item.value }}'
+    sysctl_set: yes
+    state: present
+    reload: yes
+    ignoreerrors: yes
+  with_items:
+    - { name: net.ipv4.conf.all.log_martians, value: 1 }
+    - { name: net.ipv4.conf.default.log_martians, value: 1 }
+  notify:
+    - sysctl flush ipv4 route table
+  when: configure_network_parameters_host_network == true
+
+- name: "Ensure broadcast ICMP requests are ignored"
+  sysctl:
+    name: net.ipv4.icmp_echo_ignore_broadcasts
+    value: 1
+    state: present
+    reload: yes
+    ignoreerrors: yes
+  notify:
+    - sysctl flush ipv4 route table
+  when: configure_network_parameters_host_network == true
+
+- name: "Ensure bogus ICMP responses are ignored"
+  sysctl:
+    name: net.ipv4.icmp_ignore_bogus_error_responses
+    value: 1
+    state: present
+    reload: yes
+    ignoreerrors: yes
+  notify:
+    - sysctl flush ipv4 route table
+  when: configure_network_parameters_host_network == true
+
+- name: "Ensure Reverse Path Filtering is enabled"
+  sysctl:
+    name: '{{ item.name }}'
+    value: '{{ item.value }}'
+    sysctl_set: yes
+    state: present
+    reload: yes
+    ignoreerrors: yes
+  with_items:
+    - { name: net.ipv4.conf.all.rp_filter, value: 1 }
+    - { name: net.ipv4.conf.default.rp_filter, value: 1 }
+  notify:
+    - sysctl flush ipv4 route table
+  when: configure_network_parameters_host_network == true
+
+- name: "Ensure TCP SYN Cookies is enabled"
+  sysctl:
+    name: net.ipv4.tcp_syncookies
+    value: 1
+    state: present
+    reload: yes
+    ignoreerrors: yes
+  notify:
+    - sysctl flush ipv4 route table
+  when: configure_network_parameters_host_network == true
+
+- name: "Ensure randomize_va_space is enabled"
+  sysctl:
+    name: kernel.randomize_va_space
+    value: 2
+    state: present
+    reload: yes
+    ignoreerrors: yes
+  notify:
+    - sysctl flush ipv4 route table
+  when: configure_network_parameters_host_network == true
+
+- name: "Ensure core dumps are restricted"
+  sysctl:
+    name: fs.suid_dumpable
+    value: 0
+    state: present
+    reload: yes
+    sysctl_set: yes
+    ignoreerrors: yes
+  when: configure_network_parameters_host_network == true
+
+#- name: "Ensure XD/NX support is enabled"
+
+
+
+- name: "Ensure IPv6 router advertisements are not accepted"
+  sysctl:
+    name: '{{ item.name }}'
+    value: '{{ item.value }}'
+    sysctl_set: yes
+    state: present
+    reload: yes
+    ignoreerrors: yes
+  with_items:
+    - { name: net.ipv6.conf.all.accept_ra, value: 0 }
+    - { name: net.ipv6.conf.default.accept_ra, value: 0 }
+  when: ipv6_required == true and configure_network_parameters_ipv6 == true
+  notify:
+    - sysctl flush ipv6 route table
+
+- name: "Ensure IPv6 redirects are not accepted"
+  sysctl:
+    name: '{{ item.name }}'
+    value: '{{ item.value }}'
+    sysctl_set: yes
+    state: present
+    reload: yes
+    ignoreerrors: yes
+  with_items:
+    - { name: net.ipv6.conf.all.accept_redirects, value: 0 }
+    - { name: net.ipv6.conf.default.accept_redirects, value: 0 }
+  when: ipv6_required == true and configure_network_parameters_ipv6 == true
+  notify:
+    - sysctl flush ipv6 route table
+
+- name: "Ensure IPv6 is disabled"
+  lineinfile:
+    dest: /etc/modprobe.d/CIS.conf
+    regexp: "^(#)?options ipv6 disable="
+    line: "options ipv6 disable=1"
+    create: yes
+  when: ipv6_required == false and configure_network_parameters_ipv6 == true
+
+- name: "Ensure TCP Wrappers is installed"
+  yum:
+    name: tcp_wrappers
+    state: present
+  when: configure_tcpwrappers == true
+
+- name: "Ensure /etc/hosts.allow is configured"
+  template:
+    src: hosts.allow.j2
+    dest: /etc/hosts.allow
+    owner: root
+    group: root
+    mode: 0644
+  when: configure_tcpwrappers == true
+
+- name: "Ensure /etc/hosts.deny is configured"
+  lineinfile:
+    dest: /etc/hosts.deny
+    regexp: "^(#)?ALL"
+    line: "ALL: ALL"
+  when: configure_tcpwrappers == true
+
+- name: "Ensure permissions on /etc/hosts.allow are configured"
+  file:
+    dest: /etc/hosts.allow
+    owner: root
+    group: root
+    mode: 0644
+  when: configure_tcpwrappers == true
+
+- name: "Ensure permissions on /etc/hosts.deny are 644"
+  file:
+    dest: /etc/hosts.deny
+    owner: root
+    group: root
+    mode: 0644
+  when: configure_tcpwrappers == true
+
+- name: "Ensure DCCP is disabled"
+  lineinfile:
+    dest: /etc/modprobe.d/CIS.conf
+    regexp: "^(#)?install dccp(\\s|$)"
+    line: "install dccp /bin/true"
+    create: yes
+  when: configure_uncommon_protocols_disable == true
+
+- name: "Ensure SCTP is disabled"
+  lineinfile:
+    dest: /etc/modprobe.d/CIS.conf
+    regexp: "^(#)?install sctp(\\s|$)"
+    line: "install sctp /bin/true"
+    create: yes
+  when: configure_uncommon_protocols_disable == true
+
+- name: "Ensure RDS is disabled"
+  lineinfile:
+    dest: /etc/modprobe.d/CIS.conf
+    regexp: "^(#)?install rds(\\s|$)"
+    line: "install rds /bin/true"
+    create: yes
+  when: configure_uncommon_protocols_disable == true
+
+- name: "Ensure TIPC is disabled"
+  lineinfile:
+    dest: /etc/modprobe.d/CIS.conf
+    regexp: "^(#)?install tipc(\\s|$)"
+    line: "install tipc /bin/true"
+    create: yes
+  when: configure_uncommon_protocols_disable == true
+
+- name: "Ensure firewalld is installed and started - CUSTOM"
+  yum:
+    name: firewalld
+    state: present
+  when: Enable_firewalld == true and configure_network_filter == true
+
+- name: "Ensure firewalld is installed and started - CUSTOM"
+  service:
+      name: firewalld
+      state: started
+      enabled: yes
+  when: Enable_firewalld == true and configure_network_filter == true
+
+- name: "Ensure iptables is installed"
+  yum:
+    name: iptables
+    state: present
+  when: Enable_iptables == true and configure_network_filter == true
+
+- name: "Ensure iptables is installed and started"
+  service:
+    name: iptables
+    state: started
+    enabled: yes
+  when: Enable_iptables == true and configure_network_filter == true
+
+#- name: "Ensure default deny iptables policy"
+#  iptables:
+#    chain: "{{item}}"
+#    policy: DROP
+#  with_items:
+#    - INPUT
+#    - FORWARD
+#    - OUTPUT
+#  when: Enable_iptables == true and configure_network_filter == true
+
+- name: "Ensure loopback traffic is configured"
+  iptables:
+    in_interface: "{{item.iterface}}"
+    chain: "{{item.chain}}"
+    jump: "{{item.jump}}"
+  with_items:
+    - { interface: 'lo', chain: 'INPUT', jump: 'ACCEPT'}
+  when: Enable_iptables == true and configure_network_filter == true
+
+- name: "Ensure loopback traffic is configured"
+  iptables:
+    out_interface: "{{item.iterface}}"
+    chain: "{{item.chain}}"
+    jump: "{{item.jump}}"
+  with_items:
+    - { interface: 'lo', chain: 'OUTPUT', jump: 'ACCEPT'}
+  when: Enable_iptables == true and configure_network_filter == true
+
+- name: "Ensure loopback traffic is configured"
+  iptables:
+    source: "{{item.source}}"
+    chain: "{{item.chain}}"
+    jump: "{{item.jump}}"
+  with_items:
+    - { source: '127.0.0./8', chain: 'INPUT', jump: 'DROP'}
+  when: Enable_iptables == true and configure_network_filter == true
+
+- name: "Ensure outbound and established connections are configured"
+  iptables:
+    chain: "{{item.chain}}"
+    protocol: "{{item.protocol}}"
+    ctstate: "{{item.ctstate}}"
+    match: "{{item.match}}"
+    jump: "{{item.jump}}"
+  with_items:
+    - { chain: 'OUTPUT', protocol: 'tcp', match: 'state', ctstate: 'NEW,ESTABLISHED', jump: 'ACCEPT'}
+    - { chain: 'OUTPUT', protocol: 'udp', match: 'state', ctstate: 'NEW,ESTABLISHED', jump: 'ACCEPT'}
+    - { chain: 'OUTPUT', protocol: 'icmp', match: 'state', ctstate: 'NEW,ESTABLISHED', jump: 'ACCEPT'}
+    - { chain: 'INPUT', protocol: 'tcp', match: 'state', ctstate: 'ESTABLISHED', jump: 'ACCEPT'}
+    - { chain: 'INPUT', protocol: 'udp', match: 'state', ctstate: 'ESTABLISHED', jump: 'ACCEPT'}
+    - { chain: 'INPUT', protocol: 'icmp', match: 'state', ctstate: 'ESTABLISHED', jump: 'ACCEPT'}
+  when: Enable_iptables == true and configure_network_filter == true
+
+- name: "Ensure firewall rules exist for all open ports"
+  iptables:
+    chain: INPUT
+    Protocol: tcp
+    destination_port: "{{item}}"
+    match: state
+    ctstate: NEW
+    jump: ACCEPT
+  with_items: "{{iptables_port}}"
+  when: Enable_iptables == true and configure_network_filter == true
+
+- name: "Ensure default deny firewall policy"
+  lineinfile:
+    dest: /etc/firewalld/firewalld.conf
+    regexp: "^DefaultZone"
+    line: "DefaultZone=drop"
+  when: Enable_firewalld == true and configure_network_filter == true
+
+- name: "Ensure default deny firewall policy"
+  firewalld:
+    state: enabled
+    zone: drop
+    permanent: true
+  when: Enable_firewalld == true and configure_network_filter == true
+
+- name: "Ensure firewall rules exist for all open ports"
+  firewalld:
+    service: "{{ item }}"
+    state: enabled
+    zone: drop
+    permanent: true
+    immediate: true
+  when: Enable_firewalld == true and configure_network_filter == true
+  notify: restart firewalld
+  with_items: "{{ Firewall_services }}"
+
+- name: "Configure System Accounting (auditd)"
+  yum:
+    name: audit
+    state: present
+  when: configure_audit == true
+
+- name: "Ensure auditd service is enabled"
+  service:
+    name: auditd
+    state: started
+    enabled: yes
+  when: configure_audit == true
+
+- name: "Ensure audit log storage size is configured"
+  lineinfile:
+    dest: /etc/audit/auditd.conf
+    regexp: "^max_log_file( |=)"
+    line: "max_log_file = {{ max_log_file }}"
+    state: present
+  when: configure_audit == true
+
+- name: "Ensure system is disabled when audit logs are full"
+  lineinfile:
+    dest: /etc/audit/auditd.conf
+    regexp: "^admin_space_left_action"
+    line: "admin_space_left_action = {{ admin_space_left_action }}"
+    state: present
+  when: configure_audit == true
+
+- name: "Ensure system is disabled when audit logs are full before Mail generated"
+  lineinfile:
+    dest: /etc/audit/auditd.conf
+    regexp: "^space_left_action"
+    line: "space_left_action = {{ space_left_action }}"
+    state: present
+  when: configure_audit == true
+
+- name: "Ensure system is disabled when audit logs are full before Mail generated by root user"
+  lineinfile:
+    dest: /etc/audit/auditd.conf
+    regexp: "^action_mail_acct"
+    line: "action_mail_acct = {{ action_mail_acct }}"
+    state: present
+  when: configure_audit == true
+
+- name: "Ensure audit logs are not automatically deleted"
+  lineinfile:
+    dest: /etc/audit/auditd.conf
+    regexp: "^max_log_file_action"
+    line: "max_log_file_action = {{ max_log_file_action }}"
+    state: present
+  when: configure_audit == true
+
+- name: "Ensure auditing for processes that start prior to auditd is enabled"
+  replace:
+    dest: /etc/default/grub
+    regexp: '(^GRUB_CMDLINE_LINUX\s*\=\s*)(?:")(.+)(?<!audit=1)(?:")'
+    replace: '\1"\2 audit=1"'
+    follow: yes
+  ignore_errors: yes
+  register: auditd_priority
+  when: configure_audit == true
+
+- name: "update the grub2 configuration"
+  shell: grub2-mkconfig > /boot/grub2/grub.cfg
+  when: auditd_priority is succeeded and configure_audit == true
+
+- name: "Ensure events that modify date and time information are collected"
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    line: '{{ item }}'
+  with_items:
+    - -a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change
+    - -a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change
+    - -a always,exit -F arch=b64 -S clock_settime -k time-change
+    - -a always,exit -F arch=b32 -S clock_settime -k time-change
+    - -w /etc/localtime -p wa -k time-change
+  when: configure_audit == true
+
+- name: "Ensure events that modify user/group information are collected"
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    line: '{{item}}'
+  with_items:
+    - -w /etc/group -p wa -k identity
+    - -w /etc/passwd -p wa -k identity
+    - -w /etc/gshadow -p wa -k identity
+    - -w /etc/shadow -p wa -k identity
+    - -w /etc/security/opasswd -p wa -k identity
+  when: configure_audit == true
+
+- name: "Ensure events that modify the system's network environment are collected"
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    line: '{{ item }}'
+  with_items:
+    - -a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale
+    - -a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale
+    - -w /etc/issue -p wa -k system-locale
+    - -w /etc/issue.net -p wa -k system-locale
+    - -w /etc/hosts -p wa -k system-locale
+    - -w /etc/sysconfig/network -p wa -k system-locale
+  when: configure_audit == true
+
+- name: "Ensure events that modify the system's Mandatory Access Controls are collected"
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    line: '-w /etc/selinux/ -p wa -k MAC-policy'
+  when: configure_audit == true
+
+- name: "Ensure events that modify the system's Mandatory Access Controls are collected (ubuntu)"
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    line: '{{item}}'
+  with_items:
+    - -w /etc/selinux/ -p wa -k MAC-policy
+    - -w /usr/share/selinux/ -p wa -k MAC-policy
+  when: configure_audit == true
+
+- name: "Ensure login and logout events are collected (centos)"
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    line: '{{ item }}'
+  with_items:
+    - -w /var/log/lastlog -p wa -k logins
+    - -w /var/run/faillock/ -p wa -k logins
+  when: configure_audit == true
+
+- name: "Ensure login and logout events are collected (ubuntu)"
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    line: '{{ item }}'
+  with_items:
+    - -w /var/log/faillog -p wa -k logins
+    - -w /var/log/lastlog -p wa -k logins
+    - -w /var/log/tallylog -p wa -k logins
+  when: configure_audit == true
+
+- name: "Ensure session initiation information is collected"
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    line: '{{item}}'
+  with_items:
+    - -w /var/run/utmp -p wa -k session
+    - -w /var/log/wtmp -p wa -k session
+    - -w /var/log/btmp -p wa -k session
+  when: configure_audit == true
+
+- name: "Ensure discretionary access control permission modification events are collected"
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    line: '{{ item }}'
+  with_items:
+    - -a always,exit -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod
+    - -a always,exit -F arch=b32 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod
+    - -a always,exit -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
+    - -a always,exit -F arch=b32 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
+    - -a always,exit -F arch=b64 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
+    - -a always,exit -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
+  when: configure_audit == true
+
+- name: "Ensure unsuccessful unauthorized file access attempts are collected"
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    line: '{{ item }}'
+  with_items:
+    - -a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
+    - -a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
+    - -a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+    - -a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+  when: configure_audit == true
+
+- name: "Ensure successful file system mounts are collected"
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    line: '{{ item }}'
+  with_items:
+    - -a always,exit -F arch=b64 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts
+    - -a always,exit -F arch=b32 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts
+  when: configure_audit == true
+
+- name: "Ensure file deletion events by users are collected"
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    line: '{{item}}'
+  with_items:
+    - -a always,exit -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete
+    - -a always,exit -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete
+  when: configure_audit == true
+
+- name: "Ensure changes to system administration scope (sudoers) is collected"
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    line: '{{item}}'
+  with_items:
+    - -w /etc/sudoers -p wa -k scope
+    - -w /etc/sudoers.d -p wa -k scope
+  when: configure_audit == true
+
+- name: "Ensure system administrator actions (sudolog) are collected"
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    line: '-w /var/log/sudo.log -p wa -k actions'
+  when: configure_audit == true
+
+- name: "Ensure kernel module loading and unloading is collected"
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    line: '{{item}}'
+  with_items:
+    - -w /sbin/insmod -p x -k modules
+    - -w /sbin/rmmod -p x -k modules
+    - -w /sbin/modprobe -p x -k modules
+    - -a always,exit arch=b64 -S init_module -S delete_module -k modules
+  when: configure_audit == true
+
+- name: "Ensure the audit configuration is immutable"
+  replace:
+    dest: /etc/audit/audit.rules
+    regexp: '^-f 1'
+    replace: '-e 2'
+  when: configure_audit == true
+
+- name: "Ensure rsyslog Service is installed"
+  yum:
+    name: rsyslog
+    state: present
+  when:
+    - configure_logging == true
+    - enable_rsyslog == true
+
+- name: "Ensure rsyslog Service is enabled"
+  service:
+    name: rsyslog
+    enabled: yes
+  when:
+    - configure_logging == true
+    - enable_rsyslog == true
+
+- name: "Ensure rsyslog default file permissions configured"
+  lineinfile:
+    dest: /etc/rsyslog.conf
+    regexp: '^\$FileCreateMode'
+    line: '$FileCreateMode 0640'
+  when:
+    - configure_logging == true
+    - enable_rsyslog == true
+
+- name: "Ensure rsyslog is configured to send logs to a remote log host"
+  replace:
+    path: /etc/rsyslog.conf
+    regexp: "{{item.exp}}"
+    replace: "{{item.line}}"
+    backup: yes
+  with_items:
+    - { exp: '#\$ModLoad imtcp',                line: '$ModLoad imtcp'}
+    - { exp: '#\$InputTCPServerRun 514',        line: '$InputTCPServerRun 514'}
+    - { exp: '#\$ActionQueueFileName fwdRule1', line: '$ActionQueueFileName fwdRule1'}
+    - { exp: '#\$ActionQueueMaxDiskSpace 1g',   line: '$ActionQueueMaxDiskSpace 1g'}
+    - { exp: '#\$ActionQueueSaveOnShutdown on', line: '$ActionQueueSaveOnShutdown on'}
+    - { exp: '#\$ActionQueueType LinkedList',   line: '$ActionQueueType LinkedList'}
+    - { exp: '#\$ActionResumeRetryCount -1',    line: '$ActionResumeRetryCount -1'}
+    - { exp: '#\*\.\* @@remote-host:514',       line: '*.* @@{{rsyslog_server_ip}}:{{rsyslog_server_port}}'}
+  notify:
+    - restart rsyslog
+  when:
+    - configure_logging == true
+    - logs_push_to_rsyslog_server == true
+    - enable_rsyslog == true
+    - rsyslog_server_port is defined
+    - rsyslog_server_ip is defined
+
+- name: "Ensure syslog-ng service is enabled"
+  yum:
+    name: syslog-ng
+    state: present
+  when:
+    - configure_logging == true
+    - enable_syslog_ng == true
+
+- name: "Ensure syslog-ng service is enabled"
+  service:
+    name: syslog-ng
+    enabled: yes
+  when:
+    - configure_logging == true
+    - enable_syslog_ng == true
+
+- name: "Ensure syslog-ng default file permissions configured"
+  lineinfile:
+    dest: /etc/syslog-ng/syslog-ng.conf
+    line: options { chain_hostnames(off); flush_lines(0); perm(0640); stats_freq(3600);  threaded(yes); };
+  notify:
+    - restart syslog-ng
+  when:
+    - configure_logging == true
+    - enable_syslog_ng == true
+
+- name: "Ensure syslog-ng is configured to send logs to a remote log host"
+  lineinfile:
+    dest: /etc/syslog-ng/syslog-ng.conf
+    line: "{{item}}"
+  loop:
+    - destination logserver { tcp("{{syslog_ng_server_ip}}" port({{syslog_ng_server_port}})); };
+    - log { source(src); destination(logserver); };
+  notify:
+    - restart syslog-ng
+  when:
+    - configure_logging == true
+    - enable_syslog_ng == true
+    - syslog_ng_server_ip is defined
+    - syslog_ng_server_port is defined
+
+- name: "Ensure permissions on all logfiles are configured"
+  shell: >
+    find /var/log -type f -exec chmod g-wx,o-rwx {} +
+  ignore_errors: true
+  when:
+    - configure_logging == true
+    - enable_rsyslog == true
+
+- name: "Configure cron (centos)"
+  yum:
+    name: cronie
+    state: present
+  when: configure_crond == true
+
+- name: "Ensure cron daemon is enabled"
+  service:
+    name: crond
+    enabled: yes
+  when: configure_crond == true
+
+- name: "Ensure permissions on /etc/crontab are configured"
+  file:
+    dest: /etc/crontab
+    owner: root
+    group: root
+    mode: 0600
+  when: configure_crond == true
+
+- name: "Ensure permissions on /etc/cron.hourly are configured"
+  file:
+    dest: /etc/cron.hourly
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+  when: configure_crond == true
+
+- name: "Ensure permissions on /etc/cron.daily are configured"
+  file:
+    dest: /etc/cron.daily
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+  when: configure_crond == true
+
+- name: "Ensure permissions on /etc/cron.weekly are configured"
+  file:
+    dest: /etc/cron.weekly
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+  when: configure_crond == true
+
+- name: "Ensure permissions on /etc/cron.monthly are configured"
+  file:
+    dest: /etc/cron.monthly
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+  when: configure_crond == true
+
+- name: "Ensure permissions on /etc/cron.d are configured"
+  file:
+    dest: /etc/cron.d
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+  when: configure_crond == true
+
+- name: "Ensure at/cron is restricted to authorized users"
+  file:
+    dest: /etc/at.deny
+    state: absent
+  when: configure_crond == true
+
+- name: "File information /etc/at.allow"
+  stat:
+    path: /etc/at.allow
+  register: jino
+  when: configure_crond == true
+
+- name: "Ensure at/cron is restricted to authorized users"
+  file:
+    dest: /etc/at.allow
+    state: '{{ "file" if  jino.stat.exists else "touch"}}'
+    owner: root
+    group: root
+    mode: 0600
+  when: configure_crond == true
+
+- name: "Ensure at/cron is restricted to authorized users"
+  file:
+    dest: /etc/cron.deny
+    state: absent
+  when: configure_crond == true
+
+- name: "File information /etc/cron.allow"
+  stat:
+    path: "/etc/cron.allow"
+  register: jino
+  when: configure_crond == true
+
+- name: "Ensure at/cron is restricted to authorized users"
+  file:
+    dest: /etc/cron.allow
+    state: '{{ "file" if  jino.stat.exists else "touch"}}'
+    owner: root
+    group: root
+    mode: 0600
+  when: configure_crond == true
+
+- name: "Ensure permissions on /etc/ssh/sshd_config are configured"
+  file:
+    dest: /etc/ssh/sshd_config
+    state: file
+    owner: root
+    group: root
+    mode: 0600
+  when: configure_ssh == true
+
+- name: "Ensure SSH Protocol is set to 2"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^Protocol'
+    line: Protocol {{Protocol}}
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH LogLevel is set to INFO"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^LogLevel'
+    line: 'LogLevel {{LogLevel}}'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH X11 forwarding is disabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^X11Forwarding'
+    line: 'X11Forwarding no'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH MaxAuthTries is set to {{ MaxAuthTries }} or less"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^(#)?MaxAuthTries \d'
+    line: 'MaxAuthTries {{ MaxAuthTries }}'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH IgnoreRhosts is enabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^IgnoreRhosts'
+    line: 'IgnoreRhosts yes'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH KeepAlive is enabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^KeepAlive'
+    line: 'KeepAlive yes'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH TCPKeepAlive is enabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^TCPKeepAlive'
+    line: 'TCPKeepAlive yes'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH PrintMotd is enabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^PrintMotd'
+    line: 'PrintMotd yes'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH StrictModes is enabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^StrictModes'
+    line: 'StrictModes yes'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH HostbasedAuthentication is disabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^HostbasedAuthentication'
+    line: 'HostbasedAuthentication no'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH root login is disabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^PermitRootLogin'
+    line: 'PermitRootLogin no'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH GatewayPorts is enabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^GatewayPorts'
+    line: 'GatewayPorts no'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH PermitEmptyPasswords is disabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^PermitEmptyPasswords'
+    line: 'PermitEmptyPasswords no'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH PermitUserEnvironment is disabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^PermitUserEnvironment'
+    line: 'PermitUserEnvironment no'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure only approved ciphers are used"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^Ciphers'
+    line: '{{ Ciphers }}'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure only approved MAC algorithms are used"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^MACs'
+    line: '{{ MACs }}'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH Idle Timeout Interval is configured"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^ClientAliveInterval'
+    line: "ClientAliveInterval {{ ClientAliveInterval }}"
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH ClientAliveCountMax set to <= 3"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^ClientAliveCountMax'
+    line: "ClientAliveCountMax {{ ClientAliveCountMax }}"
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH LoginGraceTime is set to one minute or less"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^LoginGraceTime'
+    line: 'LoginGraceTime {{ LoginGraceTime }}'
+  notify:
+    - restart sshd
+  when: configure_ssh == true
+
+- name: "Ensure SSH access is limited - allowusers"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: "^AllowUsers"
+    line: AllowUsers {{ allowusers }}
+  notify:
+    - restart sshd
+  when: allowusers|default('') != '' and configure_ssh == true
+
+- name: "Ensure SSH access is limited - allowgroups"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: "^AllowGroups"
+    line: AllowGroups {{ allowgroups }}
+  notify:
+    - restart sshd
+  when: allowgroups|default('') != '' and configure_ssh == true
+
+- name: "Ensure SSH access is limited - denyusers"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: "^DenyUsers"
+    line: DenyUsers {{ denyusers }}
+  notify:
+    - restart sshd
+  when: denyusers|default('') != '' and configure_ssh == true
+
+- name: "Ensure SSH access is limited - denygroups"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: "^DenyGroups"
+    line: DenyGroups {{ denygroups }}
+  notify:
+    - restart sshd
+  when: denygroups|default('') != '' and configure_ssh == true
+
+- name: "Ensure SSH warning banner is configured"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^Banner'
+    line: 'Banner /etc/issue.net'
+  notify:
+    - restart sshd
+  when: configure_crond == true and configure_banners == true
+
+- name: "Ensure password creation requirements are configured"
+  lineinfile:
+    state: present
+    dest: /etc/security/pwquality.conf
+    regexp: '^{{ item.key }}'
+    line: '{{ item.key }} = {{ item.value }}'
+  with_items:
+    - { key: 'minlen',  value: '14' }
+    - { key: 'dcredit', value: '-1' }
+    - { key: 'ucredit', value: '-1' }
+    - { key: 'ocredit', value: '-1' }
+    - { key: 'lcredit', value: '-1' }
+  when: configure_pam == true
+
+- name: "Ensure lockout for failed password attempts is configured (centOS)"
+  lineinfile:
+    state: present
+    dest: "{{item.dest}}"
+    line: "{{item.line}}"
+  with_items:
+  - { dest: '/etc/pam.d/password-auth', line: 'auth required pam_faillock.so preauth audit silent deny=5 unlock_time=900'}
+  - { dest: '/etc/pam.d/password-auth', line: 'auth [success=1 default=bad] pam_unix.so'}
+  - { dest: '/etc/pam.d/password-auth', line: 'auth [default=die] pam_faillock.so authfail audit deny=5 unlock_time=900'}
+  - { dest: '/etc/pam.d/password-auth', line: 'auth sufficient pam_faillock.so authsucc audit deny=5 unlock_time=900'}
+  - { dest: '/etc/pam.d/system-auth', line: 'auth required pam_faillock.so preauth audit silent deny=5 unlock_time=900'}
+  - { dest: '/etc/pam.d/system-auth', line: 'auth [success=1 default=bad] pam_unix.so'}
+  - { dest: '/etc/pam.d/system-auth', line: 'auth [default=die] pam_faillock.so authfail audit deny=5 unlock_time=900'}
+  - { dest: '/etc/pam.d/system-auth', line: 'auth sufficient pam_faillock.so authsucc audit deny=5 unlock_time=900'}
+  when: configure_pam == true
+
+- name: "Ensure password reuse is limited"
+  lineinfile:
+    state: present
+    dest: "{{item.dest}}"
+    line: "{{item.line}}"
+  with_items:
+  - { dest: '/etc/pam.d/password-auth', line: 'password sufficient pam_unix.so remember=5'}
+  - { dest: '/etc/pam.d/system-auth', line: 'password sufficient pam_unix.so remember=5'}
+  when: configure_pam == true
+
+- name: "Ensure password expiration is {{ PASS_MAX_DAYS }} days or less"
+  lineinfile:
+    state: present
+    dest: /etc/login.defs
+    regexp: '^PASS_MAX_DAYS'
+    line: 'PASS_MAX_DAYS {{ PASS_MAX_DAYS }}'
+  when: configure_usermanage == true
+
+- name: "Ensure user maximum password days"
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$5!="{{PASS_MAX_DAYS}}"' | cut -d: -f1 | egrep -vw "root|{{ansible_user}}"
+  ignore_errors: true
+  register: user_max_password_days
+  failed_when: user_max_password_days.rc == "1"
+
+- name: "To change user maximum password days"
+  shell: "chage --maxdays {{ PASS_MAX_DAYS }} {{item}}"
+  with_items:
+    - "{{ user_max_password_days.stdout_lines }}"
+  when: user_max_password_days.stdout_lines != "[]" and configure_usermanage == true
+
+- name: "Ensure minimum days between password changes is {{ PASS_MIN_DAYS }} or more"
+  lineinfile:
+    state: present
+    dest: /etc/login.defs
+    regexp: '^PASS_MIN_DAYS'
+    line: 'PASS_MIN_DAYS {{ PASS_MIN_DAYS }}'
+  when: configure_usermanage == true
+
+- name: "Ensure user minimum password days"
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$4!="{{ PASS_MIN_DAYS }}"' | cut -d: -f1 | egrep -wv "root|{{ansible_user}}"
+  ignore_errors: true
+  register: user_min_password_days
+  failed_when: user_min_password_days.rc == "1"
+
+- name: "To change user minimum password days"
+  shell: "chage --mindays {{ PASS_MIN_DAYS }} {{item}}"
+  with_items: "{{ user_min_password_days.stdout_lines }}"
+  when: user_min_password_days.stdout_lines != "[]" and configure_usermanage == true
+
+- name: "Ensure password expiration warning days is {{ PASS_WARN_AGE }} or more"
+  lineinfile:
+    state: present
+    dest: /etc/login.defs
+    regexp: '^PASS_WARN_AGE'
+    line: 'PASS_WARN_AGE {{ PASS_WARN_AGE }}'
+  when: configure_usermanage == true
+
+- name: "Ensure user password warning age days"
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$6!="{{ PASS_WARN_AGE }}"' | cut -d: -f1 | egrep -wv "root|{{ansible_user}}"
+  ignore_errors: true
+  register: user_warn_age
+  failed_when: user_warn_age.rc == "1"
+
+- name: "To change user password warning age days"
+  shell: "chage --maxdays {{ PASS_WARN_AGE }} {{item}}"
+  with_items: "{{ user_warn_age.stdout_lines }}"
+  when: user_warn_age.stdout_lines == "[]" and configure_usermanage == true
+
+#- name: "Ensure password minimum length  is {{ authentication.PASS_MIN_LEN }} or more"
+#  lineinfile:
+  #    state: present
+  #  dest: /etc/login.defs
+  #  regexp: '^PASS_MIN_LEN'
+  #  line: 'PASS_MIN_LEN {{ authentication.PASS_MIN_LEN }}'
+
+- name: "To set the default password inactivity period to 30 days"
+  shell: "useradd -D -f {{ INACTIVE }}"
+  changed_when: no
+  failed_when: no
+  when: configure_usermanage == true
+
+- name: "Ensure all users last password change date is in the past"
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | cut -d: -f1
+  ignore_errors: true
+  register: user_password_change
+  failed_when: user_password_change.rc == "1"
+  when: configure_usermanage == true
+
+#- name: "Ensure system accounts are non-login"
+
+- name: "Ensure default group for the root account is GID 0"
+  user:
+    name: root
+    uid: 0
+    state: present
+  changed_when: no
+  failed_when: no
+  when: configure_usermanage == true
+
+#- name: "Ensure root login is restricted to system console"
+
+- name: "Ensure access to the su command is restricted"
+  lineinfile:
+    state: present
+    dest: /etc/pam.d/su
+    regexp: '^(#)?auth\s+required\s+pam_wheel\.so'
+    line: 'auth           required        pam_wheel.so use_uid'
+  when: configure_usermanage == true
+
+- name: "Ensure access to the su command is restricted - wheel group contains root"
+  user:
+    name: root
+    groups: wheel
+  when: configure_usermanage == true
+
+- name: "Ensure the sudo log configured"
+  lineinfile:
+    dest: /etc/sudoers
+    line: "Defaults  logfile=/var/log/sudo.log"
+  when: configure_usermanage == true
+
+- name: "Ensure default user umask is 027 or more restrictive - /etc/bashrc"
+  replace:
+    path: /etc/bashrc
+    regexp: '(^\s+umask) 002'
+    replace: '\1 027'
+  when: configure_usermanage == true
+
+- name: "Ensure default user umask is 027 or more restrictive - /etc/profile"
+  replace:
+    path: /etc/profile
+    regexp: '(^\s+umask) 002'
+    replace: '\1 027'
+  when: configure_usermanage == true
+
+- name: "Ensure Automatically shell timeout configured in /etc/bashrc"
+  lineinfile:
+    path: /etc/bashrc
+    line: TMOUT={{shell_timeout}}
+  when: configure_usermanage == true
+
+- name: "Ensure automatically shell timeout configured in /etc/profile"
+  lineinfile:
+    path: /etc/profile
+    line: TMOUT={{shell_timeout}}
+  when: configure_usermanage == true
+
+- name: "Ensure permissions on /etc/passwd are configured"
+  file:
+    dest: /etc/passwd
+    owner: root
+    group: root
+    mode: 0644
+  when: configure_usermanage == true
+
+- name: "Ensure permissions on /etc/shadow are configured (centos)"
+  file:
+    dest: /etc/shadow
+    owner: root
+    group: root
+    mode: 0000
+  when: configure_system_file_permissions == true
+
+- name: "Ensure permissions on /etc/group are configured"
+  file:
+    dest: /etc/group
+    owner: root
+    group: root
+    mode: 0644
+  when: configure_system_file_permissions == true
+
+- name: "Ensure permissions on /etc/gshadow are configured in (centos)"
+  file:
+    dest: /etc/gshadow
+    owner: root
+    group: root
+    mode: 0000
+  when: configure_system_file_permissions == true
+
+- name: "Ensure permissions on /etc/passwd- are configured (centos)"
+  file:
+    dest: /etc/passwd-
+    owner: root
+    group: root
+    mode: 0644
+  when: configure_system_file_permissions == true
+
+- name: "Ensure permissions on /etc/shadow- are configured (centos)"
+  file:
+    dest: /etc/shadow-
+    owner: root
+    group: root
+    mode: 0000
+  when: configure_system_file_permissions == true
+
+- name: "Ensure permissions on /etc/group- are configured (centos)"
+  file:
+    dest: /etc/group-
+    owner: root
+    group: root
+    mode: 0644
+  when: configure_system_file_permissions == true
+
+- name: "Ensure permissions on /etc/gshadow- are configured"
+  file:
+    dest: /etc/gshadow-
+    owner: root
+    group: root
+    mode: 0000
+  when: configure_system_file_permissions == true
+
+- name: "Gather accounts with empty password fields"
+  shell: >
+    awk -F":" '($2 == "") {print $1}' /etc/shadow
+  register: empty_password_accounts
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure password fields are not empty"
+  command: passwd -l {{ item }}
+  changed_when: no
+  failed_when: no
+  with_items: "{{ empty_password_accounts.stdout_lines }}"
+  when: empty_password_accounts.rc and configure_user_group_settings == true
+
+- name: "Ensure no legacy '+' entries exist in /etc/passwd"
+  command: sed -i '/^+/ d' /etc/passwd
+  changed_when: no
+  failed_when: no
+  when: configure_user_group_settings == true
+
+- name: "Ensure no legacy '+' entries exist in /etc/shadow"
+  command: sed -i '/^+/ d' /etc/shadow
+  changed_when: no
+  failed_when: no
+  when: configure_user_group_settings == true
+
+- name: "Ensure no legacy '+' entries exist in /etc/group"
+  command: sed -i '/^+/ d' /etc/group
+  changed_when: no
+  failed_when: no
+  when: configure_user_group_settings == true
+
+- name: "Gather UID 0 accounts other than root"
+  shell: >
+     cat /etc/passwd | awk -F: '($3 == 0 && $1 != "root" ) { print $1 }'
+  register: uid_zero_accounts_except_root
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure root is the only UID 0 account"
+  command: passwd -l {{ item }}
+  changed_when: no
+  failed_when: no
+  with_items: "{{ uid_zero_accounts_except_root.stdout_lines }}"
+  when: uid_zero_accounts_except_root.rc and configure_user_group_settings == true
+
+#- name: "Ensure root PATH Integrity"
+#- name: "Ensure all users' home directories exist"
+#- name: "Ensure users' home directories permissions are 750 or more restrictive"
+#- name: "Ensure users own their home directories"
+#- name: "Ensure users' dot files are not group or world writable"
+
+- name: "List users accounts"
+  command: "awk -F: '{print $1}' /etc/passwd"
+  register: users
+  changed_when: no
+  check_mode: no
+
+- name: "Ensure no users have .forward files"
+  file:
+    state: absent
+    dest: "~{{ item }}/.forward"
+  with_items: "{{ users.stdout_lines }}"
+  when: configure_user_group_settings == true
+
+- name: "Ensure no users have .netrc files"
+  file:
+    state: absent
+    dest: "~{{ item }}/.netrc"
+  with_items: "{{ users.stdout_lines }}"
+  when: configure_user_group_settings == true
+
+- name: "Ensure no users have .rhosts files"
+  file:
+    state: absent
+    dest: "~{{ item }}/.rhosts"
+  with_items: "{{ users.stdout_lines }}"
+  when: configure_user_group_settings == true

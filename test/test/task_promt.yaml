@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Install Play
+      debug:
+        msg: "this is my first ansible play"
+    - pause:
+        prompt: "Do you want to install mysql (yes/no)?"
+      register: pro
+    - debug:
+        msg: "{{pro.user_input}}"

@@ -1,0 +1,4 @@
+---
+- name: echo the messages
+  debug:
+    msg: "{{jino}}"

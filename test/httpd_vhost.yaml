@@ -1,0 +1,9 @@
+---
+- hosts: node1
+  roles:
+  - role: httpd_vhost
+    domain_name: jj.com
+  - role: httpd_vhost
+    domain_name: jjj.com
+  - role: firewall
+    firewall_service_name: http

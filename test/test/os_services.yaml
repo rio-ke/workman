@@ -1,0 +1,16 @@
+---
+- name: services yaml file
+  hosts: master
+  tasks:
+  - name: check it if package installed or not
+    yum:
+      name: "{{ item }}"
+    state: absent
+    with_items: "{{services_pkgs}}"
+    register: jino
+  - name: remove packages
+    debug:
+      msg: "{{jino.}}
+    when: "{{item.when}}"
+    with_items:
+      - { when: 'jino.results[2].stdout_lines != []' }

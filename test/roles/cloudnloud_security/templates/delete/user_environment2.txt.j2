@@ -1,0 +1,284 @@
+---------------------------------------------------------------------------------------------
+{% if user_sccounts_results.results[0].stdout != "" %}
+{% if user_sccounts_results.results[0].stdout != PASS_MAX_DAYS  %}
+Audit : {{user_sccounts_results.results[0].item}} {{user_sccounts_results.results[0].stdout}}
+remidiation: Userpassword PASS_MAX_DAYS days is huge.. (set {{PASS_MAX_DAYS}} dys)
+
+{% else %}
+
+Audit : {{user_sccounts_results.results[0].item}} {{user_sccounts_results.results[0].stdout}}
+condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+---------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results.stdout == "" %}
+
+Audit: all user's password PASS_MAX_DAYS is {{PASS_MAX_DAYS}}.
+condition: success.
+
+{% else %}
+
+Audit      : Here mentioned user's password PASS_MAX_DAYS is not equal to {{PASS_MAX_DAYS}}.
+Remediation: failed.
+
+{% for pass_max_days in user_accounts_expiriation_results.stdout_lines %}
+{{loop.index}} - {{pass_max_days}}
+{% endfor %}
+{% endif %}
+
+
+---------------------------------------------------------------------------------------------
+
+{% if user_sccounts_results.results[1].stdout != "" %}
+{% if user_sccounts_results.results[1].stdout !=  PASS_MIN_DAYS %}
+Audit : {{user_sccounts_results.results[1].item}} {{user_sccounts_results.results[1].stdout}}
+remidiation: Userpassword PASS_MIN_DAYS days is differ .. (set {{PASS_MIN_DAYS}} days)
+
+{% else %}
+
+Audit : {{user_sccounts_results.results[1].item}} {{user_sccounts_results.results[1].stdout}}
+condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results1.stdout == "" %}
+
+Audit: all user's password PASS_MIN_DAYS is {{PASS_MIN_DAYS}}.
+condition: success.
+
+{% else %}
+Audit      : Here mentioned user's password PASS_MIN_DAYS is not equal to {{PASS_MIN_DAYS}}.
+Remediation: failed.
+
+{% for pass_min_days in user_accounts_expiriation_results1.stdout_lines %}
+{{loop.index}} - {{pass_min_days}}
+{% endfor %}
+{% endif %}
+
+-------------------------------------------------------------------------------------------
+
+{% if user_sccounts_results.results[2].stdout != "" %}
+{% if user_sccounts_results.results[2].stdout != PASS_WARN_AGE %}
+Audit : {{user_sccounts_results.results[2].item}} {{user_sccounts_results.results[2].stdout}}
+remidiation: Userpassword PASS_WARN_AGE days is differ .. (set {{PASS_WARN_AGE}} days)
+
+{% else %}
+
+Audit : {{user_sccounts_results.results[2].item}} {{user_sccounts_results.results[2].stdout}}
+condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results2.stdout == "" %}
+
+Audit: all user's password PASS_WARN_DAYS is {{PASS_WARN_AGE}}.
+condition: success.
+
+{% else %}
+Audit      : Here mentioned user's password PASS_WARN_DAYS is not equal to {{PASS_WARN_AGE}}.
+Remediation: failed.
+
+{% for pass_warn_days in user_accounts_expiriation_results2.stdout_lines %}
+{{loop.index}} - {{pass_warn_days}}
+{% endfor %}
+{% endif %}
+
+-------------------------------------------------------------------------------------------
+
+{% if user_sccounts_results.results[3].stdout != "" %}
+{% if user_sccounts_results.results[3].stdout != PASS_MIN_LEN  %}
+Audit : {{user_sccounts_results.results[3].item}} {{user_sccounts_results.results[3].stdout}}
+remidiation: Userpassword PASS_MIN_LEN days is differ .. (set {{PASS_MIN_LEN}} days)
+
+{% else %}
+
+Audit : {{user_sccounts_results.results[3].item}} {{user_sccounts_results.results[3].stdout}}
+condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results3.results[0].stdout == PASS_INACTIVE %}
+Audit: Password inactive date is enough
+condition: success
+
+{% else %}
+Audit: Password inactive is not satisfy {{PASS_INACTIVE}}
+condition: Failed (set password inactive date {{PASS_INACTIVE}})
+
+{% endif %}
+--------------------------------------------------------------------------------------------
+
+Audit: Users password change details History
+{% for user_last_change in user_last_pass_change_results.results | json_query('[]')  %}
+{{loop.index}} - Username: {{user_last_change.item}} - {{user_last_change.stdout | replace('\t\t\t\t\t', ' ') }}
+{% endfor %}
+
+--------------------------------------------------------------------------------------------
+{% if non_login_results.stdout == "" %}
+
+Audit: system accounts are non-login in shell
+Condition: success
+
+{% else %}
+
+Audit: system accounts users are login in shell
+Remediation: Kindly change the shell "usermod -s /sbin/nologin username"
+Condition: Failed
+{% endif %}
+--------------------------------------------------------------------------------------------
+
+{% if root_uid_results.stdout == "0" %}
+
+Audit: root uid is equal to 0
+condition: Sucess
+
+{% else %}
+
+Audit: root uid is equal to 0
+Remediation: kindly change to 0
+Condition: Failed
+
+{% endif %}
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results3.results[1].stdout == "" %}
+Audit      : TMOUT is not set in  /etc/bashrc
+Remediation: TMOUT=600 in /etc/bashrc
+Condition  : Failed
+
+{% else %}
+
+Audit      : TMOUT is set in /etc/bashrc
+Condition  : success
+
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results3.results[2].stdout == "" %}
+Audit      : TMOUT is not set in  /etc/profile
+Remediation: TMOUT=600 in /etc/profile
+Condition  : Failed
+
+{% else %}
+
+Audit      : TMOUT is set in /etc/profile
+Condition  : success
+
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results3.results[3].stdout == "" %}
+Audit      : su command is not restricted.
+Remediation: Add "auth required pam_wheel.so use_uid  --> /etc/pam.d/su "
+Condition  : Failed
+
+{% else %}
+
+Audit      : su command is restricted {{user_accounts_expiriation_results3.results[3].stdout}}
+Condition  : success
+
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results3.results[3].stdout == "" %}
+Audit      : su command is not restricted.
+Remediation: Add "auth required pam_wheel.so use_uid  --> /etc/pam.d/su "
+Condition  : Failed
+
+{% else %}
+
+Audit      : su command is restricted {{user_accounts_expiriation_results3.results[3].stdout}}
+Condition  : success
+
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_homedir_results.stdout == "" %}
+Audit: All users have home directory
+Remediation: sucess
+
+{% else %}
+Audit: SOme users have home directory.
+Remediation: If any users' home directories do not exist, create them and make sure the respective user owns the directory. Users without an assigned home directory should be removed or assigned a home directory as appropriate.
+Result: Failed. {{ user_homedir_results.stdout }}
+
+
+{% endif %}
+--------------------------------------------------------------------------------------------
+
+{% if User_home_oen_results.stdout == "" %}
+Audit: All user hame directory is owned by users only.
+Remediation: sucess
+
+{% else %}
+Audit: Home directory dont have user permission.
+Remediation: user must be the owner of the directory.. {{ User_home_oen_results.stdout }}
+
+
+{% endif %}
+--------------------------------------------------------------------------------------------
+
+{% if world_writable_user_dot_files.stdout == "" %}
+Audit: Users' dot files are group or world writable
+Remediation: sucess
+
+{% else %}
+Audit: Users' dot files are group or world writable
+Remediation: Group or world-writable user configuration files may enable malicious users to steal or modify other users' data or to gain another user's system privileges.. {{ world_writable_user_dot_files.stdout }}
+
+{% endif %}
+--------------------------------------------------------------------------------------------
+
+{% if dot_foreward_files.stdout == "" %}
+Audit: Users'i dont have .forward files
+Remediation: sucess
+
+{% else %}
+Audit: Users' .forward are group or world writable.
+Remediation: Making global modifications to users' files without alerting the user community can result in unexpected outages and unhappy users... {{ dot_foreward_files.stdout }}
+
+{% endif %}
+--------------------------------------------------------------------------------------------
+
+{% if dot_netrc_files.stdout == "" %}
+Audit: Users'i dont have .netrc files
+Remediation: sucess
+
+{% else %}
+Audit: Users' .netrc are group or world writable.
+Remediation: Making global modifications to users' files without alerting the user community can result in unexpected outages and unhappy users... {{ dot_netrc_files.stdout }}
+
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if dot_netrc_files_writable.stdout == "" %}
+Audit: Users' .netrc Files are not group or world accessible
+Remediation: sucess
+
+{% else %}
+Audit: Users' .netrc Files are  group or world accessible
+Remediation: Making global modifications to users' files without alerting the user community can result in unexpected outages and unhappy users... {{ dot_netrc_files_writable.stdout }}
+
+{% endif %}
+--------------------------------------------------------------------------------------------

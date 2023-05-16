@@ -1,0 +1,18 @@
+---
+# delegate_host: localhost
+email_to: jinojoe@gmail.com
+email_cc: jinojoe@rediffmail.com
+template_storage_path: /tmp/ec2_instance_info.txt
+client_name: Skylark
+##Alert
+slack_alert: false
+mail_alert: false
+
+smtp_host:
+smtp_port:
+smtp_username:
+smtp_password:
+#aws_details
+# aws_secret_key: 2X8+gl8djRpI0
+# aws_access_key: HPKZYDLU3DAX6A
+# region: us-east-

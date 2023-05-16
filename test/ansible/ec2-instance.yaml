@@ -1,0 +1,29 @@
+---
+- name: localhost
+  hosts: localhost
+  vars:
+    # key: AKIAIM5VLIN63FY7A2OQ
+    # secret: 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
+    region: us-east-1
+  tasks:
+  - name: ec2 instance
+    ec2:
+      aws_access_key: "{{ key }}"
+      aws_secret_key: "{{ secret }}"
+      key_name: JINO_N
+      #group: einsteinish  # security group name
+      instance_type: t2.micro
+      image: ami-0ac019f4fcb7cb7e6
+      wait: true
+      region: "{{ region }}"
+      count: 2  # default
+      count_tag:
+        Name: JINNO
+      instance_tags:
+        Name: JINNO
+      vpc_subnet_id: subnet-4afe6464
+      assign_public_ip: yes
+    register: ec2
+  - name: dispaly the content
+    debug:
+      msg: "{{ ec2.instances | json_query('[].public_ip[]') }}"

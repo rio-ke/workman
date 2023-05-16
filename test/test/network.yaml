@@ -1,0 +1,34 @@
+---
+- name: "To restart network"
+  hosts: master
+  tasks:
+  - name: "Replace ip address"
+    replace:
+      path: /etc/sysconfig/network-scripts/ifcfg-eth1
+      regexp: IPADDR=192.168.5.10
+      replace: IPADDR=192.168.5.20
+      backup: yes
+
+  - name: Ensure a job that runs at 2 and 5 exists. Creates an entry like "0 5,2 * * ls -alh > /dev/null"
+    cron:
+      name: "netwok start job"
+      minute: "*/1"
+      job: "systemctl restart network"
+
+  - pause:
+      minutes: 3
+  - name: "provision of gcloud instance"
+    add_host:
+      hostname: 192.168.5.20
+      groupname: instance_ip
+      ansible_ssh_private_key_file: ~/vagrant/.vagrant/machines/node1/virtualbox/private_key
+
+- hosts: instance_ip
+  remote_user: vagrant
+  become: True
+  tasks:
+  - name: 'Ensure an old job is no longer present. Removes any job that is prefixed by "#Ansible: an old job" from the crontab'
+    cron:
+      name: "netwok start job"
+      state: absent
+

@@ -1,0 +1,86 @@
+ansible_date:
+-------------
+
+{% for j, k in jino.ansible_facts.ansible_date_time.iteritems() %}
+{{ j.rjust(20) }} - {{ k }}
+{% endfor %}
+-----------------------------------------------------------------------------
+
+
+{% for j, k in jino.ansible_facts.ansible_default_ipv4.iteritems() %}
+{{ j }} - {{ k }}
+{% endfor %}
+-----------------------------------------------------------------------------
+
+
+{% for j, k in jino.ansible_facts.ansible_default_ipv6.iteritems() %}
+{{ j }} - {{ k }}
+{% endfor %}
+-----------------------------------------------------------------------------
+{{ jino.ansible_facts.ansible_mounts| length }}
+{% for j in jino.ansible_facts | json_query('ansible_mounts[]') %}
+{{j.device}}
+
+{% for l, k in j.iteritems() %}
+{{ l }} - {{ k }}
+{% endfor %}
+
+{% endfor %}
+
+=============================================================================
+{% for j, k in jino.ansible_facts.ansible_mounts[0].iteritems() %}
+{{ j }} - {{ k }}
+{% endfor %}
+-----------------------------------------------------------------------------
+
+{% for j, k in jino.ansible_facts.ansible_device_links.ids.iteritems() %}
+{{j}}
+-----
+{% for l in k %}
+{{ l }}
+{% endfor %}
+
+{% endfor %}
+----------------------------------------------------------------------------
+
+{% for j, k in jino.ansible_facts.ansible_device_links.uuids.iteritems() %}
+{{j}}
+------
+{% for l in k %}
+{{ l }}
+{% endfor %}
+
+{% endfor %}
+-----------------------------------------------------------------------------
+
+{% for j, k in jino.ansible_facts.ansible_devices.iteritems() %}
+{{ j }}
+-------
+{% for l in k.iteritems() %}
+{% for m in l %}
+{% endfor %}
+{% endfor %}
+
+{% endfor %}
+-----------------------------------------------------------------------------
+
+
+
+{% for i,j in jino.ansible_facts.ansible_device_links.iteritems() %}
+{{i}}
+{% if 'ids' in i %}
+{% for k,l in j.iteritems() %}
+{{k}}
+{% for n in l %}
+- {{n.rjust(3)}}
+{% set jino = 'kijoj' %}
+{{jino}}
+{% endfor %}
+
+{% endfor %}
+{% endif %}
+{% endfor %}
+{{jino.ansible_facts | to_nice_yaml(indent=2, width=4)}}
+
+
+{{jino.ansible_facts.ansible_mounts | to_nice_yaml}}

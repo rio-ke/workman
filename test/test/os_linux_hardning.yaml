@@ -1,0 +1,9 @@
+---
+- hosts: node1
+  vars_prompt:
+  - name: Linu_Hardening_Server
+    prompt: "Which Linux_Hardening_server do you want to deploy?\n1- New Configuration Server\n2- ALready Configured server\n"
+    private: no
+  tasks:
+  roles:
+    - role: linux_hardening

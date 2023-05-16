@@ -1,0 +1,247 @@
+---------------------------------------------------------------------------------------------
+{% if user_sccounts_results.results[0].stdout != "" %}
+{% if user_sccounts_results.results[0].stdout != PASS_MAX_DAYS  %}
+Audit : {{user_sccounts_results.results[0].item}} {{user_sccounts_results.results[0].stdout}}
+remidiation: Userpassword PASS_MAX_DAYS days is huge.. (set {{PASS_MAX_DAYS}} dys)
+
+{% else %}
+
+Audit : {{user_sccounts_results.results[0].item}} {{user_sccounts_results.results[0].stdout}}
+condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+---------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results.stdout == "" %}
+
+Audit: all user's password PASS_MAX_DAYS is {{PASS_MAX_DAYS}}.
+condition: success.
+
+{% else %}
+
+Audit      : Here mentioned user's password PASS_MAX_DAYS is not equal to {{PASS_MAX_DAYS}}.
+Remediation: failed.
+
+{% for pass_max_days in user_accounts_expiriation_results.stdout_lines %}
+{{loop.index}} - {{pass_max_days}}
+{% endfor %}
+{% endif %}
+
+
+---------------------------------------------------------------------------------------------
+
+{% if user_sccounts_results.results[1].stdout != "" %}
+{% if user_sccounts_results.results[1].stdout !=  PASS_MIN_DAYS %}
+Audit : {{user_sccounts_results.results[1].item}} {{user_sccounts_results.results[1].stdout}}
+remidiation: Userpassword PASS_MIN_DAYS days is differ .. (set {{PASS_MIN_DAYS}} days)
+
+{% else %}
+
+Audit : {{user_sccounts_results.results[1].item}} {{user_sccounts_results.results[1].stdout}}
+condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results1.stdout == "" %}
+
+Audit: all user's password PASS_MIN_DAYS is {{PASS_MIN_DAYS}}.
+condition: success.
+
+{% else %}
+Audit      : Here mentioned user's password PASS_MIN_DAYS is not equal to {{PASS_MIN_DAYS}}.
+Remediation: failed.
+
+{% for pass_min_days in user_accounts_expiriation_results1.stdout_lines %}
+{{loop.index}} - {{pass_min_days}}
+{% endfor %}
+{% endif %}
+
+-------------------------------------------------------------------------------------------
+
+{% if user_sccounts_results.results[2].stdout != "" %}
+{% if user_sccounts_results.results[2].stdout != PASS_WARN_AGE %}
+Audit : {{user_sccounts_results.results[2].item}} {{user_sccounts_results.results[2].stdout}}
+remidiation: Userpassword PASS_WARN_AGE days is differ .. (set {{PASS_WARN_AGE}} days)
+
+{% else %}
+
+Audit : {{user_sccounts_results.results[2].item}} {{user_sccounts_results.results[2].stdout}}
+condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results2.stdout == "" %}
+
+Audit: all user's password PASS_WARN_DAYS is {{PASS_WARN_AGE}}.
+condition: success.
+
+{% else %}
+Audit      : Here mentioned user's password PASS_WARN_DAYS is not equal to {{PASS_WARN_AGE}}.
+Remediation: failed.
+
+{% for pass_warn_days in user_accounts_expiriation_results2.stdout_lines %}
+{{loop.index}} - {{pass_warn_days}}
+{% endfor %}
+{% endif %}
+
+-------------------------------------------------------------------------------------------
+
+{% if user_sccounts_results.results[3].stdout != "" %}
+{% if user_sccounts_results.results[3].stdout != PASS_MIN_LEN  %}
+Audit : {{user_sccounts_results.results[3].item}} {{user_sccounts_results.results[3].stdout}}
+remidiation: Userpassword PASS_MIN_LEN days is differ .. (set {{PASS_MIN_LEN}} days)
+
+{% else %}
+
+Audit : {{user_sccounts_results.results[3].item}} {{user_sccounts_results.results[3].stdout}}
+condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results3.results[0].stdout == PASS_INACTIVE %}
+Audit: Password inactive date is enough
+condition: success
+
+{% else %}
+Audit: Password inactive is not satisfy {{PASS_INACTIVE}}
+condition: Failed (set password inactive date {{PASS_INACTIVE}})
+
+{% endif %}
+--------------------------------------------------------------------------------------------
+
+Audit: Users password change details History
+{% for user_last_change in user_last_pass_change_results.results | json_query('[]')  %}
+{{loop.index}} - Username: {{user_last_change.item}} - {{user_last_change.stdout | replace('\t\t\t\t\t', ' ') }}
+{% endfor %}
+
+--------------------------------------------------------------------------------------------
+{% if non_login_results.stdout == "" %}
+
+Audit: system accounts are non-login in shell
+Condition: success
+
+{% else %}
+
+Audit: system accounts users are login in shell
+Remediation: Kindly change the shell "usermod -s /sbin/nologin username"
+Condition: Failed
+{% endif %}
+--------------------------------------------------------------------------------------------
+
+{% if root_uid_results.stdout == "0" %}
+
+Audit: root uid is equal to 0
+condition: Sucess
+
+{% else %}
+
+Audit: root uid is equal to 0
+Remediation: kindly change to 0
+Condition: Failed
+
+{% endif %}
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results3.results[1].stdout == "" %}
+Audit      : TMOUT is not set in  /etc/bashrc
+Remediation: TMOUT=600 in /etc/bashrc
+Condition  : Failed
+
+{% else %}
+
+Audit      : TMOUT is set in /etc/bashrc
+Condition  : success
+
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results3.results[2].stdout == "" %}
+Audit      : TMOUT is not set in  /etc/profile
+Remediation: TMOUT=600 in /etc/profile
+Condition  : Failed
+
+{% else %}
+
+Audit      : TMOUT is set in /etc/profile
+Condition  : success
+
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results3.results[3].stdout == "" %}
+Audit      : su command is not restricted.
+Remediation: Add "auth required pam_wheel.so use_uid  --> /etc/pam.d/su "
+Condition  : Failed
+
+{% else %}
+
+Audit      : su command is restricted {{user_accounts_expiriation_results3.results[3].stdout}}
+Condition  : success
+
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% if user_accounts_expiriation_results3.results[3].stdout == "" %}
+Audit      : su command is not restricted.
+Remediation: Add "auth required pam_wheel.so use_uid  --> /etc/pam.d/su "
+Condition  : Failed
+
+{% else %}
+
+Audit      : su command is restricted {{user_accounts_expiriation_results3.results[3].stdout}}
+Condition  : success
+
+{% endif %}
+
+--------------------------------------------------------------------------------------------
+
+{% for jino in checking_scripts_results.results | json_query('[]') %}
+
+{% if jino.stdout == "" %}
+
+Audit: No Entries in {{jino.item}}.
+Condition: success.
+
+{% else %}
+
+Audit: {{jino.item}} Found.
+Condition: failed
+{{jino.stdout}}
+
+{% endif %}
+{% endfor %}
+
+--------------------------------------------------------------------------------------------
+
+{% for j in lagacy_results.results | json_query('[]') %}
+{% if j.stdout == "" %}
+
+Audit: No legacy "+" entries exist in {{j.item}}.
+Condition: success.
+
+{% else %}
+Audit: {{j.item}} Found.
+Condition: failed
+{{j.stdout}}
+
+{% endif %}
+{% endfor %}
+--------------------------------------------------------------------------------------------

@@ -1,0 +1,56 @@
+---
+- name: "Ensure permissions on /etc/passwd are configured"
+  file:
+    dest: /etc/passwd
+    owner: root
+    group: root
+    mode: 0644
+
+- name: "Ensure permissions on /etc/shadow are configured"
+  file:
+    dest: /etc/shadow
+    owner: root
+    group: root
+    mode: 0000
+
+- name: "Ensure permissions on /etc/group are configured"
+  file:
+    dest: /etc/group
+    owner: root
+    group: root
+    mode: 0644
+
+- name: "Ensure permissions on /etc/gshadow are configured"
+  file:
+    dest: /etc/gshadow
+    owner: root
+    group: root
+    mode: 0000
+
+- name: "Ensure permissions on /etc/passwd- are configured"
+  file:
+    dest: /etc/passwd-
+    owner: root
+    group: root
+    mode: 0600
+
+- name: "Ensure permissions on /etc/shadow- are configured"
+  file:
+    dest: /etc/shadow-
+    owner: root
+    group: root
+    mode: 0600
+
+- name: "Ensure permissions on /etc/group- are configured"
+  file:
+    dest: /etc/group-
+    owner: root
+    group: root
+    mode: 0600
+
+- name: "Ensure permissions on /etc/gshadow- are configured"
+  file:
+    dest: /etc/gshadow-
+    owner: root
+    group: root
+    mode: 0600

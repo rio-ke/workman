@@ -1,0 +1,19 @@
+{% for i in jino.snapshots | json_query('[]') %}
+owner_id           : {{ i.owner_id }}
+status             : {{ i.progress }}
+snapshot_id        : {{ i.snapshot_id }}
+volume_id          : {{ i.volume_id }}
+volume_size        : {{ i.volume_size }}
+snap starting time : {{ i.start_time }}
+state              : {{ i.state }}
+{% if i.encrypted == false %}
+encryption         : no
+{% else %}
+encryption         : yes
+{% endif %}
+{% if i.description != '' %}
+description        : {{ i.description }}
+{% else %}
+description        : description is not set
+{% endif %}
+{% endfor %}

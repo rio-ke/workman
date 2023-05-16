@@ -1,0 +1,33 @@
+[global]
+	workgroup      = WORKGROUP
+    unix charset = UTF-8
+	security       = user
+	passdb backend = tdbsam
+	printing       = cups
+	printcap name  = cups
+	load printers  = yes
+	cups options   = raw
+    max log size   = 50
+
+    vfs objects         = full_audit
+    full_audit:prefix   = %u|%I|%m|%S
+    full_audit:success  = mkdir rename unlink rmdir pwrite
+    full_audit:failure  = none
+    full_audit:facility = local7
+    full_audit:priority = NOTICE
+
+[{{samba_share_name}} ]
+    path              = {{ samba_share_path }}
+    read only         = Yes
+    guest ok          = ok
+    browsable         = Yes
+    writable          = Yes
+    delete veto files = yes
+    create mode       = {{ create_mode|default('0664') }}
+    force create mode = {{ force_create_mode|default('0664') }}
+    directory mode    = {{ directory_mode|default('0775') }}
+    force directory mode = {{ force_directory_mode|default('0775') }}
+    veto files = /*.msi/*.exe/*.mp3/*.bat/*.com/*.dll/*.lnk/*.asd/*.shb/*.vb/*.wsf/*.wsh/*.pif/*.scr/*.chm/*.hta/*.shs/*.vbs/*.vbe/*.js/*.jse/*.wmv/*.3gp/*.avi/*.mp4/*.ini/*.mkv/*.iso/*.srt/
+
+
+# https://www.samba.org/samba/docs/using_samba/ch09.html

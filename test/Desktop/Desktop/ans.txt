@@ -1,0 +1,76 @@
+
+grep -E "$(date +%b) $(date +%d)" /var/log/yum.log | cut -d " " -f 3-5
+linux server kernel Upgrade and server reboot	
+	Till server reboot the playbook should run and post server came back we should get the output.
+:q!
+
+Ansible	
+
+I have 4 linux machines and 1 ansible server.I need to do the following just by execute the playbook from ansible server.  
+1. ssh key should be copied to all 4 clients 
+
+jenkins	
+
+if I execute the playbook then it should complete the following tasks.  
+1. install jenkins in port 8080 in one machine
+2. install artifactory with tomcat in another machine in 8080 port 
+3. create new maven project and configure all the necessary settings 
+4. build should start and war file should be deployed automatically into tomcat webserver.
+
+jenkins	if I execute the playbook then it should complete the following tasks.  
+1. install jenkins in port 8080 in one machine 
+2. install artifactory with tomcat in another machine in 8080 port 
+3. create new maven project and configure all the necessary settings 
+4. build should start and war file should be deployed automatically into tomcat webserver. 
+5. configure github repository into one linux machine. 
+6. from the linux machine commit with new empty file. 
+7. The moment empty file checked in to github repository,in jenkins automatically the build and deployment should start.
+
+AWS	
+
+If i execute the playbook i need to achieve the following tasks in AWS cloud 
+1. create launch configuration with redhat 7,10 gb disk,t2.micro,port 80,22 opened,security key create and download' 
+2. create auto scaling group with minimum 2 and maximum 5 
+3. install webserver in all machines 
+4. create index.html in all the machines.  
+
+in machine1 --> /var/www/html/index.html file put server1 word in the file. 
+in machine2 --> /var/www/html/index.html file put server2 word in the file. 
+in machine3 --> /var/www/html/index.html file put server3 word in the file. 
+in machine4 --> /var/www/html/index.html file put server4 word in the file.  
+5. start the httpd service in all the linux machines 
+6. associate all these machines into classic load balancer.  
+7. now access that load balancer DNS name .we should see name from index.html file.
+
+AWS	
+If i execute the playbook i need to achieve the following tasks in AWS cloud  
+1. create launch configuration with redhat 7,10 gb disk,t2.micro,port 80,22 opened,security key create and download' 
+2. create auto scaling group with minimum 2 and maximum 5 
+3. give load to the linux servers. 
+4. Now new servers should be launched automatically 
+
+AWS	
+If i execute the playbook i need to achieve the following tasks in AWS cloud  
+1. create 3 ec2 instances 
+2. create s3 bucket 
+3. mount s3 bukcet in all 3 machines.
+
+AWS	
+If i execute the playbook i need to achieve the following tasks in AWS cloud  
+1. create launch configuration with redhat 7,10 gb disk,t2.micro,port 80,22 opened,security key create and download' 
+2. create auto scaling group with minimum 2 and maximum 5 
+3. install webserver in all machines 
+4. create index.html in all the machines.  
+in machine1 --> /var/www/html/index.html file put server1 word in the file. 
+in machine2 --> /var/www/html/index.html file put server2 word in the file. 
+in machine3 --> /var/www/html/index.html file put server3 word in the file. 
+in machine4 --> /var/www/html/index.html file put server4 word in the file.  
+5. start the httpd service in all the linux machines 
+6. associate all these machines into classic load balancer.  
+7. now access that load balancer DNS name .we should see name from index.html file.   
+8. Now do the same in the another new region (All steps mentioned in the above)  
+9. Now configure new DNS domain name in route 53.  
+10. Now create new alias --> select first region load balancer --> select weighted routing policy 50%   
+11. Now create second new alias --> select second region load balancer --> select weighted routing policy 50%   
+13.Now if we access main domain name from multiple machines then across region it will load balance it.
+

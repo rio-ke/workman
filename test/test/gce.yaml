@@ -1,0 +1,14 @@
+---
+- name: To launch ansible instance
+  hosts: localhost
+  tasks:
+  - gce:
+      instance_names: my-test-instance1
+      zone: us-east4-a
+      machine_type: n1-standard-1
+      image: centos-7
+      state: present
+      service_account_email: "XXXXXXXXXXXXXXXXX@developer.gserviceaccount.com"
+      credentials_file: "XXXXXXXXXXXX.json"
+      project_id: "XXXXXXXX"
+      disk_size: 10

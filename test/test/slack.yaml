@@ -1,0 +1,12 @@
+---
+- hosts: local
+  tasks:
+  - name: Sending message to slack channel
+    slack:
+      token: "TCYQDFEPR/BCYBD8ENR/RgAvFE7Zw27aPRb1DfEbf7rM"
+      channel: "#general"
+      msg: "Ansible failed on *{{ ansible_hostname }} ({{ inventory_hostname }})* \n
+       *+* *Task*         : jino \n
+       *+* *Action*       : jake \n
+       *+* *Error Message*: \n "
+    delegate_to: localhost

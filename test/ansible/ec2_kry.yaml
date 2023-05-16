@@ -1,0 +1,16 @@
+---
+- name: localhost
+  hosts: localhost
+  vars:
+    key: AKIAJF4HBRLKWBOQ4N5A
+    secret: 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
+    region: us-east-1
+  tasks:
+  - name: to generate the key
+    ec2_key:
+      name: JINO_KEY
+      aws_access_key: "{{ key }}"
+      aws_secret_key: "{{ secret }}"
+      region: "{{region}}"
+
+

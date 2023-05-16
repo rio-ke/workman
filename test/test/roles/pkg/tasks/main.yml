@@ -1,0 +1,6 @@
+---
+- name: "Install customer packages"
+  yum:
+    name: "{{item}}"
+    state: present
+  with_items: "{{user_pkg.split(',')}}"

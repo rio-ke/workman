@@ -1,0 +1,88 @@
+---
+- name: play for jenkins
+  hosts: vag1
+  vars:
+    - ports:
+      - 8080
+      - 8081
+    - package_name:
+      - epel-release
+      - wget
+      - ntp
+      - java-1.8.0-openjdk-devel
+    - package_env:
+      - JAVA_HOME=/usr/lib/jvm/java-1.8.0
+      - JRE_HOME=/usr/lib/jvm/java-1.8.0/jre
+      - PATH=$PATH:$HOME/bin:$JAVA_HOME/bin:$JRE_HOME/bin
+  tasks:
+  - name: Install Packages
+    yum:
+      name: "{{ item }}"
+      state: latest
+    with_items:
+      - "{{package_name}}"
+  - name: add the JAVA_HOME in file
+    shell: "{{item}}"
+    with_items:
+      - "{{ package_env }}"
+  - name: update the time
+    shell: ntpdate 1.asia.pool.ntp.org
+  - name: download jfrog-artifactory-oss.repo
+    get_url:
+      url:  https://bintray.com/jfrog/artifactory-rpms/rpm
+      dest: /etc/yum.repos.d/bintray-jfrog-artifactory-rpms.repo
+  - name: install jfrog-artifactory-oss
+    yum:
+      name: jfrog-artifactory-oss
+      state: present
+  - name: install tomcat-packages
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - tomcat-webapps
+      - tomcat-admin-webapps
+  - name: insert/update /usr/share/tomcat/conf/tomcat.conf
+    blockinfile:
+      path: /usr/share/tomcat/conf/tomcat.conf
+      block: |
+        JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xmx512m -XX:MaxPermSize=256m -XX:+UseConcMarkSweepGC"
+  - name: port replace
+    replace:
+      path: /usr/share/tomcat/conf/tomcat-users.xml
+      regexp: '{{item.regexp}}'
+      replace: '{{item.replace}}'
+      backup: yes
+    with_items:
+      - { regexp: '<!-- <role rolename="admin"/> -->', replace: '<role rolename="admin"/>' }
+      - { regexp: '<!-- <role rolename="admin-gui"/> -->', replace: '<role rolename="admin-gui"/>' }
+      - { regexp: '<!-- <role rolename="admin-script"/> -->', replace: '<role rolename="admin-script"/>' }
+      - { regexp: '<!-- <role rolename="manager"/> -->', replace: '<role rolename="manager"/>' }
+      - { regexp: '<!-- <role rolename="manager-gui"/> -->', replace: '<role rolename="manager-gui"/>' }
+      - { regexp: '<!-- <role rolename="manager-script"/> -->', replace: '<role rolename="manager-script"/>' }
+      - { regexp: '<!-- <role rolename="manager-jmx"/> -->', replace: '<role rolename="manager-jmx"/>' }
+      - { regexp: '<!-- <role rolename="manager-status"/> -->', replace: '<role rolename="manager-status"/>' }
+      - { regexp: '<!-- <user name="admin" password="adminadmin" roles="admin,manager,admin-gui,admin-script,manager-gui,manager-script,manager-jmx,manager-status" /> -->', replace: '<user username="admin" password="adminadmin" roles="admin,manager,admin-gui,admin-script,manager-gui,manager-script,manager-jmx,manager-status" />' }
+  - name: start Installed Service
+    systemd:
+      name: "{{item}}"
+      state: restarted
+      enabled: true
+    with_items:
+      - tomcat
+      - artifactory
+  - name: firewall whitlist
+    firewalld:
+      port: "{{ item }}/tcp"
+      permanent: true
+      # immediate: yes
+      state: enabled
+    with_items:
+      - "{{ ports }}"
+    tags:
+      - jino
+  - name: reload the firewalld
+    systemd:
+      name: firewalld
+      state: reloaded
+      enabled: true

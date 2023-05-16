@@ -1,0 +1,22 @@
+---
+- hosts: dc1-node-T
+  vars_files:
+    - vars/main.yaml
+  tasks:
+  - raw: cat /var/log/httpd/access_log | grep "{{ log_date }}" | wc -l
+    register: result1
+  - raw: cat /var/log/httpd/access_log | grep "{{ log_date }}" | awk '{printf "%s \n", $1}' | sort -n | uniq -c | wc -l
+    register: result2
+  - raw: pcs status | egrep 'Masters|Slaves'
+    register: result3
+  - name: Notification message via Slack
+    slack:
+      token: "{{tokens}}"
+      msg: "{{item}}"
+      color: good
+      channel: '#general'
+    with_items:
+       -  "Lastday User Hits Count is: {{result1.stdout_lines}}"
+       -  "Lastday User IP's Count is: {{result2.stdout_lines}}"
+       -  "Current Date PCS Status: {{result3.stdout_lines}}"
+    delegate_to: localhost

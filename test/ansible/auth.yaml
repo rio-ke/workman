@@ -1,0 +1,8 @@
+---
+- hosts: vag
+  vars:
+    motd_value: "{{ lookup('file', '/etc/group') }}"
+  tasks:
+  - debug:
+      msg: "motd value is {{ motd_value }}"
+

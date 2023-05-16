@@ -1,0 +1,798 @@
+welcome to security check verification score..
+----------------------------------------------
+
+Password_maximum_days_results:
+------------------------------
+{% if pass_days_result.results[0].stdout == 90 %}
+success - {{ansible_hostname}} - PASS_MAX_DAYS is - {{pass_days_result.results[0].stdout}}
+{% else %}
+Warning - {{ansible_hostname}} - PASS_MAX_DAYS is - {{pass_days_result.results[0].stdout}}
+{% endif %}
+
+===============================================================================================
+
+Password_minimum__days_results:
+-------------------------------
+{% if pass_days_result.results[1].stdout == 1 %}
+success - {{ansible_hostname}} - PASS_MIN_DAYS is - {{pass_days_result.results[1].stdout}}
+{% else %}
+Warning - {{ansible_hostname}} - PASS_MIN_DAYS is - {{pass_days_result.results[1].stdout}}
+{% endif %}
+
+===============================================================================================
+
+Password_minimum__length_results:
+-------------------------------
+{% if  pass_days_result.results[2].stdout == 8 %}
+success - {{ansible_hostname}} - PASS_MINIMUM_LENGTH is - {{pass_days_result.results[2].stdout}}
+{% else %}
+Warning - {{ansible_hostname}} - PASS_MINIMUM_LENGTH is - {{pass_days_result.results[2].stdout}}
+{% endif %}
+
+===============================================================================================
+
+Password_Maximum__days_results:
+-------------------------------
+{% if verify_password_maximum_days.stdout == "" %}
+success - {{ansible_hostname}} - All users password maximum date already set with 90 days
+{% else %}
+Warning - {{ansible_hostname}} - Kindly check this users Maximum passsword days.
+{% for users in verify_password_maximum_days.stdout_lines %}
+{{loop.index}} - {{users}}
+{% endfor %}
+{% endif %}
+
+===============================================================================================
+
+Password_Maximum__days_results:
+-------------------------------
+{% if verify_password_minimum_days.stdout == "" %}
+success - {{ansible_hostname}} - All users password minimum expire date already set with 1 days
+{% else %}
+Warning - {{ansible_hostname}} - Kindly check this users Minimum passsword days.
+{% for users in verify_password_minimum_days.stdout_lines %}
+{{loop.index}} - {{users}}
+{% endfor %}
+{% endif %}
+
+===============================================================================================
+Password_Remember_system-auth_History_results:
+----------------------------------------------
+{% if pass_days_result.results[3].stdout != "" %}
+success - {{ansible_hostname}} - All users password remember history Already set in file /etc/pam.d/system-auth.
+{% else %}
+Warning - {{ansible_hostname}} - All users password remember history not set in file /etc/pam.d/system-auth
+{% endif %}
+
+===============================================================================================
+Password_Remember_Password-auth__History_results:
+-------------------------------------------------
+{% if pass_days_result.results[4].stdout != "" %}
+success - {{ansible_hostname}} - All users password remember history Already set in file /etc/pam.d/password-auth.
+{% else %}
+Warning - {{ansible_hostname}} - All users password remember history not set in file /etc/pam.d/password-auth
+{% endif %}
+
+================================================================================================
+password hashing algorithm sha512 results:
+-------------------------------------------------
+{% if pass_days_result.results[5].stdout != "" %}
+success - {{ansible_hostname}} - password hashing algorithm sha512 is set
+{% else %}
+Warning - {{ansible_hostname}} - password hashing algorithm sha512 is not set
+{% endif %}
+
+===============================================================================================
+password hashing algorithm md5 results:
+-------------------------------------------------
+{% if pass_days_result.results[6].stdout != "" %}
+success - {{ansible_hostname}} - password hashing algorithm md5 is set
+{% else %}
+Warning - {{ansible_hostname}} - password hashing algorithm md5 is not set
+{% endif %}
+
+===============================================================================================
+failed login attempts /etc/pam.d/system-auth Result:
+----------------------------------------------------
+{% if pass_days_result.results[7].stdout != "" %}
+success - {{ansible_hostname}} - Threshold for consecutive failed login attempts already set in /etc/pam.d/system-auth"
+{% else %}
+Warning - {{ansible_hostname}} - Threshold for consecutive failed login attempts not set in /etc/pam.d/system-auth"
+{% endif %}
+
+===============================================================================================
+failed login attempts /etc/pam.d/password-auth Result:
+----------------------------------------------------
+{% if pass_days_result.results[8].stdout != "" %}
+success - {{ansible_hostname}} - Threshold for consecutive failed login attempts already set in /etc/pam.d/pasword-auth"
+{% else %}
+Warning - {{ansible_hostname}} - Threshold for consecutive failed login attempts not set in /etc/pam.d/password-auth"
+{% endif %}
+
+===============================================================================================
+
+To find Duplicate UID Result:
+-----------------------------
+{% if duplicate_uid.stdout == "" %}
+success - {{ansible_hostname}} - No Duplicate UID found
+{% else %}
+Warning - {{ansible_hostname}} - Some Duplicate UID found.
+{% endif %}
+
+===============================================================================================
+To find Duplicate GID Result:
+-----------------------------
+{% if duplicate_gid.stdout == "" %}
+success - {{ansible_hostname}} - No Duplicate GID found
+{% else %}
+Warning - {{ansible_hostname}} - Some Duplicate GID found.
+{% endif %}
+
+===============================================================================================
+ Ensure access to the su command Result:
+----------------------------------------
+{% if  pass_days_result.results[9].stdout != "" %}
+success - {{ansible_hostname}} - su command is restrcted
+{% else %}
+Warning - {{ansible_hostname}} - su command not restricted.
+{% endif %}
+
+===============================================================================================
+To find Duplicate GID Result:
+-----------------------------
+{% if pass_days_result.results[10].stdout == "" %}
+success - {{ansible_hostname}} - Password fields are not empty
+{% else %}
+Warning - {{ansible_hostname}} - Some password fields are empty
+{% endif %}
+
+===============================================================================================
+To check /var/log/wtmp file exists or not:
+-----------------------------------
+{% if files_exist.results[0].stat.exists == true %}
+success - {{ansible_hostname}} -  File was already created
+location: {{files_exist.results[0].stat.path}}
+Permission: {{files_exist.results[0].stat.mode}}
+owner-group: {{files_exist.results[0].stat.pw_name}}-{{files_exist.results[0].stat.gr_name}}
+{% else %}
+Warning - {{ansible_hostname}} - File was not found
+{% endif %}
+
+===============================================================================================
+To check /var/log/messages file exists or not:
+---------------------------------------------
+{% if files_exist.results[1].stat.exists == true %}
+success - {{ansible_hostname}} -  File was already created
+location: {{files_exist.results[1].stat.path}}
+Permission: {{files_exist.results[1].stat.mode}}
+owner-group: {{files_exist.results[1].stat.pw_name}}-{{files_exist.results[1].stat.gr_name}}
+{% else %}
+Warning - {{ansible_hostname}} - File was not found
+{% endif %}
+
+===============================================================================================
+To check /var/log/syslog file exists or not:
+--------------------------------------------
+{% if files_exist.results[2].stat.exists == true %}
+success - {{ansible_hostname}} -  File was already created
+location: {{files_exist.results[2].stat.path}}
+Permission: {{files_exist.results[2].stat.mode}}
+owner-group: {{files_exist.results[2].stat.pw_name}}-{{files_exist.results[2].stat.gr_name}}
+{% else %}
+Warning - {{ansible_hostname}} - File was not found
+{% endif %}
+
+===============================================================================================
+To check /var/log/secure file exists or not:
+---------------------------------------------
+{% if files_exist.results[3].stat.exists == true %}
+success - {{ansible_hostname}} -  File was already created
+location: {{files_exist.results[1].stat.path}}
+Permission: {{files_exist.results[3].stat.mode}}
+owner-group: {{files_exist.results[3].stat.pw_name}}-{{files_exist.results[3].stat.gr_name}}
+{% else %}
+Warning - {{ansible_hostname}} - File was not found
+{% endif %}
+
+===============================================================================================
+To check /var/log/auth.log file exists or not:
+----------------------------------------------
+{% if files_exist.results[4].stat.exists == true %}
+success - {{ansible_hostname}} -  File was already created
+location: {{files_exist.results[4].stat.path}}
+Permission: {{files_exist.results[4].stat.mode}}
+owner-group: {{files_exist.results[4].stat.pw_name}}-{{files_exist.results[4].stat.gr_name}}
+{% else %}
+Warning - {{ansible_hostname}} - File was not found
+{% endif %}
+
+===============================================================================================
+To check ~root/.netrc file exists or not:
+----------------------------------------------
+{% if files_exist.results[5].stat.exists == false %}
+Success - {{ansible_hostname}} - File was not found. If the file exists: Read access only by root; write access only by root
+{% else %}
+Warning - {{ansible_hostname}} -  File was already created... Read access only by root; write access only by root
+location: {{files_exist.results[5].stat.path}}
+Permission: {{files_exist.results[5].stat.mode}}
+owner: {{files_exist.results[5].stat.pw_name}}
+group: {{files_exist.results[5].stat.gr_name}}
+{% endif %}
+
+===============================================================================================
+To check ~root/.netrc file exists or not(Testing):
+----------------------------------------------
+{% if files_exist.results[5].stat.exists == true %}
+Success - {{ansible_hostname}} -  File was already created... Read access only by root; write access only by root
+{% if files_exist.results[5].stat.pw_name == "root" and files_exist.results[5].stat.gr_name == "root" and files_exist.results[5].stat.mode == 0600  %}
+Success - All permissions are correct
+location  : {{files_exist.results[5].stat.path}}
+Permission: {{files_exist.results[5].stat.mode}}
+owner     : {{files_exist.results[5].stat.pw_name}}
+group     : {{files_exist.results[5].stat.gr_name}}
+{% else %}
+warning - File permission are incorrect.
+location  : {{files_exist.results[5].stat.path}}
+Permission: {{files_exist.results[5].stat.mode}}
+owner     : {{files_exist.results[5].stat.pw_name}}
+group     : {{files_exist.results[5].stat.gr_name}}
+{% endif %}
+{% else %}
+Success - {{ansible_hostname}} - File was not found. If the file exists. Read access only by root; write access only by root
+{% endif %}
+
+===============================================================================================
+To check ~root/.rhosts file exists or not(Testing):
+----------------------------------------------
+{% if files_exist.results[6].stat.exists == true %}
+Success - {{ansible_hostname}} -  File was already created... Read access only by root; write access only by root
+{% if files_exist.results[6].stat.pw_name == "root" and files_exist.results[6].stat.gr_name == "root" and files_exist.results[6].stat.mode == 0600  %}
+Success - All permissions are correct
+location  : {{files_exist.results[6].stat.path}}
+Permission: {{files_exist.results[6].stat.mode}}
+owner     : {{files_exist.results[6].stat.pw_name}}
+group     : {{files_exist.results[6].stat.gr_name}}
+{% else %}
+warning - File permission are incorrect.
+location  : {{files_exist.results[6].stat.path}}
+Permission: {{files_exist.results[6].stat.mode}}
+owner     : {{files_exist.results[6].stat.pw_name}}
+group     : {{files_exist.results[6].stat.gr_name}}
+{% endif %}
+{% else %}
+Success - {{ansible_hostname}} - File was not found. If the file exists. Read access only by root; write access only by root
+{% endif %}
+
+===============================================================================================
+To check "/" file exists:
+----------------------------------------------
+{% if files_exist.results[7].stat.exists == true %}
+Success - {{ansible_hostname}} -  File was already created... Read access only by root; write access only by root
+{% if files_exist.results[7].stat.pw_name == "root" and files_exist.results[7].stat.gr_name == "root" and files_exist.results[7].stat.mode == 0600 or files_exist.results[7].stat.mode == 0775 or files_exist.results[7].stat.mode == 0755 or files_exist.results[7].stat.mode == 0754 %}
+Success - All permissions are correct
+location  : {{files_exist.results[7].stat.path}}
+Permission: {{files_exist.results[7].stat.mode}}
+owner     : {{files_exist.results[7].stat.pw_name}}
+group     : {{files_exist.results[7].stat.gr_name}}
+{% else %}
+warning - File permission are incorrect.
+location  : {{files_exist.results[7].stat.path}}
+Permission: {{files_exist.results[7].stat.mode}}
+owner     : {{files_exist.results[7].stat.pw_name}}
+group     : {{files_exist.results[7].stat.gr_name}}
+{% endif %}
+{% else %}
+Success - {{ansible_hostname}} - File was not found. If the file exists. Read access only by root; write access only by root
+{% endif %}
+
+===============================================================================================
+To check "/usr" file exists:
+----------------------------------------------
+{% if files_exist.results[8].stat.exists == true %}
+Success - {{ansible_hostname}} -  File was already created... Read access only by root; write access only by root
+{% if files_exist.results[8].stat.pw_name == "root" and files_exist.results[8].stat.gr_name == "root" and files_exist.results[8].stat.mode == 0600 or files_exist.results[8].stat.mode == 0775 or files_exist.results[8].stat.mode == 0755 or files_exist.results[8].stat.mode == 0754 %}
+Success - All permissions are correct
+location  : {{files_exist.results[8].stat.path}}
+Permission: {{files_exist.results[8].stat.mode}}
+owner     : {{files_exist.results[8].stat.pw_name}}
+group     : {{files_exist.results[8].stat.gr_name}}
+{% else %}
+warning - File permission are incorrect.
+location  : {{files_exist.results[8].stat.path}}
+Permission: {{files_exist.results[8].stat.mode}}
+owner     : {{files_exist.results[8].stat.pw_name}}
+group     : {{files_exist.results[8].stat.gr_name}}
+{% endif %}
+{% else %}
+Success - {{ansible_hostname}} - File was not found. If the file exists. Read access only by root; write access only by root
+{% endif %}
+
+===============================================================================================
+To check "/var" file exists:
+----------------------------------------------
+{% if files_exist.results[9].stat.exists == true %}
+Success - {{ansible_hostname}} -  File was already created... Read access only by root; write access only by root
+{% if files_exist.results[9].stat.pw_name == "root" and files_exist.results[9].stat.gr_name == "root" and files_exist.results[9].stat.mode == 0600 or files_exist.results[9].stat.mode == 0775 or files_exist.results[9].stat.mode == 0755 or files_exist.results[9].stat.mode == 0754 %}
+Success - All permissions are correct
+location  : {{files_exist.results[9].stat.path}}
+Permission: {{files_exist.results[9].stat.mode}}
+owner     : {{files_exist.results[9].stat.pw_name}}
+group     : {{files_exist.results[9].stat.gr_name}}
+{% else %}
+warning - File permission are incorrect.
+location  : {{files_exist.results[9].stat.path}}
+Permission: {{files_exist.results[9].stat.mode}}
+owner     : {{files_exist.results[9].stat.pw_name}}
+group     : {{files_exist.results[9].stat.gr_name}}
+{% endif %}
+{% else %}
+Success - {{ansible_hostname}} - File was not found. If the file exists. Read access only by root; write access only by root
+{% endif %}
+
+===============================================================================================
+To check "/etc" file exists:
+----------------------------------------------
+{% if files_exist.results[10].stat.exists == true %}
+Success - {{ansible_hostname}} -  File was already created... Read access only by root; write access only by root
+{% if files_exist.results[10].stat.pw_name == "root" and files_exist.results[10].stat.gr_name == "root" and files_exist.results[10].stat.mode == 0600 or files_exist.results[10].stat.mode == 0775 or files_exist.results[10].stat.mode == 0755 or files_exist.results[10].stat.mode == 0754 %}
+Success - All permissions are correct
+location  : {{files_exist.results[10].stat.path}}
+Permission: {{files_exist.results[10].stat.mode}}
+owner     : {{files_exist.results[10].stat.pw_name}}
+group     : {{files_exist.results[10].stat.gr_name}}
+{% else %}
+warning - File permission are incorrect.
+location  : {{files_exist.results[10].stat.path}}
+Permission: {{files_exist.results[10].stat.mode}}
+owner     : {{files_exist.results[10].stat.pw_name}}
+group     : {{files_exist.results[10].stat.gr_name}}
+{% endif %}
+{% else %}
+Success - {{ansible_hostname}} - File was not found. If the file exists. Read access only by root; write access only by root
+{% endif %}
+
+===============================================================================================
+To check "/tmp" file exists:
+----------------------------------------------
+{% if files_exist.results[11].stat.exists == true %}
+Success - {{ansible_hostname}} -  File was already created... Read access only by root; write access only by root
+{% if files_exist.results[11].stat.pw_name == "root" and files_exist.results[11].stat.gr_name == "root" and files_exist.results[11].stat.mode == 1777 %}
+Success - All permissions are correct
+location  : {{files_exist.results[11].stat.path}}
+Permission: {{files_exist.results[11].stat.mode}}
+owner     : {{files_exist.results[11].stat.pw_name}}
+group     : {{files_exist.results[11].stat.gr_name}}
+{% else %}
+warning - File permission are incorrect.
+location  : {{files_exist.results[11].stat.path}}
+Permission: {{files_exist.results[11].stat.mode}}
+owner     : {{files_exist.results[11].stat.pw_name}}
+group     : {{files_exist.results[11].stat.gr_name}}
+{% endif %}
+{% else %}
+Success - {{ansible_hostname}} - File was not found. If the file exists. Read access only by root; write access only by root
+{% endif %}
+
+===============================================================================================
+To check "/var/tmp" file exists:
+----------------------------------------------
+{% if files_exist.results[12].stat.exists == true %}
+Success - {{ansible_hostname}} -  File was already created... Read access only by root; write access only by root
+{% if files_exist.results[12].stat.pw_name == "root" and files_exist.results[12].stat.gr_name == "root" and files_exist.results[12].stat.mode == 1777 %}
+Success - All permissions are correct
+location  : {{files_exist.results[12].stat.path}}
+Permission: {{files_exist.results[12].stat.mode}}
+owner     : {{files_exist.results[12].stat.pw_name}}
+group     : {{files_exist.results[12].stat.gr_name}}
+{% else %}
+warning - File permission are incorrect. The file must exist, and File permissions must be set  * rw- --- ---
+location  : {{files_exist.results[12].stat.path}}
+Permission: {{files_exist.results[12].stat.mode}}
+owner     : {{files_exist.results[12].stat.pw_name}}
+group     : {{files_exist.results[12].stat.gr_name}}
+{% endif %}
+{% else %}
+Success - {{ansible_hostname}} - File was not found. If the file exists. Read access only by root; write access only by root
+{% endif %}
+
+===============================================================================================
+To check "/etc/security/opasswd" file exists:
+----------------------------------------------
+{% if files_exist.results[13].stat.exists == true %}
+Success - {{ansible_hostname}} - File was already created
+{% if files_exist.results[13].stat.pw_name == "root" and files_exist.results[13].stat.gr_name == "root" and files_exist.results[13].stat.mode == 0600 %}
+Success - All permissions are correct
+location  : {{files_exist.results[13].stat.path}}
+Permission: {{files_exist.results[13].stat.mode}}
+owner     : {{files_exist.results[13].stat.pw_name}}
+group     : {{files_exist.results[13].stat.gr_name}}
+{% else %}
+warning - File permission are incorrect. The file must exist, and File permissions must be set  * rw- --- ---
+location  : {{files_exist.results[13].stat.path}}
+Permission: {{files_exist.results[13].stat.mode}}
+owner     : {{files_exist.results[13].stat.pw_name}}
+group     : {{files_exist.results[13].stat.gr_name}}
+{% endif %}
+{% else %}
+Success - {{ansible_hostname}} - File was not found.
+{% endif %}
+
+===============================================================================================
+To check "/etc/shadow" file exists:
+----------------------------------------------
+{% if files_exist.results[14].stat.exists == true %}
+Success - {{ansible_hostname}} - File was already created
+{% if files_exist.results[14].stat.pw_name == "root" and files_exist.results[14].stat.gr_name == "root" and files_exist.results[14].stat.mode == 0600 %}
+Success - All permissions are correct
+location  : {{files_exist.results[14].stat.path}}
+Permission: {{files_exist.results[14].stat.mode}}
+owner     : {{files_exist.results[14].stat.pw_name}}
+group     : {{files_exist.results[14].stat.gr_name}}
+{% else %}
+warning - File permission are incorrect. The file must exist, and File permissions must be set  * rw- --- ---
+location  : {{files_exist.results[14].stat.path}}
+Permission: {{files_exist.results[14].stat.mode}}
+owner     : {{files_exist.results[14].stat.pw_name}}
+group     : {{files_exist.results[14].stat.gr_name}}
+{% endif %}
+{% else %}
+Success - {{ansible_hostname}} - File was not found.
+{% endif %}
+
+===============================================================================================
+To check "/var/log" file exists:
+----------------------------------------------
+{% if files_exist.results[15].stat.exists == true %}
+Success - {{ansible_hostname}} - File was already created
+{% if files_exist.results[15].stat.pw_name == "root" and files_exist.results[15].stat.gr_name == "root" and files_exist.results[15].stat.mode != 777 %}
+Success - All permissions are correct
+location  : {{files_exist.results[15].stat.path}}
+Permission: {{files_exist.results[15].stat.mode}}
+owner     : {{files_exist.results[15].stat.pw_name}}
+group     : {{files_exist.results[15].stat.gr_name}}
+{% else %}
+warning - File permission are incorrect.
+location  : {{files_exist.results[15].stat.path}}
+Permission: {{files_exist.results[15].stat.mode}}
+owner     : {{files_exist.results[15].stat.pw_name}}
+group     : {{files_exist.results[15].stat.gr_name}}
+{% endif %}
+{% else %}
+Success - {{ansible_hostname}} - File was not found.
+{% endif %}
+
+===============================================================================================
+To check "/var/log/faillog" file exists:
+----------------------------------------------
+{% if files_exist.results[16].stat.exists == true %}
+Success - {{ansible_hostname}} - File was already created
+{% if files_exist.results[16].stat.pw_name == "root" and files_exist.results[16].stat.gr_name == "root" and files_exist.results[16].stat.mode == 0600 %}
+Success - All permissions are correct
+location  : {{files_exist.results[16].stat.path}}
+Permission: {{files_exist.results[16].stat.mode}}
+owner     : {{files_exist.results[16].stat.pw_name}}
+group     : {{files_exist.results[16].stat.gr_name}}
+{% else %}
+warning - File permission are incorrect. The file must exist, and File permissions must be set  * rw- --- ---
+location  : {{files_exist.results[16].stat.path}}
+Permission: {{files_exist.results[16].stat.mode}}
+owner     : {{files_exist.results[16].stat.pw_name}}
+group     : {{files_exist.results[16].stat.gr_name}}
+{% endif %}
+{% else %}
+Success - {{ansible_hostname}} - File was not found.
+{% endif %}
+
+===============================================================================================
+To check "/var/log/tallylog" file exists:
+----------------------------------------------
+{% if files_exist.results[17].stat.exists == true %}
+Success - {{ansible_hostname}} - File was already created
+{% if files_exist.results[17].stat.pw_name == "root" and files_exist.results[17].stat.gr_name == "root" and files_exist.results[17].stat.mode == 0600 %}
+Success - All permissions are correct
+location  : {{files_exist.results[17].stat.path}}
+Permission: {{files_exist.results[17].stat.mode}}
+owner     : {{files_exist.results[17].stat.pw_name}}
+group     : {{files_exist.results[17].stat.gr_name}}
+{% else %}
+warning - File permission are incorrect. The file must exist, and File permissions must be set  * rw- --- ---
+location  : {{files_exist.results[17].stat.path}}
+Permission: {{files_exist.results[17].stat.mode}}
+owner     : {{files_exist.results[17].stat.pw_name}}
+group     : {{files_exist.results[17].stat.gr_name}}
+{% endif %}
+{% else %}
+Success - {{ansible_hostname}} - File was not found.
+{% endif %}
+
+===============================================================================================
+To check "/var/log/wtmp" file exists:
+----------------------------------------------
+{% if files_exist.results[18].stat.exists == true %}
+Success - {{ansible_hostname}} - File was already created
+{% if files_exist.results[18].stat.pw_name == "root" and files_exist.results[18].stat.gr_name == "root" and files_exist.results[18].stat.mode == 0755 %}
+Success - All permissions are correct
+location  : {{files_exist.results[18].stat.path}}
+Permission: {{files_exist.results[18].stat.mode}}
+owner     : {{files_exist.results[18].stat.pw_name}}
+group     : {{files_exist.results[18].stat.gr_name}}
+{% else %}
+warning - File permission are incorrect. The file must exist, and File permissions must be set  * rw- --- ---
+location  : {{files_exist.results[18].stat.path}}
+Permission: {{files_exist.results[18].stat.mode}}
+owner     : {{files_exist.results[18].stat.pw_name}}
+group     : {{files_exist.results[18].stat.gr_name}}
+{% endif %}
+{% else %}
+Warning - {{ansible_hostname}} - File was not found. The file must exist, and File permissions must be set  * rw- --- ---
+{% endif %}
+
+===============================================================================================
+To check "/var/log/secure" file exists:
+----------------------------------------------
+{% if files_exist.results[19].stat.exists == true %}
+Success - {{ansible_hostname}} - File was already created
+{% if files_exist.results[19].stat.pw_name == "root" and files_exist.results[19].stat.gr_name == "root" and files_exist.results[19].stat.mode == 0600 %}
+Success - All permissions are correct
+location  : {{files_exist.results[19].stat.path}}
+Permission: {{files_exist.results[19].stat.mode}}
+owner     : {{files_exist.results[19].stat.pw_name}}
+group     : {{files_exist.results[19].stat.gr_name}}
+{% else %}
+warning - File permission are incorrect. The file must exist, and File permissions must be set  * rw- --- ---
+location  : {{files_exist.results[19].stat.path}}
+Permission: {{files_exist.results[19].stat.mode}}
+owner     : {{files_exist.results[19].stat.pw_name}}
+group     : {{files_exist.results[19].stat.gr_name}}
+{% endif %}
+{% else %}
+Success - {{ansible_hostname}} - File was not found.
+{% endif %}
+
+===============================================================================================
+Enable tcp syncookies to prevent syn flooding:
+----------------------------------------------
+{% if sysctl_value.results[0].stdout != "" %}
+success - {{ansible_hostname}} -  Already Enable tcp syncookies to prevent syn flooding
+value: {{sysctl_value.results[0].stdout}}
+{% else %}
+Warning - {{ansible_hostname}} -  Not Enable tcp syncookies to prevent syn flooding
+{% endif %}
+
+===============================================================================================
+Turn off ICMP broadcasts:
+-------------------------
+{% if sysctl_value.results[1].stdout != "" %}
+success - {{ansible_hostname}} -  Already Turn off ICMP broadcasts
+value: {{sysctl_value.results[1].stdout}}
+{% else %}
+Warning - {{ansible_hostname}} -  Not Turn off ICMP broadcasts
+{% endif %}
+
+===============================================================================================
+Disable ICMP Redirect Acceptance:
+---------------------------------
+{% if sysctl_value.results[2].stdout != "" %}
+success - {{ansible_hostname}} -  Already Disable ICMP Redirect Acceptance
+value: {{sysctl_value.results[2].stdout}}
+{% else %}
+Warning - {{ansible_hostname}} -  Not Disable ICMP Redirect Acceptance
+{% endif %}
+
+===============================================================================================
+Disable telnet service:
+-----------------------
+{% if package_check.results[0].stdout == "" %}
+success - {{ansible_hostname}} -  telnet not installed
+{% else %}
+Warning - {{ansible_hostname}} -  telnet installed in the server. kindly remove it
+value: {{package_check.results[0].stdout}}
+{% endif %}
+
+===============================================================================================
+Disable FTP service:
+--------------------
+{% if package_check.results[1].stdout == "" %}
+success - {{ansible_hostname}} -  FTP not installed
+{% else %}
+Warning - {{ansible_hostname}} -  FTP installed in the server. kindly remove it
+value: {{package_check.results[1].stdout}}
+{% endif %}
+
+===============================================================================================
+Disable yppasswd service:
+-----------------------
+{% if package_check.results[2].stdout == "" %}
+success - {{ansible_hostname}} -  yppasswd not installed
+{% else %}
+Warning - {{ansible_hostname}} -  yppasswd installed in the server. kindly remove it
+value: {{package_check.results[2].stdout}}
+{% endif %}
+
+===============================================================================================
+
+{% for jino in  system_main_file_result.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+
+{% if jino.stat.exists  == true %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was found
+
+{% if jino.stat.mode == "0644" and jino.stat.gr_name == "root" and jino.stat.pw_name == "root" %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+
+{% else %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+Warning - File permissions is mismatch.
+The OSR {{ jino.item }} has permissions set on 0644 and user root and group root
+
+{% endif %}
+{% else %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was not found
+
+{% endif %}
+{% endfor %}
+
+
+
+{% for jino in  system_main_file_result1.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+
+{% if jino.stat.exists  == true %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was found
+
+{% if jino.stat.mode == "0600" and jino.stat.gr_name == "root" and jino.stat.pw_name == "root" %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+
+{% else %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+Warning - File permissions is mismatch.
+The OSR {{ jino.item }} has permissions set on 0600 and user root and group root
+
+{% endif %}
+{% else %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was not found
+
+{% endif %}
+{% endfor %}
+
+
+{% for jino in  system_main_file_result2.results | json_query('[]') %}
+------------------------------------------------------------------------------------
+
+{% if jino.stat.exists  == true %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was found
+
+{% if jino.stat.mode == "0000" and jino.stat.gr_name == "root" and jino.stat.pw_name == "root" %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+
+{% else %}
+
+File Path  : {{ jino.stat.path }}
+File Owner : {{ jino.stat.gr_name }}
+File group : {{ jino.stat.pw_name }}
+File Mode  : {{ jino.stat.mode }}
+Warning - File permissions is mismatch.
+The OSR {{ jino.item }} has permissions set on 0000 and user root and group root
+
+{% endif %}
+{% else %}
+
+file_name: {{ jino.item }} results:
+-----------------------------------
+File Status: Directory was not found
+
+{% endif %}
+{% endfor %}
+
+---------------------------------------------------------------------------------
+
+{% if system_main_file_result3.results[0].stdout == "" %}
+
+Audit: No world writable files exist
+Condition: Success
+
+{% else %}
+Audit      : world writable files exist
+Remediation: Removing write access for the “other” category (chmod o-w <filename>) is advisable, but always consult relevant vendor documentation to avoid breaking any application dependencies on a given file. 
+{% for jino in system_main_file_result3.results[0].stdout_lines %}
+{{loop.index}}-{{jino}}
+{% endfor %}
+{% endif %}
+
+---------------------------------------------------------------------------------
+
+{% if system_main_file_result3.results[1].stdout == "" %}
+
+Audit: No ungrouped files or directories exist
+Condition: Success
+
+{% else %}
+Audit      : Ungrouped files or directories exist
+Remediation: Locate files that are owned by users or groups not listed in the system configuration files, and reset the ownership of these files to some active user on the system as appropriate.
+{% for jino in system_main_file_result3.results[1].stdout_lines %}
+{{loop.index}}-{{jino}}
+{% endfor %}
+{% endif %}
+
+---------------------------------------------------------------------------------
+
+{% if system_main_file_result3.results[2].stdout == "" %}
+
+Audit: SGID executables
+Condition: Success
+
+{% else %}
+Audit: SGID executables was found
+Remediation: Ensure that no rogue SUID programs have been introduced into the system. Review the files returned by the action in the Audit section and confirm the integrity of these binaries.
+{% for jino in system_main_file_result3.results[2].stdout_lines %}
+{{loop.index}}-{{jino}}
+{% endfor %}
+{% endif %}
+
+---------------------------------------------------------------------------------
+
+{% if system_main_file_result3.results[3].stdout == "" %}
+
+Audit: SGID executables
+Condition: Success
+
+{% else %}
+Audit: SGID executables was found
+Remediation: Ensure that no rogue SGID programs have been introduced into the system. Review the files returned by the action in the Audit section and confirm the integrity of these binaries.
+{% for jino in system_main_file_result3.results[3].stdout_lines %}
+{{loop.index}}-{{jino}}
+{% endfor %}
+{% endif %}
+
+--------------------------------------------------------------------------------
+
+{% if system_main_file_result3.results[4].stdout == "" %}
+
+Audit: No unowned files or directories exist
+Condition: Success
+
+{% else %}
+Audit      : Unowned files or directories exist
+Remediation: Locate files that are owned by users or groups not listed in the system configuration files, and reset the ownership of these files to some active user on the system as appropriate.
+{% for jino in system_main_file_result3.results[4].stdout_lines %}
+{{loop.index}}-{{jino}}
+{% endfor %}
+{% endif %}
+
+--------------------------------------------------------------------------------
+

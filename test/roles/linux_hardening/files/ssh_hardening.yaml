@@ -1,0 +1,6 @@
+---
+- name: check the ssh file conditions
+  shell: "grep ^{{item}} /etc/ssh/sshd_config"
+  with_items: "{{ ssh_conditions_exixting_server }}"
+  register: jino
+  ignore_errors: true

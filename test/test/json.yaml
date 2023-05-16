@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  tasks:
+    - shell: cat ~/Desktop/hpilo.txt
+      register: jino
+    - template:
+        src: json_temp.j2
+        dest: ./json_txt.txt

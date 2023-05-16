@@ -1,0 +1,11 @@
+primary 111.93.12.250
+secondary 125.99.157.10
+
+
+cronjob uncomment 
+daily_vbackup rcmdata base only
+
+
+[root@moniter-server ~]#  curl -XPOST 127.0.0.1:3000/api/auth/keys --user "admin:jino@19" --data '{"name": "ansible-callback", "role": "Editor"}' -H "Content-Type: application/json"
+{"name":"ansible-callback","key":"eyJrIjoiMVd2RW9uMUNOWGU1Q0xMU0sxYkJIMEtZYzQ0TzlFTEciLCJuIjoiYW5zaWJsZS1jYWxsYmFjayIsImlkIjoxfQ=="}[root@moniter-server ~]# 
+

@@ -1,0 +1,9 @@
+---
+- name: System_maintanabce
+  hosts: vag
+  tasks:
+  - name: Verify Permissions
+    raw: stat -c %a /etc/passwd
+    register: output
+  - debug:
+      msg: "{{output.stdout_lines}}"

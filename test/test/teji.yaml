@@ -1,0 +1,8 @@
+---
+- name: install test
+  hosts: localhost
+  vars:
+    - jj: jino
+  tasks:
+  - debug:
+      msg: "{{ansible_default_ipv4.network|replace('0','11')}}"

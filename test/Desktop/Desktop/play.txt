@@ -1,0 +1,44 @@
+106.51.3.247
+==========================================================================================================================================
+= Note: Once the playbook is ready need to consolidate int the roles in such a way that the required module when clled will be installed.=
+==========================================================================================================================================
+Question 1: To install a package one client servers.
+Question 2: To start the service on the client servers.
+Question 3: To reboot the server:-
+			a. every week on saturday and sunday
+			b. Monthly reboot(1st,2nd,3rd,4th,5th week of month)
+Question 4: LVM
+			a. File system creation.
+			b. File system deletion.
+			c. File system resize.
+			d. PV migration
+			e. VG migration
+			f. LV migraion
+Question 5: Scanning the newly added LUNS.
+Question 6: Patching the Server.
+Question 7: File system clean or identifying the lage files and sending mail to application team.
+Question 8: Configuring the network bonding.
+Question 9: Identfying the current interface in bonding and switching to the alternate.
+Question 10: Logrotating 
+Question 11: NFS server + client configuration.
+Question 12: Network configuration.
+Question 13: User creations 
+Question 14: File mangement:-
+			a. Files and folder ownership
+			b. Files and folder permission
+			c. ACL permission
+Question 15. Updating /etc/hosts entry.
+Question 16: Trouble shootig CPU,memory,IO and network spikes
+Question 17: Securig the file and folders using vault.
+Question 18: Creating passwordless authentication between the 2 servers.
+Question 19. installing and configuring the sysstat.
+Question 20: Generatig the health report of the server
+Question 21: Creating the database on the server.
+Question 22: To configure the ansible server with the configuration file.
+Question 23: TO launch instance in AWS and google cloud.
+Question 24: To configure the docker.
+Question 25: TO configure the jenkins.
+Question 26: to configure the hadoop 
+Question 27: To configure the nagios.
+Question 28. Scheduling the jobs using cron.
+Question 29: Configuring the PAM.

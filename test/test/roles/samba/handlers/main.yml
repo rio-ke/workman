@@ -1,0 +1,9 @@
+---
+- name: restart smb
+  service:
+    name: smb
+    state: restarted
+- name: restart rsyslog
+  service:
+    name: rsyslog
+    state: restarted

@@ -1,0 +1,6 @@
+---
+- name: install Haproxy
+  hosts: node1
+  tasks:
+  roles:
+  - role: hardening

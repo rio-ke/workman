@@ -1,0 +1,10 @@
+---
+- name: "Ping all request to particular service"
+  hosts: localhost
+  tasks:
+  - name: "ping request rise from all servers"
+    shell: ping -c4 192.168.5.210  | grep packets
+    register: jino
+  - name: "Request for telnet"
+    shell: echo -e '\x1dclose\x0d' | telnet 192.168.5.207 22
+    register: jjino

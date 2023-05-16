@@ -1,0 +1,52 @@
+---
+- ec2_instance_facts:
+    aws_secret_key: "{{ aws_secret_key }}"
+    aws_access_key: "{{ aws_access_key }}"
+    region: "{{ region }}"
+  register: results
+  when:
+    - aws_secret_key is defined
+    - aws_secret_key is defined
+    - region is defined
+
+- name: "get ec2 instance information"
+  ec2_instance_facts:
+    aws_secret_key: "{{ aws_secret_key }}"
+    aws_access_key: "{{ aws_access_key }}"
+    region: "{{ region }}"
+    instance_ids: "{{ results | json_query('instances[].instance_id[]') | join(',') }}" # "{{ instance_id }}"
+  register: result
+  when: results.instances != [] and results is succeeded
+
+- name: "create ec2 instance templae ude jinja"
+  template:
+    src: instance_info.j2
+    dest: "{{ template_storage_path }}" #/tmp/info.txt
+  when: results.instances != [] and results is succeeded
+
+- name: "Mail ec2 instance information"
+  mail:
+    host: "{{smtp_host}}" # smtp.gmail.com
+    port: "{{smtp_port}}" # 587
+    username: "{{smtp_username}}"
+    password: "{{smtp_password}}"
+    to: "{{ email_to }}"
+    cc: "{{ email_cc }}"
+    # from: "ansible@{{ansible_nodename}}"
+    subject: "{{ client_name }} ec2 instance report"
+    body: "{{ lookup('file', '{{template_storage_path }}') }}"
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  run_once: True
+  when: results.instances != [] and results is succeeded and mail_alert == true
+
+- name: Send notification message via Slack
+  slack:
+    token: "{{slack_token}}"
+    channel: "{{ansible_slack_channel}}"
+    msg: "{{ lookup('file', '{{template_storage_path }}') }}"
+  when: results.instances != [] and results is succeeded and slack_alert == true
+
+- name: "Passing Message to customer"
+  debug:
+    msg: "Instance not available for this account"
+  when: results.instances == [] and results is succeeded

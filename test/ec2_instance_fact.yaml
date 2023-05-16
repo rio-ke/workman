@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  tasks:
+  - name: "instance ids to get"
+    ec2_instance_facts:
+      aws_secret_key: noNNdcpUzR45VZ/0bnfwx4D7Holk993YLc7GS0z5
+      aws_access_key: AKIA6DTHLTSBJZH5LJTZ
+      region: us-east-1
+    register: results
+  - debug:
+      msg: "{{ results }}"
+  - name: "Get EC2 Instance information"
+    ec2_instance_facts:
+      aws_secret_key: noNNdcpUzR45VZ/0bnfwx4D7Holk993YLc7GS0z5
+      aws_access_key: AKIA6DTHLTSBJZH5LJTZ
+      region: us-east-1
+      instance_ids: "{{ results | json_query('instances[].instance_id[]') | join(',') }}"  # "{{ instance_id }}"
+    register: result
+
+  - template:
+      src: info1.j2
+      dest: /tmp/info.txt
+

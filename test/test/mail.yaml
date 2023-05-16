@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  tasks:
+    - mail:
+        host: smtp.gmail.com
+        port: 465
+        username: jinojoe@gmail.com
+        password: KULANDAI.29
+        to: linuxadmin@radiantcashservices.com
+        subject: ansible-report
+        body: "{{ansible_hostname}}"
+      delegate_to: localhost

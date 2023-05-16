@@ -1,0 +1,57 @@
+---
+- name: "gather vpn information"
+  ec2_vpc_vpn_facts:
+    aws_secret_key: "{{ aws_secret_key }}"
+    aws_access_key: "{{ aws_access_key }}"
+    region: "{{ region }}"
+  when:
+    - aws_secret_key is defined
+    - aws_secret_key is defined
+    - region is defined
+  register: result_vpn
+
+- name: "gather vpn information"
+  ec2_vpc_vpn_facts:
+    aws_secret_key: "{{ aws_secret_key }}"
+    aws_access_key: "{{ aws_access_key }}"
+    region: "{{ region }}"
+    vpn_connection_ids: "{{ result_vpn | json_query('vpn_connections[].vpn_connection_id') | join(',') }}" # "{{ vpn_connection_ids }}"
+  when:
+    - aws_secret_key is defined
+    - aws_secret_key is defined
+    - region is defined
+  register: results
+
+- name: "create ec2 vpn templae ude jinja"
+  template:
+    src: vpn_template.j2
+    dest: "{{ template_storage_path | default('/tmp/vpn_info.txt') }}"
+  when: results.vpn_connections != []  and results is succeeded
+
+- name: "Mail ec2 vpn information"
+  mail:
+    host: "{{smtp_host}}" # smtp.gmail.com
+    port: "{{smtp_port}}" # 587
+    username: "{{smtp_username}}"
+    password: "{{smtp_password}}"
+    to: "{{email_to}}"
+    cc: "{{email_cc}}"
+    # from: "ansible@{{ansible_nodename}}"
+    subject: "{{ client_name }} ec2 vpn report"
+    body: "{{ lookup('file', '{{template_storage_path }}') }}"
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  run_once: True
+  when: results.vpn_connections != [] and results is succeeded and mail_alert == true
+
+- name: Send notification message via Slack
+  slack:
+    token: "{{slack_token}}"
+    channel: "{{ansible_slack_channel}}"
+    msg: "{{ lookup('file', '{{ template_storage_path }}') }}"
+    # msg: "{{ lookup('file', '/tmp/info.txt') }}"
+  when: results.vpn_connections != [] and results is succeeded and slack_alert == true
+
+- name: "Passing Message to customer"
+  debug:
+    msg: "vpn not configure for this server"
+  when: results.vpn_connections == [] and results is succeeded

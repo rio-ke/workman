@@ -1,0 +1,4 @@
+---
+- name: from include
+  debug:
+    msg: "{{a}}- {{b}}"

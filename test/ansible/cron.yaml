@@ -1,0 +1,16 @@
+---
+- hosts: vag
+  tasks:
+  - name: Ensure a job that runs at 2 and 5 exists. Creates an entry like "0 5,2 * * ls -alh > /dev/null"
+    cron:
+      name: "check dirs"
+      minute: "0"
+      hour: "5,2"
+      job: "ls -alh /mnt > /dev/null"
+    register: crond
+  - debug:
+      msg: "{{crond}}"
+  - name: delete cron job
+    cron:
+      name: "check dirs"
+      state: absent

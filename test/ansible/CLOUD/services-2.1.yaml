@@ -1,0 +1,29 @@
+---
+- name: services yaml file
+  hosts: vag
+  tasks:
+  - name: check it if package installed or not
+    raw: "{{item}}"
+    register: Installed_packages
+    with_items:
+      - rpm -q telnet-server
+      - rpm -q telnet
+      - rpm -q rsh-server
+      - rpm -q rsh
+      - rpm -q ypbind
+      - rpm -q ypserv
+      - rpm -q tftp
+      - rpm -q tftp-server
+      - rpm -q talk
+      - rpm -q talk-server
+      - rpm -q xinetd
+  - name: display the content msg
+    debug:
+      msg: "{{ Installed_packages.results | json_query('[].stdout_lines[]') }}"
+      #- name: if service found remove it
+    # yum:
+      # name: "{{item}}"
+      # state: absent
+      # with_items:
+      #    - "{{ Installed_packages.results | json_query('[].stdout_lines[]') }}"
+

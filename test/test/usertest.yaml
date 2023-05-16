@@ -1,0 +1,11 @@
+---
+- hosts: archive
+  vars:
+    - cluster_user: jake
+    - cluster_user_pass: testtest
+  tasks:
+  - name: Create cluster system user
+    user:
+      name={{ cluster_user }} state=present
+      password={{ cluster_user_pass | password_hash('sha512', ansible_hostname|replace('-','x')|truncate(16, True, '')) }}
+      comment="HA Cluster Administrator"

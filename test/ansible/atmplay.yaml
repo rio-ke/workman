@@ -1,0 +1,16 @@
+---
+- name: App move to ATM
+  hosts: 111.93.12.251 #localhost #119.82.114.75
+  vars:
+    - b_date: "{{rad_date}}23-45-01"
+  tasks:
+  - name: Backup Copy from Aapp
+    fetch: src=/mnt/backup/ATM/dailymysqldb/{{b_date}}/rcms_atm.gz dest=/jino/ flat=yes fail_on_missing=yes
+    ignore_errors: True
+    register: ATM_result
+  - name: Sent Mail Confirmation
+    mail:
+      to: linuxadmin@radiantcashservices.com
+      subject: "Ansible_Report - {{ansible_hostname}}"
+      body: "DB moving Status: {{ ATM_result.changed }}"
+    run_once: True

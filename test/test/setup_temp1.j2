@@ -1,0 +1,13 @@
+{% for i, h in ansible_memory_mb.items() %}
+{{i}}
+{% for l, m in h.items() %}
+{{l}}-{{m}}
+{%endfor%}
+{%endfor%}
+
+{% for j, k in jino.ansible_facts.ansible_device_links.ids.iteritems() %}
+{{j}}
+{% for l in k %}
+{{ l }}
+{% endfor %}
+{% endfor %}

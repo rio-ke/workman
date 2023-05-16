@@ -1,0 +1,13 @@
+---
+- hosts: dc1-node-T 
+  tasks:
+  - name: get apache count
+    shell: pgrep httpd | tail -n 100
+    register: jino
+  - debug: var=jino.stdout_lines
+  - name: kill httpd selected count
+    shell: "kill -9 {{ item }}"
+    with_items:
+      - "{{ jino.stdout_lines}}"
+    ignore_errors: True
+

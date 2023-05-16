@@ -1,0 +1,14 @@
+---
+- name: "OS Hardening"
+  hosts: localhost
+  vars_prompt:
+  - name: user_input_options
+    prompt: "Which linux server do you want to deploy?\n
+      1 - CentOS/Redhat\n
+      2 - UbuntuOS \n
+      3 - SuseOS \n
+      4 - Security Report Generation \n
+      please Enter number"
+    private: no
+  roles:
+    - role: os_security

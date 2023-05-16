@@ -1,0 +1,56 @@
+---
+- name: "Check whether firewall install or not"
+  shell: rpm -qa nfs-utils
+  register: installed
+
+- name: "Install nfs-utils"
+  yum:
+    name: nfs-utils
+    state: present
+  when: installed.stdout_lines == []
+
+- name: "Start the rpcbind service"
+  service:
+    name: rpcbind
+    state: started
+    enabled: yes
+
+- name: "Domain name map"
+  replace:
+    path: /etc/idmapd.conf
+    regexp: ^#Domain = local.domain.edu
+    replace: "Domain = {{nfs_domain_name}}"
+    backup: yes
+  when: nfs_domain_name is defined
+
+- name: "Create the mount directory"
+  file:
+    path: "{{ local_mount_path }}"
+    state: directory
+  register: dir_create
+  when:
+    - local_mount_path is defined
+
+- name: "Mount the nfs server IP point to client host"
+  mount:
+    path: "{{ local_mount_path }}"
+    src: "{{ nfs_server_ip }}:{{nfs_server_mount_path}}"
+    fstype: nfs
+    state: mounted
+  when:
+    - nfs_server_ip is defined
+    - nfs_server_mount_path is defined
+    - local_mount_path is defined
+    - nfs_domain_name is not defined
+
+- name: "Mount the nfs server {{nfs_domain_name}} point to client host"
+  mount:
+    path: "{{ local_mount_path }}"
+    src: "{{ nfs_server_ip }}:{{nfs_server_mount_path}}"
+    fstype: nfs
+    state: mounted
+  when:
+    - nfs_server_ip is defined
+    - nfs_server_mount_path is defined
+    - local_mount_path is defined
+    - nfs_domain_name is defined

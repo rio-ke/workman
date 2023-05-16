@@ -1,0 +1,39 @@
+---
+# b_date: "{{rad_date}}23-50-01"
+rcmsdc1_dir_timestamp1: "{{ rcmsdc1_timestamp.stdout }}23-50-01"
+rcmsdc1_dir_timestamp2: "{{ rcmsdc1_timestamp.stdout }}23-50-02"
+dbs_log_user: root
+import_db: rcmsdata.gz
+import_db_name: rcmsdata
+radiant_dbs:
+  - radfinservice.gz
+  #  - radiant.gz
+  #  - rcmsbilling.gz
+  #  - rcmsdata.gz
+  #  - rcms_universe.gz
+  #  - rit_apps.gz
+  #  - test.gz
+atm_dir_timestamp: "{{atm_timestamp.stdout}}23-45-01"
+host_dir_timestamp1: "{{host_timestamp.stdout}}23-00-01"
+host_dir_timestamp2: "{{host_timestamp.stdout}}23-00-01"
+host_dbs:
+  - radiant_host.gz
+atm_dbs:
+  - rcms_atm.gz
+
+to_address: linuxadmin@radiantcashservices.com,jinojoe@gmail.com
+cc_address: jinojoe@rediffmail.com
+
+lastday_date: "{{rcmsdc2_result.stdout}}"
+
+transfer_db:
+  - radfinservice.gz
+  #- rcmsdata.gz
+
+data_base: rcmsdata
+
+table1: hrms_empdet
+table2: radiant_ce
+table3: cust_details
+table4: client_details
+bds_db_name: bds_rcms

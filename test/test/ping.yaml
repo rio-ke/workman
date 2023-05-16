@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+  - name: install
+    ping:
+    register: jino
+  - debug: msg="{{jino.ping}}"

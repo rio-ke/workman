@@ -1,0 +1,29 @@
+vpn information:
+-----------------
+category                 : {{ results.vpn_connections[0].category }}
+customer_gateway_id      : {{ results.vpn_connections[0].customer_gateway_id }}
+static_routes_only       : {{ results.vpn_connections[0].options.static_routes_only }}
+tags_name                : {{ results.vpn_connections[0].tags.Name }}
+State                    : {{ results.vpn_connections[0].state }}
+type                     : {{ results.vpn_connections[0].type }}
+vpn_connection_id        : {{ results.vpn_connections[0].vpn_connection_id }}
+vpn_gateway_id           : {{ results.vpn_connections[0].vpn_gateway_id }}
+
+vgw_telemetry:
+--------------
+
+{% for j in results | json_query('vpn_connections[].vgw_telemetry[]') %}
+{% for l, k in j.iteritems() %}
+{{ l.ljust(24) }} : {{ k }}
+{% endfor %}
+
+{% endfor %}
+routes:
+-------
+
+{% for jino in results | json_query('vpn_connections[].routes[]') %}
+{% for l, k in jino.iteritems() %}
+{{ l.ljust(24) }} : {{ k }}
+{% endfor %}
+
+{% endfor %}

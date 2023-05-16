@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Pass dictionary to ansible
+      debug:
+        msg: "{{ variables }}"

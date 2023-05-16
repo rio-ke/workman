@@ -1,0 +1,56 @@
+---
+- name: "Condition for Memory"
+  assert:
+    that:
+      - ansible_memfree_mb > ansible_memtotal_mb|float * 0.90
+    msg: Disk space has reached 90% threshold
+  register: result
+  ignore_errors: true
+  no_log: true
+
+- template:
+    src: jino.j2
+    dest: ./jino.txt
+
+- name: "Mail Memory Alert"
+  mail:
+    host: "{{smtp_host}}"
+    port: "{{smtp_port}}"
+    username: "{{smtp_username}}"
+    password: "{{smtp_password}}"
+    to: "{{email_to}}"
+    from: "{{email_from}}"
+    subject: "{{client_name}} | {{ansible_hostname}} | MEMORY ALERT"
+    subtype: html
+    body: >
+     <!DOCTYPE html>
+     <html>
+     <head>
+     <style type="text/css">
+     .tftable {font-size:12px;color:#333333;width:50%;border-width: 1px;border-color: #729ea5;border-collapse: collapse;}
+     .tftable th {font-size:18px;background-color:#acc8cc;border-width: 1px;padding: 8px;border-style: solid;border-color: #729ea5;text-align:center;}
+     .tftable tr {background-color:#d4e3e5;}
+     .tftable td {font-size:16px;border-width: 2px;padding: 8px;border-style: solid;border-color: #729ea5;text-align:center;}
+     .tftable tr:hover {background-color:#ffffff;}
+     #url_name{background-color: green; color: white; font-weight: bold; font-size:22px;}
+     #ji3{background-color: #c9cda5}
+     #ji5{background-color: #ffffff}
+     #ji7{background-color: #ffffff}
+     #url{background-color: #00b700;color: white;font-weight: bold;font-size:22px;}
+     #heading{text-align:center;font-size:36px;color:red;margin-bottom:10px;}
+     #heading1{align:center;font-size:12px;color:black;margin-bottom:10px;width:50%;margin-left:65%;}
+     </style>
+     </head>
+     <body>
+     <h3 id="heading">MEMORY ALERT!!!</h3>
+     <h6 id="heading1">Memory thersold Limit is 90%</h6>
+     <table class="tftable" border="1" align="center">
+     <tr><td id="url" colspan="2">{{ansible_hostname}}</td></tr>
+     <tr><td id="ji3">Total Memory</td><td id="ji3">{{(ansible_memtotal_mb/1024|pow(1))|round|int}} GiB</td></tr>
+     <tr><td id="ji7">Free Memory</td><td id="ji7">{{(ansible_memfree_mb/1024|pow(1))|round|int}} GiB</td></tr>
+     </table>
+     </body>
+     </html>
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  run_once: True
+  when: result is failed

@@ -1,0 +1,19 @@
+resource {{resource_name}} {
+ protocol C;
+ meta-disk internal;
+ device /dev/{{virtual_disk_name}};
+ syncer {
+  verify-alg sha1;
+ }
+ net {
+  allow-two-primaries;
+ }
+ on {{node1_name}} {
+  disk   /dev/{{vg_name}}/{{lv_name}};
+  address  {{node1_ip}}:7789;
+ }
+ on {{node2_name}} {
+  disk   /dev/{{vg_name}}/{{lv_name}};
+  address  {{node2_ip}}:7789;
+ }
+}

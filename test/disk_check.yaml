@@ -1,0 +1,24 @@
+---
+- name: "Play for Disk Space check"
+  hosts: go go1
+  tasks:
+  - name: "Disk Space check shell script"
+    shell: >
+      df -H | egrep -vE 'tmpfs|Filesystem' | awk '{ print $5 " " $1 }'  | while read output;
+      do
+        used=$(echo $output | awk '{ print $1}' | cut -d'%' -f1  )
+        partition=$(echo $output | awk '{ print $2 }' )
+        if [ $used -ge 80 ]; then
+          echo "check $(hostname) server - $(hostname -I | awk '{print $1}') - "$partition" - $used% "
+        fi
+      done
+    register: result
+
+  - name: "Display the Disk space result"
+    debug:
+      msg: "{{result}}"
+  - name: "Display the Disk space result"
+    debug:
+      msg: "{{ lookup('template', 'templates/disk.j2') }}"
+      # msg: "{{result | json_query('[stdout]')}}"
+

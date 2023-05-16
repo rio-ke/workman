@@ -1,0 +1,129 @@
+---
+# tasks file for ossec-webui
+- name: Install apache php
+  yum: state=latest name={{ item }}
+  with_items:
+    - httpd
+    - php
+    - php-fpm
+    - php-common
+
+- name: add user apache to ossec group
+  user:
+    name: apache
+    groups: ossec
+    append: yes
+
+- name: download ossec-wui
+  get_url:
+    url: https://github.com/ossec/ossec-wui/archive/0.9.tar.gz
+    dest: /root/0.9.tar.gz
+
+- name: remove ossec-wui directory
+  file: 
+    path: "/var/www/html/{{ ossec_webui_site_name }}"
+    state: absent
+
+- name: extract ossec-wui
+  unarchive:
+    src=/root/0.9.tar.gz
+    dest=/var/www/html/
+    group=apache
+    owner=apache
+    copy=no
+  notify: start httpd
+
+
+- name: rename to ossec-wui
+  command: "mv /var/www/html/ossec-wui-0.9 /var/www/html/{{ ossec_webui_site_name }}"
+
+- name: create tmp directory
+  file:
+    path: "/var/www/html/{{ ossec_webui_site_name }}/tmp"
+    state: directory
+    group: apache
+    owner: apache
+
+- name: install selinux required packages
+  yum: state=latest name={{ item }}
+  with_items:
+    - checkpolicy
+    - selinux-policy-devel
+
+
+- name: create directory ossec-wui for targeted selinux
+  file:
+    path: /etc/selinux/targeted/ossec-wui
+    state: directory
+
+- name: change php default timezone
+  lineinfile:
+    dest: /etc/php.ini
+    regexp: '^;?date\.timezone'
+    line: 'date.timezone = Europe/Rome'
+  notify: restarted httpd
+
+- name: copy ossec-wui targeted policy for selinux
+  copy:
+    src: files/ossec-wui.te
+    dest: /etc/selinux/targeted/ossec-wui/ossec-wui.te
+
+- name: checkmodule ossec-wui for selinux
+  command: checkmodule -M -m ossec-wui.te -o ossec-wui.mod
+  args:
+    chdir: /etc/selinux/targeted/ossec-wui
+
+- name: semodule_package ossec-wui for selinux
+  command: semodule_package -o ossec-wui.pp -m ossec-wui.mod
+  args:
+    chdir: /etc/selinux/targeted/ossec-wui
+
+- name: semodule ossec-wui for selinux
+  command: semodule -i ossec-wui.pp
+  args:
+    chdir: /etc/selinux/targeted/ossec-wui
+
+- name: disable selinux
+  selinux:
+    state: disabled
+
+- name: copy .htaccess file
+  copy:
+    src: files/.htaccess
+    dest: /var/www/html/cassia/.htaccess
+    owner: apache
+    group: apache
+  when: ossec_webui_password_active
+
+- name: Install python-passlib
+  yum: state=latest name=python-passlib
+
+- name: add admin user to password file
+  htpasswd:
+    path: /var/www/html/cassia/passwords-cassia
+    name: '{{ ossec_webui_user }}'
+    password: '{{ ossec_webui_password }}'
+    owner: apache
+    group: apache
+
+
+- name: copy cassia.conf file for httpd.conf overriding
+  copy:
+    src: files/cassia.conf
+    dest: /etc/httpd/conf.d/cassia.conf
+    owner: apache
+    group: apache
+  notify: restarted httpd  
+
+- name: change php execution time
+  lineinfile:
+    path: /etc/php.ini
+    regexp: '^max_execution_time'
+    line: 'max_execution_time = {{ ossec_webui_php_max_execution_time }}'
+  
+- name: firewall enable port 80
+  firewalld:
+    port: 80/tcp
+    permanent: true
+    state: enabled  
+  notify: restarted firewalld  

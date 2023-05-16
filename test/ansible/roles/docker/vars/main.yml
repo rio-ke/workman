@@ -1,0 +1,8 @@
+---
+docker_name: docker-ce
+docker_dependencies:
+  - yum-utils
+  - device-mapper-persistent-data
+  - lvm2
+docker_repo: https://download.docker.com/linux/centos/docker-ce.repo
+docker_service_name: docker

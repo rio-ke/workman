@@ -1,0 +1,7 @@
+---
+samba_packages:
+  - samba
+  - samba-client
+samba_sahre_name: samba_share
+samba_share_path: /mnt
+user_name: jino

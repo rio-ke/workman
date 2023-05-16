@@ -1,0 +1,15 @@
+# aws_access_key: 2AKIAIM5VLIN63FY7A2OQ
+#    aws_secret_key: 23dfAJqQNmFYasj8pxjKrO60R/hMx7OBEbVkQLYKn
+#    key_name: JINO_N
+# aws_region: us-east-1
+# vpc_id: vpc-d12a82ab
+# ami_id: ami-0ac019f4fcb7cb7e6
+#   instance_type: t2.micro
+# my_local_cidr_ip: <enter cidr_ip>
+region: us-east-1
+instance_type: t2.micro
+ami: ami-011b3ccf1bd6db744
+app_code_user: "ubuntu" # remote user
+env: demo
+pem_key: JINO_N # key.pem
+

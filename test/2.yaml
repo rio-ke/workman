@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+  - name: from include
+    debug:
+      msg: "q"
+    #- include: 1.yaml

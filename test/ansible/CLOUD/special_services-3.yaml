@@ -1,0 +1,124 @@
+---
+- name: services yaml file
+  hosts: vag
+  tasks:
+
+  - name: check umask value for deamon set
+    shell: grep umask /etc/sysconfig/init
+    ignore_errors: True
+    register: umask_value
+
+  - debug:
+      msg: "no umask value found"
+    when: umask_value is failed
+
+  - blockinfile:
+      path: /etc/sysconfig/init
+      backup: yes
+      block: |
+        umask 027
+    register: file_entry
+
+  - debug:
+      msg: "{{file_entry}}"
+    when: umask_value is failed
+
+  - debug:
+      msg: "umask value is found. and the umask value is {{umask_value.stdout}} {{file_entry.msg}}"
+    when: ( umask_value is succeeded or file_entry is succeeded  )
+
+  - name: ensure the system is not booting into graphical mode
+    shell: ls -l /etc/systemd/system/default.target | grep graphical.target
+    register: graphical_mode
+    ignore_errors: True
+
+  - debug:
+      msg: "The system is not booting into graphical mode already has been disabled.Dont care about that"
+    when: graphical_mode is failed
+
+  - name: runlevel to multi user
+    file:
+      src: "{{item.src}}"
+      dest: "{{item.dest}}"
+      state: "{{item.link }}"
+    ignore_errors: true
+    with_items:
+      - { src: '/etc/systemd/system/default.target', link: 'absent', dest: ''  }
+      - { src: '/usr/lib/systemd/system/multi-user.target', link: 'link', dest: '/etc/systemd/system/default.target'  }
+    when: graphical_mode is succeeded
+
+  - name: check it if package installed or not
+    yum:
+      list: "{{item}}"
+    with_items:
+      - xorg-x11-server-common
+      - dhcp
+    register: Installed_packages
+
+  - name: display the content msg
+    debug:
+      #  msg: "Packege installed"
+      msg: "{{ Installed_packages.results | json_query('[].item[]')}}"
+    when: ( Installed_packages.results | json_query('[].results[].yumstate[]') != "installed")
+
+  - name: remove the packages
+    yum:
+      name: "{{item}}"
+      state: absent
+    with_items:
+      - "{{ Installed_packages.results | json_query('[].item[]')}}"
+    register: removed_packages
+    when: ( Installed_packages.results | json_query('[].results[].yumstate[]') == "installed" )
+
+  - name: remove package list
+    debug:
+      msg: "{{removed_packages.results | json_query('[].results[]')}}" 
+
+  - name: Disable services for automatic start
+    service:
+      name: "{{ item }}"
+      enabled: no
+    with_items:
+      - avahi-daemon
+      - cups
+    register: disable_packages
+    ignore_errors: true
+
+  - name: debug service
+    debug:
+      msg: "{{disable_packages.results | json_query('[].msg[]') }}"
+
+  - name: checks for the correct parameters on restrict default and restrict -6 default
+    shell: "{{item}}"
+    with_items:
+      - grep "restrict default" /etc/ntp.conf
+      - grep "restrict -6 default" /etc/ntp.conf
+    register: ntp_value
+    ignore_errors: true
+
+  - name: display the content msg
+    debug:
+      #  msg: "Packege installed"
+      msg: "{{ ntp_value.results | json_query('[].stdout_lines[]')}}"
+      # when: ( Installed_packages.results | json_query('[].results[].yumstate[]') != "installed")
+
+  - name: replace our security content 
+    lineinfile:
+      path: /etc/ntp.conf
+      regexp: "{{item}}"
+      line: 'restrict default kod nomodify notrap nopeer noquery'
+      state: present
+      backup: yes
+    with_items:
+      - " {{ ntp_value.results | json_query('[].stdout_lines[]') }} "
+  - name: replace our security content
+    lineinfile:
+      path: /etc/sysconfig/ntpd
+      regexp: '^OPTIONS="-g"'
+      line: ' OPTIONS="-u ntp:ntp" '
+      backup: yes
+      state: present
+  - name: start the ntp service
+    service: ntpd
+    state: started
+

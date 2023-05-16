@@ -1,0 +1,181 @@
+---
+#File System section
+configure_filesystem: true
+enable_vartmp: false
+vartmp:
+  source: /tmp
+  fstype: none
+  opts: "defaults, nodev, nosuid, noexec, bind"
+  enabled: no
+
+configure_software_updates: true
+
+configure_filesystem_integrity_check: true
+cron_user: root
+cron_file: /etc/crontab
+aide_job: '/usr/sbin/aide --check'
+aide_minute: 0
+aide_hour: 5
+aide_day: '*'
+aide_month: '*'
+aide_weekday: '*'
+
+configure_boot: true
+
+configure_process_hardening: true
+
+mandatory_access_control: true
+Enable_selinux: true
+Disable_selinux: false
+selinux_mode: enforcing
+selinux_type: targeted
+
+#Banner scetion
+configure_banners: true
+banner_gui: false #GUI set true
+warning_banner_message: Authorized uses only. All activity may be monitored and reported.
+
+configure_yum_update: true
+
+## service section
+configure_inetd_service: true
+disable_chargen_dgram: true
+disable_chargen_stream: true
+disable_daytime_dgram: true
+disable_daytime_stream: true
+disable_discard_dgram: true
+disable_discard_stream: true
+disable_echo_dgram: true
+disable_echo_stream: true
+disable_time_dgram: true
+disable_time_stream: true
+disable_tftp_server: true
+xinetd_required: false
+
+configure_special_purpose_services: true
+
+time_synchronization: chrony
+
+time_synchronization_servers:
+  - 0.pool.ntp.org
+  - 1.pool.ntp.org
+  - 2.pool.ntp.org
+  - 3.pool.ntp.org
+
+stop_avahi_daemon: true
+stop_cups_server: true
+stop_dhcpd_server: true
+stop_slapd_server: true
+stop_nfs_server: true
+stop_rpcbind_server: true
+stop_named_server: true
+stop_vsftpd_server: true
+stop_httpd_server: true
+stop_dovecot_server: true
+stop_smb_server: true
+stop_squid_server: true
+stop_snmpd_server: true
+stop_postfix_server: false
+stop_autofs_service: true
+
+
+configure_service_clients: true
+stop_nis_server: true
+remove_package_ypbind: true
+remove_package_openldap_clients: true
+stop_rsh_server: true
+remove_package_rsh: true
+stop_telnet_server: true
+remove_package_telnet: true
+stop_tftp_server: true
+stop_rsyncd_server: true
+stop_ntalk_server: true
+remove_package_talk: true
+stop_rhnsd_server: true
+
+configure_network_parameters_host: true
+IP_forward: true
+
+configure_network_parameters_host_network: true
+
+configure_network_parameters_ipv6: true
+ipv6_required: true
+
+
+configure_tcpwrappers: true
+host_allow:
+  - "10.0.0.0/255.0.0.0"
+  - "172.16.0.0/255.240.0.0"
+  - "192.168.0.0/255.255.0.0"
+
+configure_uncommon_protocols_disable: true
+
+configure_network_filter: true
+Enable_firewalld: true
+Firewall_services:
+  - ssh
+  - dhcpv6-client
+Enable_iptables: false
+iptables_port:
+  - 22
+
+configure_audit: true
+max_log_file_action: keep_logs
+action_mail_acct: root
+space_left_action: email
+admin_space_left_action: halt
+max_log_file: 15
+
+
+configure_logging: true
+enable_rsyslog: true
+logs_push_to_rsyslog_server: false
+#rsyslog_server_ip: 127.0.0.1
+#rsyslog_server_port: 514
+
+enable_syslog_ng: false
+# syslog_ng_server_ip:
+# syslog_ng_server_port: 514
+
+configure_crond: true
+
+configure_ssh: true
+KeepAlive: yes
+TCPKeepAlive: yes
+PrintMotd: yes
+StrictModes: yes
+IgnoreRhosts: yes
+HostbasedAuthentication: no
+PermitRootLogin: no
+GatewayPorts: no
+PermitEmptyPasswords: no
+PermitUserEnvironment: no
+X11Forwarding: no
+
+Protocol: 2
+LogLevel: INFO #DEBUG
+MaxAuthTries: 3
+ClientAliveInterval: 300
+ClientAliveCountMax: 0
+LoginGraceTime: 0
+Ciphers: Ciphers aes256-ctr,aes192-ctr,aes128-ctr
+MACs: MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
+# allowusers: {{ansible_user}}
+# allowgroups: systems dba
+# denyusers
+# denygroups:
+
+configure_pam: true
+
+# user management section
+configure_usermanage: true
+PASS_MAX_DAYS: 90
+PASS_MIN_DAYS: 7
+PASS_WARN_AGE: 7
+PASS_MIN_LEN: 8
+INACTIVE: 29
+shell_timeout: 600  #shell expire timeout
+
+configure_system_file_permissions: true
+
+configure_user_group_settings: true

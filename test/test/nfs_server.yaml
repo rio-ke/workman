@@ -1,0 +1,11 @@
+---
+- hosts: node1
+  tasks:
+  roles:
+  - role: epel
+  - role: nfs_server
+    # domain_name: jino.com
+    mount_point: /jino
+  - role: firewall
+    firewall_service_name: nfs3,mountd,rpc-bind
+

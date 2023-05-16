@@ -1,0 +1,7 @@
+---
+- name: debug nindbhd
+  debug:
+    msg: "{{ jino }}"
+- template:
+    src: templates/role.txt.j2
+    dest: /root/role.txt

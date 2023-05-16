@@ -1,0 +1,7 @@
+---
+- name: "Splunk"
+  hosts: all
+  tasks:
+  - name: "License Agreement"
+    shell: splunk start --accept-license --answer-yes --no-prompt
+    register: result

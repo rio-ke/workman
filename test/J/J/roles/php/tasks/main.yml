@@ -1,0 +1,44 @@
+---
+- name: install php
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ php_package }}"
+- name: replace in rsyslog and audit file if already existing replaced
+  replace:
+    path: "{{item.path}}"
+    regexp: "{{item.exp}}"
+    replace: "{{item.rep}}"
+    backup: yes
+  run_once: true
+  with_items:
+    - { path: '/etc/php.ini', exp: ';date.timezone =', rep: 'date.timezone = "Asia/Kolkata"' }
+    - { path: '/etc/php.ini', exp: 'expose_php = On', rep: 'expose_php = Off' }
+    - { path: '/etc/php.ini', exp: ';error_log = php_errors.log', rep: 'error_log = /var/log/httpd/php_scripts_error.log' }
+    - { path: '/etc/php.ini', exp: 'allow_url_fopen = On', rep: 'allow_url_fopen = Off' }
+    - { path: '/etc/php.ini', exp: 'max_input_time = 60', rep: 'max_input_time = 30' }
+    - { path: '/etc/php.ini', exp: 'memory_limit = 128M', rep: 'memory_limit = 8M' }
+    - { path: '/etc/php.ini', exp: ';cgi.force_redirect = 1', rep: 'cgi.force_redirect = 1' }
+    - { path: '/etc/php.ini', exp: 'post_max_size = 8M', rep: 'post_max_size = 256k' }
+    - { path: '/etc/php.ini', exp: '; max_input_vars = 1000', rep: 'max_input_vars = 100' }
+    - { path: '/etc/php.ini', exp: 'upload_max_filesize = 2M', rep: 'upload_max_filesize = 1M' }
+- name: create the directory
+  file:
+    name: /var/lib/php/tmp_upload
+    state: directory
+    owner: root
+    group: apache
+    mode: 770
+- name: Copy using the 'content' for inline data
+  copy:
+    content: '<?php phpinfo(); ?>'
+    dest: /var/www/html/info.php
+  notify:
+    - restart httpd
+
+
+
+
+
+# https://howtogetonline.com/how-to-harden-your-php-for-better-security.php

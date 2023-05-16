@@ -1,0 +1,13 @@
+---
+- name: Check if a service is installed
+  service:
+    name: apache2
+  register: service_info
+
+- debug:
+    msg: "{{service_info}}"
+
+- name: Set the log on user to Local System
+  win_service:
+    name: service name
+    state: restarted

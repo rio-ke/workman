@@ -1,0 +1,10 @@
+---
+- name: write down host details
+  hosts: vag
+  gather_facts: False
+  tasks:
+  - setup:
+       filter: *mount
+    register: jino
+  - debug: 
+      msg: "{{jino}}"

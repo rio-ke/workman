@@ -1,0 +1,71 @@
+
+
+
+
+
+
+[local]
+localhost ansible_connection=local ansible_user=jino
+cent ansible_host=192.168.10.190 ansible_user=vagrant ansible_private_key_file=~/vagrant/.vagrant/machines/node1/virtualbox/private_key
+redhat ansible_host=3.87.48.72 ansible_connection=ssh ansible_user=ec2-user ansible_private_key_file=~/.ssh/JINO_N.pem
+suse ansible_host=54.221.135.0 ansible_connection=ssh ansible_user=ec2-user ansible_private_key_file=~/.ssh/JINO_N.pem
+jino ansible_host=34.230.37.34 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_pass=jino
+
+192.168.5.10 ansible_connection=ssh
+#
+#
+[jk]
+jake ansible_host=119.82.114.77   ansible_connection=ssh  ansible_user=Admin ansible_ssh_pass=56apple91$
+jake1 ansible_host=119.82.114.77   ansible_connection=ssh  ansible_user=Admin ansible_ssh_pass=56apple91$
+#jake ansible_host=192.168.5.100   ansible_connection=ssh  ansible_user=ansible ansible_ssh_pass=R8di8nt123*
+[kube]
+master ansible_host=35.230.176.23   ansible_connection=ssh  ansible_user=at
+worker1 ansible_host=35.221.49.242 ansible_connection=ssh  ansible_user=at
+worker2 ansible_host=35.230.168.210 ansible_connection=ssh  ansible_user=at
+[hp]
+192.168.10.105 ansible_user=Administrator ansible_ssh_pass=Admin@123 ansible_connection=ssh
+
+[kube:vars]
+ansible_private_key_file=/home/at/google_cloud
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#[go:vars]
+#ansible_ssh_pass=!Hz^o^!yH#E0
+
+
+
+[all:vars]
+ansible_connection  = ssh
+sec_date            = "{{ lookup('pipe','date +%Y-%m-%d') }}"
+rad_date            = "{{ lookup('pipe','date +%Y%b%d\(%a\) --date="1 day ago" ') }}"
+post_rad_date       = "{{ lookup('pipe','date +%Y-%m-%d --date="3 day ago"') }}"
+pre_rad_date        = "{{ lookup('pipe','date +%Y-%m-%d --date="1 day ago"') }}"
+log_date            = "{{ lookup('pipe','date +%d/%b/%Y --date="1 day ago"') }}"
+dbs_log             = root
+name_of_month       = {{ lookup('pipe','date +%b')}}
+date_of_month       = {{ lookup('pipe','date +%d')}}
+slack_token =TCYQDFEPR/BCYBD8ENR/RgAvFE7Zw27aPRb1DfEbf7rM
+ansible_slack_channel =#akila
+#aws_secret_key=drMZIV1zy2CuE5PQIHs8yH7Rb5Q2X8+gl8djRpI0
+aws_secret_key=noNNdcpUzR45VZ/0bnfwx4D7Holk993YLc7GS0z5
+aws_access_key=AKIA6DTHLTSBJZH5LJTZ
+#aws_access_key=AKIAIQHPKZYDLU3DAX6A
+#region=us-east-1

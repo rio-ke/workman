@@ -1,0 +1,19 @@
+---
+- name: "Ensure the sudo log configured"
+  lineinfile:
+    dest: /etc/sudoers
+    line: "Defaults  logfile=/var/log/sudo.log"
+
+- name: "Assign superuser privileges withput password to particular users"
+  lineinfile:
+    dest: /etc/sudoers
+    line: "{{item}} ALL=(ALL)	NOPASSWD: ALL"
+  with_items: "{{sudo_nopassword_users}}"
+  when: sudo_password_users is defined
+
+- name: "Assign superuser privileges with password to particular users"
+  lineinfile:
+    dest: /etc/sudoers
+    line: "{{item}} ALL=(ALL)	ALL"
+  with_items: "{{sudo_nopassword_users}}"
+  when: sudo_password_users is defined

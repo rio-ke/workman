@@ -1,0 +1,4 @@
+---
+- hosts: localhost
+  roles:
+    - role: cron_scheduled_check

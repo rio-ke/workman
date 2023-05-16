@@ -1,0 +1,36 @@
+---
+- name: "get timestatmp"
+  shell: date +%Y-%m-%d --date="1 day ago"
+  register: rcmsdc2_result
+
+- name: "create directory"
+  file:
+    path: /mysqlbackup/DC2/DB/{{ lastday_date }}
+    state: directory
+
+- name: "copy rcmsdc1 to rcmsdc2 file"
+  copy:
+    src: /jino/{{ item }}
+    dest: /mysqlbackup/DC2/DB/{{ lastday_date }}/
+    remote_src: no
+  ignore_errors: True
+  loop: "{{ transfer_db  }}"
+  register: rcmatm_result
+
+- name: "success mail notification"
+  mail:
+    to: "{{to_address}}"
+    cc: "{{cc_address}}"
+    from: "ansible@{{ansible_nodename}}"
+    subject: "{{ansible_hostname}} - Ansible Report"
+    body: "RCMS DC1 DB's (rcmsdata) are transferred to DC2 server"
+  ignore_errors: True
+
+- name: "rsync rcms application data dc1 to dc2"
+  shell:  "{{item}}"
+  loop:
+    - sshpass -p "GvRJNkQG5H59E6Dy" rsync -avzpP --delete  datatx@119.82.114.75:/webdata/RCMS/* /webdata/RCMS/
+    - sshpass -p "GvRJNkQG5H59E6Dy" rsync -avzpP --delete  datatx@119.82.114.75:/webdata/clientview/* /webdata/clientview/
+    - sshpass -p "GvRJNkQG5H59E6Dy" rsync -avzpP --delete  datatx@119.82.114.75:/webdata/bill/* /webdata/bill/
+  register: rcms_application_data
+

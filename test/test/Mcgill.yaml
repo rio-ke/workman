@@ -1,0 +1,4 @@
+---
+- hosts: mei
+  roles:
+    - role: Mcgill

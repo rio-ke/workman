@@ -1,0 +1,3 @@
+{% for host in play_hosts %}
+{{ host }} - {{ hostvars[host]['result.results']['stdout'] }}
+{% endfor %}

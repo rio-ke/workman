@@ -1,0 +1,57 @@
+---
+- name: "get timestatmp"
+  shell: date +%Y-%m-%d --date="1 day ago"
+  register: rcmsdc2_result
+
+- name: "DB import process"
+  mysql_db:
+    state: import
+    login_user: "{{ dbs_log_user }}"
+    name: "{{ import_db_name }}"
+    target: "/mysqlbackup/DC2/DB/{{ lastday_date  }}/{{import_db}}"
+  ignore_errors: True
+  register: DB_result
+
+- name: "success mail notification"
+  mail:
+    to: "{{to_address}}"
+    cc: "{{cc_address}}"
+    from: "ansible@{{ansible_nodename}}"
+    subject: "{{ansible_hostname}} - Ansible Report"
+    body: "RCMS db successfully imported in DC2"
+  ignore_errors: True
+  when: DB_result is succeeded
+
+- name:
+  shell: "mysqldump -u root {{data_base}} {{item.table1 }} > /mysqlbackup/DC2/tablebackup/{{ item.table2 }}.sql"
+  loop:
+    - { table1: '{{ table1 }}',   table2: '{{ table1 }}' }
+    - { table1: '{{ table2 }}',   table2: '{{ table2 }}' }
+    - { table1: '{{ table3 }}',   table2: '{{ table3 }}' }
+    - { table1: '{{ table4 }}',   table2: '{{ table4 }}' }
+  register: table_names
+
+- name: "copy the mysql table"
+  fetch:
+    src: "/mysqlbackup/DC2/tablebackup/{{ item }}.sql"
+    dest: /jino/
+    flat: yes
+    fail_on_missing: yes
+  loop:
+    - "{{ table1 }}"
+    - "{{ table2 }}"
+    - "{{ table3 }}"
+    - "{{ table4 }}"
+  ignore_errors: True
+  register: table_result
+
+- name: "delete the table"
+  file:
+    dest: "/mysqlbackup/DC2/tablebackup/{{ item }}.sql"
+    state: absent
+  loop:
+    - "{{ table1 }}"
+    - "{{ table2 }}"
+    - "{{ table3 }}"
+    - "{{ table4 }}"
+  ignore_errors: True

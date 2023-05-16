@@ -1,0 +1,8 @@
+<VirtualHost *:8080>
+  ServerName www.{{domain2}}
+  ServerAlias {{domain2}}
+  DocumentRoot /var/www/{{domain2}}/public_html
+  ErrorLog /var/www/{{domain2}}/public_html/error.log
+  CustomLog /var/www/{{domain2}}/public_html/access.log combined
+
+</VirtualHost>

@@ -1,0 +1,23 @@
+---
+- name: "To replace user condent"
+  hosts: master
+  vars_prompt:
+  - name: conf_file_dir
+    prompt: Enter Your config file name
+    private: no
+  #  default: /var/log/messages
+  - name: line
+    prompt: searchig line
+    private: no
+  #  default: kernel
+  - name: replace_line
+    prompt: replacing line
+    private: no
+  #  default: kernel
+  tasks:
+  - name: "Uncomment configuration files"
+    replace:
+      path: "{{conf_file_dir}}"
+      regexp: "{{line}}"
+      replace: "{{replace_line}}"
+      backup: yes

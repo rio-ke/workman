@@ -1,0 +1,7 @@
+---
+- name: "update configuration"
+  hosts: node1
+  roles:
+  - role: sysctl
+    centos7_ipv6_required: True
+    centos7_is_IP_foreward: false

@@ -1,0 +1,23 @@
+{% if resolv_search %}
+search {{ resolv_search|join(' ') }}
+{% endif %}
+
+{% if resolv_domain %}
+domain {{ resolv_domain }}
+{% endif %}
+
+{% for j in resolv_domain %}
+domain {{ j }}
+{% endfor %}
+
+{% for i in resolv_nameservers %}
+nameserver {{ i }}
+{% endfor %}
+
+{% for i in resolv_sortlist %}
+sortlist {{ i }}
+{% endfor %}
+
+{% if resolv_options %}
+options {{ resolv_options|join(' ') }}
+{% endif %}

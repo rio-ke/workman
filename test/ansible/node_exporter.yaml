@@ -1,0 +1,37 @@
+---
+- name: install prometheus server
+  hosts: 180.151.48.124
+  vars:
+    - node_url: https://github.com/prometheus/node_exporter/releases/download/v0.16.0/node_exporter-0.16.0.linux-amd64.tar.gz
+    - node_filename: node_exporter-0.16.0.linux-amd64
+    - node_listen: 9100
+  tasks:
+  - name: download the packages
+    unarchive:
+      src: "{{node_url}}"
+      dest: /tmp/
+      remote_src: yes
+  - name: To move content into particular file
+    copy:
+      src: /tmp/node_exporter-0.16.0.linux-amd64/node_exporter
+      # src: "/tmp/{{node_filename}}/node_exporter"
+      dest: /usr/local/bin/
+      mode: 0755
+  - name: copy the template
+    template:
+      src: template/node_service.j2
+      dest: /etc/systemd/system/node_exporter.service
+      mode: 0755
+  - name: daemon_reload
+    systemd:
+      name: node_exporter.service
+      daemon_reload: yes
+      state: restarted
+  - name:
+    uri:
+      url: "http://localhost:{{node_listen}}"
+    register: result
+  - name:
+    debug:
+      msg: "{{result}}"
+

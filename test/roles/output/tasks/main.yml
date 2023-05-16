@@ -1,0 +1,23 @@
+---
+- name: "Output store Multiple server in single file"
+  shell: hostname
+  register: result
+
+- name: "Create template"
+  template:
+    src: result.j2
+    dest: /tmp/result.txt
+  delegate_to: localhost
+
+- name: "Generate Gmail"
+  mail:
+    subject: Result Report
+    body: i have attached for the
+    username: xx@gmail.com
+    to: root@gmsil.com
+    cc: dfbjdbf@gmail.com
+    host: smtp.gmail.com:587
+    password: gmailpasword
+    port: 465 #587
+    from: ansible@gmail.com
+    attach: /tmp/result.txt

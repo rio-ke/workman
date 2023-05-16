@@ -1,0 +1,53 @@
+---
+- name: play
+  hosts: vag
+  vars:
+    service_name: "httpd"
+    vg_name: "VolGroup"
+    lv_name: "jinoj"
+    lvm_size: "1g"
+    mountname: '/'
+    directory_name: "app"
+    mount: "{{ ansible_mounts | selectattr('mount','equalto', mountname) | first }}"
+  tasks:
+    - name: Test for 3Gb disk space available on {{ mountname }}
+      assert:
+        that: mount.size_available > mount.size_total|float * 0.03
+        msg: Disk space has reached the 97% threshold
+      register: disk_free
+    - debug:
+        msg: "your condition is true. Lets make your plan"
+      when: disk_free is succeeded
+    - name: create the directory
+      file:
+        path: "/opt/{{directory_name}}"
+        state: directory
+      when: disk_free is succeeded
+    - name: create a logical volume for under vg
+      lvol:
+        vg: "{{ vg_name }}"
+        lv: "{{ lv_name }}"
+        size: 1024
+      when: disk_free is succeeded
+    - name: create a fie system for the logical volume
+      filesystem:
+        fstype: xfs
+        dev: "/dev/{{vg_name}}/{{lv_name}}"
+      when: disk_free is succeeded
+    - name: to mount the volume
+      mount:
+        path: "/opt/{{directory_name}}"
+        src: "/dev/{{vg_name}}/{{lv_name}}"   #blkid | grep {{lv_name}} | awk '{print $2}'
+        fstype: xfs
+        state: mounted
+      when: disk_free is succeeded
+    - name: install httpd
+      yum:
+        name: "{{service_name}}"
+        state: present
+      when: disk_free is succeeded
+    - name: start the service
+      service:
+        name: "{{service_name}}"
+        state: restarted
+      when: disk_free is succeeded

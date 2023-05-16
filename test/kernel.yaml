@@ -1,0 +1,10 @@
+---
+- name: Update kernel
+  hosts: mei
+  vars_prompt:
+  - name: LINUX_SERVER
+    prompt: "Which task do you want to deploy?\n1 - Kernel Update\n2 - Kernel Revert\n"
+    private: no
+  roles:
+    - role: kernel
+

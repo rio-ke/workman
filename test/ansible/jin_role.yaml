@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  tasks:
+  - sts_assume_role:
+      role_arn: "arn:aws:iam::894906821004:user/mike"
+      role_session_name: "mikeSession"
+    register: assumed_role
+  - debug: 
+      msg: "{{ assumed_role}}"

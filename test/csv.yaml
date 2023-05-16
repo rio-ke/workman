@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  tasks:
+  - copy:
+      content: |
+        {{ansible_hostname}};{{ansible_distribution}}
+        {{ansible_hostname}};{{ansible_distribution}}
+      dest: ./system.csv

@@ -1,0 +1,7 @@
+---
+key_name: JINO_N
+aws_region: us-east-1
+vpc_id: subnet-f5d94692
+ami_id: ami-0ac019f4fcb7cb7e6
+instance_type: t2.micro
+# my_local_cidr_ip: <enter cidr_ip>

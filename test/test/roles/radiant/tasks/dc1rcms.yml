@@ -1,0 +1,58 @@
+---
+- name: "rcms timestamp"
+  command: date +%Y%b%d\(%a\) --date="1 day ago"
+  register: rcmsdc1_timestamp
+
+- name: "RCMS DB's"
+  fetch:
+    src: "/mnt/backup/RCMS/dailymysqldb/{{ rcmsdc1_dir_timestamp1 }}/{{ item }}"
+    dest: /jino/
+    flat: yes
+    fail_on_missing: yes
+  loop: "{{radiant_dbs}}"
+  ignore_errors: True
+  register: rcms_result1
+
+# - debug: msg="{{rcms_result1.results | json_query('[].[msg]')}}"
+
+- name: "optional RCMS DB's"
+  fetch:
+    src: "/mnt/backup/RCMS/dailymysqldb/{{ rcmsdc1_dir_timestamp2 }}/{{ item }}"
+    dest: /jino/
+    flat: yes
+    fail_on_missing: yes
+  loop: "{{ radiant_dbs }}"
+  ignore_errors: True
+  register: recms_result2
+  when:
+    - rcms_result1 is failed
+
+- name: "success mail notification"
+  mail:
+    to: "{{to_address}}"
+    cc: "{{cc_address}}"
+    from: "ansible@{{ansible_nodename}}"
+    subject: "{{ansible_hostname}} - Ansible Report"
+    body: "RCMS DC1 DB's are transferred to ansible server"
+  ignore_errors: True
+  when: rcms_result1 is succeeded or rcms_result2 is succeeded
+  register: mail_result
+
+- name: "failure mail notification"
+  mail:
+    to: "{{to_address}}"
+    cc: "{{cc_address}}"
+    from: "ansible@{{ansible_nodename}}"
+    subject: "{{ansible_hostname}} - Failure Ansible Report"
+    body: "RCMS DC1 DB's are not transferred to ansible server"
+  ignore_errors: True
+  when: mail_result is failed
+
+- name: "rsync rcms data sync to nas device"
+  shell: "{{ item }}"
+  loop:
+    - rsync -avzp /webdata/RCMS/* admin@180.151.48.123:/home/admin/Application/webdata/RCMS/
+    - rsync -avzpP --delete /webdata/RCMS/* admin@180.151.48.123:/home/admin/Application/UpdateApplications/webdata/RCMS/
+    - rsync -avzp /webdata/clientview/* admin@180.151.48.123:/home/admin/Application/webdata/clientview/
+    - rsync -avzpP --delete /webdata/clientview/* admin@180.151.48.123:/home/admin/Application/UpdateApplications/webdata/clientview/
+  register: rcms_application_data

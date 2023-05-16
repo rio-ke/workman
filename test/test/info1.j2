@@ -1,0 +1,39 @@
+{% for i in result.instances | json_query('[]') %}
+instance_id               : {{i.instance_id}}
+Tags name                 : {{i.tags.Name}}
+image_id                  : {{i.image_id}}
+instance_type             : {{i.instance_type}}
+key_name                  : {{i.key_name}}
+launch_time               : {{i.launch_time}}
+{% if i.private_dns_name != '' %}
+private_dns_name          : {{i.private_dns_name}}
+private_ip_address        : {{i.private_ip_address}}
+{% else %}
+private_dns_name          : None
+private_ip_address        : None
+{% endif %}
+{% if i.public_dns_name != '' %}
+public_dns_name           : {{i.public_dns_name}}
+public_ip_address         : {{i.public_ip_address}}
+{% else %}
+public_dns_name           : None
+public_ip_address         : None
+{% endif %}
+root_device_name          : {{i.root_device_name}}
+root_device_type          : {{i.root_device_type}}
+subnet_id                 : {{i.subnet_id}}
+vpc_id                    : {{i.vpc_id}}
+monitoring                : {{i.monitoring.state}}
+security_group_id         : {{i.security_groups[0].group_id}}
+security_group_name       : {{i.security_groups[0].group_name}}
+availability_zone         : {{i.placement.availability_zone}}
+cpu_core_count            : {{i.cpu_options.core_count}}
+cpu_threads_per_core      : {{i.cpu_options.threads_per_core}}
+state                     : {{i.state.name}}
+block_device              : {{i.block_device_mappings[0].device_name}}
+block_device_status       : {{i.block_device_mappings[0].ebs.status}}
+block_device_volume_id    : {{i.block_device_mappings[0].ebs.volume_id}}
+block_device_terminantion : {{i.block_device_mappings[0].ebs.delete_on_termination}}
+
+{% endfor %}
+

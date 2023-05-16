@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars_prompt:
+  - name: target_host
+    prompt: Enter the hostname in form of ansible hosts file name
+    private: no
+  tasks:
+    - add_host:
+        name: "{{ target_host }}"
+        groups: created_hosts
+- hosts: created_hosts
+  tasks:
+  - debug: msg="do things on target host here"

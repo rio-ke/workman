@@ -1,0 +1,26 @@
+---
+- name: play
+  hosts: node 
+  vars:
+    service_name: "httpd"
+    vg_name: "VolGroup"
+    lv_name: "jinoj"
+    lvm_size: "1g"
+    mountname: '/'
+    directory_name: "app"
+    mount: "{{ ansible_mounts | selectattr('mount','equalto', mountname) | first }}"
+  tasks:
+    - debug:
+        msg: "{{ mount }}"
+    - name: Test for 3Gb disk space available on {{ mountname }}
+      assert:
+        that: mount.size_available > mount.size_total|float * 9.00
+        msg: Disk space has reached the 97% threshold
+      register: disk_free
+    - debug:
+        msg: "{{ mount }}"
+    - debug:
+        msg: "your condition is true. Lets make your plan"
+      when: disk_free is succeeded
+    - debug:
+        msg: "{{ mount.size_available > mount.size_total|float * 3.03 }}"

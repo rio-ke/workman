@@ -1,0 +1,7 @@
+{% for i in result.results | json_query('[]') %}
+
+{{loop.index0}}
+
+{{i.instances[0].ami_launch_index}}
+
+{% endfor %}

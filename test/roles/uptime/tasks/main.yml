@@ -1,0 +1,24 @@
+---
+- name: "to find uptime"
+  shell: >
+    uptime |awk -F, '{ print $1}' | awk '{print $3 " " $4}'
+  register: uptime_result
+
+- name: "create uptime template"
+  template:
+    src: temp1.j2
+    dest: /tmp/uptime.txt
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  when: uptime_result.stdout != ""
+
+- name: "Mail the uptime condent"
+  mail:
+    to: "{{email_to}}"
+    cc: "{{email_cc}}"
+    subject: Uptime Report
+    attach:
+      - /tmp/uptime.txt
+    body: System has been generated memory report successfully.
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  when: uptime_result.stdout != ""
+  run_once: True

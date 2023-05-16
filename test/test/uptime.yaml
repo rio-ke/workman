@@ -1,0 +1,5 @@
+---
+- name: "uptime"
+  hosts: localhost, cent
+  roles:
+    - role: uptime

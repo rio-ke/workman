@@ -1,0 +1,10 @@
+---
+- name: user Create
+  user:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - "{{user_name}}"
+  tags:
+    - user_creation
+

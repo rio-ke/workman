@@ -1,0 +1,9 @@
+---
+# vars file for ansible-apache
+pkg_list:
+  - httpd
+  - firewalld
+svc_list:
+  - httpd
+  - firewalld
+

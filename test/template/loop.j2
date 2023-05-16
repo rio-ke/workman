@@ -1,0 +1,4 @@
+{% for host in groups['test'] %}
+    {{ host }} {{ansible_hostname}}
+{% endfor %}
+

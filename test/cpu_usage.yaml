@@ -1,0 +1,8 @@
+---
+- name: "find cpu usgae"
+  hosts: localhost
+  roles:
+  - role: cpu_usage
+    delegate_host: go1
+    email_to: linuxadmin@radiantcashservices.com
+    email_cc: jinojoe@gmail.com

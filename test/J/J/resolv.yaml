@@ -1,0 +1,6 @@
+---
+- name: entry to resolve file
+  hosts: node
+  tasks:
+  roles:
+    - role: resolv

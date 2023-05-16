@@ -1,0 +1,64 @@
+--------------------------------------------------------------
+{% if user_sccounts_results[0].stdout != "" %}
+{% if user_sccounts_results[0].stdout != "PASS_MAX_DAYS"  %}
+Audit : {{user_sccounts_results[0].item}} {{user_sccounts_results[0].stdout}}
+remidiation: Userpassword maximum days is huge.. (set below 90 days)
+
+{% else %}
+
+Audit : {{user_sccounts_results[0].item}} {{user_sccounts_results[0].stdout}}
+condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+-------------------------------------------------------------
+
+{% if user_sccounts_results[1].stdout != "" %}
+{% if user_sccounts_results[1].stdout !=  "PASS_MIN_DAYS" %}
+Audit : {{user_sccounts_results[1].item}} {{user_sccounts_results[1].stdout}}
+remidiation: Userpassword minimum days is differ .. (set below 1 days)
+
+{% else %}
+
+Audit : {{user_sccounts_results[1].item}} {{user_sccounts_results[1].stdout}}
+condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+-------------------------------------------------------------
+
+{% if user_sccounts_results[2].stdout != "" %}
+{% if user_sccounts_results[2].stdout != "PASS_WARN_AGE" %}
+Audit : {{user_sccounts_results[2].item}} {{user_sccounts_results[2].stdout}}
+remidiation: Userpassword minimum days is differ .. (set below 1 days)
+
+{% else %}
+
+Audit : {{user_sccounts_results[2].item}} {{user_sccounts_results[2].stdout}}
+condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+-------------------------------------------------------------
+
+{% if user_sccounts_results[3].stdout != "" %}
+{% if user_sccounts_results[3].stdout != PASS_MIN_LEN  %}
+Audit : {{user_sccounts_results[3].item}} {{user_sccounts_results[3].stdout}}
+remidiation: Userpassword {{PASS_MIN_LEN}} days is differ .. (set below 1 days)
+
+{% else %}
+
+Audit : {{user_sccounts_results[3].item}} {{user_sccounts_results[3].stdout}}
+condition: success
+
+{% endif %}
+{% else %}
+{% endif %}
+
+------------------------------------------------------------

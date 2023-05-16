@@ -1,0 +1,4 @@
+$template TmplAuth, "/var/log/rsyslog_clients_logs/%HOSTNAME%/%PROGRAMNAME%.log"
+template TmplMsg, "/var/log/rsyslog_clients_logs/%HOSTNAME%/%PROGRAMNAME%.log"
+authpriv.* ?TmplAuth
+*.info;mail.none;authpriv.none;cron.none ?TmplMsg

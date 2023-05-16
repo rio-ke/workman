@@ -1,0 +1,10 @@
+PYTHON
+======
+
+1.Data Type number(int) decimal number (float) alphapet char (char/string) 
+2.variables
+3.Operatores
+4.I/O statements
+5.Conditional
+6.looping
+7.fuctions

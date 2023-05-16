@@ -1,0 +1,19 @@
+---
+- name: install packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ samba_packages }}"
+- name: add template into samba file
+  template:
+    src: smb.conf.j2
+    dest: /etc/samba/smb.conf
+    backup: yes
+  notify: restart smb
+- name: add the line
+  lineinfile:
+    path: /etc/rsyslog.conf
+    backup: yes
+    line: local7.*            /var/log/samba.log
+  notify: restart rsyslog

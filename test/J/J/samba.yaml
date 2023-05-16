@@ -1,0 +1,6 @@
+---
+- name: install samba
+  hosts: master
+  tasks:
+  roles:
+  - role: samba

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+.tftable {font-size:12px;color:#333333;width:50%;border-width: 1px;border-color: #729ea5;border-collapse: collapse;}
+.tftable th {font-size:18px;background-color:#acc8cc;border-width: 1px;padding: 8px;border-style: solid;border-color: #729ea5;text-align:center;}
+.tftable tr {background-color:#d4e3e5;}
+.tftable td {font-size:16px;border-width: 2px;padding: 8px;border-style: solid;border-color: #729ea5;text-align:center;}
+.tftable tr:hover {background-color:#ffffff;}
+#ji{background-color: #cddc39}
+#url{background-color: green;color: white;font-weight: bold}
+#url_name{background-color: green;color: white;font-weight: bold}
+#front{width:70%;text-align:center;color: red;font-size:16px}
+#front1{width:50%;text-align:center;font-size:16px}
+</style>
+</head>
+<body>
+<h2 id="front">URL DOWN ALERT!!!</h2>
+<table class="tftable" border="1" align="center">
+<tr><td id="url">URL NAME</td><td id="url">URL STATE</td></tr>
+{% for i in result.results | json_query('[]') %}
+{% if i.status != 200 %}
+<tr><td id="ji">{{i.item}}</td><td id="ji">Down</td></tr>
+{% endif %}
+{% endfor %}
+</table>
+</body>
+</html>

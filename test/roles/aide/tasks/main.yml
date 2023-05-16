@@ -1,0 +1,27 @@
+---
+- name: "Ensure AIDE is installed"
+  yum:
+    name: aide
+    state: present
+
+- name: "Ensure AIDE is installed"
+  command: /usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz'
+  args:
+    creates: /var/lib/aide/aide.db.gz
+  changed_when: no
+  failed_when: no
+  when: centos7_config_aide
+  async: 45
+  poll: 0
+
+- name: "Ensure filesystem integrity is regularly checked"
+  cron:
+    name: Run AIDE integrity check weekly
+    cron_file: "{{ centos7_aide_cron.cron_file }}"
+    user: "{{ centos7_aide_cron.cron_user }}"
+    minute: "{{ centos7_aide_cron.aide_minute | default('0') }}"
+    hour: "{{ centos7_aide_cron.aide_hour | default('5') }}"
+    day: "{{ centos7_aide_cron.aide_day | default('*') }}"
+    month: "{{ centos7_aide_cron.aide_month | default('*') }}"
+    weekday: "{{ centos7_aide_cron.aide_weekday | default('*') }}"
+    job: "{{ centos7_aide_cron.aide_job }}"

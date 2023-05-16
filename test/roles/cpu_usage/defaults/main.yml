@@ -1,0 +1,10 @@
+---
+delegate_host: localhost
+email_to: jinojoe@gmail.com
+email_cc: jinojoe@rediaffmail.com
+smtp_host: # smtp.gmail.com
+smtp_port: # 587
+smtp_username:
+smtp_password:
+client_name:
+template_storage_path:

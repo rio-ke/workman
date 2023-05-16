@@ -1,0 +1,24 @@
+---
+- name: "collect HPiLO information"
+  hpilo_facts:
+    host: "{{hpilo_ip}}"
+    login: "{{hpilo_username}}"
+    password: "{{hpilo_password}}"
+  register: result
+  when:
+    - hpilo_password is defined
+    - hpilo_username is defined
+    - hpilo_ip is defined
+
+- name: "show the error Msg"
+  debug:
+    msg: "please check username password and ipaddress details"
+  when:
+    - result is skipped
+
+- name: "Save HPiLO information use template"
+  template:
+    src: hpilo.j2
+    dest: "{{ template_staorage_path | default('/tmp/hpilo_info.txt') }}"
+  when:
+  - result is succeeded

@@ -1,0 +1,5 @@
+---
+ip_address: 192.168.5.207
+delegate_host: localhost
+ping_request_file: /tmp/ping_request.txt
+telnet_request_file: /tmp/telnet_request.txt

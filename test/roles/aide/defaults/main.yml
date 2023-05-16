@@ -1,0 +1,12 @@
+---
+# defaults file for roles/aide
+centos7_config_aide: true
+centos7_aide_cron:
+  cron_user: root
+  cron_file: /etc/crontab
+  aide_job: '/usr/sbin/aide --check'
+  aide_minute: 0
+  aide_hour: 5
+  aide_day: '*'
+  aide_month: '*'
+  aide_weekday: '*'

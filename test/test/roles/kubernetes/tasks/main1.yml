@@ -1,0 +1,118 @@
+---
+- name: "update /etc/hosts file"
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ lookup('template', '../templates/hosts.j2') }}"
+    state: present
+
+- name: "update the packages"
+  apt:
+    update_cache: yes
+
+- name: "install kubernetes packges"
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - apt-transport-https
+    - curl
+    - ca-certificates
+    - software-properties-common
+
+- name: "insert apt key"
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: "apt repositary"
+  apt_repository:
+    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+    filename: kubernetes.list
+
+- name: "install kubernetes packages"
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+    - kubelet
+    - kubeadm
+    - kubectl
+
+- name: "apt mark packages"
+  shell: apt-mark hold kubelet kubeadm kubectl
+
+- name: "insert docker apt key"
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: "add docker repositary"
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    state: present
+    filename: docker.list
+
+- name: "install docker packages"
+  apt:
+    name: docker-ce=18.06.2~ce~3-0~ubuntu
+    state: present
+    update_cache: yes
+
+- name: "upload docker cdriver template"
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+
+- name: "create directory"
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+
+- name: "restart docker service"
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: docker
+
+- name: "assign master node in kubernetes cluster"
+  shell: kubeadm init --pod-network-cidr=192.168.0.0/16
+  register: result
+  ignore_errors: true
+  when: inventory_hostname == "master"
+
+- name: "create kubernetes directory"
+  file:
+    path: /root/.kube
+    state: directory
+  when: inventory_hostname == "master"
+
+- name: "copy the kubernetes configuration"
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: /root/.kube/config
+    owner: root
+    group: root
+    mode: 0600
+    remote_src: yes
+  when: inventory_hostname == "master"
+
+- name: "create overlay network in kubernetes cluster"
+  shell: "kubectl apply -f {{ item }}"
+  loop:
+    - https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
+    - https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
+  when: inventory_hostname == "master"
+
+- name: "create token"
+  shell: kubeadm token create --print-join-command
+  register: token
+  when: inventory_hostname == "master"
+
+- debug:
+    msg: "{{token}}"
+
+- command: >
+    {{token.stdout}}
+  when: inventory_hostname != "master"

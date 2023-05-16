@@ -1,0 +1,173 @@
+mysql> select count(*) from daily_trans_backup where pickup_date between '2017-08-01' and '2017-08-31';
+mysql> select count(*) from daily_collection_backup_new where coll_date between '2017-08-01' and '2017-08-31';
+mysql> select count(*) from daily_collectionmul_backup_new where coll_date between '2017-08-01' and '2017-08-31';
+
+mysql> INSERT INTO `rcmsdata`.`daily_trans` SELECT * FROM `rcmsdata`.`daily_trans_backup` where pickup_date between '2017-08-01' and '2017-08-31';
+mysql> select count(*) from daily_trans_backup where pickup_date between '2017-08-01' and '2017-08-31';
+mysql> delete from daily_trans_backup where pickup_date between '2017-08-01' and '2017-08-31';
+
+mysql> INSERT INTO `rcmsdata`.`daily_collection` SELECT * FROM `rcmsdata`.`daily_collection_backup_new` where coll_date between '2017-08-01' and '2017-08-31';
+mysql> select count(*) from daily_collection_backup where coll_date between '2017-08-01' and '2017-08-31';
+mysql> delete from daily_collection_backup_new where coll_date between '2017-08-01' and '2017-08-31';
+
+mysql> INSERT INTO `rcmsdata`.`daily_collectionmul` SELECT * FROM `rcmsdata`.`daily_collectionmul_backup_new` where coll_date between '2017-08-01' and '2017-08-31';
+mysql> select count(*) from daily_collectionmul_backup where coll_date between '2017-08-01' and '2017-08-31';
+mysql> delete from daily_collectionmul_backup_new where coll_date between '2017-08-01' and '2017-08-31';
+
+
+
+ INSERT INTO `rcmsdata`.`daily_trans` SELECT * FROM `rcmsdata`.`daily_trans_backup` where pickup_date between '2018-06-01' and '2018-06-31';
+ INSERT INTO `rcmsdata`.`daily_collectionmul_backup_new` SELECT * FROM `rcmsdata`.`daily_collectionmul` where pickup_date between '2017-08-01' and '2017-08-31';
+ INSERT INTO `rcmsdata`.`daily_collection_backup_new` SELECT * FROM `rcmsdata`.`daily_collection` where pickup_date between '2017-08-01' and '2017-08-31';
+ INSERT INTO `rcmsdata`.`daily_trans_backup` SELECT * FROM `rcmsdata`.`daily_trans` where pickup_date between '2017-08-01' and '2017-08-31';
+
+Done:
+=====
+ INSERT INTO `rcmsdata`.`daily_trans` SELECT * FROM `rcmsdata`.`daily_trans_backup` where pickup_date between '2018-06-01' and '2018-06-31';
+INSERT INTO `rcmsdata`.`daily_collectionmul` SELECT * FROM `rcmsdata`.`daily_collectionmul_backup` where coll_date between '2018-06-01' and '2018-06-31';
+INSERT INTO `rcmsdata`.`daily_deposit` SELECT * FROM `rcmsdata`.`daily_deposit_backup` where dep_date between '2018-06-01' and '2018-06-31';
+INSERT INTO `rcmsdata`.`daily_collection` SELECT * FROM `rcmsdata`.`daily_collection_backup`  where coll_date between '2018-06-01' and '2018-06-31';
+
+
+select count(*) from daily_collection_backup where coll_date between '2018-06-01' and '2018-06-31';
+
+  select count(*) from daily_collectionmul_backup where coll_date between '2018-06-01' and '2018-06-31';
+select count(*) from daily_deposit_backup where dep_date between '2018-06-01' and '2018-06-31';
+
+
+
+select count(*) from daily_trans where pickup_date between '2018-03-31' and '2018-03-31';
+
+
+
+
+
+INSERT INTO `rcmsdata`.`daily_trans_march` SELECT * FROM `rcmsdata`.`daily_trans` where pickup_date between '2018-03-01' and '2018-03-31';
+INSERT INTO `rcmsdata`.`daily_collectionmul_march` SELECT * FROM `rcmsdata`.`daily_collectionmul` where coll_date between '2018-03-01' and '2018-03-31';
+INSERT INTO `rcmsdata`.`daily_collection_march` SELECT * FROM `rcmsdata`.`daily_collection` where coll_date between '2018-03-01' and '2018-03-31';
+INSERT INTO `rcmsdata`.`daily_deposit_march` SELECT * FROM `rcmsdata`.`daily_deposit` where dep_date between '2018-03-01' and '2018-03-31';
+
+
+INSERT INTO `rcmsdata`.`daily_trans` SELECT * FROM `rcmsdata`.`daily_trans_march` where pickup_date between '2018-03-01' and '2018-03-31';
+INSERT INTO `rcmsdata`.`daily_collectionmul` SELECT * FROM `rcmsdata`.`daily_collectionmul_march` where coll_date between '2018-03-01' and '2018-03-31';
+INSERT INTO `rcmsdata`.`daily_collection` SELECT * FROM `rcmsdata`.`daily_collection_march` where coll_date between '2018-03-01' and '2018-03-31';
+INSERT INTO `rcmsdata`.`daily_deposit` SELECT * FROM `rcmsdata`.`daily_deposit_march` where dep_date between '2018-03-01' and '2018-03-31';
+
+
+tar  --exclude="BDS/deposit/*"  -cvzpf /$BACKUP_DIR/BDS.tgz BDS/
+
+
+
+ tar  --exclude='RCMS/emp_docs/*' --exclude='RCMS/emp_docs_old/*' --exclude='RCMS/Excel/*' --exclude='RCMS/js/plugins/img_crop/uploads/*' -cvpfz /mnt/backup/RCMS.tgz  RCMS/
+
+scp arch.tgz admin@111.93.12.254:/mysqlbackup/DC2/DB/
+
+
+
+
+select * from mf_receipt where mfrec_id between xxxxxx and yyyyyy
+ 
+insert into mf_receipt_backup select * from mf_receipt where mfrec_id between xxxxxx and yyyyyyy
+
+select * from mf_receipt_backup where mfrec_id between xxxxxx and yyyyyy
+
+delete from mf_receipt where mfrec_id between xxxxxx and yyyyyy
+
+
+select count(*) from mf_receipt where mfrec_id between 8142068 and 9190587
+
+insert into mf_receipt_backup select * from mf_receipt where mfrec_id between 8142068 and 9190587
+
+select count(*) from mf_receipt_backup where mfrec_id between 8142068 and 9190587
+
+delete from mf_receipt where mfrec_id between 8142068 and 9190587
+
+
+select count(*) from mf_receipt where mfrec_id between 9332015 and 9394156      =  62142
+
+insert into mf_receipt_backup select * from mf_receipt where mfrec_id between 9332015 and 9394156  = 62142
+
+select count(*) from mf_receipt_backup where mfrec_id between 9332015 and 9394156
+
+delete from mf_receipt where mfrec_id between 9332015 and 9394156
+
+
+
+9332015
+9394156
+
+
+select count(*) from mf_receipt where mfrec_id between 10248146 and 10410258
+
+insert into mf_receipt_backup select * from mf_receipt where mfrec_id between 10248146 and 10410258
+
+select count(*) from mf_receipt_backup where mfrec_id between 10248146 and 10410258
+
+delete from mf_receipt where mfrec_id between 10248146 and 10410258
+
+9394157
+
+9477857  ----------> 01-10-2018 --> n 83701
+
+9477858  
+9478029  -----------> 02-10-2018 --> n 172
+
+
+9478030      --> 102441
+9580470
+
+9580471  ---> 20964
+9601434
+
+9601435
+9665345 --> 63911 --12thoct
+
+9665346
+9860109          --------> 26th 194764
+
+10248146  -----> 162113
+10410258
+
+daily_trans_aug18.sql
+
+daily_collectionmul_aug18.sql
+
+daily_collection_aug18.sql
+
+
+
+mysql> select count(*) from daily_trans_backup where pickup_date between '2017-08-01' and '2017-08-31';
+mysql> select count(*) from daily_collection where coll_date between '2017-08-01' and '2017-08-31';
+mysql> select count(*) from daily_collectionmul where coll_date between '2017-08-01' and '2017-08-31';
+
+
+mysql> select count(*) from daily_trans_aug18 where pickup_date between '2017-08-01' and '2017-08-31';
+mysql> select count(*) from daily_collection_aug18 where coll_date between '2017-08-01' and '2017-08-31';
+mysql> select count(*) from daily_collectionmul_aug18 where coll_date between '2017-08-01' and '2017-08-31';
+
+
+
+mysql> INSERT INTO `rcmsdata`.`daily_trans` SELECT * FROM `rcmsdata`.`daily_trans_aug18` where pickup_date between '2017-08-01' and '2017-08-31';
+INSERT INTO `rcmsdata`.`daily_collectionmul` SELECT * FROM `rcmsdata`.`daily_collectionmul_aug18` where coll_date between '2017-08-01' and '2017-08-31';
+INSERT INTO `rcmsdata`.`daily_collection` SELECT * FROM `rcmsdata`.`daily_collection_aug18` where coll_date between '2017-08-01' and '2017-08-31';
+
+
+
+
+INSERT INTO `rcmsdata`.`daily_collection` SELECT * FROM `rcmsdata`.`daily_collection_aug18` where coll_date between '2017-08-01' and '2017-08-31';
+
+
+mysql> select count(*) from daily_trans_backup where pickup_date between '2017-08-01' and '2017-08-31';
+mysql> delete from daily_trans_backup where pickup_date between '2017-08-01' and '2017-08-31';
+
+
+
+important query:
+=================
+select count(*) from  daily_collection_aug18 where coll_id in (select coll_id from daily_collection_AugDup2018 where coll_date between '2017-08-01' and '2017-08-31');
+
+select a.coll_id from daily_collection_aug18 a inner join daily_collection_AugDup2018 b on a.coll_id=b.coll_id group by coll_id;
+
+
+
+

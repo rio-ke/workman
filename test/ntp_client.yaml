@@ -1,0 +1,10 @@
+---
+- name: "Configure ntp client Update"
+  hosts:  node2
+  tasks:
+  roles:
+  - role: ntp_client
+    ntp_server:
+      - 192.168.0.222
+    time_zone:
+      - Asia/Kolkata

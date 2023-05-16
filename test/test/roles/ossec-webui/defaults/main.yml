@@ -1,0 +1,5 @@
+ossec_webui_site_name: ossec-wui
+ossec_webui_user: admin
+ossec_webui_password: cambiami
+ossec_webui_password_active: no
+ossec_webui_php_max_execution_time: 300

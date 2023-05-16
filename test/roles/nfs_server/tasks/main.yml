@@ -1,0 +1,61 @@
+---
+- name: "check whether firewall install or not"
+  shell: rpm -qa nfs-utils
+  register: installed
+
+- name: "Install nfs-utils"
+  yum:
+    name: nfs-utils
+    state: present
+  when: installed.stdout_lines == []
+
+- name: "Start the nfs-utils"
+  service:
+    name: "{{item}}"
+    enabled: yes
+    state: started
+  with_items:
+    - rpcbind
+    - nfs-server
+  when: installed.stdout_lines == []
+
+- name: "To create directory"
+  file:
+    path: "{{mount_point}}"
+    state: directory
+  when:
+    - mount_point is defined
+
+- name: "Domain name map"
+  replace:
+    path: /etc/idmapd.conf
+    regexp: ^#Domain = local.domain.edu
+    replace: "Domain = {{domain_name}}"
+    backup: yes
+  when: domain_name is defined
+
+- name: "Copy using the 'content' for inline data {{ansible_default_ipv4.network}}/24 is defined"
+  copy:
+    content: '{{ mount_point }} {{ansible_default_ipv4.network}}/24(rw,no_root_squash)'
+    dest: /etc/exports
+  when:
+    - mount_point is defined
+    - domain_name is not defined
+
+- name: "Copy using the 'content' for inline data {{domain_name}} is defined"
+  copy:
+    content: '{{ mount_point }} {{domain_name}}/24(rw,no_root_squash)'
+    dest: /etc/exports
+  when:
+    - mount_point is defined
+    - domain_name is defined
+
+- name: "start the nfs-utils"
+  service:
+    name: "{{item}}"
+    enabled: yes
+    state: restarted
+  with_items:
+    - rpcbind
+    - nfs-server
+

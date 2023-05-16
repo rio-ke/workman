@@ -1,0 +1,17 @@
+---
+- name: install dfnjdsbf
+  hosts: node1
+  tasks:
+    - name: AD.1.1.8.2 - To find duplicate UID found
+      shell: >
+        cat /etc/passwd | cut -f3 -d":" | sort -n | uniq -c | while read x ; do
+          [ -z "${x}" ] && break
+          set - $x
+          if [ $1 -gt 1 ]; then
+          users=`awk -F: '($3 == n) { print $1 }' n=$2 /etc/passwd | xargs`
+          echo "Duplicate UID ($2): ${users}"
+        fi
+        done
+  register: dupignore_errorsre_err
+  when: "{{dupignore_errorsre_err}}" > 10
+

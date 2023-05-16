@@ -1,0 +1,10 @@
+---
+samba_share_path: /opt/jino
+samba_share_name: jino
+# create_mode: 777
+# force_create_mode: 777
+# directory_mode: 777
+# force_directory_mode: 777
+samba_users:
+  - jino
+  - test

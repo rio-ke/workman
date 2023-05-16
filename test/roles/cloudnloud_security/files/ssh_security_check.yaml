@@ -1,0 +1,249 @@
+---
+- name: check ssh conditions
+  shell: "grep -i ^{{item}} /etc/ssh/sshd_config | awk '{print $2}'"
+  with_items: "{{ssh_config_parameters}}"
+  register: ssh_results
+  failed_when: false
+  ignore_errors: true
+
+- name: ssh_conf_file no option categories
+  shell: "grep -i ^{{item}} /etc/ssh/sshd_config | awk '{print $2}'"
+  with_items: "{{ssh_no_option}}"
+  register: ssh_no_option_result
+  failed_when: false
+  ignore_errors: true
+
+- name: ssh_conf_file yes option categories
+  shell: "grep -i ^{{item}} /etc/ssh/sshd_config | awk '{print $2}'"
+  with_items: "{{ssh_yes_option}}"
+  register: ssh_yes_option_result
+  failed_when: false
+  ignore_errors: true
+
+- name: ssh_conf_file mac option categories
+  shell: "grep -i ^{{item}} /etc/ssh/sshd_config"
+  with_items: "{{ssh_mac_option}}"
+  register: ssh_mac_option_result
+  failed_when: false
+  ignore_errors: true
+
+- name: ssh_conf_file mac option categories
+  shell: "grep -i ^{{item}} /etc/ssh/sshd_config"
+  with_items: "{{ssh_ciphers_option}}"
+  register: ssh_ciphers_option_result
+  failed_when: false
+  ignore_errors: true
+
+- name: ssh_env_variable test
+  shell: "grep -i AcceptEnv /etc/ssh/sshd_config | grep {{item}}"
+  with_items: "{{ssh_env_variable}}"
+  register: ssh_env_variable_result
+  failed_when: false
+  ignore_errors: true
+
+- name: check ssh-config file Host based Authentication
+  stat:
+    path: "{{item}}"
+  with_items: "{{ssh_host_file_check}}"
+  register: ssh_host_check_file_results
+  failed_when: false
+  ignore_errors: true
+
+- name: check ssh config file and directory
+  stat:
+    path: "{{item}}"
+  with_items: "{{ssh_file_check}}"
+  register: ssh_check_file_results
+  failed_when: false
+  ignore_errors: true
+
+- name: System Main  File system_main_file
+  stat:
+    path: "{{item}}"
+  with_items: "{{system_main_file}}"
+  failed_when: false
+  ignore_errors: true
+  register: system_main_file_result
+
+
+- name: System Main  File system_main_file1
+  stat:
+    path: "{{item}}"
+  with_items: "{{system_main_file1}}"
+  failed_when: false
+  ignore_errors: true
+  register: system_main_file_result1
+
+- name: System Main  File system_main_file2
+  stat:
+    path: "{{item}}"
+  with_items: "{{system_main_file2}}"
+  failed_when: false
+  ignore_errors: true
+  register: system_main_file_result2
+
+- name: System Main  File system_main_file2
+  shell: "{{item}}"
+  with_items: "{{system_main_file3}}"
+  failed_when: false
+  ignore_errors: true
+  register: system_main_file_result3
+
+- name: Ensure password details
+  shell: "grep ^{{item}} /etc/login.defs | awk '{print $2}'"
+  with_items: "{{user_sccounts}}"
+  register: user_sccounts_results
+  failed_when: false
+  ignore_errors: true
+
+- name: Ensure password details
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$5!="{{PASS_MAX_DAYS}}"' |cut -d: -f1
+  register: user_accounts_expiriation_results
+  failed_when: false
+  ignore_errors: true
+
+- name: Ensure password details
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$4!="{{PASS_MIN_DAYS}}"' |cut -d: -f1
+  register: user_accounts_expiriation_results1
+  failed_when: false
+  ignore_errors: true
+
+- name: Ensure password details
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$6!="{{PASS_WARN_AGE}}"' |cut -d: -f1
+  register: user_accounts_expiriation_results2
+  failed_when: false
+  ignore_errors: true
+
+- name: Ensure inactive password lock is {{PASS_INACTIVE}} days or less
+  shell: "{{item}}"
+  with_items:
+    - useradd -D | grep INACTIVE | awk -F= '{print $2}'
+    - grep -i ^TMOUT /etc/bashrc
+    - grep -i ^TMOUT /etc/profile
+    - grep ^pam_wheel.so /etc/pam.d/su
+  register: user_accounts_expiriation_results3
+  failed_when: false
+
+- name: Ensure password details
+  shell: >
+    cat /etc/shadow | cut -d: -f1
+  register: user_last_pass_change_list
+  failed_when: false
+
+- name: Ensure all users last password change date is in the past
+  shell: " chage --list {{item}} | grep -i last"
+  with_items: "{{user_last_pass_change_list.stdout_lines}}"
+  register: user_last_pass_change_results
+
+- name: Ensure system accounts are non-login
+  shell: >
+    egrep -v "^\+" /etc/passwd | awk -F: '($1!="root" && $1!="sync" && $1!="shutdown" && $1!="halt" && $3<1000 && $7!="/sbin/nologin" && $7!="/bin/false") {print}'
+  register: non_login_results
+  failed_when: false
+  ignore_errors: true
+
+- name: Ensure system accounts are non-login
+  shell: >
+    grep "^root:" /etc/passwd | cut -f4 -d:
+  register: root_uid_results
+  failed_when: false
+  ignore_errors: true
+
+- name: checking other posibilities
+  script: "files/{{item}}.sh"
+  with_items: "{{checking_scripts}}"
+  failed_when: false
+  ignore_errors: true
+  register: checking_scripts_results
+
+- name: Ensure no legacy "+" entries exist in
+  shell: "{{item}}"
+  with_items: "{{lagacy_path_check}}"
+  failed_when: false
+  ignore_errors: true
+  register: lagacy_results
+
+- name: Ensure password details
+  shell: "grep ^{{item}} /etc/login.defs | awk '{print $2}'"
+  with_items: "{{user_sccounts}}"
+  register: user_sccounts_results
+  failed_when: false
+  ignore_errors: true
+
+- name: Ensure password details
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$5!="{{PASS_MAX_DAYS}}"' |cut -d: -f1
+  register: user_accounts_expiriation_results
+  failed_when: false
+  ignore_errors: true
+
+- name: Ensure password details
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$4!="{{PASS_MIN_DAYS}}"' |cut -d: -f1
+  register: user_accounts_expiriation_results1
+  failed_when: false
+  ignore_errors: true
+
+- name: Ensure password details
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$6!="{{PASS_WARN_AGE}}"' |cut -d: -f1
+  register: user_accounts_expiriation_results2
+  failed_when: false
+  ignore_errors: true
+
+- name: Ensure inactive password lock is {{PASS_INACTIVE}} days or less
+  shell: "{{item}}"
+  with_items:
+    - useradd -D | grep INACTIVE | awk -F= '{print $2}'
+    - grep -i ^TMOUT /etc/bashrc
+    - grep -i ^TMOUT /etc/profile
+    - grep ^pam_wheel.so /etc/pam.d/su
+  register: user_accounts_expiriation_results3
+  failed_when: false
+
+- name: Ensure password details
+  shell: >
+    cat /etc/shadow | cut -d: -f1
+  register: user_last_pass_change_list
+  failed_when: false
+
+- name: Ensure all users last password change date is in the past
+  shell: " chage --list {{item}} | grep -i last"
+  with_items: "{{user_last_pass_change_list.stdout_lines}}"
+  register: user_last_pass_change_results
+
+- name: Ensure system accounts are non-login
+  shell: >
+    egrep -v "^\+" /etc/passwd | awk -F: '($1!="root" && $1!="sync" && $1!="shutdown" && $1!="halt" && $3<1000 && $7!="/sbin/nologin" && $7!="/bin/false") {print}'
+  register: non_login_results
+  failed_when: false
+  ignore_errors: true
+
+- name: Ensure system accounts are non-login
+  shell: >
+    grep "^root:" /etc/passwd | cut -f4 -d:
+  register: root_uid_results
+  failed_when: false
+  ignore_errors: true
+
+- name: checking other posibilities
+  script: "files/{{item}}.sh"
+  with_items: "{{checking_scripts}}"
+  failed_when: false
+  ignore_errors: true
+  register: checking_scripts_results
+
+- name: Ensure no legacy "+" entries exist in
+  shell: "{{item}}"
+  with_items: "{{lagacy_path_check}}"
+  failed_when: false
+  ignore_errors: true
+  register: lagacy_results
+
+- name: store the results
+  template:
+    src: templates/ssh_result.txt.j2
+    dest: /tmp/ssh_{{ansible_hostname}}_result.txt

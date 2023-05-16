@@ -1,0 +1,32 @@
+---
+- name: "copy the file local to back up server"
+  copy:
+    src: /jino/{{ item }}.sql
+    dest: /backup/table/
+    remote_src: no
+  ignore_errors: True
+  loop:
+    - "{{ table1 }}"
+    - "{{ table2 }}"
+    - "{{ table3 }}"
+    - "{{ table4 }}"
+    register: bds_table
+
+- name: "restore the table"
+  shell: "mysql {{ bds_db_name }} < /backup/table/{{ item }}.sql "
+  loop:
+    - "{{ table1 }}"
+    - "{{ table2 }}"
+    - "{{ table3 }}"
+    - "{{ table4 }}"
+  register: bds_table
+
+- name: "delete the table"
+  file:
+    dest: /backup/table/{{ item }}.sql
+    state: absent
+  loop:
+    - "{{ table1 }}"
+    - "{{ table2 }}"
+    - "{{ table3 }}"
+    - "{{ table4 }}"

@@ -1,0 +1,15 @@
+---
+- hosts: archive_server
+  tasks:
+  - name: Reboot Machine
+    shell: sleep 2 && shutdown -r now "Reboot triggered"
+    async: 1
+    poll: 0
+    ignore_errors: True
+    notify:
+      - Wait for Reboot
+
+  - name: Wait for Reboot
+    wait_for_connection:
+      timeout: 6000
+      delay: 20

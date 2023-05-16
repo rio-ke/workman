@@ -1,0 +1,27 @@
+---
+- name: "Show CPU usage"
+  script: jjino.sh
+  register: result1
+
+- name: "Create the resilt use Jinja2 template"
+  template:
+    src: temp1.j2
+    dest: "{{ storage_template_path }}" #/tmp/cpu_usage.txt
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  when: result1.stdout != ""
+
+- name: "Mail the result"
+  mail:
+    host: "{{smtp_host}}" # smtp.gmail.com
+    port: "{{smtp_port}}" # 587
+    username: "{{smtp_username}}"
+    password: "{{smtp_password}}"
+    to: "{{ email_to }}"
+    cc: "{{ email_cc }}"
+    subject: "{{ client_name }} Memory Report"
+    attach:
+      - "{{ storage_template_path }}"
+    body: System has been generated CPU Usage report.
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  when: result1.stdout != ""
+  run_once: True

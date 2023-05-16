@@ -1,0 +1,5 @@
+---
+- include_tasks: kernel_install.yaml
+  when: LINUX_SERVER == "1"
+- include_tasks: kernel_revert.yaml
+  when: LINUX_SERVER == "2"

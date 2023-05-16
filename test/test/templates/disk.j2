@@ -1,0 +1,4 @@
+        {% for a in result | json_query('[]') %}
+        {{ a.stdout }}
+        {% endfor %}
+

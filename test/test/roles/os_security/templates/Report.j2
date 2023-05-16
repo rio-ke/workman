@@ -1,0 +1,3826 @@
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 110 - Ensure mounting of FAT filesystems is disabled
+{% if result_110.stdout != '' %}
+Condion       = Success
+state         = {{result_110.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 111 - Ensure mounting of cramfs filesystems is disabled
+{% if result_111.stdout != '' %}
+Condion       = Success
+state         = {{result_111.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 112 - Ensure mounting of freevxfs filesystems is disabled
+{% if result_112.stdout != '' %}
+Condion       = Success
+state         = {{result_112.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 113 - Ensure mounting of jffs2 filesystems is disabled
+{% if result_113.stdout != '' %}
+Condion       = Success
+state         = {{result_113.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 114 - Ensure mounting of hfs filesystems is disabled
+{% if result_114.stdout != '' %}
+Condion       = Success
+state         = {{result_114.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 115 - Ensure mounting of hfsplus filesystems is disabled
+{% if result_115.stdout != '' %}
+Condion       = Success
+state         = {{result_115.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 116 - Ensure mounting of udf filesystems is disabled
+{% if result_116.stdout != '' %}
+Condion       = Success
+state         = {{result_116.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 117 - Ensure mounting of squashfs filesystems is disabled
+{% if result_117.stdout != '' %}
+Condion       = Success
+state         = {{result_117.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 118 - Ensure separate partition exists for /tmp
+{%if result_118.stdout != '' %}
+Condition     = Success
+state         = /tmp partion found
+{%else%}
+Condition     = Failed
+state         = /tmp partion not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 119 - Ensure nodev option set on /tmp partition
+{%if result_118.stdout != '' %}
+{% if 'nodev' in result_118.stdout %}
+Condition     = Success
+state         = nodev option already set on /tmp partition
+{%else%}
+Condition     = Failed
+state         = nodev option not set on /tmp partition
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Partition not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 119a - Ensure nodev option set on /tmp partition
+{%if result_118.stdout != '' %}
+{% if 'noexec' in result_118.stdout %}
+Condition     = Success
+state         = noexec option already set on /tmp partition
+{%else%}
+Condition     = Failed
+state         = noexec option not set on /tmp partition
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Partition not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 120 - Ensure nosuid option set on /tmp partition
+{%if result_118.stdout != '' %}
+{% if 'nosuid' in result_118.stdout %}
+Condition     = Success
+state         = nosuid option already set on /tmp partition
+{%else%}
+Condition     = Failed
+state         = nosuid option not set on /tmp partition
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Partition not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 121 - Ensure separate partition exists for /var
+{%if result_121.stdout != '' %}
+Condition     = Success
+state         = /var partion found
+{%else%}
+Condition     = Failed
+state         = /var partion not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 122 - Ensure separate partition exists for /var/tmp
+{%if result_122.stdout != '' %}
+Condition     = Success
+state         = /var/tmp partion found
+{%else%}
+Condition     = Failed
+state         = /var/tmp partion not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 123 - Ensure nodev option set on /var/tmp partition
+{%if result_122.stdout != '' %}
+{% if 'nodev' in result_122.stdout %}
+Condition     = Success
+state         = nodev option already set on /var/tmp partition
+{%else%}
+Condition     = Failed
+state         = nodev option not set on /var/tmp partition
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Partition not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 124 - Ensure nosuid option set on /var/tmp partition
+{%if result_122.stdout != '' %}
+{% if 'nosuid' in result_122.stdout %}
+Condition     = Success
+state         = nosuid option already set on /var/tmp partition
+{%else%}
+Condition     = Failed
+state         = nosuid option not set on /var/tmp partition
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Partition not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 125 - Ensure noexec option set on /var/tmp partition
+{%if result_122.stdout != '' %}
+{% if 'noexec' in result_122.stdout %}
+Condition     = Success
+state         = noexec option already set on /var/tmp partition
+{%else%}
+Condition     = Failed
+state         = noexec option not set on /var/tmp partition
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Partition not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 126 - Ensure separate partition exists for /var/log
+{%if result_126.stdout != '' %}
+Condition     = Success
+state         = /var/log partion found
+{%else%}
+Condition     = Failed
+state         = /var/log partion not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 127 - Ensure separate partition exists for /var/log/audit
+{%if result_127.stdout != '' %}
+Condition     = Success
+state         = /var/log/audit partion found
+{%else%}
+Condition     = Failed
+state         = /var/log/audit partion not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 128 - Ensure separate partition exists for /home
+{%if result_128.stdout != '' %}
+Condition     = Success
+state         = /home partion found
+{%else%}
+Condition     = Failed
+state         = /home partion not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 129 - Ensure nodev option set on /home partition
+{%if result_128.stdout != '' %}
+{% if 'nodev' in result_128.stdout %}
+Condition     = Success
+state         = nodev option already set on /home partition
+{%else%}
+Condition     = Failed
+state         = nodev option not set on /home partition
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Partition not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 130 - Ensure nodev option set on /dev/shm partition
+{%if result_130.stdout != '' %}
+{% if 'nodev' in result_130.stdout %}
+Condition     = Success
+state         = nodev option already set on /dev/shm partition
+{%else%}
+Condition     = Failed
+state         = nodev option not set on /dev/shm partition
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Partition not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 131 - Ensure nosuid option set on /dev/shm partition
+{%if result_130.stdout != '' %}
+{% if 'nosuid' in result_130.stdout %}
+Condition     = Success
+state         = nosuid option already set on /dev/shm partition
+{%else%}
+Condition     = Failed
+state         = nosuid option not set on /dev/shm partition
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Partition not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 132 - Ensure noexec option set on /dev/shm partition
+{%if result_130.stdout != '' %}
+{% if 'noexec' in result_130.stdout %}
+Condition     = Success
+state         = noexec option already set on /dev/shm partition
+{%else%}
+Condition     = Failed
+state         = noexec option not set on /dev/shm partition
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Partition not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 133 - Ensure nodev option set on removable media partitions
+{%if result_133.stdout != '' %}
+{% if 'nodev' in result_133.stdout %}
+Condition     = Success
+state         = nodev option already set on /media partition
+{%else%}
+Condition     = Failed
+state         = nodev option not set on /media partition
+{%endif%}
+{%else%}
+Condition     = Success
+State         = Partition not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 134 - Ensure nosuid option set on removable media partitions
+{%if result_133.stdout != '' %}
+{% if 'nosuid' in result_133.stdout %}
+Condition     = Success
+state         = nosuid option already set on /media partition
+{%else%}
+Condition     = Failed
+state         = nosuid option not set on /media partition
+{%endif%}
+{%else%}
+Condition     = Success
+State         = Partition not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 135 - Ensure noexec option set on removable media partitions
+{%if result_133.stdout != '' %}
+{% if 'noexec' in result_133.stdout %}
+Condition     = Success
+state         = noexec option already set on /media partition
+{%else%}
+Condition     = Failed
+state         = noexec option not set on /media partition
+{%endif%}
+{%else%}
+Condition     = Success
+State         = Partition not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 136 - Ensure sticky bit is set on all world-writable directories
+{%if result_136.stdout == '' %}
+Condition     = Success
+state         = All world-writable directories set sticky bit
+{%else%}
+Condition     = Failed
+state         = world-writable directories not set sticky bit
+{% for i in result_136.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 137 - Disable Automounting
+{% if result_137.stdout != "" %}
+{% if 'disabled' in result_137.stdout %}
+Condion       = Success
+state         = autofs status {{result_137.stdout}}
+{%else%}
+Condion       = Failed
+state         = autofs status {{result_137.stdout}}
+{%endif%}
+{%else%}
+Condition     = Success
+State         = Autofs Package not installed/started
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "Ubuntu" %}
+category: 141 - Ensure Package manager repositories are configured
+{% if result_141a.stdout != "" %}
+Condion       = Success
+state         = Package manager repositories are configured
+{%else%}
+Condion       = Failed
+state         = Package manager repositories are not configured
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "SLES" %}
+category: 141 - Ensure Package manager repositories are configured
+{% if result_141b.stdout != "" %}
+Condion       = Success
+state         = Package manager repositories are configured
+{%else%}
+Condion       = Failed
+state         = Package manager repositories are not configured
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" %}
+category: 141 - Ensure Package manager repositories are configured
+{% if result_141c.stdout != "" %}
+Condion       = Success
+state         = Package manager repositories are configured
+{%else%}
+Condion       = Failed
+state         = Package manager repositories are not configured
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "Ubuntu" %}
+category: 142 - Ensure GPG keys are configured
+{% if result_142a.stdout != "" %}
+Condion       = Success
+state         = GPG keys are configured
+{%else%}
+Condion       = Failed
+state         = GPG keys are not configured
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "SLES" or ansible_distribution == "CentOS" or ansible_distribution == "RedHat" %}
+category: 142 - Ensure GPG keys are configured
+{% if result_142b.stdout != "" %}
+Condion       = Success
+state         = GPG keys are configured
+{%else%}
+Condion       = Failed
+state         = GPG keys are not configured
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" %}
+category: 143 - Ensure gpgcheck is globally activated
+{% if result_143.stdout != "" %}
+{% if '0' in result_143.stdout %}
+Condion       = Failed
+state         = gpgcheck is globally not activated
+{%else%}
+Condion       = Success
+state         = gpgcheck is globally activated
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" %}
+category: 151 - Ensure AIDE is installed
+{% if result_151a.stdout != "" %}
+Condion       = Success
+state         = aide Package is installed
+{%else%}
+Condion       = Failed
+state         = aide Package is not installed
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "Ubuntu" %}
+category: 151 - Ensure AIDE is installed
+{% if result_151b.stdout != "" %}
+Condion       = Success
+state         = aide Package is installed
+{%else%}
+Condion       = Failed
+state         = aide Package is not installed
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 152 - Ensure filesystem integrity is regularly checked
+{% if result_152.results[0].stdout != "" or result_152.results[1].stdout != "" %}
+Condion       = Success
+state         = filesystem integrity is regularly checked
+{%else%}
+Condion       = Failed
+state         = filesystem integrity is regularly not checked
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 161 - Ensure permissions on bootloader config are configured
+{% if result_161a.stat.exists == true %}
+{% if result_161a.stat.mode == "0600" and result_161a.stat.pw_name == "root" and result_161a.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 161 - Ensure permissions on bootloader config are configured
+{% if result_161b.stat.exists == true %}
+{% if result_161b.stat.mode == "0600" and result_161b.stat.pw_name == "root" and result_161b.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 162 - Ensure Bootloader password is set
+{% if result_162a.stdout != ""%}
+Condion       = Success
+State         = Bootloader password is set
+{%else%}
+Condion       = Failed
+State         = Bootloader password is not set
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 162 - Ensure Bootloader password is set
+{% if result_162b.stdout != ""%}
+Condion       = Success
+State         = Bootloader password is set
+{%else%}
+Condion       = Failed
+State         = Bootloader password is not set
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 171 - Ensure core dumps are restricted
+{% if result_171.results[0].stdout != "" %}
+{% if 'core 0' in  result_171.results[0].stdout %}
+Condion       = Success
+state         = Hard core limit is set
+{%else%}
+Condion       = Failed
+state         = Hard core limit is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Hard core limit is not configure
+{%endif%}
+{% if result_171.results[1].stdout != "" %}
+{% if '0' in  result_171.results[1].stdout %}
+Condion       = Success
+state         = suid_dumpable is set
+{%else%}
+Condion       = Failed
+state         = suid_dumpable is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = suid_dumpable is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 173 - Ensure address space layout randomization (ASLR) is enabled
+{% if result_173.stdout != "" %}
+{% if '2' in  result_173.stdout %}
+Condion       = Success
+state         = address space layout randomization (ASLR) is enabled
+{%else%}
+Condion       = Failed
+state         = address space layout randomization (ASLR) is not enabled
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = address space layout randomization (ASLR) is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 174 - Ensure prelink is disabled
+{% if result_174a.stdout != "" %}
+Condion       = Failed
+state         = prelink is found
+{%else%}
+Condion       = Success
+state         = prelink is not found
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+{% if result_174b.stdout != "" %}
+Condion       = Failed
+state         = prelink is found
+{%else%}
+Condion       = Success
+state         = prelink is not    found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 181 - Ensure SELinux is not disabled in bootloader configuration
+{% if result_181b.stdout != "" %}
+{% if 'selinux=0' in result_181b.stdout or 'enforcing=0' in result_181b.stdout %}
+Condion       = Failed
+state         = SELinux is disabled in bootloader configuration
+{%else%}
+Condion       = Success
+state         = SELinux is not disabled in bootloader configuration
+{%endif%}
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 181 - Ensure SELinux is not disabled in bootloader configuration
+{% if result_181a.stdout != "" %}
+{% if 'selinux=0' in result_181a.stdout or 'enforcing=0' in result_181a.stdout %}
+Condion       = Failed
+state         = SELinux is disabled in bootloader configuration
+{%else%}
+Condion       = Success
+state         = SELinux is not disabled in bootloader configuration
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 182 - Ensure the SELinux state is enforcing
+{% if result_182.stdout != "" %}
+{% if 'enforcing' in result_182.stdout %}
+Condion       = Success
+state         = SELinux state is enforcing
+{%else%}
+Condion       = Failed
+state         = SELinux state is {{result_182.stdout}}
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = SELinux not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 183 - Ensure SELinux policy is configured
+{% if result_183.stdout != "" %}
+{% if 'targeted' in result_183.stdout or 'mls' in result_183.stdout or 'ubuntu' in result_183.stdout or 'default' in result_183.stdout %}
+Condion       = Success
+state         = SELinux policy is configured
+{%else%}
+Condion       = Failed
+state         = SELinux policy state is {{result_183.stdout}}
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = SELinux not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 184 - Ensure SETroubleshoot is not installed
+{% if result_184.stdout != "" %}
+Condion       = Failed
+state         = SETroubleshoot not installed
+{%else%}
+Condion       = Success
+state         = SETroubleshoot is not installed
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 185 - Ensure the MCS Translation Service (mcstrans) is not installed
+{% if result_185.stdout != "" %}
+Condion       = Failed
+state         = MCS Translation Service (mcstrans) is installed
+{%else%}
+Condion       = Success
+state         = MCS Translation Service (mcstrans) is not installed
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 186 - Ensure no unconfined daemons exist
+{% if result_186.stdout != "" %}
+Condion       = Failed
+state         = Unconfined daemons exist
+{%else%}
+Condion       = Success
+state         = No unconfined daemons exist
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS"  or ansible_distribution == "RedHat" %}
+category: 187 - Ensure SELinux is installed
+{% if result_187a.stdout != "" %}
+Condion       = Success
+state         = SELinux is installed
+{%else%}
+Condion       = Failed
+state         = SELinux is not installed
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 187 - Ensure SELinux is installed
+{% if result_187c.stdout != "" %}
+Condion       = Success
+state         = SELinux is installed
+{%else%}
+Condion       = Failed
+state         = SELinux is not installed
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "SLES" %}
+category: 187 - Ensure SELinux is installed
+{% if result_187b.results[0].stdout != "" and result_187b.results[1].stdout != "" %}
+Condion       = Success
+state         = SELinux is installed
+{%else%}
+Condion       = Failed
+state         = SELinux is not installed
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "SLES" %}
+category: 191 - Ensure AppArmor is not disabled in bootloader configuration
+{% if result_191b.stdout != "" %}
+{% if 'apparmor=0' in result_191b.stdout %}
+Condion       = Failed
+state         = AppArmor is disabled in bootloader configuration
+{%else%}
+Condion       = Success
+state         = AppArmor is not disabled in bootloader configuration
+{%endif%}
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 191 - Ensure AppArmor is not disabled in bootloader configuration
+{% if result_191a.stdout != "" %}
+{% if 'apparmor=0' in result_191a.stdout %}
+Condion       = Failed
+state         = AppArmor is disabled in bootloader configuration
+{%else%}
+Condion       = Success
+state         = AppArmor is not disabled in bootloader configuration
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 192 - Ensure all AppArmor Profiles are enforcing
+{% if result_192.stdout != "" %}
+Condion       = Success
+state         = All AppArmor Profiles are enforcing
+{%else%}
+Condion       = Failed
+state         = All AppArmor Profiles are not enforcing
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "Ubuntu" %}
+category: 193 - Ensure AppArmor is installed
+{% if result_193a.stdout != "" %}
+Condion       = Success
+state         = AppArmor is installed
+{%else%}
+Condion       = Failed
+state         = AppArmor is not installed
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "SLES" %}
+category: 193 - Ensure AppArmor is installed
+{% if result_193b.results[0].stdout != "" and result_193b.results[1].stdout != "" %}
+Condion       = Success
+state         = AppArmor is installed
+{%else%}
+Condion       = Failed
+state         = AppArmor is not installed
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "SLES" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS" %}
+category: 194 - Ensure message of the day is configured properly
+{% if result_194.stdout != "" %}
+Condion       = Failed
+state         = Message of the day is not configured properly
+{%else%}
+Condion       = Success
+state         = Message of the day is configured properly
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "SLES" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS" %}
+category: 195 - local login warning banner is configured properly
+{% if result_194.stdout != "" %}
+Condion       = Failed
+state         = login warning banner is not configured properly
+{%else%}
+Condion       = Success
+state         = login warning banner is configured properly
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "SLES" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS" %}
+category: 196 - Ensure remote login warning banner is configured properly
+{% if result_194.stdout != "" %}
+Condion       = Failed
+state         = Remote login warning banner is not configured properly
+{%else%}
+Condion       = Success
+state         = Remote login warning banner is configured properly
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 197 - Ensure permissions on /etc/motd are configured
+{% if result_197.stat.exists == true %}
+{% if result_197.stat.mode == "0644" and result_197.stat.pw_name == "root" and result_197.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%else%}
+Condition     = Failed
+State:        = File not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 198 - Ensure permissions on /etc/issue are configured
+{% if result_198.stat.exists == true %}
+{% if result_198.stat.mode == "0644" and result_198.stat.pw_name == "root" and result_198.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%else%}
+Condition     = Failed
+State:        = File not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 199 - Ensure permissions on /etc/issue.net are configured
+{% if result_199.stat.exists == true %}
+{% if result_199.stat.mode == "0644" and result_199.stat.pw_name == "root" and result_199.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%else%}
+Condition     = Failed
+State:        = File not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "Ubuntu" %}
+category: 200 - Ensure updates, patches, and additional security software are installed
+{% if result_200a.stdout != "" %}
+{% if '0 upgraded' in result_200a.stdout %}
+Condion       = Success
+state         = All Packages are upto date.
+{%else%}
+Condion       = Failed
+state         = some upgrade are pending.
+{%endif%}
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" %}
+category: 200 - Ensure updates, patches, and additional security software are installed
+{% if result_200b.stdout != "" %}
+{% if 'No Packages marked for update' not in result_200b.stdout %}
+Condion       = Success
+state         = All Packages are upto date.
+{%else%}
+Condion       = Failed
+state         = some upgrade are pending.
+{%endif%}
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "SLES" %}
+category: 200 - Ensure updates, patches, and additional security software are installed
+{% if result_200c.stdout != "" %}
+{% if 'No Packages marked for update' in result_200c.stdout %}
+Condion       = Success
+state         = All Packages are upto date.
+{%else%}
+Condion       = Failed
+state         = some upgrade are pending.
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 211 - Ensure chargen services are not enabled
+{% if result_211.results[0].stdout != '' or result_211.results[1].stdout != '' %}
+{% if 'on' in result_211.results[0].stdout  or 'on' in result_211.results[1].stdout %}
+Condion       = Failed
+State         = chargen services are enabled
+{%else%}
+Condion       = Success
+State         = chargen services are not enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = chargen services are not found.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 211 - Ensure chargen services are not enabled
+{% if result_211a.results[0].stdout != '' %}
+{% if 'no' in result_211a.results[0].stdout %}
+Condion       = Failed
+State         = chargen services are enabled
+{%else%}
+Condion       = Success
+State         = chargen services are not enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = chargen services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 212 - Ensure daytime services are not enabled
+{% if result_212.results[0].stdout != '' or result_212.results[1].stdout != '' %}
+{% if 'on' in result_212.results[0].stdout or 'on' in result_212.results[1].stdout %}
+Condion       = Failed
+State         = daytime services are enabled
+{%else%}
+Condion       = Success
+State         = daytime services are not enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = daytime services are not found.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 212 - Ensure daytime services are not enabled
+{% if result_212a.results[0].stdout != '' %}
+{% if 'no' in result_212a.results[0].stdout %}
+Condion       = Failed
+State         = daytime services are enabled
+{%else%}
+Condion       = Success
+State         = daytime services are not enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = daytime services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 213 - Ensure discard services are not enabled
+{% if result_213.results[0].stdout != '' or result_213.results[1].stdout != '' %}
+{% if 'on' in result_213.results[0].stdout or 'on' in result_213.results[1].stdout %}
+Condion       = Failed
+State         = discard services are enabled
+{%else%}
+Condion       = Success
+State         = discard services are not enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = discard services are not found.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 213 - Ensure discard services are not enabled
+{% if result_213a.results[0].stdout != '' %}
+{% if 'no' in result_213a.results[0].stdout %}
+Condion       = Failed
+State         = discard services are enabled
+{%else%}
+Condion       = Success
+State         = discard services are not enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = discard services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 214 - Ensure echo services are not enabled
+{% if result_214.results[0].stdout != '' or result_214.results[1].stdout != '' %}
+{% if 'on' in result_214.results[0].stdout or 'on' in result_214.results[1].stdout %}
+Condion       = Failed
+State         = echo services are enabled
+{%else%}
+Condion       = Success
+State         = echo services are not enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = echo services are not found.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 214 - Ensure echo services are not enabled
+{% if result_214a.results[0].stdout != '' %}
+{% if 'no' in result_214a.results[0].stdout %}
+Condion       = Failed
+State         = echo services are enabled
+{%else%}
+Condion       = Success
+State         = echo services are not enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = echo services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 215 - Ensure time services are not enabled
+{% if result_215.results[0].stdout != '' or result_215.results[1].stdout != '' %}
+{% if 'on' in result_215.results[0].stdout or 'on' in result_215.results[1].stdout %}
+Condion       = Failed
+State         = time services are enabled
+{%else%}
+Condion       = Success
+State         = time services are not enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = time services are not found.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 215 - Ensure time services are not enabled
+{% if result_215a.results[0].stdout != '' %}
+{% if 'no' in result_215a.results[0].stdout %}
+Condion       = Failed
+State         = time services are enabled
+{%else%}
+Condion       = Success
+State         = time services are not enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = time services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 216 - Ensure tftp services are not enabled
+{% if result_216.results[0].stdout != '' %}
+{% if 'on' in result_216.results[0].stdout  %}
+Condion       = Failed
+State         = tftp services are enabled
+{%else%}
+Condion       = Success
+State         = tftp services are not enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = tftp services are not found.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 216 - Ensure tftp services are not enabled
+{% if result_216a.results[0].stdout != '' %}
+{% if 'no' in result_216a.results[0].stdout  %}
+Condion       = Failed
+State         = tftp services are enabled
+{%else%}
+Condion       = Success
+State         = tftp services are not enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = tftp services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "Ubuntu" or ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 217 - Ensure xinetd is not enabled
+{% if result_217.stdout != '' %}
+{% if 'disabled' in result_217.stdout %}
+Condion       = Success
+State         = xinetd services are not enabled
+{%else%}
+Condion       = Failed
+State         = xinetd services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = xinetd services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 221 - Ensure time synchronization is in use
+{% if result_221.results[0].stdout != '' or result_221.results[1].stdout != '' %}
+Condion       = Success
+State         = Time synchronization is in use
+              - {{result_221.results[0].stdout}} {{result_221.results[1].stdout}}
+{%else%}
+Condion       = Failed
+State         = Time synchronization is not use
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 222 - Ensure ntp is configured
+{% if result_221.results[0].stdout != '' %}
+{% if result_222.results[0].stdout != '' %}
+{% if 'kod' in result_222.results[0].stdout %}
+Condion       = Success
+State         = All parameter configure in ntp.conf
+{%else%}
+Condion       = Failed
+State         = Some Parameter not configured in ntp.conf
+{%endif%}
+{%endif%}
+{% if result_222.results[1].stdout != '' %}
+{% if 'server' in result_222.results[1].stdout %}
+Condion       = Success
+State         = All parameter (server) configure in ntp.conf
+{%else%}
+Condion       = Failed
+State         = Some Parameter (server) not configured in ntp.conf
+{%endif%}
+{%endif%}
+{% if result_222.results[2].stdout != '' %}
+{% if 'ntp' in result_222.results[2].stdout %}
+Condion       = Success
+State         = All parameter (user) configure in ntp.conf
+{%else%}
+Condion       = Failed
+State         = Some Parameter (user) not configured in ntp.conf
+{%endif%}
+{%endif%}
+{% if result_222.results[3].stdout != '' %}
+{% if 'ntp' in result_222.results[2].stdout %}
+Condion       = Success
+State         = All parameter (user) configure in ntp.conf
+{%else%}
+Condion       = Failed
+State         = Some parameter (user) not configure in ntp.conf
+{%endif%}
+{%endif%}
+{%else%}
+Condition     = failed
+State         = ntp Package not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 223 - Ensure chrony is configured
+{% if result_221.results[1].stdout != '' %}
+{% if result_223.results[0].stdout != '' %}
+{% if 'server' in result_223.results[0].stdout %}
+Condion       = Success
+State         = All parameter(server) configure in ntp.conf
+{%else%}
+Condion       = Failed
+State         = Some Parameter(server) not configured in ntp.conf
+{%endif%}
+{%endif%}
+{% if result_223.results[1].stdout != '' %}
+{% if 'chrony' in result_223.results[1].stdout %}
+Condion       = Success
+State         = All parameter(user) configure in chrony.conf
+{%else%}
+Condion       = Failed
+State         = Some Parameter(user) not configured in chrony.conf
+{%endif%}
+{%endif%}
+{%else%}
+Condition     = failed
+State         = chrony Package not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 224 - Ensure X Window System is not installed
+{% if result_224.stdout == '' %}
+Condion       = Success
+State         = X Window System is not installed
+{%else%}
+Condion       = Failed
+State         = X Window System is installed.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 224 - Ensure X Window System is not installed
+{% if result_224a.stdout == '' %}
+Condion       = Success
+State         = X Window System is not installed
+{%else%}
+Condion       = Failed
+State         = X Window System is installed.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 225 - Ensure Avahi Server is not enabled
+{% if result_225.stdout != '' %}
+{% if 'disabled' in result_225.stdout %}
+Condion       = Success
+State         = Avahi deamon services are not enabled
+{%else%}
+Condion       = Failed
+State         = Avahi deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = Avahi deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 226 - Ensure CUPS is not enabled
+{% if result_226.stdout != '' %}
+{% if 'disabled' in result_226.stdout %}
+Condion       = Success
+State         = Cups services are not enabled
+{%else%}
+Condion       = Failed
+State         = Cups deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = Cups deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 227 - Ensure DHCP Server is not enabled
+{% if result_227.stdout != '' %}
+{% if 'disabled' in result_227.stdout %}
+Condion       = Success
+State         = DHCP services are not enabled
+{%else%}
+Condion       = Failed
+State         = DHCP deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = DHCP deamon services are not found.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 227 - Ensure DHCP Server is not enabled
+{% if result_227a.results[0].stdout != '' and result_227a.results[1].stdout != '' %}
+{% if 'disabled' in result_227a.results[0].stdout and 'disabled' in result_227a.results[1].stdout %}
+Condion       = Success
+State         = DHCP services are not enabled
+{%else%}
+Condion       = Failed
+State         = DHCP services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = DHCP deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 228 - Ensure LDAP server is not enabled
+{% if result_228.stdout != '' %}
+{% if 'disabled' in result_228.stdout %}
+Condion       = Success
+State         = LDAP services are not enabled
+{%else%}
+Condion       = Failed
+State         = LDAP deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = LDAP deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 229 - Ensure nfs Server is not enabled
+{% if result_229.results[0].stdout != '' and result_229.results[1].stdout != '' and result_229.results[2].stdout != '' %}
+{% if 'disabled' in result_229.results[0].stdout and 'disabled' in result_229.results[1].stdout and 'disabled' in result_229.results[2].stdout %}
+Condion       = Success
+State         = Nfs services are not enabled
+{%else%}
+Condion       = Failed
+State         = Nfs services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = Nfs deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "Ubuntu" %}
+category: 229 - Ensure nfs Server is not enabled
+{% if result_229a.results[0].stdout != '' and result_229a.results[1].stdout != '' %}
+{% if 'disabled' in result_229a.results[0].stdout and 'disabled' in result_229a.results[1].stdout %}
+Condion       = Success
+State         = Nfs services are not enabled
+{%else%}
+Condion       = Failed
+State         = Nfs services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = Nfs deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 230 - Ensure DNS Server is not enabled
+{% if result_230.stdout != '' %}
+{% if 'disabled' in result_230.stdout %}
+Condion       = Success
+State         = DNS services are not enabled
+{%else%}
+Condion       = Failed
+State         = DNS services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = DNS deamon services are not found.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 230 - Ensure DNS Server is not enabled
+{% if result_230a.stdout != '' %}
+{% if 'disabled' in result_230a.stdout %}
+Condion       = Success
+State         = Bind9 services are not enabled
+{%else%}
+Condion       = Failed
+State         = Bind9 services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = Bind9 deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 231 - Ensure FTP Server is not enabled
+{% if result_231.stdout != '' %}
+{% if 'disabled' in result_231.stdout %}
+Condion       = Success
+State         = FTP services are not enabled
+{%else%}
+Condion       = Failed
+State         = FTP deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = FTP deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 232 - Ensure HTTPd Server is not enabled
+{% if result_232.stdout != '' %}
+{% if 'disabled' in result_232.stdout %}
+Condion       = Success
+State         = HTTPd services are not enabled
+{%else%}
+Condion       = Failed
+State         = HTTPd deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = HTTPd deamon services are not found.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 232 - Ensure HTTPd Server is not enabled
+{% if result_232a.stdout != '' %}
+{% if 'disabled' in result_232a.stdout %}
+Condion       = Success
+State         = Apache2 services are not enabled
+{%else%}
+Condion       = Failed
+State         = Apache2 deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = Apache2 deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 233 - Ensure IMAP and POP3 server is not enabled
+{% if result_233.stdout != '' %}
+{% if 'disabled' in result_233.stdout %}
+Condion       = Success
+State         = Devecot services are not enabled
+{%else%}
+Condion       = Failed
+State         = Devecot deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = Devecot deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 234 - Ensure samba Server is not enabled
+{% if result_234.stdout != '' %}
+{% if 'disabled' in result_234.stdout %}
+Condion       = Success
+State         = Smb services are not enabled
+{%else%}
+Condion       = Failed
+State         = Smb deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = Smb deamon services are not found.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 234 - Ensure samba Server is not enabled
+{% if result_234a.stdout != '' %}
+{% if 'disabled' in result_234a.stdout %}
+Condion       = Success
+State         = Smbd services are not enabled
+{%else%}
+Condion       = Failed
+State         = Smbd deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = Smbd deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 235 - Ensure  HTTP Proxy Server is not enabled
+{% if result_235.stdout != '' %}
+{% if 'disabled' in result_235.stdout %}
+Condion       = Success
+State         = HTTP Proxy services are not enabled
+{%else%}
+Condion       = Failed
+State         = HTTP Proxy deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = HTTP Proxy deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 236 - Ensure SNMP Server is not enabled
+{% if result_236.stdout != '' %}
+{% if 'disabled' in result_236.stdout %}
+Condion       = Success
+State         = SNMP services are not enabled
+{%else%}
+Condion       = Failed
+State         = SNMP deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = SNMP deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 237 - Ensure mail transfer agent is configured for local-only mode
+{% if result_237.stdout != '' %}
+{% if 'loopback-only' in result_237.stdout %}
+Condion       = Success
+State         = Mail transfer agent is configured for local-only mode
+{%else%}
+Condion       = Failed
+State         = Mail transfer agent is not configured for local-only mode
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = Postfix deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 238 - Ensure NIS Server is not enabled
+{% if result_238.stdout != '' %}
+{% if 'disabled' in result_238.stdout %}
+Condion       = Success
+State         = NIS services are not enabled
+{%else%}
+Condion       = Failed
+State         = NIS deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = NIS deamon services are not found.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 238 - Ensure NIS Server is not enabled
+{% if result_238a.stdout != '' %}
+{% if 'disabled' in result_238a.stdout %}
+Condion       = Success
+State         = NIS services are not enabled
+{%else%}
+Condion       = Failed
+State         = NIS deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = NIS deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 239 - Ensure rsh server is not enabled
+{% if result_239.stdout != '' %}
+{% if 'disabled' in result_239.stdout %}
+Condion       = Success
+State         = rsh services are not enabled
+{%else%}
+Condion       = Failed
+State         = rsh deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = rsh deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 240 - Ensure telnet Server is not enabled
+{% if result_240.stdout != '' %}
+{% if 'disabled' in result_240.stdout %}
+Condion       = Success
+State         = telnet services are not enabled
+{%else%}
+Condion       = Failed
+State         = telnet deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = telnet deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 241 - Ensure tftp server is not enabled
+{% if result_241.stdout != '' %}
+{% if 'disabled' in result_241.stdout %}
+Condion       = Success
+State         = tftp services are not enabled
+{%else%}
+Condion       = Failed
+State         = tftp deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = tftp deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 242 - Ensure rsync service is not enabled
+{% if result_242.stdout != '' %}
+{% if 'disabled' in result_242.stdout %}
+Condion       = Success
+State         = Rsync services are not enabled
+{%else%}
+Condion       = Failed
+State         = Rsync deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = Rsync deamon services are not found.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 242 - Ensure rsync service is not enabled
+{% if result_242a.stdout != '' %}
+{% if 'disabled' in result_242a.stdout %}
+Condion       = Success
+State         = Rsync services are not enabled
+{%else%}
+Condion       = Failed
+State         = Rsync deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = Rsync deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 243 - Ensure talk Server is not enabled
+{% if result_243.stdout != '' %}
+{% if 'disabled' in result_243.stdout %}
+Condion       = Success
+State         = talk services are not enabled
+{%else%}
+Condion       = Failed
+State         = talk deamon services are enabled
+{%endif%}
+{%else%}
+Condition     = Success
+State:        = talk deamon services are not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 251 - Ensure NIS Client is not installed
+{% if result_251.stdout == '' %}
+Condion       = Success
+State         = Package NIS Client is not installed
+{%else%}
+Condion       = Failed
+State         = Package NIS Client Package is installed.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 251 - Ensure NIS Client is not installed
+{% if result_251a.stdout == '' %}
+Condion       = Success
+State         = Package NIS Client is not installed
+{%else%}
+Condion       = Failed
+State         = Package NIS Client Package is installed.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 252 - Ensure rsh client is not installed
+{% if result_252.stdout == '' %}
+Condion       = Success
+State         = Package rsh client is not installed
+{%else%}
+Condion       = Failed
+State         = Package client Package is installed.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 252 - Ensure rsh client is not installed
+{% if result_252a.results[0].stdout == '' and result_252a.results[1].stdout == '' %}
+Condion       = Success
+State         = Package rsh client is not installed
+{%else%}
+Condion       = Failed
+State         = Package client Package is installed.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 253 - Ensure talk client is not installed
+{% if result_253.stdout == '' %}
+Condion       = Success
+State         = Package talk client is not installed
+{%else%}
+Condion       = Failed
+State         = Package talk client is installed
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 253 - Ensure talk client is not installed
+{% if result_253a.stdout == '' %}
+Condion       = Success
+State         = Package talk client is not installed
+{%else%}
+Condion       = Failed
+State         = Package talk client is installed
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 254 - Ensure telnet client is not installed
+{% if result_254.stdout == '' %}
+Condion       = Success
+State         = Package telnet client is not installed
+{%else%}
+Condion       = Failed
+State         = Package telnet client is installed
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 254 - Ensure telnet client is not installed
+{% if result_254a.stdout == '' %}
+Condion       = Success
+State         = Package telnet client is not installed
+{%else%}
+Condion       = Failed
+State         = Package telnet client is installed
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 255 - Ensure LDAP client is not installed
+{% if result_255.stdout == '' %}
+Condion       = Success
+State         = Package openldap-clients is not installed
+{%else%}
+Condion       = Failed
+State         = Package openldap-clients is installed
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 255 - Ensure LDAP client is not installed
+{% if result_255a.stdout == '' %}
+Condion       = Success
+State         = Package openldap-clients is not installed
+{%else%}
+Condion       = Failed
+State         = Package openldap-clients is installed
+{%endif%}
+{%endif%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 311 - Ensure IP forwarding is disabled
+{% if result_311.stdout != '' %}
+{% if '0' in result_311.stdout %}
+Condion       = Success
+state         = {{result_311.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 312 - Ensure packet redirect sending is disabled
+{% if result_312.results[0].stdout != '' %}
+{% if '0' in result_312.results[0].stdout != '' %}
+Condion       = Success
+state         = {{result_312.results[0].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{% if result_312.results[1].stdout != '' %}
+{% if '0' in result_312.results[1].stdout != '' %}
+Condion       = Success
+state         = {{result_312.results[1].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 313 - Ensure source routed packets are not accepted
+{% if result_313.results[0].stdout != '' %}
+{% if '0' in result_313.results[0].stdout != '' %}
+Condion       = Success
+state         = {{result_313.results[0].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{% if result_313.results[1].stdout != '' %}
+{% if '0' in result_313.results[1].stdout != '' %}
+Condion       = Success
+state         = {{result_313.results[1].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 314 - Ensure ICMP redirects are not accepted
+{% if result_314.results[0].stdout != '' %}
+{% if '0' in result_314.results[0].stdout != '' %}
+Condion       = Success
+state         = {{result_314.results[0].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{% if result_314.results[1].stdout != '' %}
+{% if '0' in result_314.results[1].stdout != '' %}
+Condion       = Success
+state         = {{result_314.results[1].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 315 - Ensure secure ICMP redirects are not accepted
+{% if result_315.results[0].stdout != '' %}
+{% if '0' in result_315.results[0].stdout != '' %}
+Condion       = Success
+state         = {{result_315.results[0].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{% if result_315.results[1].stdout != '' %}
+{% if '0' in result_315.results[1].stdout != '' %}
+Condion       = Success
+state         = {{result_315.results[1].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 316 - Ensure suspicious packets are logged
+{% if result_316.results[0].stdout != '' %}
+{% if '1' in result_316.results[0].stdout != '' %}
+Condion       = Success
+state         = {{result_316.results[0].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{% if result_316.results[1].stdout != '' %}
+{% if '1' in result_316.results[1].stdout != '' %}
+Condion       = Success
+state         = {{result_316.results[1].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 317 - Ensure broadcast ICMP requests are ignored
+{% if result_317.stdout != '' %}
+{% if '1' in result_317.stdout %}
+Condion       = Success
+state         = {{result_317.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 318 - Ensure bogus ICMP responses are ignored
+{% if result_318.stdout != '' %}
+{% if '1' in result_318.stdout %}
+Condion       = Success
+state         = {{result_318.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 319 - Ensure Reverse Path Filtering is enabled
+{% if result_319.results[0].stdout != '' %}
+{% if '1' in result_319.results[0].stdout != '' %}
+Condion       = Success
+state         = {{result_319.results[0].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{% if result_319.results[1].stdout != '' %}
+{% if '1' in result_319.results[1].stdout != '' %}
+Condion       = Success
+state         = {{result_319.results[1].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 320 - Ensure TCP SYN Cookies is enabled
+{% if result_320.stdout != '' %}
+{% if '1' in result_320.stdout %}
+Condion       = Success
+state         = {{result_320.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 331 - Ensure IPv6 router advertisements are not accepted
+{% if result_331.results[0].stdout != '' %}
+{% if '0' in result_331.results[0].stdout != '' %}
+Condion       = Success
+state         = {{result_331.results[0].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{% if result_331.results[1].stdout != '' %}
+{% if '0' in result_331.results[1].stdout != '' %}
+Condion       = Success
+state         = {{result_331.results[1].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 332 - Ensure IPv6 redirects are not accepted
+{% if result_332.results[0].stdout != '' %}
+{% if '0' in result_332.results[0].stdout != '' %}
+Condion       = Success
+state         = {{result_332.results[0].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{% if result_332.results[1].stdout != '' %}
+{% if '0' in result_332.results[1].stdout != '' %}
+Condion       = Success
+state         = {{result_332.results[1].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 333 - Ensure IPv6 is disabled
+{% if result_333.stdout != '' %}
+{% if 'ipv6.disable=1' in result_333.stdout %}
+Condion       = Success
+state         = {{result_333.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 333 - Ensure IPv6 is disabled
+{% if result_333a.stdout != '' %}
+{% if '1' in result_333a.stdout %}
+Condion       = Success
+state         = {{result_333a.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" %}
+category: 341 - Ensure TCP Wrappers is installed
+{% if result_341c.stdout != '' %}
+Condion       = Success
+state         = {{result_341c.stdout}}
+{%else%}
+Condion       = Failed
+state         = tcp_wrappers not installed
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 341 - Ensure TCP Wrappers is installed
+{% if result_341a.stdout != '' %}
+Condion       = Success
+state         = tcpd Package is installed
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "SLES" %}
+category: 341 - Ensure TCP Wrappers is installed
+{% if result_341b.stdout != '' %}
+Condion       = Success
+state         = {{result_341b.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 342 - Ensure /etc/hosts.allow is configured
+{% if result_342.stdout != '' %}
+Condion       = Success
+state         = {{result_342.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 343 - Ensure /etc/hosts.deny is configured
+{% if result_343.stdout != '' %}
+Condion       = Success
+state         = {{result_343.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 344 - Ensure permissions on /etc/hosts.allow are configured
+{% if result_344.stat.exists == true %}
+{% if result_344.stat.mode == "0644" and result_344.stat.pw_name == "root" and result_344.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 345 - Ensure permissions on /etc/hosts.deny are configured
+{% if result_345.stat.exists == true %}
+{% if result_345.stat.mode == "0644" and result_345.stat.pw_name == "root" and result_345.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 351 - Ensure DCCP is disabled
+{% if result_351.stdout != '' %}
+Condion       = Success
+state         = {{result_351.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 352 - Ensure sctp is disabled
+{% if result_352.stdout != '' %}
+Condion       = Success
+state         = {{result_352.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 353 - Ensure rds is disabled
+{% if result_353.stdout != '' %}
+Condion       = Success
+state         = {{result_353.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 354 - Ensure TIPC is disabled
+{% if result_354.stdout != '' %}
+Condion       = Success
+state         = {{result_354.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" %}
+category: 361 - Ensure Iptables is installed
+{% if result_361b.stdout != '' %}
+Condion       = Success
+state         = {{result_361b.stdout}}
+{%else%}
+Condion       = Failed
+state         = Iptables not installed
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 361 - Ensure Iptables is installed
+{% if result_361a.stdout != '' %}
+Condion       = Success
+state         = Iptables Package is installed
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 362 - Ensure firewalld is installed
+{% if result_362b.stdout != '' %}
+Condion       = Success
+state         = {{result_362b.stdout}}
+{%else%}
+Condion       = Failed
+state         = Firewalld not installed
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 361 - Ensure Iptables is installed
+{% if result_361a.stdout != '' %}
+Condion       = Success
+state         = Firewalld Package is installed
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 411 - Ensure audit log storage size is configured
+{% if result_411.stdout != '' %}
+{% if 'MB' in result_411.stdout %}
+Condion       = Success
+state         = {{result_411.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 412 - Ensure audit log storage size is configured
+space_left_action status
+{% if result_412.results[0].stdout != '' %}
+{% if 'email' in result_412.results[0].stdout != '' %}
+Condion       = Success
+state         = {{result_412.results[0].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+action_mail_acct status
+{% if result_412.results[1].stdout != '' %}
+{% if 'root' in result_412.results[1].stdout != '' %}
+Condion       = Success
+state         = {{result_412.results[1].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+admin_space_left_action status
+{% if result_412.results[2].stdout != '' %}
+{% if 'halt' in result_412.results[2].stdout != '' %}
+Condion       = Success
+state         = {{result_412.results[2].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 413 - Ensure audit logs are not automatically deleted
+{% if result_413.stdout != '' %}
+{% if 'keep_logs' in result_413.stdout %}
+Condion       = Success
+state         = {{result_413.stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 414 - Ensure auditd daemon is enabled
+{% if result_414.stdout != "" %}
+{% if 'enabled' in result_414.stdout %}
+Condion       = Success
+state         = auditd status {{result_414.stdout}}
+{%else%}
+Condion       = Failed
+state         = auditd status {{result_414.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Audit Package not installed / started
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 415 - Ensure auditing for processes that start prior to auditd is enabled
+{% if result_415.stdout != "" %}
+{% if 'audit=1' in result_415.stdout %}
+Condion       = Success
+state         = auditd status {{result_415.stdout}}
+{%else%}
+Condion       = Failed
+state         = auditd status {{result_415.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 415 - Ensure auditing for processes that start prior to auditd is enabled
+{% if result_415a.stdout != "" %}
+{% if 'audit=1' in result_415a.stdout %}
+Condion       = Success
+state         = {{result_415a.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_415a.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 416 - Ensure events that modify date and time information are collected
+{% if result_416.stdout != "" %}
+{% if 'time-change' in result_416.stdout %}
+Condion       = Success
+state         = {{result_416.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_416.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 417 - Ensure events that modify user/group information are collected
+{% if result_417.stdout != "" %}
+{% if 'identity' in result_417.stdout %}
+Condion       = Success
+state         = {{result_417.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_417.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 418 - Ensure events that modify the system's network environment are collected
+{% if result_418.stdout != "" %}
+{% if 'system-locale' in result_418.stdout %}
+Condion       = Success
+state         = {{result_418.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_418.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 419 - Ensure events that modify the system's Mandatory Access Controls are collected
+{% if result_419.stdout != "" %}
+{% if 'MAC-policy' in result_419.stdout %}
+Condion       = Success
+state         = {{result_419.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_419.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 420 - Ensure session initiation information is collected
+{% if result_420.stdout != "" %}
+{% if 'session' in result_420.stdout %}
+Condion       = Success
+state         = {{result_420.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_420.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 421 - Ensure discretionary access control permission modification events are collected
+{% if result_421.stdout != "" %}
+{% if 'perm_mod' in result_421.stdout %}
+Condion       = Success
+state         = {{result_421.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_421.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 422 - Ensure events that modify the system's Mandatory Access Controls are collected
+{% if result_422.stdout != "" %}
+{% if 'access' in result_422.stdout %}
+Condion       = Success
+state         = {{result_422.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_422.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 424 - Ensure successful file system mounts are collected
+{% if result_424.stdout != "" %}
+{% if 'mounts' in result_424.stdout %}
+Condion       = Success
+state         = {{result_424.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_424.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 425 - Ensure file deletion events by users are collected
+{% if result_425.stdout != "" %}
+{% if 'delete' in result_425.stdout %}
+Condion       = Success
+state         = {{result_425.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_425.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 426 - Ensure changes to system administration scope (sudoers) is collected
+{% if result_426.stdout != "" %}
+{% if 'scope' in result_426.stdout %}
+Condion       = Success
+state         = {{result_426.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_426.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 427 - Ensure system administrator actions (sudolog) are collected
+{% if result_427.stdout != "" %}
+{% if 'actions' in result_427.stdout %}
+Condion       = Success
+state         = {{result_427.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_427.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 428 - Ensure system administrator actions (sudolog) are collected
+{% if result_428.stdout != "" %}
+{% if 'modules' in result_428.stdout %}
+Condion       = Success
+state         = {{result_428.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_428.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 429 - Ensure the audit configuration is immutable
+{% if result_429.stdout != "" %}
+{% if '-e 2' in result_429.stdout %}
+Condion       = Success
+state         = {{result_429.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_429.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 430 - Ensure login and logout events are collected
+{% if result_430.stdout != "" %}
+{% if 'logins' in result_430.stdout %}
+Condion       = Success
+state         = {{result_430.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_430.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+State         = Parameter is not configure.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 431 - Ensure rsyslog daemon is enabled
+{% if result_431.stdout != "" %}
+{% if 'enabled' in result_431.stdout %}
+Condion       = Success
+state         = rsyslog status {{result_431.stdout}}
+{%else%}
+Condion       = Failed
+state         = rsyslog status {{result_431.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+state         = Rsyslog not installed
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 433 - Ensure rsyslog default file permissions configured
+{% if result_433.stdout != "" %}
+{% if 'FileCreateMode' in result_433.stdout %}
+Condion       = Success
+state         = {{result_433.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_433.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 434 - Ensure rsyslog is configured to send logs to a remote log host
+{% if result_434.stdout != "" %}
+{% if '@@' in result_434.stdout %}
+Condion       = Success
+state         = {{result_434.stdout}}
+{%else%}
+Condion       = Failed
+state         = {{result_434.stdout}}
+{%endif%}
+{%else%}
+Condition     = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 435 - Ensure remote rsyslog messages are only accepted on designated log hosts
+ModLoad imtcp Parameter:
+{% if result_435.results[0].stdout != '' %}
+{% if 'imtcp' in result_435.results[0].stdout != '' %}
+Condion       = Success
+state         = {{result_435.results[0].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+InputTCPServerRun Parameter:
+{% if result_435.results[1].stdout != '' %}
+{% if 'tcp' in result_435.results[1].stdout != '' %}
+Condion       = Success
+state         = {{result_435.results[1].stdout}}
+{%else%}
+Condion       = Failed
+state         = Parameter is match
+{%endif%}
+{%else%}
+Condion       = Failed
+state         = Parameter is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" %}
+category: 511 - Ensure cron daemon is enabled
+{% if 'enabled' in result_511.stdout %}
+Condion       = Success
+state         = cron status {{result_511.stdout}}
+{%else%}
+Condion       = Failed
+state         = cron status {{result_511.stdout}}
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 511 - Ensure cron daemon is enabled
+{% if 'enabled' in result_511a.stdout %}
+Condion       = Success
+state         = cron status {{result_511a.stdout}}
+{%else%}
+Condion       = Failed
+state         = cron status {{result_511a.stdout}}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 512 - Ensure permissions on /etc/crontab are configured
+{% if result_512.stat.exists == true %}
+{% if result_512.stat.mode == "0600" and result_512.stat.pw_name == "root" and result_512.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 513 - Ensure permissions on /etc/cron.hourly are configured
+{% if result_513.stat.exists == true %}
+{% if result_513.stat.mode == "0700" and result_513.stat.pw_name == "root" and result_513.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 514 - Ensure permissions on /etc/cron.daily are configured
+{% if result_514.stat.exists == true %}
+{% if result_514.stat.mode == "0700" and result_514.stat.pw_name == "root" and result_514.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 515 - Ensure permissions on /etc/cron.weekly are configured
+{% if result_515.stat.exists == true %}
+{% if result_515.stat.mode == "0700" and result_515.stat.pw_name == "root" and result_515.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 516 - Ensure permissions on /etc/cron.monthly are configured
+{% if result_516.stat.exists == true %}
+{% if result_516.stat.mode == "0700" and result_516.stat.pw_name == "root" and result_516.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 517 - Ensure permissions on /etc/cron.d are configured
+{% if result_517.stat.exists == true %}
+{% if result_517.stat.mode == "0700" and result_517.stat.pw_name == "root" and result_517.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 518 - Ensure permissions on /etc/at.allow are configured
+{% if result_518.stat.exists == true %}
+{% if result_518.stat.mode == "0600" and result_518.stat.pw_name == "root" and result_518.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = /etc/at.allow file not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 519 - Ensure permissions on /etc/cron.allow are configured
+{% if result_519.stat.exists == true %}
+{% if result_519.stat.mode == "0600" and result_519.stat.pw_name == "root" and result_519.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = /etc/cron.allow file not found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 520 - Ensure permissions on /etc/at.deny are configured
+{% if result_520.stat.exists == false %}
+Condion       = Success
+State         = /etc/at.deny file was not found
+{%else%}
+Condion       = Failed
+State         = /etc/at.deny file was found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 521 - Ensure permissions on /etc/cron.deny are configured
+{% if result_521.stat.exists == false %}
+Condion       = Success
+State         = /etc/cron.deny file was not found
+{%else%}
+Condion       = Failed
+State         = /etc/cron.deny file was found
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 531 - Ensure permissions on /etc/ssh/sshd_config are configured
+{% if result_531.stat.exists == true %}
+{% if result_531.stat.mode == "0600" and result_531.stat.pw_name == "root" and result_531.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 532 - Ensure SSH Protocol is set to 2
+{% if  result_532.stdout != "" %}
+{% if '2' in result_532.stdout %}
+Condion       = Success
+State         = {{result_532.stdout}}
+{%else%}
+Condion       = Failed
+State         = Protocol value MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = Protocol Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 533 - Ensure SSH LogLevel is set to INFO
+{% if  result_533.stdout != "" %}
+{% if 'INFO' in result_533.stdout or 'DEBUG' in result_533.stdout %}
+Condion       = Success
+State         = {{result_533.stdout}}
+{%else%}
+Condion       = Failed
+State         = Log value MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = Log Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 534 - Ensure SSH X11 forwarding is disabled
+{% if  result_534.stdout != "" %}
+{% if 'no' in result_534.stdout %}
+Condion       = Success
+State         = {{result_534.stdout}}
+{%else%}
+Condion       = Failed
+State         = X11 forwarding value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = X11 forwarding not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 535 - Ensure SSH MaxAuthTries is set to 4 or less
+{% if  result_535.stdout != "" %}
+{% if '1' in result_535.stdout or '2' in result_535.stdout or '3' in result_535.stdout or '4' in result_535.stdout %}
+Condion       = Success
+State         = {{result_535.stdout}}
+{%else%}
+Condion       = Failed
+State         = MaxAuthTries value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = Log Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 536 - Ensure SSH IgnoreRhosts is enabled
+{% if  result_536.stdout != "" %}
+{% if 'yes' in result_536.stdout %}
+Condion       = Success
+State         = {{result_536.stdout}}
+{%else%}
+Condion       = Failed
+State         = IgnoreRhosts value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = IgnoreRhosts Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 537 - Ensure SSH HostbasedAuthentication is disabled
+{% if  result_537.stdout != "" %}
+{% if 'no' in result_537.stdout %}
+Condion       = Success
+State         = {{result_537.stdout}}
+{%else%}
+Condion       = Failed
+State         = HostbasedAuthentication value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = HostbasedAuthentication Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 538 - Ensure SSH root login is disabled
+{% if  result_538.stdout != "" %}
+{% if 'no' in result_538.stdout %}
+Condion       = Success
+State         = {{result_538.stdout}}
+{%else%}
+Condion       = Failed
+State         = root login value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = root login Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 539 - Ensure SSH PermitEmptyPasswords is disabled
+{% if  result_539.stdout != "" %}
+{% if 'no' in result_539.stdout %}
+Condion       = Success
+State         = {{result_539.stdout}}
+{%else%}
+Condion       = Failed
+State         = PermitEmptyPasswords value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = PermitEmptyPasswords Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 540 - Ensure SSH PermitUserEnvironment is disabled
+{% if  result_540.stdout != "" %}
+{% if 'no' in result_540.stdout %}
+Condion       = Success
+State         = {{result_540.stdout}}
+{%else%}
+Condion       = Failed
+State         = PermitUserEnvironment value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = PermitUserEnvironment Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 541 - Ensure only approved ciphers are used
+{% if  result_541.stdout != "" %}
+{% if 'aes128-ctr' in result_541.stdout or 'aes256-ctr' in result_541.stdout %}
+Condion       = Success
+State         = {{result_541.stdout}}
+{%else%}
+Condion       = Failed
+State         = cipher value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = cipher Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 542 - Ensure only approved MAC algorithms are used
+{% if  result_542.stdout != "" %}
+{% if 'sha2' in result_542.stdout %}
+Condion       = Success
+State         = {{result_542.stdout}}
+{%else%}
+Condion       = Failed
+State         = MACs value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = MACs Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 543 - Ensure SSH Idle Timeout Interval - ClientAliveInterval is configured
+{% if  result_543.stdout != "" %}
+{% if '300' in result_543.stdout %}
+Condion       = Success
+State         = {{result_543.stdout}}
+{%else%}
+Condion       = Failed
+State         = ClientAliveInterval value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = ClientAliveInterval Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 544 - Ensure SSH Idle Timeout Interval - ClientAliveCountMax is configured
+{% if  result_544.stdout != "" %}
+{% if '0' in result_544.stdout %}
+Condion       = Success
+State         = {{result_544.stdout}}
+{%else%}
+Condion       = Failed
+State         = ClientAliveCountMax value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = ClientAliveCountMax Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 545 - Ensure SSH LoginGraceTime is set to one minute or less
+{% if  result_545.stdout != "" %}
+{% if '60' in result_545.stdout or '0' in result_545.stdout %}
+Condion       = Success
+State         = {{result_545.stdout}}
+{%else%}
+Condion       = Failed
+State         = LoginGraceTime value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = LoginGraceTime Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 546 - Ensure SSH access - AllowUsers is limited
+{% if  result_546.stdout != "" %}
+{% if 'AllowUsers' in result_546.stdout %}
+Condion       = Success
+State         = {{result_546.stdout}}
+{%else%}
+Condion       = Failed
+State         = AllowUsers value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = AllowUsers Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 547 - Ensure SSH access - AllowGroups is limited
+{% if  result_547.stdout != "" %}
+{% if 'AllowGroups' in result_547.stdout %}
+Condion       = Success
+State         = {{result_547.stdout}}
+{%else%}
+Condion       = Failed
+State         = AllowGroups value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = AllowGroups Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 548 - Ensure SSH access - DenyUsers is limited
+{% if  result_548.stdout != "" %}
+{% if 'DenyUsers' in result_548.stdout %}
+Condion       = Success
+State         = {{result_548.stdout}}
+{%else%}
+Condion       = Failed
+State         = DenyUsers value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = DenyUsers Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 549 - Ensure SSH access - DenyGroups is limited
+{% if  result_549.stdout != "" %}
+{% if 'DenyGroups' in result_549.stdout %}
+Condion       = Success
+State         = {{result_549.stdout}}
+{%else%}
+Condion       = Failed
+State         = DenyGroups value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = DenyGroups Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 550 - Ensure SSH access - Banner is limited
+{% if  result_550.stdout != "" %}
+{% if 'Authorized' in result_550.stdout or 'activity' in result_550.stdout %}
+Condion       = Success
+State         = {{result_550.stdout}}
+{%else%}
+Condion       = Failed
+State         = Banner value is MisMatch
+{%endif%}
+{%else%}
+Condion       = Failed
+State         = Banner Parameter not configure in /etc/ssh/sshd_config
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 571 - Ensure password expiration is 90 days or less
+{% if '90' in result_571.stdout %}
+Condion       = Success
+State         = {{result_571.stdout}}
+{%else%}
+Condion       = Failed
+State         = Password expiration days value is MisMatch
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 571a- Ensure password expiration is 90 days or less - user's list
+{% if  result_571a.stdout == "" %}
+Condion       = Success
+State         = All user's password expiration is 90 days or less
+{%else%}
+Condion       = Failed
+State         = Password expiration days value is MisMatch
+{% for i in result_571a.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 572 - Ensure minimum days between password changes is 7 or more
+{% if '7' in result_572.stdout %}
+Condion       = Success
+State         = {{result_572.stdout}}
+{%else%}
+Condion       = Failed
+State         = value is MisMatch
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 572a- Ensure minimum days between password changes is 7 or more - user's list
+{% if  result_572a.stdout == "" %}
+Condion       = Success
+State         = minimum days between password changes is 7
+{%else%}
+Condion       = Failed
+State         = minimum days between password changes value is MisMatch
+{% for i in result_572a.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 573 - Ensure password expiration warning days is 7 or more
+{% if '7' in result_573.stdout != "" %}
+Condion       = Success
+State         = {{result_573.stdout}}
+{%else%}
+Condion       = Failed
+State         = password expiration warning days value is MisMatch
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 573a- Ensure password expiration warning days is 7 or more - user's list
+{% if  result_573a.stdout == "" %}
+Condion       = Success
+State         = All user's password expiration warning days is 7
+{%else%}
+Condion       = Failed
+State         = Password expiration warning days value is MisMatch
+{% for i in result_573a.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 574 - Ensure inactive password lock is 30 days or less
+{% if  result_574.stdout != "" %}
+Condion       = Success
+State         = {{result_574.stdout}}
+{%else%}
+Condion       = Failed
+State         = inactive password lock value is MisMatch
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 575 - Ensure all users last password change date is in the past
+{% if  result_575.results | json_query('[].stdout_lines[]') != "" %}
+Condion       = Query
+{% for i in result_575.results | json_query('[]') %}
+              {{loop.index}} - {{i.item.ljust(20)}} - Last Password Change - {{i.stdout}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" or ansible_distribution == "SLES" %}
+category: 576 - Ensure system accounts are non-login
+{% if  result_576.stdout == "" %}
+Condion       = Success
+State         = system user are non-login not found
+{%else%}
+Condion       = Failed
+State         = system user are non-login found
+{% for i in result_576.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" %}
+category: 576 - Ensure system accounts are non-login
+{% if  result_576a.stdout == "" %}
+Condion       = Success
+State         = system user are non-login not found
+{%else%}
+Condion       = Failed
+State         = system user are non-login found
+{% for i in result_576a.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "Ubuntu" %}
+category: 577 - Ensure default group for the root account is GID 0
+{% if  result_577.stdout == "0" %}
+Condion       = Success
+State         = default group for the root account is GID 0
+{%else%}
+Condion       = Failed
+State         = default group for the root account is GID non zero
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "Ubuntu" %}
+category: 578 - Ensure default user umask is TMOUT or more restrictive
+{% if '027' in  result_578a.results | json_query('[].stdout[]') %}
+Condion       = Success
+State         = Default user umask is 027
+{%else%}
+Condion       = Failed
+State         = Ensure default user umask is 027 not found.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "SLES" %}
+category: 578 - Ensure default user umask is TMOUT or more restrictive
+{% if '027' in  result_578b.results | json_query('[].stdout[]') %}
+Condion       = Success
+State         = Default user umask is 027
+{%else%}
+Condion       = Failed
+State         = Ensure default user umask is (027) not found.
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" %}
+category: 578 - Ensure default user umask is 027 or more restrictive
+{% if '027' in  result_578c.results | json_query('[].stdout[]') %}
+Condion       = Success
+State         = Default user umask is 027
+{%else%}
+Condion       = Failed
+State         = Ensure default user umask is (027) not found.
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "Ubuntu" %}
+category: 579 - Ensure default user shell timeout is 900 seconds or less
+{% if 'TMOUT' in  result_579a.results | json_query('[].stdout[]') %}
+Condion       = Success
+State         = {{result_579a.results | json_query('[].stdout[]')}}
+{%else%}
+Condion       = Failed
+State         = default user shell timeout is not configure
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "SLES" %}
+category: 579 - Ensure default user shell timeout is 900 seconds or less
+{% if 'TMOUT' in  result_579b.results | json_query('[].stdout[]') %}
+Condion       = Success
+State         = Default user shell timeout is 900 seconds or less
+{%else%}
+Condion       = Failed
+State         = Default user shell timeout is not configure
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" %}
+category: 579 - Ensure default user shell timeout is 900 seconds or less
+{% if 'TMOUT' in  result_579c.results | json_query('[].stdout[]') %}
+Condion       = Success
+State         = Default user shell timeout is 900 seconds or less
+{%else%}
+Condion       = Failed
+State         = Default user shell timeout is not configure
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 601 - Ensure permissions on /etc/passwd are configured
+{% if result_601.stat.exists == true %}
+{% if result_601.stat.mode == "0644" and result_601.stat.pw_name == "root" and result_601.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" %}
+category: 602 - Ensure permissions on /etc/shadow are configured
+{% if result_602.stat.exists == true %}
+{% if result_602.stat.mode == "0000" and result_602.stat.pw_name == "root" and result_602.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+{% if result_602.stat.mode == "0640" and result_602.stat.pw_name == "root" and result_602.stat.gr_name == "shadow" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 603 - Ensure permissions on /etc/group are configured
+{% if result_603.stat.exists == true %}
+{% if result_603.stat.mode == "0644" and result_603.stat.pw_name == "root" and result_603.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" %}
+category: 604 - Ensure permissions on /etc/gshadow are configured
+{% if result_604.stat.exists == true %}
+{% if result_604.stat.mode == "0000" and result_604.stat.pw_name == "root" and result_604.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+{% if result_604.stat.mode == "0640" and result_604.stat.pw_name == "root" and result_604.stat.gr_name == "shadow" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 605 - Ensure permissions on /etc/passwd- are configured
+{% if result_605.stat.exists == true %}
+{% if result_605.stat.mode == "0644" and result_605.stat.pw_name == "root" and result_605.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" %}
+category: 606 - Ensure permissions on /etc/shadow- are configured
+{% if result_606.stat.exists == true %}
+{% if result_606.stat.mode == "0000" and result_606.stat.pw_name == "root" and result_606.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 606 - Ensure permissions on /etc/shadow- are configured
+{% if result_606.stat.exists == true %}
+{% if result_606.stat.mode == "0640" and result_606.stat.pw_name == "root" and result_606.stat.gr_name == "shadow" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 607 - Ensure permissions on /etc/group- are configured
+{% if result_607.stat.exists == true %}
+{% if result_607.stat.mode == "0644" and result_607.stat.pw_name == "root" and result_607.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat" %}
+category: 608 - Ensure permissions on /etc/gshadow- are configured
+{% if result_608.stat.exists == true %}
+{% if result_608.stat.mode == "0000" and result_608.stat.pw_name == "root" and result_608.stat.gr_name == "root" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+{% if ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 608 - Ensure permissions on /etc/gshadow- are configured
+{% if result_608.stat.exists == true %}
+{% if result_608.stat.mode == "0640" and result_608.stat.pw_name == "root" and result_608.stat.gr_name == "shadow" %}
+Condion       = Success
+State         = permissions are correct
+{%else%}
+Condion       = Failed
+State         = permissions are incorrect
+{%endif%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 609 - Ensure no world writable files exist
+{% if result_609.stdout == "" %}
+Condion       = Success
+State         = no world writable files exist
+{%else%}
+Condion       = Failed
+State         = world writable files exist found
+{%for i in result_609.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 610 - Ensure no unowned files or directories exist
+{% if result_610.stdout == "" %}
+Condion       = Success
+State         = no unowned files or directories exist
+{%else%}
+Condion       = Failed
+State         = unowned files or directories exist
+{%for i in result_610.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 611 - Ensure no ungrouped files or directories exist
+{% if result_611.stdout == "" %}
+Condion       = Success
+State         = no ungrouped files or directories exist
+{%else%}
+Condion       = Failed
+State         = ungrouped files or directories exist
+{%for i in result_611.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 612 - Audit SUID executables
+{% if result_612.stdout == "" %}
+Condion       = Success
+State         = No SUID executables files
+{%else%}
+Condion       = Failed
+State         = SUID executables files found
+{%for i in result_612.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 613 - Audit SGID executables
+{% if result_613.stdout == "" %}
+Condion       = Success
+State         = No SGID executables files
+{%else%}
+Condion       = Failed
+State         = SGID executables files found
+{%for i in result_613.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 621 - Ensure password fields are not empty
+{% if result_621.stdout == "" %}
+Condion       = Success
+State         = users password fields are not empty
+{%else%}
+Condion       = Failed
+State         = users password fields are empty, following users
+{%for i in result_621.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 622 - Ensure no legacy "+" entries exist in /etc/passwd
+{% if result_622.stdout == "" %}
+Condion       = Success
+State         = no legacy "+" entries exist in /etc/passwd
+{%else%}
+Condion       = Failed
+State         = Legacy "+" entries exist in /etc/passwd
+{%for i in result_622.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 623 - Ensure no legacy "+" entries exist in /etc/shadow
+{% if result_623.stdout == "" %}
+Condion       = Success
+State         = no legacy "+" entries exist in /etc/shadow
+{%else%}
+Condion       = Failed
+State         = Legacy "+" entries exist in /etc/shadow
+{%for i in result_623.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 624 - Ensure no legacy "+" entries exist in /etc/group
+{% if result_624.stdout == "" %}
+Condion       = Success
+State         = no legacy "+" entries exist in /etc/group
+{%else%}
+Condion       = Failed
+State         = Legacy "+" entries exist in /etc/group
+{%for i in result_624.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 625 - Ensure root is the only UID 0 account
+{% if 'root' in result_625.stdout %}
+Condion       = Success
+State         = root is the only UID 0 account
+{%else%}
+Condion       = Failed
+State         = root UID is wrong
+{%for i in result_625.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 626 - Ensure root PATH Integrity
+{% if result_626.stdout == "" %}
+Condion       = Success
+State         = Ensure root PATH Integrity is fine
+{%else%}
+Condion       = Failed
+State         = Ensure root PATH Integrity is wrong
+{%for i in result_626.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 627 - Ensure all users' home directories exist
+{% if result_627.stdout == "" %}
+Condion       = Success
+State         = All users' home directories exist
+{%else%}
+Condion       = Failed
+State         = Some user's dont have home directories exist
+{%for i in result_627.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{#% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 628 - Ensure all users' home directories exist
+{% if result_628.stdout == "" %}
+Condion       = Success
+State         = All users' home directories exist
+{%else%}
+Condion       = Failed
+State         = Some user's dont have home directories exist
+{%for i in result_628.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%#}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 629 - Ensure users own their home directories
+{% if result_629.stdout == "" %}
+Condion       = Success
+State         = All users own their home directories
+{%else%}
+Condion       = Failed
+State         = Some users own their home directories id diffrent
+{%for i in result_629.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 630 - Ensure users own their home directories
+{% if result_630.stdout == "" %}
+Condion       = Success
+State         = Ensure users dot files are not group or world writable
+{%else%}
+Condion       = Failed
+State         = Some users dot files are not group or world writable
+{%for i in result_630.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 631 - Ensure no users have .forward files
+{% if result_631.stdout == "" %}
+Condion       = Success
+State         = no users have .forward file
+{%else%}
+Condion       = Failed
+State         = some users have have .forward files
+{%for i in result_631.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 632 - Ensure no users have .netrc files
+{% if result_632.stdout == "" %}
+Condion       = Success
+State         = no users have .netrc file
+{%else%}
+Condion       = Failed
+State         = some users have have .netrc files
+{%for i in result_632.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 633 - Ensure users' .netrc Files are not group or world accessible
+{% if result_633.stdout == "" %}
+Condion       = Success
+State         = no users .netrc Files are not group or world accessible
+{%else%}
+Condion       = Failed
+State         = some users have have .netrc Files are not group or world accessible
+{%for i in result_633.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 634 - Ensure no users have .rhosts files
+{% if result_634.stdout == "" %}
+Condion       = Success
+State         = no users have .rhosts files
+{%else%}
+Condion       = Failed
+State         = some users have have .rhosts files
+{%for i in result_634.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 635 - Ensure all groups in /etc/passwd exist in /etc/group
+{% if result_635.stdout == "" %}
+Condion       = Success
+State         = All groups in /etc/passwd exist in /etc/group
+{%else%}
+Condion       = Failed
+State         = Some users groups not in /etc/passwd exist in /etc/group
+{%for i in result_635.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 636 - Ensure no duplicate UIDs exist
+{% if result_636.stdout == "" %}
+Condion       = Success
+State         = No duplicate UIDs found
+{%else%}
+Condion       = Failed
+State         = Duplicate UIDs found
+{%for i in result_636.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 637 - Ensure no duplicate GIDs exist
+{% if result_637.stdout == "" %}
+Condion       = Success
+State         = No duplicate GIDs found
+{%else%}
+Condion       = Failed
+State         = Duplicate GIDs found
+{%for i in result_637.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 638 - Ensure no duplicate user names exist
+{% if result_638.stdout == "" %}
+Condion       = Success
+State         = No duplicate user name's found
+{%else%}
+Condion       = Failed
+State         = Duplicate user names's found
+{%for i in result_638.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}
+
+{% if ansible_distribution == "CentOS" or ansible_distribution == "RedHat"  or ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" %}
+category: 639 - Ensure no duplicate group names exist
+{% if result_639.stdout == "" %}
+Condion       = Success
+State         = No duplicate group name's found
+{%else%}
+Condion       = Failed
+State         = Duplicate group names's found
+{%for i in result_639.stdout_lines %}
+              {{loop.index}} - {{i}}
+{%endfor%}
+{%endif%}
+{%endif%}

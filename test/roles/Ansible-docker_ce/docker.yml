@@ -1,0 +1,7 @@
+---
+- name: Adding docker ce repo,installing the docker ce repo and starting the service
+  hosts: all
+  vars:
+   - path: /etc/yum.repos.d/docker-ce.repo
+  roles:
+    - docker

@@ -1,0 +1,12 @@
+---
+- name: install firewalld
+  yum: name=firewalld state=present
+- name: start firewalld service
+  service: name=firewalld state=restarted enabled=yes
+- name: open ports in firewalld
+  firewalld: 
+   service: "{{ firewall_service }}"
+   permanent: true 
+   state: enabled 
+   immediate: true
+

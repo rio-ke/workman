@@ -1,0 +1,11 @@
+---
+- name: user create with append multiple group
+  user:
+    name: "{{user_name}}"
+    shell: "{{shell_type}}"
+    groups: "{{group_name}}"
+    append: yes
+  tags:
+    - user_creation_with_multiple_group
+
+

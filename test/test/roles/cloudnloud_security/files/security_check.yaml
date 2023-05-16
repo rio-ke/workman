@@ -1,0 +1,118 @@
+---
+- name: check user login password maximu days
+  shell: "{{item}}"
+  with_items:
+    - grep ^PASS_MAX_DAYS /etc/login.defs | awk '{print $2}'
+    - grep ^PASS_MIN_DAYS /etc/login.defs | awk '{print $2}'
+    - grep ^PASS_MIN_LEN /etc/login.defs | awk '{print $2}'
+    - grep "remember" /etc/pam.d/system-auth
+    - grep "remember" /etc/pam.d/password-auth
+    - authconfig --test | grep hashing | grep sha512
+    - authconfig --test | grep hashing | grep md5
+    - cat /etc/pam.d/system-auth |  egrep "pam_tally.so/pam_tally2.so" | grep -w "account\|auth"
+    - cat /etc/pam.d/password-auth |  egrep "pam_tally.so/pam_tally2.so" | grep -w "account\|auth"
+    - grep ^pam_wheel.so /etc/pam.d/su
+    - cat /etc/shadow | awk -F: '($2 == "" ) { print $1 " does not have a password "}'
+    - grep ^UsePAM /etc/ssh/sshd_config | grep yes
+  register: pass_days_result
+  ignore_errors: true
+  failed_when: false
+
+- name: check files are exist or not
+  stat:
+    path: "{{item}}"
+  with_items:
+    - /var/log/wtmp               #0
+    - /var/log/messages           #1
+    - /var/log/syslog             #2
+    - /var/log/secure             #3
+    - /var/log/auth.log           #4
+    - ~root/.netrc                #5
+    - ~root/.rhosts               #6
+    - /                           #7
+    - /usr                        #8
+    - /var                        #9
+    - /etc                        #10
+    - /tmp                        #11
+    - /var/tmp                    #12
+    - /etc/security/opasswd       #13
+    - /etc/shadow                 #14
+    - /var/log                    #15
+    - /var/log/faillog            #16
+    - /var/log/tallylog           #17
+    - /var/log/wtmp               #18  rwx r-x r-x
+    - /var/log/secure             #19  * rwx r-x ---
+  register: files_exist
+  failed_when: false
+  ignore_errors: true
+
+- name: Verify all users with a password maximum days between password change conforms to site policy (no more than 90 days)
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$5!="90"' | cut -d: -f1
+  register: verify_password_maximum_days
+
+- name: Verify all users with a password minimum days between password change conforms to site policy (1 day)
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$4=="0", $4>"1"' | cut -d: -f1
+  register: verify_password_minimum_days
+
+- name: AD.1.1.8.2 - To find duplicate UID found
+  shell: >
+    cat /etc/passwd | cut -f3 -d":" | sort -n | uniq -c | while read x ; do
+      [ -z "${x}" ] && break
+      set - $x
+      if [ $1 -gt 1 ]; then
+        users=`awk -F: '($3 == n) { print $1 }' n=$2 /etc/passwd | xargs`
+        echo "Duplicate UID ($2): ${users}"
+      fi
+    done
+  register: duplicate_uid
+  ignore_errors: true
+
+- name: To find duplicate GID found
+  shell: >
+    cat /etc/group | cut -f3 -d":" | sort -n | uniq -c | while read x ; do
+      [ -z "${x}" ] && break
+      set - $x
+        if [ $1 -gt 1 ]; then
+        groups=`awk -F: '($3 == n) { print $1 }' n=$2 /etc/group | xargs`
+        echo "Duplicate GID ($2): ${groups}"
+      fi
+    done
+  register: duplicate_gid
+  ignore_errors: true
+
+- name: check sysctl value
+  shell: "{{item}}"
+  with_items:
+    - grep ^net.ipv4.tcp_syncookies /etc/sysctl.conf | grep 1
+    - grep ^net.ipv4.icmp_echo_ignore_broadcasts /etc/sysctl.conf |  grep 1
+    - grep ^net.ipv4.conf.all.accept_redirects /etc/sysctl.conf | grep  0
+  register: sysctl_value
+  failed_when: false
+
+- name: verify unwant package installed or not
+  shell: "{{item}}"
+  with_items:
+    - rpm -qa telnet
+    - rpm -qa ftp
+    - rpm -qa yppasswd
+  register: package_check
+
+- name: check user login password maximu days
+  shell: "ls -la {{item}}"
+  with_items: "{{check_files}}"
+  register: dirctory_stats_result
+  failed_when: false
+
+- name: template move
+  template:
+    src: templates/result.txt.j2
+    dest: "/tmp/{{ansible_hostname}}_result.txt"
+
+- name: template move
+  template:
+    src: templates/result1.txt.j2
+    dest: "/tmp/result.txt"
+
+

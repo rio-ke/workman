@@ -1,0 +1,10 @@
+HostnameLookups Off
+ServerSignature Off
+ServerTokens Prod
+TraceEnable off
+KeepAlive On
+Header always append X-Frame-Options SAMEORIGIN
+Header always set x-xss-protection "1; mode=block"
+Header set X-Content-Type-Options "nosniff"
+Header unset ETag
+FileETag None

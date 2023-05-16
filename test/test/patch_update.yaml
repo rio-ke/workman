@@ -1,0 +1,34 @@
+---
+- name: "pactch update"
+  hosts: master
+  gather_facts: no
+  tasks:
+  - name: "get Yum history"
+    shell: yum history list
+    register: yum_history
+  - debug:
+      msg: "{{yum_history.stdout_lines}}"
+
+  - name: "Update all packages"
+    yum:
+      name: "*"
+      state: latest
+
+- hosts: master
+  tasks:
+  - name: "get Yum history"
+    shell: yum history list
+    register: yum_history
+  - debug:
+      msg: "{{yum_history.stdout_lines}}"
+
+- hosts: master
+  vars_prompt:
+  - name: kernel_state
+    prompt: kernel_revert_ID
+    private: no
+  tasks:
+  - name: Listing Packages
+    shell: "yum history undo {{kernel_state}} -y"
+    register: List_file
+    when: kernel_state is defined

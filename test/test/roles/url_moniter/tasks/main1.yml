@@ -1,0 +1,48 @@
+---
+- name: "check weather domain name works or not"
+  uri:
+    url: "{{item}}"
+  loop: "{{url_list}}"
+  register: result
+  ignore_errors: true
+
+- debug:
+    msg: >
+      {% for i in result.results | json_query('[]') %}
+      {% if i.status != 200 %}
+      {{i.item}} - down status
+      {% endif %}
+      {% endfor %}
+  register: url_result
+
+- debug:
+    msg: "{{item.item}} - down"
+  when: item.status  != 200 and result.results != []
+  with_items: "{{ result.results | json_query('[]') }}"
+  register: results
+  no_log: true
+  ignore_errors: true
+
+- debug:
+    msg: "{{ results }}"
+
+- name: "Mail ec2 vpn information"
+  mail:
+    to: "{{email_to}}"
+    cc: "{{email_cc}}"
+    from: "ansible@{{ansible_nodename}}"
+    subject: "{{ client_name }} website DOWN Report"
+    body: "{{results.results | json_query('[].msg')}}"
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  run_once: True
+  when: result.results != [] and mail_alert == true
+  # when: results.results | json_query('[].msg') != [] and result.results != [] and mail_alert == true
+
+- name: "Send notification message via Slack"
+  slack:
+    token: "{{slack_token}}"
+    channel: "{{ansible_slack_channel}}"
+    msg: "{{ client_name }} - {{results.results | json_query('[].msg')}}" # "VPN connection ip address Down - {{item.outside_ip_address}}"
+  when: result.results != [] and slack_alert == true
+  # when: results.results | json_query('[].msg') != [] and result.results != [] and slack_alert == true
+  # when:  results.results != [] and slack_alert == true

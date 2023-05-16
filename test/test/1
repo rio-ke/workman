@@ -1,0 +1,40 @@
+---
+- name: "check weather domain name works or not"
+  uri:
+    url: "{{item}}"
+  loop: "{{url_list}}"
+  register: result
+  ignore_errors: true
+  no_log: true
+- debug:
+    msg: >
+      {% if result.results != [] %}
+      {% for url_list in result.results | json_query('[]') %}
+      {% if url_list.status != 200 %}
+      url name   : {{url_list.item}}
+      status code: {{ url_list.status }}
+      state      : failed
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+  register: test
+- debug:
+    msg: "{{test}}"
+#- debug:
+#    msg: "not reachable url"
+#  when: item is 200
+#  loop:  "{{ result.results | json_query('[].staus') }}"
+#  ignore_errors: true
+- template:
+    src: url_template.j2
+    dest: /tmp/url_mon.txt
+  register: temp_result
+- shell: cat /tmp/url_mon.txt | column
+  register: jino
+- debug:
+    msg: "{{jino.stdout}}"
+- debug: msg="{{temp_result}}"
+  when: temp_result.changed ==  true
+#- debug:
+#    msg: "{{ result.results | json_query('[].status') }}"
+#  when: result.results | json_query('[].status') != '200'

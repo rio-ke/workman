@@ -1,0 +1,14 @@
+---
+- name: installing firewall
+  yum: name=firewalld state=latest
+- name:
+  service: name=firewalld state=restarted  enabled=yes
+- firewalld:
+    service: "{{ mypack }}"
+    permanent: true
+    state: enabled
+  notify:
+   - restart firewalld
+
+
+

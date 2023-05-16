@@ -1,0 +1,51 @@
+---
+- name: install play for the httpd
+  yum:
+    name: httpd
+    state: latest
+- name: Add some content
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: '^Listen 80 '
+    insertafter: '^Listen '
+    line: "{{item}}"
+  with_items:
+    - "Listen {{ port2 }}"
+    - "Listen {{ port3 }}"
+- name: create directory
+  file:
+    path: "{{item}}"
+    state: directory
+    owner: apache
+    group: apache
+  with_items:
+    - /var/www/{{domain1}}/public_html
+    - /var/www/{{domain2}}/public_html
+    - /var/www/{{domain3}}/public_html
+- template:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    owner: apache
+    group: apache
+    mode: 775
+  with_items:
+    - {src: template/index1.j2, dest: "/var/www/{{domain1}}/public_html/index.html" }
+    - {src: template/index2.j2, dest: "/var/www/{{domain2}}/public_html/index.html" }
+    - {src: template/index3.j2, dest: "/var/www/{{domain3}}/public_html/index.html" }
+  notify: restart httpd
+- template:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    owner: apache
+    group: apache
+    mode: 775
+  with_items:
+    - {src: template/domain1.j2, dest: "/etc/httpd/conf.d/{{domain1}}.conf" }
+    - {src: template/domain2.j2, dest: "/etc/httpd/conf.d/{{domain2}}.conf" }
+    - {src: template/domain3.j2, dest: "/etc/httpd/conf.d/{{domain3}}.conf" }
+  notify: restart httpd
+- name: start the service
+  service:
+    name: httpd
+    state: started
+    enabled: yes

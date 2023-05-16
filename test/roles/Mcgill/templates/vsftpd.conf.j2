@@ -1,0 +1,23 @@
+anonymous_enable=NO
+local_enable=YES
+write_enable=YES
+local_umask=022
+dirmessage_enable=YES
+xferlog_enable=YES
+xferlog_std_format=NO
+ascii_upload_enable=YES
+ascii_download_enable=YES
+ftpd_banner=Welcome to FTP service.
+chroot_local_user=YES
+listen=YES
+listen_ipv6=NO
+
+pam_service_name=vsftpd
+userlist_enable=YES
+tcp_wrappers=YES
+use_localtime=YES
+user_config_dir=/etc/vsftpd/users
+allow_writeable_chroot=YES
+vsftpd_log_file=/var/log/vsftpd.log
+log_ftp_protocol=YES
+#chroot_list_enable=YES

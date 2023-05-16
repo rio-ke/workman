@@ -1,0 +1,1 @@
+ALL: {% for iprange in centos7_host_allow -%}{{ iprange }}{% if not loop.last %}, {% endif %}{% endfor %}

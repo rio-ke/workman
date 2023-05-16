@@ -1,0 +1,65 @@
+---
+- name: "gather vpn information"
+  ec2_vpc_vpn_facts:
+    aws_secret_key: "{{ aws_secret_key }}"
+    aws_access_key: "{{ aws_access_key }}"
+    region: "{{ region }}"
+  when:
+    - aws_secret_key is defined
+    - aws_secret_key is defined
+    - region is defined
+  register: result_vpn
+
+- name: "gather vpn information"
+  ec2_vpc_vpn_facts:
+    aws_secret_key: "{{ aws_secret_key }}"
+    aws_access_key: "{{ aws_access_key }}"
+    region: "{{ region }}"
+    vpn_connection_ids: "{{ result_vpn | json_query('vpn_connections[].vpn_connection_id') | join(',') }}" # "{{ vpn_connection_ids }}"
+  when:
+    - aws_secret_key is defined
+    - aws_secret_key is defined
+    - region is defined
+  register: results
+
+#- debug:
+#    msg: "VPN connection ip address Down - {{item.outside_ip_address}}"
+#  when: item.status == 'DOWN'
+#  with_items: "{{ results | json_query('vpn_connections[].vgw_telemetry[]') }}"
+#  register: vpn_result1
+
+- debug:
+    msg: >
+      {% for i in results | json_query('vpn_connections[]') %}
+      {% for j in results | json_query('vpn_connections[].vgw_telemetry[0]') %}
+      {% if j.status == 'DOWN' %}
+      VPN DOWN STATUS - {{i.tags.Name}} : {{j.outside_ip_address}}
+      {% else %}
+      good
+      {% endif %}
+      {% endfor %}
+      {% endfor %}
+  register: vpn_result
+  no_log: true
+
+- name: "Mail ec2 vpn information"
+  mail:
+    host: "{{smtp_host}}" # smtp.gmail.com
+    port: "{{smtp_port}}" # 587
+    username: "{{smtp_username}}"
+    password: "{{smtp_password}}"
+    to: "{{email_to}}"
+    cc: "{{email_cc}}"
+    # from: "ansible@{{ansible_nodename}}"
+    subject: "{{ client_name }} ec2 vpn DOWN Report"
+    body: "{{vpn_result.msg}}"
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  run_once: True
+  when: results.vpn_connections != [] and result_vpn is succeeded and mail_alert == true and 'good' not in vpn_result.msg
+
+- name: "Send notification message via Slack"
+  slack:
+    token: "{{slack_token}}"
+    channel: "{{ansible_slack_channel}}"
+    msg: "{{vpn_result.msg}}"
+  when: results.vpn_connections != [] and result_vpn is succeeded and slack_alert == true and 'good' not in vpn_result.msg

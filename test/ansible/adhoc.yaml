@@ -1,0 +1,15 @@
+- hosts: localhost dc2-node1
+  vars_files:
+    - vars/main.yaml
+  tasks:
+    - shell: "{{item}}"
+      with_items:
+        - hostname
+        - uname -mrs
+      register: result1
+    - name: Notification message via Slack
+      slack:
+        token: "{{tokens}}"
+        msg: "{{ result1.results | json_query('[].stdout_lines[]') }}"
+        channel: '#general'
+      delegate_to: localhost

@@ -1,0 +1,39 @@
+    <table class="table table-striped">
+    <thead>
+        <th>&nbsp;</th>
+        <th>Class</th>
+        <th>Votes</th>
+        <th>Description</th>
+        <th>Car #</th>
+        <th>Owner</th>
+        <th>Year</th>
+        <th>Model</th>
+    </thead>
+    <tbody>
+    {% set rowStyleFirstInClass = "border-top-style:solid;border-top-width:3px;border-top-color:black" %}
+    {% set rowStyleHighlight = "color:#000000;background-color:#ffbbbb;" %}
+    {% set rowStyleNormal = "color:#000000;background-color:#ffffff;" %}
+    {% set rowStyle = rowStyleNormal %}
+    {% set currentClass = "" %}
+    {% set currentVotes = 0 %}
+    {% for rec in verify_password_minimum_days.stdout_lines %}
+        {% if rec[0] != currentClass %}
+            {% set rowStyle = rowStyleFirstInClass %}
+        {% else %}
+            {% set rowStyle = rowStyleNormal %}
+        {% endif %}
+        <tr>
+            {% if rec[0] == currentClass %}
+                <td style="{{rowStyle}}">&nbsp;</td>
+            {% else %}
+                <td style="{{rowStyle}}"><i class="fa fa-arrow-right"/>xx{{currentClass}}xx{{currentVotes}}yy</td>
+            {% endif %}
+            {% for field in rec %}
+            <td style = "{{rowStyle}}">{{field}}</td>
+            {% endfor %}
+        </tr>
+        {% set currentClass = rec[0] %}
+        {% set currentVotes = rec[1] %}
+    {% endfor %}
+    </tbody>
+</table>

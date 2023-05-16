@@ -1,0 +1,20 @@
+
+{% for details in result.ansible_facts %}
+bios date                         : {{details.hw_bios_date}}
+hw_bios_version                   : {{details.hw_bios_version}}
+{% endfor %}
+
+
+{% for j, k in result.ansible_facts.hw_health.firmware_information.iteritems() %}
+firmware_information:
+{{ j.rjust(33)}} : {{ k }}
+{% endfor %}
+
+health_at_a_glance
+{% for j in result.ansible_facts.hw_health.health_at_a_glance %}
+{% for k in j %}
+{% for l, m in k.iteritems() %}
+{{k}}
+{{ l.rjust(33)}} : {{ m }}
+{% endfor %}
+

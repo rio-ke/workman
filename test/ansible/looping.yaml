@@ -1,0 +1,15 @@
+- hosts: localhost
+  vars:
+    myvar:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+  tasks:
+    - name: break loop after 3
+      debug: msg={{item}}
+      failed_when: item == 3
+      register: myresults
+      when: not (myresults|default({}))|failed
+      with_items: "{{myvar}}"

@@ -1,0 +1,7 @@
+---
+- hosts: vag
+  ignore_errors: true
+  roles:
+    - { role: apache_mul }
+      # - { role: user_group, user_name: aaa, group_name: fuck , shell_type: /bin/bash, tags: [ 'user_creation'] }
+

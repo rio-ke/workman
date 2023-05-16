@@ -1,0 +1,30 @@
+---
+- name: install rsyslog
+  yum:
+    name: "{{ rsyslog_packages }}"
+    state: present
+- name: restart service
+  service:
+    name: rsyslog
+    state: started
+    enabled: yes
+- name: Edit configuration file
+  lineinfile:
+    path: /etc/rsyslog.conf
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+    backup: yes
+  with_items:
+  - { regexp: '\#\$ModLoad imudp', line: 'module(load="imudp")' }
+  - { regexp: '\#\$UDPServerRun 514', line: '$UDPServerRun 514'}
+  - { regexp: '\#\$ModLoad imtcp', line: '$ModLoad imtcp' }
+  - { regexp: '\#\$InputTCPServerRun 514', line: '$InputTCPServerRun 514'}
+  notify:
+  - restart rsyslog
+- name: add templates
+  template:
+    src: tmpl.conf.j2
+    dest: /etc/rsyslog.d/tmpl.conf
+    backup: yes
+  notify:
+  - restart rsyslog

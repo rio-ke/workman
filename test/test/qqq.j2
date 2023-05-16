@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+.tftable {font-size:12px;color:#333333;width:50%;border-width: 1px;border-color: #729ea5;border-collapse: collapse;}
+.tftable th {font-size:18px;background-color:#acc8cc;border-width: 1px;padding: 8px;border-style: solid;border-color: #729ea5;text-align:center;}
+.tftable tr {background-color:#d4e3e5;}
+.tftable td {font-size:16px;border-width: 2px;padding: 8px;border-style: solid;border-color: #729ea5;text-align:center;}
+.tftable tr:hover {background-color:#ffffff;}
+#url_name{background-color: green; color: white; font-weight: bold; font-size:22px;}
+#ji3{background-color: #c9cda5}
+#ji5{background-color: #ffffff}
+#ji7{background-color: #ffffff}
+#url{background-color: #00b700;color: white;font-weight: bold;font-size:22px;}
+#heading{text-align:center;font-size:36px;color:red;margin-bottom:10px;}
+</style>
+</head>
+<body>
+<h3 id="heading">DISK SPACE ALERT!!!</h3>
+<table class="tftable" border="1" align="center">
+<tr><td id="url" colspan="2">{{ansible_hostname}}</td></tr>
+{% for i in result.results | json_query('[]') %}
+{% if i.failed == true %}
+{% for q, w in i.item.items() %}
+{% if q == "mount" %}
+<tr><td id="ji{{loop.index}}">Mount Point</td><td id="ji{{loop.index}}">{{w}}</td></tr>
+{% endif %}
+{% if q == "size_available" %}
+<tr><td id="ji{{loop.index}}">Available Memory</td><td id="ji{{loop.index}}">{{(w/1024|pow(3))|round|int}} Gb</td></tr>
+{% endif %}
+{% if q == "size_total" %}
+<tr><td id="ji{{loop.index}}">Total Memory</td><td id="ji{{loop.index}}">{{(w/1024|pow(3))|round|int}} Gb</td></tr>
+{% endif %}
+{% endfor %}
+<br>
+{% endif %}
+{% endfor %}
+</table>
+</body>
+</html>

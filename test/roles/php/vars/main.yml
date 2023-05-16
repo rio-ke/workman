@@ -1,0 +1,9 @@
+---
+php_package:
+  - php
+  - php-opcache
+  - php-mysqlnd
+  - php-pear
+  - php-gd
+  - php-mbstring
+  - php-pdo

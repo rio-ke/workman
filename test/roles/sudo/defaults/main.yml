@@ -1,0 +1,5 @@
+---
+# sudo_nopassword_users:
+#  - usernames
+# sudo_password_users:
+#  - usernames

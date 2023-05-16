@@ -1,0 +1,23 @@
+---
+- hosts: vag
+  ignore_errors: true
+  roles:
+  #  - {role: "role_name", user_name: "user_name", shell_type: "/bin/bash" }
+    - { role: user_creation, user_name: eino, group_name: gano, qw, shell_type: /bin/bash, tags: ["user_creation, user_creation_with_shell, user_delete, user_creation_with_uid, user_creation_with_single_group, user_creation_with_multiple_group, group_creation" ]}
+
+#   - { role: demo, jino: "user" }
+    # TAGS:
+    # 1.user_creation
+    # 2.user_creation_with_shell
+    # 3.user_delete
+    # 4.user_creation_with_uid
+    # 5.user_creation_with_single_group
+    # 6.user_creation_with_multiple_group
+    # 7.group_creation
+
+    #   variables:
+    # 1.user_name:
+    # 2.shell_type
+    # 3.group_name
+    # 4.uid_num
+    # 5.group_name

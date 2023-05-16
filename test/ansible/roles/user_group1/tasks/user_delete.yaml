@@ -1,0 +1,10 @@
+---
+- name: user delete
+  user:
+    name:  "{{item}}"
+    state: absent
+  with_items:
+    - "{{user_name}}"
+  tags:
+    user_delete
+

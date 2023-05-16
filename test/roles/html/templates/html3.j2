@@ -1,0 +1,20 @@
+{% for i, j in ansible_eno1.features.items() %}
+{% if i == "tx_checksum_ipv4" %}
+{{i}} - {{j}}
+{% endif %}
+{% endfor %}
+
+{% for i, j in ansible_python.items()%}
+{% if i == "type" %}
+{{i}} - {{j}}
+{% endif %}
+{% endfor %}
+
+
+{% for i, j in ansible_python.items()%}
+{% if i == "version" %}
+{% for q, w in j.items() %}
+{{q}} {{w}}
+{% endfor %}
+{% endif %}
+{% endfor %}

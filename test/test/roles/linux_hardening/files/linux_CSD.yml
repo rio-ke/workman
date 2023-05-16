@@ -1,0 +1,28 @@
+---
+  - name: to determine if the password-hashing algorithm is set to SHA-512
+    raw: authconfig --test | grep hashing | grep sha512
+    ignore_errors: true
+    register: algorithm_set
+
+  - name: SHA-512 algorithm provides
+    raw: authconfig --passalgo=sha512 --update
+    when: algorithm_set is failed
+
+  - name: password So
+    raw: grep pam_pwquality.so /etc/pam.d/system-auth
+    ignore_errors: true
+    register: pam_quality
+
+  - name: replace in pam_quality if already existing replaced
+    replace:
+      path: "{{item.path}}"
+      regexp: "{{item.exp}}"
+      replace: "{{item.rep}}"
+      backup: yes
+    with_items:
+      - { path: '/etc/security/pwquality.conf', exp: '# minlen = 9', rep: 'minlen = 14' }
+      - { path: '/etc/security/pwquality.conf', exp: '# dcredit = 1', rep: '# dcredit = -1' }
+      - { path: '/etc/security/pwquality.conf', exp: '# ucredit = 1', rep: '# ucredit = -1' }
+      - { path: '/etc/security/pwquality.conf', exp: '# ocredit = 1', rep: '# ocredit = -1' }
+      - { path: '/etc/security/pwquality.conf', exp: '# lcredit = 1', rep: '# lcredit = -1' }
+    when: pam_quality is succeeded

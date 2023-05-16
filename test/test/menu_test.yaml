@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  vars_prompt:
+  - name: application
+    prompt: "Which application do you want to deploy?\n1- Web\n2- Wiki\n"
+    private: no
+  tasks:
+    - debug:
+        msg: "menu 1"
+      when: ( application == "1" )
+
+    - debug:
+        msg: "menu 2"
+      when: ( application == "2" )

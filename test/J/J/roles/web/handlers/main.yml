@@ -1,0 +1,4 @@
+---
+# handlers file for roles/web
+- name: start nginx
+  service: name=httpd state=started

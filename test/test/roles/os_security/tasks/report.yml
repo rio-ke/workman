@@ -1,0 +1,2496 @@
+---
+- name: "Category-110 | Ensure FAT is disabled"
+  shell: modprobe -n -v cramfs | grep install
+  register: result_110
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-111 | Ensure cramfs is disabled"
+  shell: modprobe -n -v cramfs | grep install
+  register: result_111
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-112 | Ensure freevxfs is disabled"
+  shell: modprobe -n -v freevxfs | grep install
+  register: result_112
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-113 | Ensure jffs2 is disabled"
+  shell: modprobe -n -v jffs2 | grep install
+  register: result_113
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-114 | Ensure hfs is disabled"
+  shell: modprobe -n -v hfs | grep install
+  register: result_114
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-115 | Ensure hfsplus is disabled"
+  shell: modprobe -n -v hfsplus | grep install
+  register: result_115
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-116 | Ensure udf is disabled"
+  shell: modprobe -n -v udf | grep install
+  register: result_116
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-117 | Ensure squashfs is disabled"
+  shell: modprobe -n -v squashfs  | grep install
+  register: result_117
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+
+- name: "Category-118,119,120 | Ensure separate partition exists for /tmp | Ensure nodev option set on /tmp partition | Ensure nosuid option set on /tmp partition"
+  shell: mount | grep /tmp
+  register: result_118
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-121 | Ensure separate partition exists for /var"
+  shell: mount | grep /var
+  register: result_121
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+
+- name: "Category-122,123,124,125 | Ensure separate partition exists for /var/tmp | Ensure nodev option set on /var/tmp partition | Ensure nosuid option set on /var/tmp partition | Ensure noexec option set on /var/tmp partition"
+  shell: mount | grep /tmp
+  register: result_122
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-126 | Ensure separate partition exists for /var/log"
+  shell: mount | grep /var/log
+  register: result_126
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-127 | Ensure separate partition exists for /var/log/audit"
+  shell: mount | grep /var/log/audit
+  register: result_127
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-128,129 | Ensure separate partition exists for /home | Ensure nodev option set on /home partition"
+  shell: mount | grep /home
+  register: result_128
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-130,131,132 | Ensure nodev option set on /dev/shm partition | Ensure nosuid option set on /dev/shm partition | Ensure noexec option set on /dev/shm partition"
+  shell: mount | grep /dev/shm
+  register: result_130
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-133,134,135 | Ensure nodev option set on removable media partitions | Ensure nosuid option set on removable media partitions | Ensure noexec option set on removable media partitions"
+  shell: mount | grep /media
+  register: result_133
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-136 | Ensure sticky bit is set on all world-writable directories"
+  shell: >
+    df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d \( -perm -0002 -a ! -perm -1000 \) 2>/dev/null
+  register: result_136
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-137 | Disable Automounting"
+  shell: systemctl is-enabled autofs
+  register: result_137
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-141 | Ensure package manager repositories are configured"
+  shell: apt-cache policy
+  register: result_141a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-141 | Ensure package manager repositories are configured"
+  shell: zypper repos
+  register: result_141b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES"
+
+- name: "Category-141 | Ensure package manager repositories are configured"
+  shell: yum repolist
+  register: result_141c
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-142 | Ensure GPG keys are configured"
+  shell: apt-key list
+  register: result_142a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-142 | Ensure GPG keys are configured"
+  shell: rpm -q gpg-pubkey --qf '%{name}-%{version}-%{release} --> %{summary}\n'
+  register: result_142b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-143 | Ensure gpgcheck is globally activated"
+  shell: grep ^gpgcheck /etc/yum.conf /etc/yum.repos.d/*
+  register: result_143
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-151 | Ensure AIDE is installed"
+  shell: rpm -qa | grep aide
+  register: result_151a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-151 | Ensure AIDE is installed"
+  shell: dpkg -s aide
+  register: result_151b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-152 | Ensure filesystem integrity is regularly checked"
+  shell: "{{item}}"
+  register: result_152
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - crontab -u root -l | grep aide
+    - grep -r aide /etc/cron.* /etc/crontab
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-161 | Ensure permissions on bootloader config are configured"
+  stat:
+    path: /boot/grub2/grub.cfg
+  register: result_161a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-161 | Ensure permissions on bootloader config are configured"
+  stat:
+    path: /boot/grub/grub.cfg
+  register: result_161b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-162 | Ensure bootloader password is set"
+  shell: grep "^GRUB2_PASSWORD" /boot/grub2/grub.cfg
+  register: result_162a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-162 | Ensure bootloader password is set"
+  shell: grep "^GRUB2_PASSWORD" /boot/grub/grub.cfg
+  register: result_162b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+#- name: "Category-163 | Ensure authentication required for single user mod3"
+
+- name: "Category-171 | Ensure core dumps are restricted"
+  shell: "{{item}}"
+  register: result_171
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - grep "hard core" /etc/security/limits.conf /etc/security/limits.d/*
+    - sysctl fs.suid_dumpable
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+#- name: "Category-172 | Ensure XD/NX support is enabled"
+
+- name: "Category-173 | Ensure address space layout randomization (ASLR) is enabled"
+  shell: sysctl kernel.randomize_va_space
+  register: result_173
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-174 | Ensure prelink is disabled"
+  shell: rpm -qa | grep prelink
+  register: result_174a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-174 | Ensure prelink is disabled"
+  shell: dpkg -s prelink
+  register: result_174b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-181 | Ensure SELinux is not disabled in bootloader configuration"
+  shell: grep "^\s*linux" /boot/grub/grub.cfg
+  register: result_181a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-181 | Ensure SELinux is not disabled in bootloader configuration"
+  shell: grep "^\s*linux" /boot/grub2/grub.cfg
+  register: result_181b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-182 | Ensure the SELinux state is enforcing"
+  shell: grep ^SELINUX=enforcing /etc/selinux/config
+  register: result_182
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "Ubuntu" or ansible_distribution == "CentOS"
+
+- name: "Category-183 | Ensure SELinux policy is configured"
+  shell: grep ^SELINUXTYPE= /etc/selinux/config
+  register: result_183
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "Ubuntu" or ansible_distribution == "CentOS"
+
+- name: "Category-184 | Ensure SETroubleshoot is not installed"
+  shell: rpm -qa | grep setroubleshoot
+  register: result_184
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-185 | Ensure the MCS Translation Service (mcstrans) is not installed"
+  shell: rpm -qa | grep mcstrans
+  register: result_185
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-186 | Ensure no unconfined daemons exist"
+  shell: ps -eZ | egrep "initrc" | egrep -vw "tr|ps|egrep|bash|awk" | tr ':' ' ' | awk '{ print $NF }'
+  register: result_186
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-187 | Ensure SELinux is installed"
+  shell: rpm -qa | grep libselinux
+  register: result_187a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-187 | Ensure SELinux is installed"
+  shell: "{{item}}"
+  register: result_187b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - rpm -aq | grep libselinux1
+    - rpm -qa | grep selinux-policy
+  when: ansible_distribution == "SLES"
+
+- name: "Category-187 | Ensure SELinux is installed"
+  shell: dpkg -s selinux
+  register: result_187c
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-191 | Ensure AppArmor is not disabled in bootloader configuration"
+  shell: grep "^\s*linux" /boot/grub/grub.cfg
+  register: result_191a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-191 | Ensure AppArmor is not disabled in bootloader configuration"
+  shell: grep "^\s*linux" /boot/grub2/grub.cfg
+  register: result_191b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES"
+
+- name: "Category-192 | Ensure all AppArmor Profiles are enforcing"
+  shell: apparmor_status
+  register: result_192
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES"
+
+- name: "Category-193 | Ensure AppArmor is installed"
+  shell: "{{item}}"
+  register: result_193b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - rpm -aq | grep libapparmor1
+    - rpm -qa | grep apparmor-utils
+  when: ansible_distribution == "SLES"
+
+- name: "Category-193 | Ensure AppArmor is installed"
+  shell: dpkg -s apparmor
+  register: result_193a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-194 | Ensure message of the day is configured properly"
+  shell: egrep '(\\v|\\r|\\m|\\s)' /etc/motd
+  register: result_194
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-195 | Ensure local login warning banner is configured properly"
+  shell: egrep '(\\v|\\r|\\m|\\s)' /etc/issue
+  register: result_195
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-196 | Ensure remote login warning banner is configured properly"
+  shell: egrep '(\\v|\\r|\\m|\\s)' /etc/issue.net
+  register: result_196
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "Ubuntu" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-197 | Ensure permissions on /etc/motd are configured"
+  stat:
+    path: /etc/motd
+  register: result_197
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-198 | Ensure permissions on /etc/issue are configured"
+  stat:
+    path: /etc/issue
+  register: result_198
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-199 | Ensure permissions on /etc/issue.net are configured"
+  stat:
+    path: /etc/issue.net
+  register: result_199
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-200 | Ensure updates, patches, and additional security software are installed"
+  shell: apt-get -s upgrade
+  register: result_200a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-200 | Ensure updates, patches, and additional security software are installed"
+  shell: yum check-update
+  register: result_200b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-200 | Ensure updates, patches, and additional security software are installed"
+  shell: zypper list-updates
+  register: result_200c
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES"
+
+- name: "Category-211 | Ensure chargen services are not enabled"
+  shell: "{{item}}"
+  register: result_211
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - chkconfig --list | grep chargen-dgram
+    - chkconfig --list | grep chargen-stream
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-211 | Ensure chargen services are not enabled"
+  shell: "{{item}}"
+  register: result_211a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - cat /etc/xinetd.d/chargen | grep "disable"
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-212 | Ensure daytime services are not enabled"
+  shell: "{{item}}"
+  register: result_212
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - chkconfig --list | grep daytime-dgram
+    - chkconfig --list | grep daytime-stream
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-212 | Ensure daytime services are not enabled"
+  shell: "{{item}}"
+  register: result_212a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - cat /etc/xinetd.d/daytime | grep "disable"
+  when: ansible_distribution == "Ubuntu"
+
+
+- name: "Category-213 | Ensure discard services are not enabled"
+  shell: "{{item}}"
+  register: result_213
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - chkconfig --list | grep discard-dgram
+    - chkconfig --list | grep discard-stream
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-213 | Ensure discard services are not enabled"
+  shell: "{{item}}"
+  register: result_213a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - cat /etc/xinetd.d/daytime | grep "disable"
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-214 | Ensure echo services are not enabled"
+  shell: "{{item}}"
+  register: result_214
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - chkconfig --list | grep echo-dgram
+    - chkconfig --list | grep echo-stream
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-214 | Ensure echo services are not enabled"
+  shell: "{{item}}"
+  register: result_214a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - cat /etc/xinetd.d/echo | grep "disable"
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-215 | Ensure time services are not enabled"
+  shell: "{{item}}"
+  register: result_215
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - chkconfig --list | grep time-dgram
+    - chkconfig --list | grep time-stream
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-215 | Ensure time services are not enabled"
+  shell: "{{item}}"
+  register: result_215a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - cat /etc/xinetd.d/time | grep "disable"
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-216 | Ensure tftp server is not enabled"
+  shell: "{{item}}"
+  register: result_216
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - chkconfig --list | grep tftp
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-216 | Ensure tftp server is not enabled"
+  shell: "{{item}}"
+  register: result_216a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - cat /etc/xinetd.d/tftp | grep "disable"
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-217 | Ensure xinetd is not enabled"
+  shell: systemctl is-enabled xinetd
+  register: result_217
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-221 | Ensure time synchronization is in use"
+  shell: "{{item}}"
+  register: result_221
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - rpm -qa | grep ntp
+    - rpm -qa | grep chrony
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-222 | Ensure ntp is configured"
+  shell: "{{item}}"
+  register: result_222
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - grep "^restrict" /etc/ntp.conf
+    - grep "^(server|pool)" /etc/ntp.conf
+    - grep "^OPTIONS" /etc/sysconfig/ntpd
+    - grep "^ExecStart" /usr/lib/systemd/system/ntpd.service
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-223 | Ensure chrony is configured"
+  shell: "{{item}}"
+  register: result_223
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - grep "^(server|pool)" /etc/chrony.conf
+    - grep ^OPTIONS /etc/sysconfig/chronyd
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-224 | Ensure X Window System is not installed"
+  shell: rpm -qa | grep xorg-x11*
+  register: result_224
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-224 | Ensure X Window System is not installed"
+  shell: dpkg -l xserver-xorg*
+  register: result_224a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-225 | Ensure Avahi Server is not enabled"
+  shell: systemctl is-enabled avahi-daemon
+  register: result_225
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu"
+
+- name: "Category-226 | Ensure CUPS is not enabled"
+  shell: systemctl is-enabled cups
+  register: result_226
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+
+- name: "Category-227 | Ensure DHCP Server is not enabled"
+  shell: systemctl is-enabled dhcpd
+  register: result_227
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-227 | Ensure DHCP Server is not enabled"
+  shell: "{{item}}"
+  register: result_227a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - systemctl is-enabled isc-dhcp-server
+    - systemctl is-enabled isc-dhcp-server6
+  when: ansible_distribution == "Ubuntu"
+
+
+- name: "Category-228 | Ensure LDAP server is not enabled"
+  shell: systemctl is-enabled slapd
+  register: result_228
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu"
+
+- name: "Category-229 | Ensure nfs Server is not enabled"
+  shell: "{{item}}"
+  register: result_229
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - systemctl is-enabled nfs
+    - systemctl is-enabled nfs-server
+    - systemctl is-enabled rpcbind
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-229 | Ensure nfs Server is not enabled"
+  shell: "{{item}}"
+  register: result_229a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - systemctl is-enabled nfs-server
+    - systemctl is-enabled rpcbind
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-230 | Ensure DNS Server is not enabled"
+  shell: systemctl is-enabled named
+  register: result_230
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-230 | Ensure DNS Server is not enabled"
+  shell: systemctl is-enabled bind9
+  register: result_230a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+
+- name: "Category-231 | Ensure FTP Server is not enabled"
+  shell: systemctl is-enabled vsftpd
+  register: result_231
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu"
+
+- name: "Category-232 | Ensure httpd Server is not enabled"
+  shell: systemctl is-enabled httpd
+  register: result_232
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-232 | Ensure Apache2 Server is not enabled"
+  shell: systemctl is-enabled apache2
+  register: result_232a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-233 | Ensure IMAP and POP3 server is not enabled"
+  shell: systemctl is-enabled dovecot
+  register: result_233
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu"
+
+- name: "Category-234 | Ensure samba Server is not enabled"
+  shell: systemctl is-enabled smb
+  register: result_234
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-234 | Ensure samba Server is not enabled"
+  shell: systemctl is-enabled smbd
+  register: result_234a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-235 | Ensure HTTP Proxy Server is not enabled"
+  shell: systemctl is-enabled squid
+  register: result_235
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu"
+
+
+- name: "Category-236 | Ensure SNMP Server is not enable"
+  shell: systemctl is-enabled snmpd
+  register: result_236
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu"
+
+- name: "Category-237 | Ensure mail transfer agent is configured for local-only mode"
+  shell: grep "^inet_interfaces" /etc/postfix/main.cf
+  register: result_237
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS" or ansible_distribution == "Ubuntu"
+
+
+- name: "Category-238 | Ensure NIS Server is not enabled"
+  shell: systemctl is-enabled ypserv
+  register: result_238
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-238 | Ensure NIS Server is not enabled"
+  shell: systemctl is-enabled nis
+  register: result_238a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-239 | Ensure rsh server is not enabled"
+  shell: systemctl is-enabled rsh.socket
+  register: result_239
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+
+- name: "Category-240 | Ensure telnet server is not enabled"
+  shell: systemctl is-enabled telnet.socket
+  register: result_240
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+
+- name: "Category-241 | Ensure tftp server is not enabled"
+  shell: systemctl is-enabled tftp.socket
+  register: result_241
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+
+- name: "Category-242 | Ensure rsync service is not enabled"
+  shell: systemctl is-enabled rsyncd
+  register: result_242
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-242 | Ensure rsync service is not enabled"
+  shell: systemctl is-enabled rsync
+  register: result_242a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-243 | Ensure talk server is not enabled"
+  shell: systemctl is-enabled ntalk
+  register: result_243
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-251 | Ensure NIS Client is not installed"
+  shell: rpm -qa | grep ypbind
+  register: result_251
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-251 | Ensure NIS Client is not installed"
+  shell: dpkg -s nis
+  register: result_251a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-252 | Ensure rsh client is not installed"
+  shell: rpm -qa | grep rsh
+  register: result_252
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-252 | Ensure rsh client is not installed"
+  shell: "{{item}}"
+  register: result_252a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - dpkg -s rsh-client
+    - dpkg -s rsh-redone-client
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-253 | Ensure talk client is not installed"
+  shell: rpm -qa | grep talk
+  register: result_253
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-253 | Ensure talk client is not installed"
+  shell: dpkg -s talk
+  register: result_253a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+
+- name: "Category-254 | Ensure telnet client is not installed"
+  shell: rpm -qa | grep telnet
+  register: result_254
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-254 | Ensure telnet client is not installed"
+  shell: dpkg -s telnet
+  register: result_254a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-255 | Ensure LDAP client is not installed"
+  shell: rpm -qa | grep openldap-clients
+  register: result_255
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-255 | Ensure LDAP client is not installed"
+  shell: dpkg -s ldap-utils
+  register: result_255a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-311 | Ensure IP forwarding is disabled"
+  shell: sysctl net.ipv4.ip_forward
+  register: result_311
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-312 | Ensure packet redirect sending is disabled"
+  shell: "{{item}}"
+  register: result_312
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - sysctl net.ipv4.conf.all.send_redirects
+    - sysctl net.ipv4.conf.default.send_redirects
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-313 | Ensure source routed packets are not accepted"
+  shell: "{{item}}"
+  register: result_313
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - sysctl net.ipv4.conf.all.accept_source_route
+    - sysctl net.ipv4.conf.default.accept_source_route
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+
+- name: "Category-314 | Ensure ICMP redirects are not accepted"
+  shell: "{{item}}"
+  register: result_314
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - sysctl net.ipv4.conf.all.accept_redirects
+    - sysctl net.ipv4.conf.default.accept_redirects
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-315 | Ensure secure ICMP redirects are not accepted"
+  shell: "{{item}}"
+  register: result_315
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - sysctl net.ipv4.conf.all.secure_redirects
+    - sysctl net.ipv4.conf.default.secure_redirects
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-316 | Ensure suspicious packets are logged"
+  shell: "{{item}}"
+  register: result_316
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - sysctl net.ipv4.conf.all.log_martians
+    - sysctl net.ipv4.conf.default.log_martians
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-317 | Ensure broadcast ICMP requests are ignored"
+  shell: sysctl net.ipv4.icmp_echo_ignore_broadcasts
+  register: result_317
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-318 | Ensure bogus ICMP responses are ignored"
+  shell: sysctl net.ipv4.icmp_ignore_bogus_error_responses
+  register: result_318
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-319 | Ensure Reverse Path Filtering is enabled"
+  shell: "{{item}}"
+  register: result_319
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - sysctl net.ipv4.conf.all.rp_filter
+    - sysctl net.ipv4.conf.default.rp_filter
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-320 | Ensure TCP SYN Cookies is enabled"
+  shell: sysctl net.ipv4.tcp_syncookies
+  register: result_320
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-331 | Ensure IPv6 router advertisements are not accepted"
+  shell: "{{item}}"
+  register: result_331
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - sysctl net.ipv6.conf.all.accept_ra
+    - sysctl net.ipv6.conf.default.accept_ra
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-332 | Ensure IPv6 redirects are not accepted"
+  shell: "{{item}}"
+  register: result_332
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - sysctl net.ipv6.conf.all.accept_redirects
+    - sysctl net.ipv6.conf.default.accept_redirects
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-333 | Ensure IPv6 is disabled"
+  shell: grep "^\s*linux" /boot/grub2/grub.cfg
+  register: result_333
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-333a | Ensure IPv6 is disabled"
+  shell: grep "^\s*linux" /boot/grub/grub.cfg
+  register: result_333a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-341 | Ensure TCP Wrappers is installed"
+  shell: dpkg -s tcpd
+  register: result_341a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-341 | Ensure TCP Wrappers is installed"
+  shell: rpm -q tcpd
+  register: result_341b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES"
+
+- name: "Category-341 | Ensure TCP Wrappers is installed"
+  shell: rpm -q tcp_wrappers
+  register: result_341c
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+
+- name: "Category-342 | Ensure /etc/hosts.allow is configured"
+  shell: cat /etc/hosts.allow | grep ^ALL
+  register: result_342
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-343 | Ensure /etc/hosts.deny is configured"
+  shell: cat /etc/hosts.deny | grep ^ALL
+  register: result_343
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-344 | Ensure permissions on /etc/hosts.allow are configured"
+  stat:
+    path: /etc/hosts.allow
+  register: result_344
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-345 | Ensure permissions on /etc/hosts.deny are configured"
+  stat:
+    path: /etc/hosts.deny
+  register: result_345
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-351 | Ensure DCCP is disabled"
+  shell: modprobe -n -v dccp | grep install
+  register: result_351
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-352 | Ensure sctp is disabled"
+  shell: modprobe -n -v sctp | grep install
+  register: result_352
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-353 | Ensure rds is disabled"
+  shell: modprobe -n -v rds | grep install
+  register: result_353
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-354 | Ensure DCCP is disabled"
+  shell: modprobe -n -v tipc | grep install
+  register: result_354
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-361 | Ensure iptables is installed"
+  shell: dpkg -s iptables
+  register: result_361a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-361 | Ensure iptables is installed"
+  shell: rpm -q iptables
+  register: result_361b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-362 | Ensure firewalld is installed"
+  shell: dpkg -s firewalld
+  register: result_362a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-362 | Ensure firewalld is installed"
+  shell: rpm -qa | grep firewalld
+  register: result_362b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- name: "Category-411 | Ensure audit log storage size is configured"
+  shell: grep ^max_log_file /etc/audit/auditd.conf
+  register: result_411
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+#- name: "Category-412 | Ensure system is disabled when audit logs are full"
+
+- name: "Category-412 | Ensure system is disabled when audit logs are full"
+  shell: "{{item}}"
+  register: result_412
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  with_items:
+    - grep ^space_left_action /etc/audit/auditd.conf
+    - grep ^action_mail_acct /etc/audit/auditd.conf
+    - grep ^admin_space_left_action /etc/audit/auditd.conf
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-413 | Ensure audit logs are not automatically deleted"
+  shell: grep ^max_log_file_action /etc/audit/auditd.conf
+  register: result_413
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-414 | Ensure auditd service is enabled"
+  shell: systemctl is-enabled auditd
+  register: result_414
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-415 | Ensure auditing for processes that start prior to auditd is enabled"
+  shell: grep "^\s*linux" /boot/grub2/grub.cfg
+  register: result_415
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-415 | Ensure auditing for processes that start prior to auditd is enabled"
+  shell: grep "^\s*linux" /boot/grub/grub.cfg
+  register: result_415a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-416 | Ensure events that modify date and time information are collected"
+  shell: grep time-change /etc/audit/audit.rules
+  register: result_416
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-417 | Ensure events that modify user/group information are collected"
+  shell: grep identity /etc/audit/audit.rules
+  register: result_417
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-418 | Ensure events that modify the system's network environment are collected"
+  shell: grep system-locale /etc/audit/audit.rules
+  register: result_418
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-419 | Ensure events that modify the system's Mandatory Access Controls are collected"
+  shell: grep MAC-policy /etc/audit/audit.rules
+  register: result_419
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-420 | Ensure session initiation information is collected"
+  shell: grep session /etc/audit/audit.rules
+  register: result_420
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-421 | Ensure discretionary access control permission modification events are collected"
+  shell: grep perm_mod /etc/audit/audit.rules
+  register: result_421
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-422 | Ensure unsuccessful unauthorized file access attempts are collected"
+  shell: grep access /etc/audit/audit.rules
+  register: result_422
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+#- name: "Category-423 | Ensure use of privileged commands is collected"
+
+- name: "Category-424 | Ensure successful file system mounts are collected"
+  shell: grep mounts /etc/audit/audit.rules
+  register: result_424
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-425 | Ensure file deletion events by users are collected"
+  shell: grep delete /etc/audit/audit.rules
+  register: result_425
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-426 | Ensure changes to system administration scope (sudoers) is collected"
+  shell: grep scope /etc/audit/audit.rules
+  register: result_426
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-427 | Ensure system administrator actions (sudolog) are collected"
+  shell: grep actions /etc/audit/audit.rules
+  register: result_427
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-428 | Ensure kernel module loading and unloading is collected"
+  shell: grep modules /etc/audit/audit.rules
+  register: result_428
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-429 | Ensure the audit configuration is immutable"
+  shell: grep "-e 2" /etc/audit/audit.rules
+  # shell: grep "^\s*[^#]" /etc/audit/audit.rules | tail -1
+  register: result_429
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-430 | Ensure login and logout events are collected"
+  shell: grep logins /etc/audit/audit.rules
+  register: result_430
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-431 | Ensure rsyslog Service is enabled"
+  shell: systemctl is-enabled rsyslog
+  register: result_431
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+#- name: "Category-432 | Ensure logging is configured"
+
+- name: "Category-433 | Ensure rsyslog default file permissions configured"
+  shell: grep ^\$FileCreateMode /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+  register: result_433
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-434 | Ensure rsyslog is configured to send logs to a remote log host"
+  shell: grep "^*.*[^I][^I]*@" /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+  register: result_434
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-435 | Ensure remote rsyslog messages are only accepted on designated log hosts"
+  shell: "{{item}}"
+  register: result_435
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  with_items:
+    - grep '^$ModLoad imtcp' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+    - grep '^$InputTCPServerRun' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-511 | Ensure cron daemon is enabled"
+  shell: systemctl is-enabled crond
+  register: result_511
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-511 | Ensure cron daemon is enabled"
+  shell: systemctl is-enabled cron
+  register: result_511a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES"
+
+- name: "Category-512 | Ensure permissions on /etc/crontab are configured"
+  stat:
+    path: /etc/crontab
+  register: result_512
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-513 | Ensure permissions on /etc/cron.hourly are configured"
+  stat:
+    path: /etc/cron.hourly
+  register: result_513
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-514 | Ensure permissions on /etc/cron.daily are configured"
+  stat:
+    path: /etc/cron.daily
+  register: result_514
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-515 | Ensure permissions on /etc/cron.weekly are configured"
+  stat:
+    path: /etc/cron.weekly
+  register: result_515
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-516 | Ensure permissions on /etc/cron.monthly are configured"
+  stat:
+    path: /etc/cron.monthly
+  register: result_516
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-517 | Ensure permissions on /etc/cron.d are configured"
+  stat:
+    path: /etc/cron.d
+  register: result_517
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-518 | Ensure /etc/at.allow is restricted to authorized users"
+  stat:
+    path: /etc/at.allow
+  register: result_518
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-519 | Ensure /etc/cron.allow is restricted to authorized users"
+  stat:
+    path: /etc/cron.allow
+  register: result_519
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-520 | Ensure /etc/at.deny is restricted to authorized users"
+  stat:
+    path: /etc/at.deny
+  register: result_520
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-521 | Ensure /etc/cron.deny is restricted to authorized users"
+  stat:
+    path: /etc/cron.deny
+  register: result_521
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-531 | Ensure permissions on /etc/ssh/sshd_config are configured"
+  stat:
+    path: /etc/ssh/sshd_config
+  register: result_531
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-532 | Ensure SSH Protocol is set to 2"
+  shell: grep "^Protocol" /etc/ssh/sshd_config
+  register: result_532
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-533 | Ensure SSH LogLevel is set to INFO"
+  shell: grep "^LogLevel" /etc/ssh/sshd_config
+  register: result_533
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-534 | Ensure SSH X11 forwarding is disabled"
+  shell: grep "^X11Forwarding" /etc/ssh/sshd_config
+  register: result_534
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-535 | Ensure SSH MaxAuthTries is set to 4 or less"
+  shell: grep "^MaxAuthTries" /etc/ssh/sshd_config
+  register: result_535
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-536 | Ensure SSH IgnoreRhosts is enabled"
+  shell: grep "^IgnoreRhosts" /etc/ssh/sshd_config
+  register: result_536
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-537 | Ensure SSH HostbasedAuthentication is disabled"
+  shell: grep "^HostbasedAuthentication" /etc/ssh/sshd_config
+  register: result_537
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-538 | Ensure SSH root login is disabled"
+  shell: grep "^PermitRootLogin" /etc/ssh/sshd_config
+  register: result_538
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-539 | Ensure SSH PermitEmptyPasswords is disabled"
+  shell: grep "^PermitEmptyPasswords" /etc/ssh/sshd_config
+  register: result_539
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-540 | Ensure SSH PermitUserEnvironment is disabled"
+  shell: grep "^PermitUserEnvironment" /etc/ssh/sshd_config
+  register: result_540
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-541 | Ensure only approved ciphers are used"
+  shell: grep "^cipher" /etc/ssh/sshd_config
+  register: result_541
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-542 | Ensure only approved MAC algorithms are used"
+  shell: grep "MACs" /etc/ssh/sshd_config
+  register: result_542
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-543 | Ensure SSH Idle Timeout Interval - ClientAliveInterval is configured"
+  shell: grep "^ClientAliveInterval" /etc/ssh/sshd_config
+  register: result_543
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-544 | Ensure SSH Idle Timeout Interval - ClientAliveCountMax is configured"
+  shell: grep "^ClientAliveCountMax" /etc/ssh/sshd_config
+  register: result_544
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-545 | Ensure SSH LoginGraceTime is set to one minute or less"
+  shell: grep "^LoginGraceTime" /etc/ssh/sshd_config
+  register: result_545
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-546 | Ensure SSH access - AllowUsers is limited"
+  shell: grep "^AllowUsers" /etc/ssh/sshd_config
+  register: result_546
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-547 | Ensure SSH access - AllowGroups is limited"
+  shell: grep "^AllowGroups" /etc/ssh/sshd_config
+  register: result_547
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-548 | Ensure SSH access - DenyUsers is limited"
+  shell: grep "^DenyUsers" /etc/ssh/sshd_config
+  register: result_548
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-549 | Ensure SSH access - DenyGroups is limited"
+  shell: grep "^DenyGroups" /etc/ssh/sshd_config
+  register: result_549
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-550 | Ensure SSH warning banner is configured"
+  shell: grep "^Banner" /etc/ssh/sshd_config
+  register: result_550
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-571 | Ensure password expiration is 90 days or less"
+  shell: grep ^PASS_MAX_DAYS /etc/login.defs
+  register: result_571
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-571a | Ensure password expiration is 90 days or less"
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$5!=90' | cut -d: -f1
+  register: result_571a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-572 | Ensure minimum days between password changes is 7 or more"
+  shell: grep ^PASS_MIN_DAYS /etc/login.defs
+  register: result_572
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-572a | Ensure minimum days between password changes is 7 or more - userlist"
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$4!="7"' | cut -d: -f1
+  register: result_572a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-573 | Ensure password expiration warning days is 7 or more"
+  shell: grep ^PASS_WARN_AGE /etc/login.defs
+  register: result_573
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-573a | Ensure password expiration warning days is 7 or more - userlist"
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$6!="7"' | cut -d: -f1
+  register: result_573a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-574 | Ensure inactive password lock is 30 days or less"
+  shell: useradd -D | grep INACTIVE
+  register: result_574
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-575a (Fact's) | Ensure all users last password change date is in the past"
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | cut -d: -f1
+  register: result_575a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-575 | Ensure all users last password change date is in the past"
+  shell: "chage --list {{item}} | egrep Last | awk -F: '{print $2}' "
+  register: result_575
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  with_items: "{{result_575a.stdout_lines}}"
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-576 | Ensure system accounts are non-login"
+  shell: >
+    egrep -v "^\+" /etc/passwd | awk -F: '($1!="root" && $1!="sync" && $1!="shutdown" && $1!="halt" && $3<1000 && $7!="/sbin/nologin" && $7!="/bin/false") {print}'
+  register: result_576
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-576a | Ensure system accounts are non-login"
+  shell: >
+    egrep -v "^\+" /etc/passwd | awk -F: '($1!="root" && $1!="sync" && $1!="shutdown" && $1!="halt" && $3<1000 && $7!="/usr/sbin/nologin" && $7!="/bin/false") {print}'
+  register: result_576a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-577 | Ensure default group for the root account is GID 0"
+  shell: >
+    grep "^root:" /etc/passwd | cut -f4 -d:
+  register: result_577
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-578a | Ensure default user umask is 027 or more restrictive"
+  shell: "{{item}}"
+  register: result_578a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - grep umask 027 /etc/bash.bashrc
+    - grep umask 027 /etc/profile /etc/profile.d/*.sh
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-578b | Ensure default user umask is 027 or more restrictive"
+  shell: "{{item}}"
+  register: result_578b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - grep "umask 027" /etc/bash.bashrc.local
+    - grep "umask 027" /etc/profile /etc/profile.d/*.sh
+  when: ansible_distribution == "SLES"
+
+- name: "Category-578c | Ensure default user umask is 027 or more restrictive"
+  shell: "{{item}}"
+  register: result_578c
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - grep "umask 027" /etc/bashrc
+    - grep "umask 027" /etc/profile /etc/profile.d/*.sh
+  when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+
+- name: "Category-579a | Ensure default user shell timeout is 900 seconds or less"
+  shell: "{{item}}"
+  register: result_579a
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - grep "^TMOUT" /etc/bash.bashrc
+    - grep "^TMOUT" /etc/profile /etc/profile.d/*.sh
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Category-579b | Ensure default user shell timeout is 900 seconds or less"
+  shell: "{{item}}"
+  register: result_579b
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - grep "^TMOUT" /etc/bash.bashrc.local
+    - grep "^TMOUT" /etc/profile /etc/profile.d/*.sh
+  when: ansible_distribution == "SLES"
+
+- name: "Category-579c | Ensure default user shell timeout is 900 seconds or less"
+  shell: "{{item}}"
+  register: result_579c
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  loop:
+    - grep "^TMOUT" /etc/bashrc
+    - grep "^TMOUT" /etc/profile /etc/profile.d/*.sh
+  when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+
+- name: "Category-601 | Ensure permissions on /etc/passwd are configured"
+  stat:
+    path: /etc/passwd
+  register: result_601
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-602 | Ensure permissions on /etc/shadow are configured"
+  stat:
+    path: /etc/shadow
+  register: result_602
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-603 | Ensure permissions on /etc/group are configured"
+  stat:
+    path: /etc/group
+  register: result_603
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-604 | Ensure permissions on /etc/gshadow are configured"
+  stat:
+    path: /etc/gshadow
+  register: result_604
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-605 | Ensure permissions on /etc/passwd- are configured"
+  stat:
+    path: /etc/passwd-
+  register: result_605
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-606 | Ensure permissions on /etc/shadow- are configured"
+  stat:
+    path: /etc/shadow-
+  register: result_606
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-607 | Ensure permissions on /etc/group- are configured"
+  stat:
+    path: /etc/group-
+  register: result_607
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-608 | Ensure permissions on /etc/gshadow- are configured"
+  stat:
+    path: /etc/gshadow-
+  register: result_608
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-609 | Ensure no world writable files exist"
+  shell: >
+    df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002
+  register: result_609
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-610 | Ensure no unowned files or directories exist"
+  shell: >
+    df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser
+  register: result_610
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-611 | Ensure no ungrouped files or directories exist"
+  shell: >
+    df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup
+  register: result_611
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-612 | Audit SUID executables"
+  shell: >
+    df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -4000
+  register: result_612
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-613 | Audit SGID executables"
+  shell: >
+    df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -2000
+  register: result_613
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-621 | Ensure password fields are not empty"
+  shell: >
+    cat /etc/shadow | awk -F: '($2 == "" ) { print $1 }'
+  register: result_621
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-622 | Ensure no legacy + entries exist in /etc/passwd"
+  shell: >
+    grep '^\+:' /etc/passwd
+  register: result_622
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-623 | Ensure no legacy + entries exist in /etc/shadow"
+  shell: >
+    grep '^\+:' /etc/shadow
+  register: result_623
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-624 | Ensure no legacy + entries exist in /etc/group"
+  shell: >
+    grep '^\+:' /etc/group
+  register: result_624
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-625 | Ensure root is the only UID 0 account"
+  shell: >
+    cat /etc/passwd | awk -F: '($3 == 0) { print $1 }'
+  register: result_625
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-626 | Ensure root PATH Integrity"
+  script: root_path_integrity.sh
+  register: result_626
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-627 | Ensure all users' home directories exist"
+  script: all_user_home_dir_exists.sh
+  register: result_627
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+#- name: "Category-628 | Ensure users' home directories permissions are 750 or more restrictive "
+#  script: all_user_home_dir_exists.sh
+#  register: result_628
+#  failed_when: no
+#  changed_when: no
+#  ignore_errors: true
+#  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-629 | Ensure users own their home directories"
+  script: all_users_home_dir.sh
+  register: result_629
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-630 | Ensure users' dot files are not group or world writable"
+  script: dot_files_group_writable.sh
+  register: result_630
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-631 | Ensure no users have .forward files"
+  script: users_forward_files.sh
+  register: result_631
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-632 | Ensure no users have .netrc files"
+  script: users_netrc_files.sh
+  register: result_632
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+
+- name: "Category-633 | Ensure users' .netrc Files are not group or world accessible"
+  script: users_netrc_files_notgrouped.sh
+  register: result_633
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-634 | Ensure no users have .rhosts files"
+  script: rhost_files.sh
+  register: result_634
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-635 | Ensure all groups in /etc/passwd exist in /etc/group"
+  script: all_groups.sh
+  register: result_635
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-636 | Ensure no duplicate UIDs exist"
+  script: duplicate_uid.sh
+  register: result_636
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-637 | Ensure no duplicate GIDs exist"
+  script: duplicate_gid.sh
+  register: result_637
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-638 | Ensure no duplicate user names exist"
+  script: duplicate_user_name.sh
+  register: result_638
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Category-639 | Ensure no duplicate group names exist"
+  script: duplicate_group_name.sh
+  register: result_639
+  failed_when: no
+  changed_when: no
+  ignore_errors: true
+  no_log: true
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "SLES" or ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
+- name: "Security Report Generation Template"
+  template:
+    src: report.j2
+    dest: /tmp/report.txt
+
+- name: "Security Report Generation CSV"
+  template:
+    src: report_csv.j2
+    dest: /tmp/report.csv
+
+- name: "Security Report Generation Template for HTML"
+  template:
+    src: html.j2
+    # src: report_html.j2
+    dest: /tmp/report.html
+
+- name: "Mail ec2 instance information"
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: jinojoe@gmail.com
+    password: KULANDAI.29
+    to: jinojoe@gmail.com
+    from: jinojoe@gmail.com
+    subject: Disk Report
+    subtype: html
+    attach:
+      - /tmp/report.csv
+      - /tmp/report.html
+      - /tmp/report.txt
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  run_once: True

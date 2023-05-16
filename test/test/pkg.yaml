@@ -1,0 +1,9 @@
+---
+- name: "To install customer available packages"
+  hosts: master
+  vars_prompt:
+    - name: user_pkg
+      prompt: "Please Enter your package"
+      private: no
+  roles:
+    - role: pkg

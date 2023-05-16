@@ -1,0 +1,4 @@
+
+{% for l, k in jino.ansible_facts.ansible_default_ipv4.items() %}
+{{l}} - {{k}}
+{% endfor %}

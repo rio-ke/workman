@@ -1,0 +1,6 @@
+---
+- name: bcv
+  hosts: master local
+  tasks:
+  roles:
+    - role: hosts

@@ -1,0 +1,67 @@
+[local]
+localhost ansible_connection=local ansible_user=mike
+#localhost ansible_connection=local ansible_user=mike
+#[test]
+#rits_server
+archive_server ansible_connection=ssh ansible_user=ansible ansible_ssh_pass=R8di8nt123*
+[dc2]
+dc2-node1
+dc2-node2
+#dc2-node-T
+#dc2-node-H
+[bds]
+bds_server ansible_host=180.151.48.124
+[bds2]
+192.168.5.212 
+[atm]
+atm_server ansible_host=182.156.227.181
+#atm_server ansible_host=119.82.114.76
+#atm_server ansible_host=119.82.114.76
+[host]
+#host_server ansible_host=182.156.227.179
+host_server ansible_host=113.193.248.99
+#host_server ansible_host=119.82.114.77
+
+[dc1]
+dc1-node-T
+dc1-node-S
+dc1-node-D
+
+# inventory
+[bastion-host]
+3.80.253.186 ansible_connection=ssh  ansible_user=ubuntu  ansible_ssh_private_key_file=~/Documents/JINO_N.pem
+
+[private]
+172.31.34.236 ansible_connection=ssh  ansible_user=ubuntu   ansible_ssh_private_key_file=~/Documents/JINO_N.pem
+172.31.35.111 ansible_connection=ssh  ansible_user=ubuntu  ansible_ssh_private_key_file=~/Documents/JINO_N.pem
+
+
+[vag]
+master ansible_host=192.168.5.161 ansible_user=vagrant ansible_connection=ssh ansible_private_key_file=/home/mike/Study/vagrant/.vagrant/machines/jino/virtualbox/private_key
+node ansible_host=192.168.5.174 ansible_user=vagrant ansible_connection=ssh ansible_private_key_file=/home/mike/Study/vagrant/node2/.vagrant/machines/jino1/virtualbox/private_key
+
+[nas]
+nas_server ansible_host=180.151.48.123
+
+[nas:vars]
+ansible_user=admin
+ansible_ssh_pass=R8di8ntadmin789*
+[bds2:vars]
+ansible_user=root
+ansible_ssh_pass=.
+[j]
+172.31.15.127 ansible_user=ubuntu
+
+[all:vars]
+ansible_user        = jinoj
+ansible_ssh_pass    = !Hz^o^!yH#E0
+ansible_connection  = ssh
+sec_date            = "{{ lookup('pipe','date +%Y-%m-%d') }}"
+rad_date            = "{{ lookup('pipe','date +%Y%b%d\(%a\) --date="1 day ago" ') }}"
+post_rad_date       = "{{ lookup('pipe','date +%Y-%m-%d --date="3 day ago"') }}"
+pre_rad_date        = "{{ lookup('pipe','date +%Y-%m-%d --date="1 day ago"') }}"
+log_date            = "{{ lookup('pipe','date +%d/%b/%Y --date="1 day ago"') }}"
+dbs_log             = root
+name_of_month       = {{ lookup('pipe','date +%b')}}
+date_of_month       = {{ lookup('pipe','date +%d')}}
+# !Hz^o^!yH#E0

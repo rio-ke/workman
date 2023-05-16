@@ -1,0 +1,29 @@
+---
+pcs_pack:
+  - pacemaker
+  - pcs
+  - psmisc
+  - policycoreutils-python
+
+drbd_conf:
+  - kmod-drbd84
+  - drbd84-utils
+disk_name: sdb
+disk_size: 1GiB
+lv_name: lv1
+vg_name: vg1
+resource_name: wwwdata
+hacluster_user: hacluster
+hacluster: hacluster
+node1_ip: 192.168.5.141
+node2_ip: 192.168.5.187
+node1_name: jino1
+node2_name: jino2
+virtual_disk_name: drbd0
+pcs_conf:
+  - pcs cluster auth {{node1_name}} {{node2_name}} -u {{hacluster_user}} -p{{hacluster}}
+  - pcs cluster setup --name mycluster {{node1_name}} {{node2_name}}
+  - pcs cluster start --all
+  - pcs cluster enable --all
+  - pcs property set stonith-enabled=false
+  - pcs property set no-quorum-policy=ignore

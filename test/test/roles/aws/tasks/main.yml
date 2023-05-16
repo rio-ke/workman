@@ -1,0 +1,13 @@
+---
+- ec2_vpc:
+    state: present
+    cidr_block: "{{vpc_cidr_block}}"
+    region: "{{region}}"
+    resource_tags: { "Environment":"Development" }
+    subnets:
+      - cidr: "{{public_subnet}}"
+        az: "{{public_zone}}"
+        resource_tags: { "Environment":"Dev", "Tier" : "Web" }
+      - cidr: "{{private_subnet}}"
+        az: "{{private_zone}}"
+        resource_tags: { "Environment":"Dev", "Tier" : "App" }

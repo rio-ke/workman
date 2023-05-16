@@ -1,0 +1,11 @@
+---
+# defaults file for roles/hpilo_alert
+smtp_username: jinojow@gmail.com
+smtp_password: KULANDAI.29
+smtp_port: 587
+smtp_host: smtp.gmail.com
+email_from: jinojoe@gmail.com
+email_to: jinojoe@gmail.com
+email_cc: jinojoe@gmail.com
+client_name: Skylark
+delegate_host: localhost

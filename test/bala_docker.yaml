@@ -1,0 +1,4 @@
+---
+- hosts: node2
+  roles:
+    - role: bala_docker

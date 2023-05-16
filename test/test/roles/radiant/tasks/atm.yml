@@ -1,0 +1,42 @@
+---
+- name: "atm timestamp"
+  command: date +%Y%b%d\(%a\) --date="1 day ago"
+  register: atm_timestamp
+
+- name: "atm DB"
+  fetch:
+    src: "/mnt/backup/ATM/dailymysqldb/{{atm_dir_timestamp}}/{{item}}"
+    dest: /jino
+    flat: yes
+    fail_on_missing: yes
+  loop: "{{atm_dbs}}"
+  ignore_errors: True
+  register: atm_result
+
+- name: "success mail notification"
+  mail:
+    to: "{{to_address}}"
+    cc: "{{cc_address}}"
+    from: "ansible@{{ansible_nodename}}"
+    subject: "{{ansible_hostname}} - Ansible Report"
+    body: "ATM DB are transferred to ansible server"
+  ignore_errors: True
+  when: atm_result1 is succeeded
+  register: mail_result
+
+- name: "failure mail notification"
+  mail:
+    to: "{{to_address}}"
+    cc: "{{cc_address}}"
+    from: "ansible@{{ansible_nodename}}"
+    subject: "{{ansible_hostname}} - Failure Ansible Report"
+    body: "ATM DB are not transferred to ansible server"
+  ignore_errors: True
+  when: mail_result is failed
+
+- name: "rsync atm data into nas device"
+  shell: "{{item}}"
+  loop:
+    - rsync -avzpP --delete /var/www/html/ATM/* admin@180.151.48.123:/home/admin/Application/UpdateApplications/ATM/
+    - rsync -avzpP  /var/www/html/ATM/* admin@180.151.48.123:/home/admin/Application/atmdata/ATM/
+  register: atm_application_data

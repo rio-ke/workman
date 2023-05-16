@@ -1,0 +1,24 @@
+---
+- include_tasks: dc1rcms.yml
+  when:
+  - ansible_nodename == "dc1-node02.rcms.net" or ansible_nodename == "dc1-node01.rcms.net"
+
+- include_tasks: dc2rcms.yml
+  when:
+  - ansible_nodename == "dc2-node01.rcms.net" or ansible_nodename == "dc2-node02.rcms.net"
+
+- include_tasks: dc2mysqlimport.yml
+  when:
+  - ansible_nodename == "dc2-node01.rcms.net" or ansible_nodename == "dc2-node02.rcms.net"
+
+- include_tasks: bds_server1.yml
+  when:
+  - ansible_nodename == "bds-server"
+
+- include_tasks: atm.yml
+  when:
+  - ansible_nodename == "atmserver.rcms.net"
+
+- include_tasks: nas_server.yml
+  when:
+  - ansible_nodename == "RADIANT_NAS"

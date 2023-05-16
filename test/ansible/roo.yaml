@@ -1,0 +1,12 @@
+---
+- hosts: archive_server
+  tasks:
+    - name: Ensuring that free space on '/' is grater than 30%
+      assert:
+        that:
+          - not {{ item.mount and ( item.size_available < item.size_total - ( item.size_total|float * 0.9 ) ) }}
+      with_items: '{{ ansible_mounts }}' # disk_free.results[0]['item']['size_available']
+      ignore_errors: yes
+      register: disk_free
+    -  debug: var=disk_free
+

@@ -1,0 +1,19 @@
+---
+- hosts: node
+  tasks:
+  - name: check weather domain name works or not
+    uri:
+      url: http://jino.com
+    register: result
+
+  - debug:
+      msg: "{{ result }}"
+
+  - name: Add IP address of all hosts to all hosts
+    lineinfile:
+      dest: /etc/hosts
+      regexp: '.*{{ item }}$'
+      line: "{{ hostvars[item].ansible_host }} {{item}}"
+      state: present
+    when: hostvars[item].ansible_host is defined
+    with_items: "{{ groups.all }}"

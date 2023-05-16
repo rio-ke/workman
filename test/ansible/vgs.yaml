@@ -1,0 +1,7 @@
+---
+- name: knfw
+  hosts: archive_server
+  tasks:
+  - name: skdjn
+    vgs:
+

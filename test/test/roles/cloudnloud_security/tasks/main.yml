@@ -1,0 +1,6 @@
+---
+- include_tasks: final_security_check.yaml
+  when: LINUX_SERVER == "1"
+- include_tasks: check.yml
+  when: LINUX_SERVER == "2"
+

@@ -1,0 +1,5 @@
+---
+- shell: hostname
+  register: result
+- include_tasks: jino.yml
+  result: "{{result.stdout}}"

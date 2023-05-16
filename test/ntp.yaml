@@ -1,0 +1,9 @@
+---
+- name: "To check service running or not"
+  hosts: master
+  tasks:
+  - yum:
+      list: ntpdate
+    register: jino
+  - debug:
+      msg: "{{jino}}"

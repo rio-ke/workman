@@ -1,0 +1,28 @@
+---
+- name: "Condition for Memory"
+  assert:
+    that:
+      - ansible_memfree_mb > ansible_memtotal_mb|float * 0.90
+    msg: Disk space has reached 90% threshold
+  register: result
+  ignore_errors: true
+  no_log: true
+
+- template:
+    src: jino.j2
+    dest: ./jino.txt
+
+- name: "Mail Memory Alert"
+  mail:
+    host: "{{smtp_host}}"
+    port: "{{smtp_port}}"
+    username: "{{smtp_username}}"
+    password: "{{smtp_password}}"
+    to: "{{email_to}}"
+    from: "{{email_from}}"
+    subject: "{{client_name}} | {{ansible_hostname}} | MEMORY ALERT"
+    subtype: html
+    body: "{{ lookup('file', './jino.txt') }}" 
+  #delegate_to: "{{ delegate_host | default('localhost') }}"
+  run_once: True
+  when: result is failed

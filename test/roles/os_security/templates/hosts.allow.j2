@@ -1,0 +1,2 @@
+ALL: {% for iprange in host_allow -%}{{ iprange }}{% if not loop.last %}, {% endif %}{% endfor %}
+

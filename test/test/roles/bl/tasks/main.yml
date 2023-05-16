@@ -1,0 +1,25 @@
+---
+- name: "read files"
+  shell: cat /etc/resolv.conf | grep -v "#"
+  register: result2
+
+- name: "read files"
+  shell: cat /etc/sysconfig/network-scripts/ifcfg-eth0 | grep -v "#"
+  # shell: cat /etc/network/interfaces | grep -v "#"
+  register: result1
+  when: ansible_distribution == "CentOS"
+
+- debug:
+    msg: "{{item.0}};{{item.1}};{{item.2}}"
+  with_together:
+    - "{{ansible_hostname}}"
+    - "{{result1.stdout_lines}}"
+    - "{{result2.stdout_lines}}"
+  register: result
+  no_log: true
+
+- name: "create template"
+  template:
+    src: result.j2
+    dest: /home/jino/result1.csv
+  delegate_to: localhost

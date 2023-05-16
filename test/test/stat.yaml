@@ -1,0 +1,12 @@
+---
+- name: ensure check file exixt or not
+  hosts: localhost
+  tasks:
+  - stat:
+      path: /etc/hosts
+    register: jino
+  - debug:
+      msg: "{{ jino }}"
+      #  - yum:
+      # name: httpd
+      # state: '{{ "yum" if jino.failed else "present"}}'

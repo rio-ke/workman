@@ -1,0 +1,34 @@
+---
+- name: App move to ATM
+  hosts: 111.93.12.251
+  vars:
+    - b_date: "{{rad_date}}23-45-01"
+  tasks:
+  - name: create directory
+    file:
+      path: "/mysqlbackup/DC2/DB/{{ pre_rad_date }}"
+      state: directory
+  - name: copy the file local to back up server
+    copy: src=/jino/{{ item }}  dest=/mysqlbackup/DC2/DB/{{ pre_rad_date }}/ remote_src=no
+    ignore_errors: True
+    with_items:
+      - rcms_atm.gz
+      - rcmsdata.gz
+    register: rcmatm_result
+  - name: Sent Mail Confirmation
+    mail:
+      to: linuxadmin@radiantcashservices.com
+      subject: "Ansible_Report - {{ansible_hostname}}"
+      body: "DB moving Status: {{ rcmatm_result.changed }}"
+    run_once: True
+    ignore_errors: True
+  - name: Restore DB
+    mysql_db: state=import login_user={{dbs_log}}  name=rcmsdata target=/mysqlbackup/DC2/DB/{{ pre_rad_date }}/rcmsdata.gz
+    ignore_errors: True
+    register: DB_result
+  - name: mail status with success result
+    mail:
+      to: linuxadmin@radiantcashservices.com
+      subject: "Ansible_Report - {{ansible_hostname}}"
+      body: "DB Import Status: {{ DB_result.changed }}"
+    run_once: True

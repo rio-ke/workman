@@ -1,0 +1,60 @@
+---
+- name:  group create
+  group:
+    name: "{{item}}"
+    # name: "{{group_name}}"
+    state: present
+  with_items:
+    - "{{group_name}}"
+  tags:
+    group_creation
+
+- name: user Create
+  user:
+    name:  "{{user_name}}"
+    state: present
+  tags:
+    user_creation
+
+- name: user create with shell
+  user:
+    name:  "{{user_name}}"
+    shell: "{{shell_type}}"
+    state: present
+  tags:
+    user_creation_with_shell
+
+- name: user delete
+  user:
+    name:  "{{user_name}}"
+    state: absent
+  tags:
+    user_delete
+
+- name: user create with Uid
+  user:
+    name: "{{user_name}}"
+    shell: "{{shell_type}}"
+    uid: "{{uid_num}}"
+    state: present
+  tags:
+    user_creation_with_uid
+
+- name: user create with single group
+  user:
+    name: "{{user_name}}"
+    shell: "{{shell_type}}"
+    group: "{{group_name}}"
+    append: yes
+  tags:
+    user_creation_with_single_group
+
+- name: user create with append multiple group
+  user:
+    name: "{{user_name}}"
+    shell: "{{shell_type}}"
+    groups: "{{group_name}}"
+    append: yes
+  tags:
+    user_creation_with_multiple_group
+

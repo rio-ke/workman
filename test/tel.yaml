@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  tasks:
+
+  - name: run show commands
+    telnet:
+      user: tad
+      password: .
+      login_prompt: "Username: "
+      prompts:
+        - '[>|#]'
+      command:
+        - show version

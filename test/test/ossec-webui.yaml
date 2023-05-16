@@ -1,0 +1,4 @@
+---
+- hosts: node2
+  roles:
+    - role: juju4.ossecwui

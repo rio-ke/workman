@@ -1,0 +1,27 @@
+---
+- name: "Play for Mounts"
+  hosts: jake 
+  tasks:
+  - assert:
+      that:
+      - mount.size_available > mount.size_total|float * 0.15
+      msg: Disk space has reached 85% threshold
+    vars:
+      mount: "{{ ansible_mounts | selectattr('mount','equalto',item.mount) | list | first }}"
+    with_items:
+      - "{{ ansible_mounts }}"
+    ignore_errors: true
+    register: result
+    no_log: true
+
+  #  - debug:
+  #      msg: "{{item.item.mount}} {{item.item.size_available}}"
+  #    when: item.failed == true
+  #    with_items: "{{ result.results | json_query('[]')}}"
+  #    register: jj
+
+  - template:
+      src: ./qqq.j2
+      dest: /tmp/disk.csv
+    delegate_to: localhost
+

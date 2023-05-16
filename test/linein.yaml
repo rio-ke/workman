@@ -1,0 +1,9 @@
+---
+- hosts: cent
+  tasks:
+  - replace:
+      path: /etc/httpd/conf/httpd.conf
+      before: '#'
+      regexp: 'LogFormat "\%h \%l \%u \%t \"\%r\" \%>s \%b \"\%\{Referer\}i\" \"\%\{User-Agent\}i\"" combined'
+      replace: 'LogFormat "\%h  \%{\%d/\%b/\%Y \%T}t  \%\{remote\}p \%>s \%X \%m \%f \%T/\%D  \%P   \%\{Referer\}i" combined'
+      backup: yes

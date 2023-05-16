@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  tasks:
+  - name: "Ensure openbsd-inetd is not installed"
+    shell: dpkg -s openbsd-inetd
+    register: openbsd
+    ignore_errors: true
+    changed_when: no
+    failed_when: no
+    check_mode: no
+  - debug:
+      msg: "{{openbsd}}"

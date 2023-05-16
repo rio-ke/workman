@@ -1,0 +1,11 @@
+---
+upload_max_filesize: 1M
+max_input_vars: 100
+post_max_size: 256k
+memory_limit: 256M
+expose_php: off
+error_log_path: /var/log/httpd/php_scripts_error.log
+max_input_time: 60
+
+ftp_user: mcgillcheftps
+ftp_password: mcgillcheftps@><==

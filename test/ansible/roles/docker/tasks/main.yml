@@ -1,0 +1,24 @@
+---
+- name: install docker dependencies
+  yum:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - "{{docker_dependencies}}"
+- name: docker repo
+  get_url:
+    url: "{{docker_repo}}"
+    dest: /etc/yum.repos.d/docker.repo
+- name: install docker
+  yum:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - "{{docker_name}}"
+- name: start the docker service
+  service:
+    name: "{{item}}"
+    state: started
+    enabled: yes
+  with_items:
+    - "{{docker_service_name}}"

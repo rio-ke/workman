@@ -1,0 +1,24 @@
+---
+# tasks file for roles/html
+#
+- name: "setup calluclation"
+  setup:
+  register: jino
+- debug: msg="{{jino.ansible_facts.ansible_default_ipv4}}"
+- template:
+    src: html3.j2
+    dest: ~/Desktop/html.txt
+
+- name: "Mail ec2 instance information"
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: jinojoe@gmail.com
+    password: KULANDAI.29
+    to: jinojoe@gmail.com
+    from: jinojoe@gmail.com
+    subject: Disk Report
+    subtype: html
+    body: "{{ lookup('file', '~/Desktop/html.html') }}"
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  run_once: True

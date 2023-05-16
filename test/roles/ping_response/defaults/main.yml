@@ -1,0 +1,5 @@
+---
+target_host: 127.0.0.1
+delegate_host: localhost
+email_to: linuxadmin@radiantcashservices.com
+email_cc: jinojoe@gmail.com

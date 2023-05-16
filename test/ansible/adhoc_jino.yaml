@@ -1,0 +1,13 @@
+- hosts: dc1-node-T localhost
+  tasks:
+    - shell: "{{item}}"
+      with_items:
+        - hostname
+        - uname -mrs
+      register: result2
+    - name: Notification message via Slack
+      slack:
+        token: TCYQDFEPR/BCYBD8ENR/RgAvFE7Zw27aPRb1DfEbf7rM
+        msg: "{{ lookup('template', 'template/result2.j2') }}"
+        channel: '#general'
+      delegate_to: localhost

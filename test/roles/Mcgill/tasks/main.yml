@@ -1,0 +1,165 @@
+---
+- name: "Install httpd"
+  yum:
+    name: httpd
+    state: present
+
+- name: "Install epel-release"
+  yum:
+    name: epel-release
+    state: present
+
+- name: "install vim editor"
+  yum:
+    name: vim
+    state: present
+
+- name: "start the httpd"
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: "htaccess enable"
+  replace:
+    path: /etc/httpd/conf/httpd.conf
+    before: '#'
+    regexp: 'AllowOverride None'
+    replace: AllowOverride All
+    backup: yes
+
+#- name: "Auto indexing php"
+#  replace:
+#    path: /etc/httpd/conf/httpd.conf
+#    before: '#'
+#    regexp: 'DirectoryIndex index.html'
+#    replace: DirectoryIndex index.php index.html
+#    backup: yes
+#
+- name: "apache security hardening fix"
+  template:
+    src: security.j2
+    dest: /etc/httpd/conf.d/security.conf
+  notify:
+  - restart httpd
+
+- name: "install php7.2 rpm"
+  yum:
+    name: http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+    state: present
+
+- name: "Install php"
+  yum:
+    name: "{{item}}"
+    state: present
+    enablerepo: remi-php72
+  with_items:
+    - php
+    - php-common
+    - php-opcache
+    - php-mcrypt
+    - php-cli
+    - php-gd
+    - php-curl
+    - php-mysqlnd
+    - php-mbstring
+    - php-memcached
+    - php-opcache
+
+- name: "Replace in rsyslog and audit file if already existing replaced"
+  replace:
+    path: /etc/php.ini
+    regexp: "{{item.exp}}"
+    replace: "{{item.rep}}"
+    backup: yes
+  run_once: true
+  with_items:
+    - { exp: ';date.timezone =',            rep: 'date.timezone = "Asia/Kolkata"' }
+    - { exp: 'expose_php = On',             rep: 'expose_php = {{expose_php}}' }
+    - { exp: ';error_log = php_errors.log', rep: 'error_log = {{error_log_path}}' }
+    - { exp: 'allow_url_fopen = On',        rep: 'allow_url_fopen = Off' }
+    - { exp: 'max_input_time = 60',         rep: 'max_input_time = {{max_input_time}}' }
+    - { exp: 'memory_limit = 128M',         rep: 'memory_limit = {{memory_limit}}' }
+    - { exp: ';cgi.force_redirect = 1',     rep: 'cgi.force_redirect = 1' }
+    - { exp: 'post_max_size = 8M',          rep: 'post_max_size = {{post_max_size}}' }
+    - { exp: '; max_input_vars = 1000',     rep: 'max_input_vars = {{max_input_vars}}' }
+    - { exp: 'upload_max_filesize = 2M',    rep: 'upload_max_filesize = {{upload_max_filesize}}' }
+
+- name: "install php7.2 rpm"
+  yum:
+    name: https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm
+    state: present
+
+- name: "install mysql5.7"
+  yum:
+    name: mysql-server
+    state: present
+
+- name: "start mysql service"
+  service:
+    name: mysqld
+    state: started
+    enabled: yes
+
+- name: "install vsftpd"
+  yum:
+    name: vsftpd
+    state: present
+
+- name: "create vsftpd user"
+  user:
+    name:  "{{ftp_user}}" #mcgftpchn
+    state: present
+    shell: /usr/sbin/nologin
+    comment: ftpuser
+
+#- name: "Assign password for particular user"
+#  shell: "echo {{ftp_password}} | passwd --stdin {{ftp_user}}"
+
+- name: "create log file"
+  file:
+    path: /var/log/vsftpd.log
+    state: touch
+    owner: "{{ftp_user}}"
+    group: "{{ftp_user}}"
+    mode: 744
+
+- name: "ftp user config directory"
+  file:
+    path: /etc/vsftpd/users
+    state: directory
+
+- name: "create log file"
+  file:
+    path: "/etc/vsftpd/users/{{ftp_user}}"
+    state: touch
+
+- name: "Add ftp user to userlist"
+  blockinfile:
+    path: "/etc/vsftpd/users/{{ftp_user}}"
+    block: |
+      local_root=/var/www/html/
+
+- name: "start vsftpd"
+  service:
+    name: vsftpd
+    state: started
+    enabled: yes
+
+- name: "whitelist http port"
+  firewalld:
+    service: http
+    state: enabled
+    immediate: yes
+    permanent: yes
+
+- name: "whitelist ftp port"
+  firewalld:
+    service: ftp
+    state: enabled
+    immediate: yes
+    permanent: yes
+
+- name: Disable SELinux
+  selinux:
+    state: disabled

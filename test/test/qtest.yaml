@@ -1,0 +1,19 @@
+---
+- hosts: node1
+  tasks:
+  - stat:
+      path: /jjj/jino1.txt
+    register: jj
+    ignore_errors: true
+
+  - debug: msg="file found"
+    when: jj.stat.exists == True
+
+  - stat:
+      path: /jjj/j/jino.txt
+    register: jjj
+    when: jj.stat.exists == false
+
+  - debug: msg="file found in second location"
+    when: jj.stat.exists == false
+

@@ -1,0 +1,6 @@
+---
+nagios_service_name: nagios
+nagios_url: nagios
+htpassword_path: /etc/nagios/passwd
+nagios_pass: nagiosadmin
+nagios_email_alert: jinojoe@gmail.com

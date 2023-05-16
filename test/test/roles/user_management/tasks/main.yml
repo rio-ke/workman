@@ -1,0 +1,109 @@
+---
+- name: "Ensure password expiration is {{ PASS_MAX_DAYS }} days or less"
+  lineinfile:
+    state: present
+    dest: /etc/login.defs
+    regexp: '^PASS_MAX_DAYS'
+    line: 'PASS_MAX_DAYS {{ PASS_MAX_DAYS }}'
+
+- name: "Ensure user maximum password days"
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$5!="{{PASS_MAX_DAYS}}"' | cut -d: -f1 | egrep -vw "root|{{ansible_user}}"
+  ignore_errors: true
+  register: user_max_password_days
+  failed_when: user_max_password_days.rc == "1"
+
+- name: "To change user maximum password days"
+  shell: "chage --maxdays {{ PASS_MAX_DAYS }} {{item}}"
+  with_items:
+    - "{{ user_max_password_days.stdout_lines }}"
+  when: user_max_password_days.stdout_lines != "[]"
+
+- name: "Ensure minimum days between password changes is 7 or more"
+  lineinfile:
+    state: present
+    dest: /etc/login.defs
+    regexp: '^PASS_MIN_DAYS'
+    line: 'PASS_MIN_DAYS {{ PASS_MIN_DAYS }}'
+
+- name: "Ensure user minimum password days"
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$4!="{{ PASS_MIN_DAYS }}"' | cut -d: -f1 | egrep -wv "root|{{ansible_user}}"
+  ignore_errors: true
+  register: user_min_password_days
+  failed_when: user_min_password_days.rc == "1"
+
+- name: "To change user minimum password days"
+  shell: "chage --mindays {{ PASS_MIN_DAYS }} {{item}}"
+  with_items:
+    - "{{ user_min_password_days.stdout_lines }}"
+  when: user_min_password_days.stdout_lines != "[]"
+
+- name: "Ensure password expiration warning days is {{ PASS_WARN_AGE }} or more"
+  lineinfile:
+    state: present
+    dest: /etc/login.defs
+    regexp: '^PASS_WARN_AGE'
+    line: 'PASS_WARN_AGE {{ PASS_WARN_AGE }}'
+
+- name: "Ensure user password warning age days"
+  shell: >
+    egrep ^[^:]+:[^\!*] /etc/shadow | awk -F':' '$6!="{{ PASS_WARN_AGE }}"' | cut -d: -f1 | egrep -wv "root|{{ansible_user}}"
+  ignore_errors: true
+  register: user_warn_age
+  failed_when: user_warn_age.rc == "1"
+
+- name: "To change user password warning age days"
+  shell: "chage --maxdays {{ PASS_WARN_AGE }} {{item}}"
+  with_items:
+    - "{{ user_warn_age.stdout_lines }}"
+  when: user_warn_age.stdout_lines == "[]"
+
+#- name: "Ensure password minimum length  is {{ PASS_MIN_LEN }} or more"
+#  lineinfile:
+  #    state: present
+  #  dest: /etc/login.defs
+  #  regexp: '^PASS_MIN_LEN'
+  #  line: 'PASS_MIN_LEN {{ PASS_MIN_LEN }}'
+
+- name: "To set the default password inactivity period to 30 days"
+  shell: "useradd -D -f {{ INACTIVE }}"
+  changed_when: no
+  failed_when: no
+
+- name: "Ensure password creation requirements are configured"
+  lineinfile:
+    state: present
+    dest: /etc/security/pwquality.conf
+    regexp: '^{{ item.key }}'
+    line: '{{ item.key }} = {{ item.value }}'
+  with_items:
+    - { key: 'minlen',  value: '14' }
+    - { key: 'dcredit', value: '-1' }
+    - { key: 'ucredit', value: '-1' }
+    - { key: 'ocredit', value: '-1' }
+    - { key: 'lcredit', value: '-1' }
+
+- name: "Ensure lockout for failed password attempts is configured"
+  lineinfile:
+    state: present
+    dest: "{{item.dest}}"
+    line: "{{item.line}}"
+  with_items:
+  - { dest: '/etc/pam.d/password-auth', line: 'auth required pam_faillock.so preauth audit silent deny=5 unlock_time=900'}
+  - { dest: '/etc/pam.d/password-auth', line: 'auth [success=1 default=bad] pam_unix.so'}
+  - { dest: '/etc/pam.d/password-auth', line: 'auth [default=die] pam_faillock.so authfail audit deny=5 unlock_time=900'}
+  - { dest: '/etc/pam.d/password-auth', line: 'auth sufficient pam_faillock.so authsucc audit deny=5 unlock_time=900'}
+  - { dest: '/etc/pam.d/system-auth', line: 'auth required pam_faillock.so preauth audit silent deny=5 unlock_time=900'}
+  - { dest: '/etc/pam.d/system-auth', line: 'auth [success=1 default=bad] pam_unix.so'}
+  - { dest: '/etc/pam.d/system-auth', line: 'auth [default=die] pam_faillock.so authfail audit deny=5 unlock_time=900'}
+  - { dest: '/etc/pam.d/system-auth', line: 'auth sufficient pam_faillock.so authsucc audit deny=5 unlock_time=900'}
+
+- name: "Ensure password reuse is limited"
+  lineinfile:
+    state: present
+    dest: "{{item.dest}}"
+    line: "{{item.line}}"
+  with_items:
+  - { dest: '/etc/pam.d/password-auth', line: 'password sufficient pam_unix.so remember=5'}
+  - { dest: '/etc/pam.d/system-auth', line: 'password sufficient pam_unix.so remember=5'}

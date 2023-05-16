@@ -1,0 +1,61 @@
+---
+- name: Warning Banners
+  hosts: archive
+  vars:
+    - warn:
+        - /etc/motd
+        - /etc/issue
+  tasks:
+  - name: list all banners
+    raw: "{{item}}"
+    with_items:
+      - /bin/ls -l /etc/motd
+      - /bin/ls -l /etc/issue
+      - /bin/ls -l /etc/issue.net
+    register: result1
+  - debug:
+      msg: "{{ result1.results | json_query('[].stdout_lines[]') }}"
+  - stat:
+      path: "{{item}}"
+    with_items:
+      - /etc/motd
+      - /etc/issue
+      - /etc/issue.net
+    register: j
+  - debug:
+      msg: "All Permissions are correct"
+    when: ( item.stat.gr_name == "root"  and  item.stat.pw_name == "root" and item.stat.mode == "0644" )
+    with_items:
+      - "{{ j.results }}"
+    register: message
+  - name: Copy using the 'content' for inline data
+    copy:
+      content: '"Authorized uses only. All activity may be monitored and reported."'
+      backup: yes
+      dest: "{{item}}"
+    with_items:
+      - "{{ warn }}"
+  - name: change the permission
+    file:
+      path: "{{item}}"
+      owner: root
+      group: root
+      mode: 0644
+    when: message | failed
+    # when: ( item.stat.gr_name == "root"  and  item.stat.pw_name == "root" and item.stat.mode == "0644" )
+    with_items:
+      - /etc/motd
+      - /etc/issue
+      - /etc/issue.net
+  - name: verify
+      - "{{ warn }}"
+  - name: list all banners
+    raw: "{{ item }}"
+    with_items:
+      - egrep '(\\v|\\r|\\m|\\s)' /etc/issue
+      - egrep '(\\v|\\r|\\m|\\s)' /etc/motd
+      - egrep '(\\v|\\r|\\m|\\s)' /etc/issue.net
+    register: result11
+  - debug:
+      msg: "{{ result11.results | json_query('[].stdout_lines[]') }}"
+

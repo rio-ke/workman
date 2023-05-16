@@ -1,0 +1,5 @@
+---
+- include_tasks: update.yaml
+  when: kernel_update == "1"
+- include_tasks: rollback.yaml
+  when: kernel_update == "2"

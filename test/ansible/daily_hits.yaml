@@ -1,0 +1,44 @@
+---
+- hosts: dc1-node-T
+  ignore_errors: true
+  vars_files:
+    - vars/main.yaml
+  tasks:
+  - raw: "{{item}}"
+    with_items:
+      - cat /var/log/httpd/access_log | grep "{{ log_date }}" | wc -l
+      - cat /var/log/httpd/access_log | grep "{{ log_date }}" | awk '{printf "%s \n", $1}' | sort -n | uniq -c | wc -l
+      - pcs status | egrep 'Masters|Slaves'
+    register: result
+  - name: Notification message via Slack
+    slack:
+      token: "{{tokens}}"
+      msg: "{{item}}"
+      color: good
+      channel: '#general'
+    with_items:
+       -  "{{ansible_hostname}} - {{log_date}} - User Hits Count is: {{result.results[0].stdout_lines}}"
+       -  "{{ansible_hostname}} - {{log_date}} - User IP's Count is: {{result.results[1].stdout_lines}}"
+       -  "{{ansible_hostname}} - {{log_date}} - Current Date PCS Status: {{result.results[2].stdout_lines}}"
+    delegate_to: localhost
+
+- hosts: atm
+  ignore_errors: true
+  vars_files:
+    - vars/main.yaml
+  tasks:
+  - raw: "{{item}}"
+    with_items:
+      - cat /var/log/httpd/access_log | grep "{{ log_date }}" | wc -l
+      - cat /var/log/httpd/access_log | grep "{{ log_date }}" | awk '{printf "%s \n", $1}' | sort -n | uniq -c | wc -l
+    register: result
+  - name: Notification message via Slack
+    slack:
+      token: "{{tokens}}"
+      msg: "{{item}}"
+      color: good
+      channel: '#general'
+    with_items:
+       -  "{{ansible_hostname}} - {{log_date}} - User Hits Count is: {{result.results[0].stdout_lines}}"
+       -  "{{ansible_hostname}} - {{log_date}} - User IP's Count is: {{result.results[1].stdout_lines}}"
+    delegate_to: localhost

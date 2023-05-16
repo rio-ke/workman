@@ -1,0 +1,12 @@
+---
+- name: "aws vpn monitering"
+  hosts: localhost
+  roles:
+    - role: ec2_vpn_monitor
+      smtp_host:
+      smtp_port:
+      smtp_username:
+      smtp_password:
+      mail_alert: true
+      slack_alert: true
+      region:

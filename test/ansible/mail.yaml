@@ -1,0 +1,13 @@
+---
+- hosts: all
+  gather_facts: False
+  connection: local
+  tasks:
+  - shell: df -Th 
+    register: result
+  - mail:
+      to: linuxadmin@radiantcashservices.com
+      subject: Test
+      body: "{{ lookup('template', 'template/mail_body.j2') }}"
+    delegate_to: 113.193.248.101
+    run_once: True

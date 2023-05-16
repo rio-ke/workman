@@ -1,0 +1,7 @@
+---
+- hosts: localhost, jake
+  roles:
+  - role: ino
+    a: 1
+    b: 2
+    c: 3

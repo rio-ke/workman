@@ -1,0 +1,226 @@
+---
+- name: play for System Access, Authentication and Authorization
+  hosts: vag
+  tasks:
+  - name: Configure cron and anacron - Enable anacron Daemon
+    yum:
+      name: "{{item}}"
+      state: present
+    with_items:
+      - cronie-anacron
+  - name: Perform the following to determine if cron is enabled
+    service:
+      name: "{{item}}"
+      enabled: yes
+    with_items:
+      - crond
+  - name: Set User/Group Owner and Permission anacrontab
+    raw: stat -L -c "%a %u %g" /etc/anacrontab | egrep ".00 0 0"
+    register: anacron
+    ignore_errors: true
+
+  - name: set acess rule
+    file:
+      path: /etc/anacrontab
+      owner: root
+      group: root
+      mode: 0600
+    when: anacron is failed
+
+  - name: Set User/Group Owner and Permission crontab
+    raw: stat -L -c "%a %u %g" /etc/crontab | egrep ".00 0 0"
+    register: crontab
+    ignore_errors: true
+
+  - name: set acess rule
+    file:
+      path: /etc/crontab
+      owner: root
+      group: root
+      mode: 0700
+    when: crontab is failed
+
+  - name: Set User/Group Owner and Permission cron.daily
+    raw: stat -L -c "%a %u %g" /etc/cron.daily | egrep ".00 0 0"
+    register: crondaily
+    ignore_errors: true
+
+  - name: set acess rule
+    file:
+      path: /etc/cron.daily
+      owner: root
+      group: root
+      mode: 0700
+    when: crondaily is failed
+
+  - name: Set User/Group Owner and Permission cron.weekly
+    raw: stat -L -c "%a %u %g" /etc/cron.weekly | egrep ".00 0 0"
+    register: cronweekly
+    ignore_errors: true
+
+  - name: set acess rule
+    file:
+      path: /etc/cron.weekly
+      owner: root
+      group: root
+      mode: 0700
+    when: cronweekly is failed
+
+  - name: Set User/Group Owner and Permission cron.monthly
+    raw: stat -L -c "%a %u %g" /etc/cron.monthly | egrep ".00 0 0"
+    register: cronmonthly
+    ignore_errors: true
+
+  - name: set acess rule
+    file:
+      path: /etc/cron.monthly
+      owner: root
+      group: root
+      mode: 0700
+    when: cronmonthly is failed
+
+  - name: Set User/Group Owner and Permission cron.d
+    raw: stat -L -c "%a %u %g" /etc/cron.d | egrep ".00 0 0"
+    register: crond
+    ignore_errors: true
+
+  - name: set acess rule
+    file:
+      path: /etc/cron.d
+      owner: root
+      group: root
+      mode: 0700
+    when: crond is failed
+
+  - name: create file /etc/at.allow
+    file: 
+      path: "{{item}}"
+      owner: root
+      group: root
+      mode: 0700
+      state: touch
+    with_items:
+      - /etc/cron.allow
+      - /etc/at.allow
+
+  - name: delete at.deny entry
+    file:
+      path: "{{item}}"
+      backup: yes
+      state: absent
+    ignore_errors: true
+    with_items:
+      - /etc/at.deny
+      - /etc/cron.deny
+
+  - name: check protocol 2 enable or not
+    raw: grep "^Protocol" /etc/ssh/sshd_config
+    ignore_errors: true
+    register: proto
+
+  - name: add protocol 2 in to ssh config file
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      line: "{{item}}"
+    when: proto is failed
+    with_items:
+      - Protocol 2
+      - AllowUsers
+      - AllowGroups
+      - DenyUsers
+      - DenyGroups
+
+  - name: replace in rsyslog and audit file if already existing replaced
+    replace:
+      path: "{{item.path}}"
+      regexp: "{{item.exp}}"
+      replace: "{{item.rep}}"
+      backup: yes
+    with_items:
+      - { path: '/etc/ssh/sshd_config', exp: '#PermitRootLogin yes', rep: 'PermitRootLogin no' }
+      - { path: '/etc/ssh/sshd_config', exp: '#LogLevel INFO', rep: 'LogLevel INFO' }
+      - { path: '/etc/ssh/sshd_config', exp: 'X11Forwarding yes', rep: 'X11Forwarding no' }
+      - { path: '/etc/ssh/sshd_config', exp: '#MaxAuthTries 6', rep: 'MaxAuthTries 4' }
+      - { path: '/etc/ssh/sshd_config', exp: '#IgnoreRhosts yes', rep: 'IgnoreRhosts yes' }
+      - { path: '/etc/ssh/sshd_config', exp: '#HostbasedAuthentication no', rep: 'HostbasedAuthentication no' }
+      - { path: '/etc/ssh/sshd_config', exp: '#PermitEmptyPasswords no', rep: 'PermitEmptyPasswords no' }
+      - { path: '/etc/ssh/sshd_config', exp: '#PermitUserEnvironment no', rep: 'PermitUserEnvironment no' }
+      - { path: '/etc/ssh/sshd_config', exp: '# Ciphers and keying', rep: 'Ciphers aes128-ctr,aes192-ctr,aes256-ctr' }
+      - { path: '/etc/ssh/sshd_config', exp: '#ClientAliveInterval 0', rep: 'ClientAliveInterval 300' }
+      - { path: '/etc/ssh/sshd_config', exp: '#ClientAliveCountMax 3', rep: 'ClientAliveCountMax 0' }
+  - name: sestart the service
+    service:
+      name: sshd
+      state: restarted
+  - name: to determine if the password-hashing algorithm is set to SHA-512
+    raw: authconfig --test | grep hashing | grep sha512
+    ignore_errors: true
+    register: algorithm_set
+
+  - name: SHA-512 algorithm provides
+    raw: authconfig --passalgo=sha512 --update
+    when: algorithm_set is failed
+
+  - name: password So
+    raw: grep pam_pwquality.so /etc/pam.d/system-auth
+    ignore_errors: true
+    register: pam_quality
+
+  - name: replace in pam_quality if already existing replaced
+    replace:
+      path: "{{item.path}}"
+      regexp: "{{item.exp}}"
+      replace: "{{item.rep}}"
+      backup: yes
+    with_items:
+      - { path: '/etc/security/pwquality.conf', exp: '# minlen = 9', rep: 'minlen = 14' }
+      - { path: '/etc/security/pwquality.conf', exp: '# dcredit = 1', rep: '# dcredit = -1' }
+      - { path: '/etc/security/pwquality.conf', exp: '# ucredit = 1', rep: '# ucredit = -1' }
+      - { path: '/etc/security/pwquality.conf', exp: '# ocredit = 1', rep: '# ocredit = -1' }
+      - { path: '/etc/security/pwquality.conf', exp: '# lcredit = 1', rep: '# lcredit = -1' }
+    when: pam_quality is succeeded
+    ignore_errors: true
+  - name: search password-auth entry
+    raw: grep "pam_faillock" /etc/pam.d/password-auth
+    register: pam_faillock
+
+  - name: add entry
+    lineinfile:
+      path: /etc/pam.d/password-auth
+      block: |
+        auth required pam_env.so
+        auth required pam_faillock.so preauth audit silent deny=5 unlock_time=900
+        auth [success=1 default=bad] pam_unix.so
+        auth [default=die] pam_faillock.so authfail audit deny=5 unlock_time=900
+        auth sufficient pam_faillock.so authsucc audit deny=5 unlock_time=900
+        auth required pam_deny.so
+    when: pam_faillock is failed
+  - name: search system-auth entry
+    raw: grep "pam_faillock" /etc/pam.d/system-auth
+    register: system_auth
+
+  - name: add entry system-auth
+    lineinfile:
+      path: /etc/pam.d/system-auth
+      block: |
+        auth required pam_env.so
+        auth required pam_faillock.so preauth audit silent deny=5 unlock_time=900
+        auth [success=1 default=bad] pam_unix.so
+        auth [default=die] pam_faillock.so authfail audit deny=5 unlock_time=900
+        auth sufficient pam_faillock.so authsucc audit deny=5 unlock_time=900
+        auth required pam_deny.so
+    when: system_auth is failed
+
+  - name: Limit Password Reuse
+    raw: grep "remember" /etc/pam.d/system-auth
+    register: system_auth1
+
+  - name: add entry Limit Password Reuse system_auth
+    lineinfile:
+      path: /etc/pam.d/system-auth
+      block: |
+        password sufficient pam_unix.so remember=5
+
+        # - name: Restrict root Login to System Console
+  #- name: Restrict Access to the su Command
+

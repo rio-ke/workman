@@ -1,0 +1,16 @@
+---
+- name: dvndsbvsd
+  hosts: all
+  tasks:
+	- name: synchronize between nodes
+  	environment:
+    	RSYNC_PASSWORD: "{{ R8di8ntadmin789* }}"
+  	synchronize:
+    	src: rsync://user@remote_server:/module/
+    	dest: /destination/directory/
+    // if needed
+    	rsync_opts:
+        - "--include=what_needed"
+        - "--exclude=**/**"
+    	mode: push
+    delegate_to: "{{ inventory_hostname }}"

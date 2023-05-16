@@ -1,0 +1,22 @@
+---
+- name: "create ec2 instance with default security group"
+  ec2:
+    key_name: JINO
+    region: us-east-1
+    instance_type: t2.micro
+    image: ami-024a64a6685d05041
+    wait: yes
+    wait_timeout: 100
+    vpc_subnet_id: subnet-f5d94692
+    assign_public_ip: yes
+    count: 2
+  register: jino
+- debug: msg="{{jino.instance_ids}}"
+- name: "tag set"
+  ec2_tag:
+    resource: "{{item.id}}"
+    region: us-east-1
+    state: present
+    tags:
+      Name: "ubuntu_server-{{ '%02d' | format(item.0 + 1) }}"
+  with_indexed_items: "{{jino.instances | json_query('[]')}}"

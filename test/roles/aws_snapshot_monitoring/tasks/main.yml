@@ -1,0 +1,11 @@
+---
+- name: "get snap info "
+  ec2_snapshot_facts:
+    snapshot_ids:
+      - snap-0b49992f6f4bc862f
+  register: jino
+- debug: msg="{{ jino.snapshots | json_query('[]') }}"
+- name: "create template for snapshot information"
+  template:
+    src: temp.j2
+    dest: /tmp/snap_info.txt

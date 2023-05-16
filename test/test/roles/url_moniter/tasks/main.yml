@@ -1,0 +1,55 @@
+---
+- name: "check weather domain name works or not"
+  uri:
+    url: "{{item}}"
+  loop: "{{url_list}}"
+  register: result
+  no_log: true
+  ignore_errors: true
+
+- name: "Create variables to trigger Alert!!!"
+  debug:
+    msg: >
+      {% for i in result.results | json_query('[]') %}
+      {% if i.status != 200 %}
+      status: {{i.item}} - down
+      {% endif %}
+      {% endfor %}
+  register: url_result
+  no_log: true
+  ignore_errors: true
+
+- name: "Create Template"
+  template:
+    src: url_template.j2
+    dest: ~/url_monitor.html
+  when: url_result.msg.find('down') != -1
+
+- name: "Mail URL Down Information"
+  mail:
+    host: "{{smtp_host}}"
+    port: "{{smtp_port}}" # 587
+    username: "{{smtp_username}}"
+    password: "{{smtp_password}}"
+    to: "{{email_to}}"
+    cc: "{{email_cc}}"
+    from: "{{email_from}}"
+    subject: "{{ client_name }} URL DOWN ALERT!!!"
+    subtype: html
+    body: "{{ lookup('file', '~/url_monitor.html') }}"
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+  run_once: True
+  when: mail_alert == true and url_result.msg.find('down') != -1
+
+- name: "Send notification message via Slack"
+  slack:
+    token: "{{slack_token}}"
+    channel: "{{ansible_slack_channel}}"
+    msg: >
+      URL DOWN ALERT!!!
+      {% for i in result.results | json_query('[]') %}
+      {% if i.status != 200 %}
+      Down - {{i.item}}
+      {% endif %}
+      {% endfor %}
+  when: slack_alert == true and url_result.msg.find('down') != -1

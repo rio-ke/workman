@@ -1,0 +1,14 @@
+---
+- name: install Multiple packges
+  hosts: master
+  vars:
+    package_list:
+      - httpd
+      - vsftpd
+  tasks:
+  - name: install packages
+    yum:
+      name: "{{item}}"
+      state: present
+    with_items:
+      - "{{package_list}}"

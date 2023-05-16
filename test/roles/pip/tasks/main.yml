@@ -1,0 +1,15 @@
+---
+- name: Ensure python version are installed or not
+  shell: rpm -qa python-pip
+  register: package_installed
+- name: Ensure Pip is installed.
+  package:
+    name: "{{ pip_package }}"
+    state: present
+  when: package_installed.stdout_lines == ''
+- name: Ensure pip_install_packages are installed.
+  pip:
+    name: "{{ item.name | default(item) }}"
+    state: "{{ pip_pkg_state | default('present') }}"
+    version: "{{ version | default(omit) }}"
+  with_items: "{{ pip_install_packages }}"

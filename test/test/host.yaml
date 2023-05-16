@@ -1,0 +1,14 @@
+- name: Set targeted hosts based on git branch 
+  hosts: localhost 
+  tasks:
+  - name: Set hosts variable 
+    vars: 
+      targeted_host: "{{groups['upgrade-CI-test'] if branch == 'test' else upgrade_version }}" 
+  - debug: 
+      var: targeted_host
+- name: Remove old scripts from upgrade machine
+  hosts: targeted_host 
+  tasks:
+  - name: Remove any old wrapper scripts win_file
+    debug:
+      msg: "jino"

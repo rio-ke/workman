@@ -1,0 +1,9 @@
+---
+- name: Display the current working Directories
+  hosts: master
+  tasks:
+  - name: Current working Directory
+    shell: ls -la ~/
+    register: working_directory
+  - debug:
+      msg: "{{working_directory.stdout_lines}}"

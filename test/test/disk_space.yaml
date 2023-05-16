@@ -1,0 +1,8 @@
+---
+- name: "find Disk usgae"
+  hosts: go
+  roles:
+  - role: disk_space
+    delegate_host: go1
+    email_to: linuxadmin@radiantcashservices.com,jinojoe@gmail.com
+    email_cc: jinojoe@rediffmail.com

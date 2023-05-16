@@ -1,0 +1,20 @@
+---
+- name: "ping request rise from all servers"
+  shell: "ping -c4 {{ ip_address }} | egrep -v 'PING'"  # | grep packets"
+  register: result
+
+- name: "Request for telnet"
+  shell: echo -e '\x1dclose\x0d' | telnet {{ ip_address }} 22
+  register: result1
+
+- name: "Copy the Disk usage precentage"
+  template:
+    src: data.j2
+    dest: "{{ ping_request_file | default('/tmp/ping_request.txt')}}" #/tmp/ping_request.txt
+  delegate_to: "{{ delegate_host | default('localhost') }}"
+
+- name: "Copy the Disk usage precentage"
+  template:
+    src: data1.j2
+    dest: "{{ telnet_request_file | default('/tmp/telnet_request.txt')}}" # /tmp/telnet_request.txt
+  delegate_to: "{{ delegate_host | default('localhost') }}"

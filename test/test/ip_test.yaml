@@ -1,0 +1,9 @@
+---
+- hosts: localhost,node1
+  tasks:
+  - setup:
+    register: jino
+  - debug:
+      msg: "jino-{{ '%02d' | format(item.0 + 1) }}"
+    with_indexed_items:
+      - "{{jino}}"

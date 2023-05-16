@@ -1,0 +1,31 @@
+---
+- include_vars: centos.yml
+  when:
+  - ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+  - user_input_options == "1"
+- include_tasks: centos.yml
+  when:
+  - ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+  - user_input_options == "1"
+
+- include_vars: ubuntuos.yml
+  when:
+  - ansible_distribution == "Ubuntu"
+  - user_input_options == "2"
+- include_tasks: ubuntuos.yml
+  when:
+  - ansible_distribution == "Ubuntu"
+  - user_input_options == "2"
+
+- include_vars: suseos.yml
+  when:
+  - ansible_distribution == "SLES"
+  - user_input_options == "3"
+- include_tasks: suseos.yml
+  when:
+  - ansible_distribution == "SLES"
+  - user_input_options == "3"
+
+- include_tasks: report.yml
+  when:
+  - user_input_options == "4"

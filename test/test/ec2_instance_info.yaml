@@ -1,0 +1,12 @@
+---
+- name: "EC2 Instance Information"
+  hosts: localhost
+  roles:
+  - role: ec2_instance_info
+    delegate_host: localhost
+    email_to: jinojoe@gmail.com
+    email_cc: jinojoe@rediffmail.com
+    smtp_host:
+    smtp_port:
+    smtp_username:
+    smtp_password:

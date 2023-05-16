@@ -1,0 +1,20 @@
+---
+- name: Set targeted hosts based on git branch 
+  hosts: localhost
+  vars:
+    targeted_host: "{{groups['vagrant']}}"
+  tasks:
+  - debug:
+      var: targeted_host
+- name: Remove old scripts from upgrade machine
+  hosts: targeted_host
+  tasks:
+  - name: debug messages
+    debug:
+      msg: "{{ansible_hostname}}"
+    when: inventory_hostname == "node1"
+  - name: debug messages
+    debug:
+      msg: "{{ansible_hostname}}"
+    delegate_to: node1
+

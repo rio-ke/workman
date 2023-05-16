@@ -1,0 +1,21 @@
+---
+url_list:
+  - http://google.com
+  - http://twitter.com
+  - http://facebook.com
+  - http://duckduckgo.com
+  - http://example.com
+  - http://192.168.5.2
+  #
+  #
+  #
+mail_alert: false
+slack_alert: true
+mail_to: jinojoe@gmail.com
+mail_from: jinojoe@gmail.com
+mail_cc: jinojoe@rediffmail.com
+client_name: skylark
+smtp_host:
+smtp_port:
+smtp_username:
+smtp_password:

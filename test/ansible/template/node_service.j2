@@ -1,0 +1,29 @@
+[Unit]
+Description=Prometheus node_exporter
+After=network.target auditd.service
+
+[Service]
+User=root
+
+ExecStart=/usr/local/bin/node_exporter \
+  --web.listen-address=0.0.0.0:{{node_listen}} \
+  --path.procfs=/proc \
+  --collector.tcpstat \
+  --collector.bonding \
+  --collector.systemd --collector.systemd.unit-whitelist=(sshd|httpd|node_exporter|vsftpd|rsyslog).service \
+  --collector.meminfo_numa \
+  --collector.logind \
+  --collector.filesystem.ignored-mount-points "^(/snap/|/run/|/dev/|/sys|/run).*" \
+  --collector.netdev.ignored-devices "^lo.*" \
+  --no-collector.wifi \
+  --no-collector.nfs \
+  --no-collector.zfs \
+  --no-collector.nfsd  \
+  --no-collector.mdadm
+Restart=on-failure
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=default.target
+

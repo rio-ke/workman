@@ -1,0 +1,58 @@
+---
+sudo_log: /var/log/sudo.log
+ssh_conditions_exixting_server:
+  - PermitEmptyPasswords
+  - LogLevel
+  - QuietMode
+  - TCPKeepAlive
+  - LoginGraceTime
+  - MaxStartups
+  - MaxAuthTries
+  - Protocol
+  - GatewayPorts
+  - PermitRootLogin
+  - PubkeyAuthentication
+  - HostbasedAuthentication
+  - PermitUserEnvironment
+  - StrictModes
+  - PrintMotd
+  - Banner
+
+ssh_file_conditions:
+  - /bin/openssl
+  - /bin/scp
+  - /bin/sftp
+  - /bin/sftp-server # no such a directory
+  - /bin/slogin
+  - /bin/ssh-add
+  - /bin/ssh-agent
+  - /bin/ssh-keygen
+  - /bin/ssh-keyscan
+  - /sbin/sshd
+  - /etc/ssh/sshd_config
+  - 
+# Ensure password creation requirements are configured
+password_creation_requirements:
+  - grep pam_pwquality.so /etc/pam.d/password-auth
+  - grep ^minlen /etc/security/pwquality.conf
+  - grep ^dcredit /etc/security/pwquality.conf
+  - grep ^lcredit /etc/security/pwquality.conf
+  - grep ^ocredit /etc/security/pwquality.conf
+  - grep ^ucredit /etc/security/pwquality.conf
+  - grep pam_pwquality.so /etc/pam.d/system-auth
+failed_password_attempts_is_configured_cmd:
+  - auth        required                pam_faillock.so preauth audit silent deny=5 unlock_time=900
+  - auth        sufficient              pam_faillock.so authsucc audit deny=5 unlock_time=900
+  - auth        \[success=1 default=bad\] pam_unix.so
+  - auth        \[default=die\]           pam_faillock.so authfail audit deny=5 unlock_time=900
+  - password sufficient pam_unix.so remember=5
+failed_password_attempts_is_configured:
+  - auth        required                pam_faillock.so preauth audit silent deny=5 unlock_time=900
+  - auth        sufficient              pam_faillock.so authsucc audit deny=5 unlock_time=900
+  - auth        [success=1 default=bad] pam_unix.so
+  - auth        [default=die]           pam_faillock.so authfail audit deny=5 unlock_time=900
+  - password sufficient pam_unix.so remember=5
+
+password_auth_file: /etc/pam.d/password-auth
+system_auth_file: /etc/pam.d/system-auth
+password_expiration: /etc/login.defs

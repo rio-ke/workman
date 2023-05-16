@@ -1,0 +1,21 @@
+---
+- name: Play for log file anslysis
+  hosts: master
+  vars_prompt:
+    - name: log_file
+      prompt: Enter Your log file name
+      private: no
+      default: /var/log/messages
+    - name: log_file_error
+      prompt: Searching Keyword
+      private: no
+      default: kernel
+  tasks:
+    - name: search {{log_file_error}} {{log_file}} location
+      shell: grep -i {{log_file_error}} {{log_file}}
+      register: Log_results
+      failed_when: Log_results.rc >= 1
+
+    - debug:
+        msg: "{{Log_results.stdout_lines}}"
+      when: Log_results.rc == 0

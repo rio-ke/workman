@@ -1,0 +1,5 @@
+---
+- name:: Play For Existing Server
+  include_tasks: linux_hardening.yaml
+  when: LINUX_SERVER == "2"
+

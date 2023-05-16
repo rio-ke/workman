@@ -1,0 +1,68 @@
+---
+- name: list of the Listening port numbers
+  raw: netstat -tan | grep LISTEN  | wc -l
+  # raw:  netstat -tan | grep LISTEN | grep -v tcp6 | awk '{print $4}' | cut -d ":" -f2 | wc -l
+  register: listen_states
+- name: Display the number of port running
+  debug:
+    msg: "Total Listening Ports = {{listen_states.stdout_lines}}"
+- name: Clean YUM cache
+  command: yum clean all
+  args:
+    warn: false
+  changed_when: false
+- name: Update YUM packages
+  yum:
+    name: '*'
+    state: latest
+    update_only: "yes"
+
+- name: Upgrade YUM packages
+  yum:
+    name: '*'
+    state: latest
+- name: Generate list of installed and updated packages
+  shell: grep -E "$(date +%b) $(date +%d)" /var/log/yum.log | cut -d " " -f 3-5
+  changed_when: false
+  register: result
+- name: List installed and updated packages
+  debug: msg="{{ result.stdout_lines }}"
+- name: Check if reboot is required
+  shell: if [ $(rpm -q kernel|tail -n 1) != kernel-$(uname -r) ]; then echo 'True'; else echo 'False'; fi
+  register: reboot_required
+- name: Restart server
+  shell: sleep 1 && shutdown -r now "Reboot triggered by Ansible" && sleep 1
+  async: 1
+  poll: 0
+  ignore_errors: true
+  register: restart_state
+  when:
+  - reboot_required.stdout == True
+- name: "This play will wait for 3 minutes for system to come up"
+  pause: minutes=3
+  when:
+  - reboot_required.stdout == True
+- name: check the system status
+  local_action: shell ansible -u ansible -m ping {{ inventory_hostname }}
+  register: result
+  until: result.rc == 0
+  retries: 30
+  delay: 10
+  when:
+  - reboot_required.stdout == True
+- name: check the client uptime
+  shell: uptime
+  register: up_time
+- name: list of the Listening port numbers
+  raw: netstat -tan | grep LISTEN  | wc -l
+  register: listen_states_after_patch
+- name: compliation changes
+  debug:
+    msg: Some Services are not Statred or Listened. Kindly check with {{ansible_hostname}}
+  when:
+  - listen_states_after_patch.stdout_lines != listen_states.stdout_lines
+  register: ports_condition
+- debug:
+    msg: "Hi Everything is fine after paching {{ansible_hostname}} server and server uptime is {{up_time.stdout}}"
+  when:
+  - ports_condition is skipped

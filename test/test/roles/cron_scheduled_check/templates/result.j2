@@ -1,0 +1,6 @@
+{{ ansible_managed | comment }}
+{% for host in play_hosts %}
+server name: {{ host }}
+
+{{ hostvars[host]['result']['stdout'] }}
+{% endfor %}

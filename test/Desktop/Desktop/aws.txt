@@ -1,0 +1,291 @@
+Data center: (SOW - statement of work) (FSA board) ( HIPPA Rule)
+
+migration
+          A data center is a dedicatef space where compsnirs can keep and operate most of the .
+
+capex:
+	capital expense.
+opex:
+	operational expense.
+
+
+migrstion:
+
+     operational cost reach some huge expensive. (depends on time to create infra setup)
+
+
+autoscalling (scal in or scalout or aws burst)
+
+compute:
+========
+      (CPU+memory+Disk) sharing CPU and MEM to be used with others but Disk only stored with our data with knowledge.
+
+Severity: 1: 5m 2-4 hours
+Severity: 2:   3-6 hours
+
+
+SLA: service level aggrement uptime.is
+
+
+Sizing:
+
+=============================================================================================
+Data Center types
+
+types    states        -- chossing State        -- fine cost   -- Application Classification
+=============================================================================================
+tier1    NA            -- standalone            -- normal Cost -- BCV4       
+tierII   Normal        -- DEV/TEST/UAT          --             -- BCV3
+tierIII  critical      -- BCP/DR                -- Cost High   -- BCV2
+tierIV   Most Critical -- redunancy  99.99999%  -- Hugh Cost   -- BCV1
+
+Data Center Chossing:
+
+
+Application Classification + SLA 
+RISK statements
+
+----------------------------------------
+
+1. On permisses - networking + service + servers + Virtualization + os + Middleware + Runtime + Data + Application
+
+	1. Infra as a service    -- networking+service+servers+Virtualization
+	2. Platform as a service -- networking+service+servers+Virtualization +   os+Middleware+Runtime
+	3. Software as a service -- networking+service+servers+Virtualization +   os+Middleware+Runtime +  Data+Application
+
+AnyCast DNS and GeoDNS 
+AnyCast Dns --> DNS resolve anywhere.
+Geo DNS --> point our Record location Based (ISP Provider).
+
+Functional Recuriment:
+ 	As a client provide recuirments 
+Non Functional recurments:
+
+	meetup recuriments with client provide recuriments. (prepare with Docs)
+
+RTO - Recovery TIME Objective -- Depends on response time. HA (availability) --> important things should be keep time and (data).
+RPO - Recovery POINT objective -- (more then client aggrement time crossed)s -- imortant things should be keep data.
+
+region: 
+availability-Zone: ( also kvnown as Datacenter )
+
+us-east-1a:
+
+for example:
+
+region:
+	 us-east-1 --> virginia
+
+availability_zone: 
+	1.us-east-1a
+	2.us-east-1b
+	3.us-east-1c
+	4.us-east-1d
+	5.us-east-1e
+
+instance.type
+
+1.baseline report for load testing  ----> baseline report --> tool --> (Mercury Quality) 
+2. user access history
+
+pagesize request  CPU  memory  totalbandwith
+
+4kb       200     1    1         800kb
+4kb       400     2    2         1600kb
+4kb       600     3    3         2400kb
+4000kb    800     1    1         32000Kb
+
+
+aws instance load test  report for instance type --> t2.micro t3.micro t4.micro ---> get from aws (best of selection instance type)
+
+
+DISK --> IDE SATA SSD
+
+IOPS --> load testing team  --> spoofing process ---> session id based process. if raised accept and dont have process.. MAN LAN --> tcp WAN --> udp
+
+codespace hacking.com -------> threadten
+
+puttygen.exe --> conversion
+putty.exe
+
+elastic ip -- static ip
+puplic-ip -- dynamicip
+
+
+spot instance 1 to 6 hours
+
+request --> spot instance 
+ 
+
+3000 CPU --> biding based 
+
+reserved server --> production server build reserved . gurentee bussiness...
+
+purchased --> standard (not modify compute resource ) and convertable (modify compute resource ) tick check box Only show offerings that reserve capacity .. its show menu if select region only available particular availabilty zones.
+
+
+How to Lunch instance in reserved instance use ansible?
+
+
+Dedicated host-- Bare metal as a service. (our policy not match with sharing host..you must go with Dedicated host)
+
+Scheduled Instances allow you to reserve Amazon EC2 instances on a recurring schedule.
+
+loadbalancer --> keepalive or polling
+
+Ephemeral Disk -- tempory Disk -- contail os related files
+
+VOLUME -- within same zone -- >  two diffrent zone is not possible.  ---> if want use EBS volume.
+
+Autoscalling --- profile based rule is used for scale in or scale out automatiacly. is suitable for same name.. (giving Availabily zone for all)
+
+cpuload avarage cPU if satisfy the limit its will be create ?
+  --
+CPU and  core diffrence?
+
+
+false alert ?
+
+
+fs-76b25897.efs.us-east-1.amazonaws.com
+
+sudo mount -t nfs4  fs-76b25897.efs.us-east-1.amazonaws.com:/ /jino
+ 
+ceph -- > object storage...
+
+object storage (S3) --> files can be access via http and https
+
+Black Storage --> not accessible for http https
+
+object storage -->  
+
+
+backup and snapshat:
+
+backup --> backup + difrentil backup + incremental backup	`
+snapshot -> point in time =====> full snapshot and  linked snapshot -->  
+
+ceph: true
+
+why we need more s3 buckets replicas?
+
+
+uri -- uniform resource locator
+
+Documenten
+
+oauth
+
+autherised 
+
+authentication
+
+NCR ---> 
+
+https://jinojoe.signin.aws.amazon.com/console
+
+cloudfront CDN--> 
+
+
+swap memory --> 
+
+
+cache memory -- >
+
+physical memory -->  RAM Memory
+
+
+EDGE LOADBALANCER --> region wise server sharing the condent functionality...(example Airtel showroom) its makes load directly access content with edge load balancer.
+
+once server update the condent is commit with edge loadbalancer also. 
+
+
+dr8o4hkw2jku8.cloudfront.net
+
+https://dr8o4hkw2jku8.cloudfront.net/Untitled+Diagram.png
+
+https://s3.amazonaws.com/jbucket123/Untitled+Diagram.png
+
+layer2 --> switching
+layer3 --> routing
+
+
+VPC network
+
+
+green --> database Application server 
+
+red --> webserver (internet expose) DMZ
+
+yellow zone --> Database Server (caching)
+
+webserver -- static condent
+
+webapplication -- Dynamic content distrubute
+
+
+Horizontal Scalling -->  number of physical server increase
+
+Vertical Scalling  -->  increase resource in servers
+
+
+gateway router -- > ipv4_forwarding = 1 -- sysctl.conf
+
+10.0.0.0/16  --> 10.0.1.0/24 + 10.0.2.0/24 + 10.0.3.0/24 + N..................
+
+
+
+
+10.0.1.0/24 --> nat server 
+
+Snowball:
+
+large amount of data move into cloud service.. once move revert back in to private
+
+route53 --> DNS resoluation  i have created to domain map with two diffrent region.
+
+1. Domain traffic distribute
+2. traffic split into load balancers with ,two diffrent regions
+3. whatever traffic control based on region.
+4. you can create alias datastructure
+
+private 
+
+public
+
+hybrid  ( private + public ) expand ... ( public + private ) cloud
+
+community  -->  act as centralized bussiness solution
+
+
+cloudformation
+
+sns
+
+promotional -->  service based adds and / transaction --> service based alert
+
+1. go to VPC
+
+2. create VPC --> 10.0.0.0/16
+
+3. create subnet --> create publc subnet --> 10.0.1.0/24
+
+4 . Create subnet --> create private sunet --> 10.0.2.0/24
+
+5. create internet gateway --> right click and associate to your VPC
+
+6. in the routing table --> assume the existing routing table is for public. --> so u name as public,then you create new routing table with provate named
+
+7. in routing table --> go to subnet associations --> asocaite public to public routing and private to private routing table.
+
+8. in routing table --> go to both private and public --> add 0.0.0.0/0 bot rule
+
+9. open ec2 window in next tab --> first launch one instance and select your VPC and select public network and ensure the public IP option is enabled.in the security group open all
+
+10. open ec2 window in next tab --> launch second instance and select your VPC and select private network --> in this security grou you have to say the source is 10.0.1.0/24
+
+
+11. login public instance (jump box) --> ping your private machine --> try to login yur private server from your public machine
+
+PAT --> Port Address Translation
+

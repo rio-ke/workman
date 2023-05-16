@@ -1,0 +1,26 @@
+---
+- hosts: vag
+  vars:
+    ntp_servers: [ 0.asia.pool.ntp.org, 1.asia.pool.ntp.org, 2.asia.pool.ntp.org, 3.asia.pool.ntp.org ]
+  tasks:
+  - name: install packages
+    yum:
+      name: ntp
+      state: present
+  - name: restart service
+    service:
+      name: ntpd
+      state: started
+      enabled: yes
+  - name: Configure NTP
+    template:
+      src: template/ntp.conf.j2
+      dest: /etc/ntp.conf
+      backup: yes
+    notify:
+      - restart ntpd
+  handlers:
+  - name: restart ntpd
+    service:
+      name: ntpd
+      state: restarted

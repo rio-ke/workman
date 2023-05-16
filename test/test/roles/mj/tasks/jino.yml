@@ -1,0 +1,4 @@
+---
+- name: "show results"
+  debug:
+    msg: "{{ result | default('variable is not defined')}}"

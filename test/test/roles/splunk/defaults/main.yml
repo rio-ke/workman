@@ -1,0 +1,4 @@
+---
+# defaults file for splunk
+splunk_username: admin
+splunk_password: admin@19

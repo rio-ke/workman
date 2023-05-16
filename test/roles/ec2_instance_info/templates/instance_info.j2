@@ -1,0 +1,60 @@
+{% for i in result.instances | json_query('[]') %}
+{{loop.index}} - instance
+--------------
+
+instance_id               : {{i.instance_id}}
+{% if i.tags != '' %}
+tags name                 : {{i.tags.Name}}
+{% else %}
+tags name                 : Not Assign
+{% endif %}
+image_id                  : {{i.image_id}}
+instance_type             : {{i.instance_type}}
+key_name                  : {{i.key_name}}
+launch_time               : {{i.launch_time}}
+availability_zone         : {{i.placement.availability_zone}}
+{% if i.private_dns_name != '' %}
+private_dns_name          : {{i.private_dns_name}}
+private_ip_address        : {{i.private_ip_address}}
+tenancy                   : {{i.placement.tenancy}}
+subnet_id                 : {{i.subnet_id}}
+vpc_id                    : {{i.vpc_id}}
+monitoring                : {{i.monitoring.state}}
+{% else %}
+tenancy                   : {{i.placement.tenancy}}
+private_dns_name          : None
+private_ip_address        : None
+subnet_id                 : None
+vpc_id                    : None
+monitoring                : None
+{% endif %}
+{% if 'association' in i.network_interfaces[0] %}
+public_ip_address         : {{i.network_interfaces[0].association.public_ip}}
+{% else %}
+public_ip_address         : None
+{% endif %}
+cpu_core_count            : {{i.cpu_options.core_count}}
+cpu_threads_per_core      : {{i.cpu_options.threads_per_core}}
+state                     : {{i.state.name}}
+{% if i.security_groups != [] %}
+security_group_id         : {{i.security_groups[0].group_id}}
+security_group_name       : {{i.security_groups[0].group_name}}
+{% else %}
+security_group_id         : Nil
+security_group_name       : NIl
+{% endif %}
+{% if i.block_device_mappings != [] %}
+{% for j in i | json_query('block_device_mappings[]') %}
+volume name               : {{ j.device_name }}
+{% for l, k in j.iteritems() %}
+{% for m, n in j.ebs.iteritems() %}
+{{ m.ljust(25) }} : {{ n }}
+{% endfor %}
+{% endfor %}
+
+{% endfor %}
+{% else %}
+block_device              : Nil (volumes not available)
+{% endif %}
+
+{% endfor %}

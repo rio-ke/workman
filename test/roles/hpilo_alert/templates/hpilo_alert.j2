@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+.tftable {font-size:12px;color:#333333;width:50%;border-width: 1px;border-color: #729ea5;border-collapse: collapse;}
+.tftable th {font-size:18px;background-color:#acc8cc;border-width: 1px;padding: 8px;border-style: solid;border-color: #729ea5;text-align:center;}
+.tftable tr {background-color:#d4e3e5;}
+.tftable td {font-size:16px;border-width: 2px;padding: 8px;border-style: solid;border-color: #729ea5;text-align:center;}
+.tftable tr:hover {background-color:#ffffff;}
+#ji{background-color: #cddc39}
+#url{background-color: green;color: white;font-weight: bold}
+#url_name{background-color: green;color: white;font-weight: bold}
+#front{width:100%;text-align:center;color: red;font-size:16px}
+#front1{width:100%;text-align:center;font-size:16px;color: red}
+</style>
+</head>
+<body>
+<h2 id="front">HPiLO HARDWARE DOWN ALERT!!!</h2>
+<table class="tftable" border="1" align="center">
+<tr><td id="url">HARDWARE</td><td id="url">STATUS</td></tr>
+{% for j in result.ansible_facts.hw_health.health_at_a_glance %}
+{% for k in j %}
+{% for l, m in k.iteritems() %}
+<tr><td id="ji">{{k}}</td><td id="ji">{{m}}</td></tr>
+{% endfor %}
+{% endfor %}
+{% endfor %}
+</table>
+<br>
+<br>
+<h2 id="front1">HPiLO HARDWARE INFORMATION - TO RAISE COMPLAINT!!!!</h2>
+<table class="tftable" border="1" align="center">
+<tr><td id="url">NAME</td><td id="url">DETAILS</td></tr>
+<tr><td id="ji">Product Name</td><td id="ji">{{hw_product_name}}</td></tr>
+<tr><td id="ji">Product UUID</td><td id="ji">{{hw_product_uuid}}</td></tr>
+<tr><td id="ji">System Serial</td><td id="ji">{{hw_system_serial}}</td></tr>
+<tr><td id="ji">UUID</td><td id="ji">{{hw_product_name}}</td></tr>
+</table>
+</body>
+</html>
+

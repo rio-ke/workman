@@ -1,0 +1,193 @@
+---
+- name: "Ensure permissions on /etc/ssh/sshd_config are configured"
+  file:
+    dest: /etc/ssh/sshd_config
+    state: file
+    owner: root
+    group: root
+    mode: 0600
+
+- name: "Ensure SSH Protocol is set to 2"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^Protocol'
+    line: 'Protocol 2'
+
+- name: "Ensure SSH LogLevel is set to INFO"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^LogLevel'
+    line: 'LogLevel INFO'
+
+- name: "Ensure SSH X11 forwarding is disabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^X11Forwarding'
+    line: 'X11Forwarding no'
+
+- name: "Ensure SSH MaxAuthTries is set to {{ MaxAuthTries }} or less"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^(#)?MaxAuthTries \d'
+    line: 'MaxAuthTries {{ MaxAuthTries }}'
+
+- name: "Ensure SSH IgnoreRhosts is enabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^IgnoreRhosts'
+    line: 'IgnoreRhosts yes'
+
+- name: "Ensure SSH KeepAlive is enabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^KeepAlive'
+    line: 'KeepAlive yes'
+
+- name: "Ensure SSH TCPKeepAlive is enabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^TCPKeepAlive'
+    line: 'TCPKeepAlive yes'
+
+- name: "Ensure SSH PrintMotd is enabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^PrintMotd'
+    line: 'PrintMotd yes'
+
+- name: "Ensure SSH StrictModes is enabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^StrictModes'
+    line: 'StrictModes yes'
+
+- name: "Ensure SSH HostbasedAuthentication is disabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^HostbasedAuthentication'
+    line: 'HostbasedAuthentication no'
+
+- name: "Ensure SSH root login is disabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^PermitRootLogin'
+    line: 'PermitRootLogin no'
+
+- name: "Ensure SSH GatewayPorts is enabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^GatewayPorts'
+    line: 'GatewayPorts no'
+
+- name: "Ensure SSH PermitEmptyPasswords is disabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^PermitEmptyPasswords'
+    line: 'PermitEmptyPasswords no'
+
+- name: "Ensure SSH PermitUserEnvironment is disabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^PermitUserEnvironment'
+    line: 'PermitUserEnvironment no'
+
+- name: "Ensure only approved ciphers are used"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^Ciphers'
+    line: '{{ ciphers }}'
+
+- name: "Ensure only approved MAC algorithms are used"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^MACs'
+    line: '{{ mac }}'
+
+- name: "Ensure SSH Idle Timeout Interval is configured"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^ClientAliveInterval'
+    line: "ClientAliveInterval {{ clientaliveinterval }}"
+
+- name: "Ensure SSH ClientAliveCountMax set to <= 3"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^ClientAliveCountMax'
+    line: "ClientAliveCountMax {{ clientalivecountmax }}"
+
+- name: "Ensure SSH LoginGraceTime is set to one minute or less"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^LoginGraceTime'
+    line: 'LoginGraceTime {{ LoginGraceTime }}'
+
+- name: "Ensure SSH access is limited - allowusers"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: "^AllowUsers"
+    line: AllowUsers {{ allowusers }}
+  notify:
+    - restart sshd
+  when: "allowusers|default('') != ''"
+
+- name: "Ensure SSH access is limited - allowgroups"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: "^AllowGroups"
+    line: AllowGroups {{ allowgroups }}
+  notify:
+    - restart sshd
+  when: "allowgroups|default('') != ''"
+
+- name: "Ensure SSH access is limited - denyusers"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: "^DenyUsers"
+    line: DenyUsers {{ denyusers }}
+  notify:
+    - restart sshd
+  when: "denyusers|default('') != ''"
+
+- name: "Ensure SSH access is limited - denygroups"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: "^DenyGroups"
+    line: DenyGroups {{ denygroups }}
+  notify:
+    - restart sshd
+  when: "denygroups|default('') != ''"
+
+- name: "Banner Msg"
+  copy:
+    content: "{{centos7_warning_banner}}"
+    dest: /etc/issue.net
+
+- name: "Ensure SSH warning banner is configured"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^Banner'
+    line: 'Banner /etc/issue.net'

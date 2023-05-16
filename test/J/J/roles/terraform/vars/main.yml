@@ -1,0 +1,9 @@
+---
+zip_package:
+  - zip
+  - unzip
+  # terraform_url: https://releases.hashicorp.com/terraform/0.11.10/terraform_0.11.10_linux_amd64.zip
+terraform_url: https://releases.hashicorp.com/terraform/{{terraform_version}}/terraform_{{terraform_version}}_linux_amd64.zip
+terraform_version: 0.11.11
+location:
+  - /usr/local/bin

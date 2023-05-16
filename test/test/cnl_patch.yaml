@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  vars_prompt:
+  - name: kernel_update
+    prompt: "Which task do you want to deploy?\n1 - System Update\n2 - Update Rollback\n"
+    private: no
+  roles:
+    - role: cnl_patch

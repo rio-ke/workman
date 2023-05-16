@@ -1,0 +1,10 @@
+---
+- name:  group create
+  group:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - "{{group_name}}"
+  tags:
+    - group_creation
+

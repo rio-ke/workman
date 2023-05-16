@@ -1,0 +1,4 @@
+---
+- hosts: master,local
+  roles:
+    - role: network_host_entry

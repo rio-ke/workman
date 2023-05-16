@@ -1,0 +1,29 @@
+---
+- name: Install the Docker Pre-requistes,Docker and play arround docker commands
+  yum:
+   name: "{{ item }}"
+   state: present
+  with_items:
+     - "{{ package }}"
+- name: Add Docker GPG key.
+  rpm_key:
+    key: "{{ rpm_key_value }}"
+    state: present
+- name: Add Docker Repo
+  get_url:
+   url: "{{ docker_yum_repo_url }}"
+   dest: '/etc/yum.repos.d/docker-{{ docker_edition }}.repo'
+   #- name: Enable or Disable Docker Edge repo
+   #  ini_file:
+   #   dest: "{{ path }}"
+   #   section: "{{ item }}"
+   #   option: enabled
+   #   value: 1
+   #  with_items: ['docker-ce-test','docker-ce-edge']
+- name: Install the Docker-CE package
+  yum:
+    name: "{{item }}"
+    state: present
+  with_items: "{{docker_package}}"
+  notify:
+   - docker start

@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+
+# task variables
+ansible_server_ip=$(hostname -i)
+ansible_user_name=ansible
+ansible_user_pass=redhat #and root password also
+playbook_directory=/home/ansible/ansible
+inventory_directory_windows=/home/ansible/ansible/windows
+host_directory_windows=/opt/ansible/inventory/windows
+inventory_directory_linux=/home/ansible/ansible/linux
+host_directory_linux=/opt/ansible/inventory/linux
+roles_directory=/opt/ansible/roles/
+linux_hosts=$inventory_directory_linux/hosts
+windows_hosts=$inventory_directory_windows/hosts
+windows_configfile=$host_directory_windows/ansible.cfg
+linux_configfile=$host_directory_linux/ansible.cfg
+
+#Make host entry in localhost
+if [ "$(hostname)" != "ansible-server" ];
+then
+    hostnamectl set-hostname ansible-server
+fi
+
+sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/selinux/config
+echo "$ansible_server_ip ansible-server ansible"   >> /etc/hosts
+
+#Installtion packages List
+for i in epel-release vim-enhanced  ansible wget curl sshpass curl zip unzip
+do
+	if [  $(rpm -qa | grep $i | wc -l) -eq 0 ];
+    then
+        yum install $i -q -y
+    fi
+done
+
+# user create in ansible server
+if [ $(id $ansible_user_name | wc -l) -eq 0 ];
+then
+    useradd -s /bin/bash ansible
+    chown -R $ansible_user_name:$ansible_user_name /home/ansible
+    echo "$ansible_user_pass" | passwd --stdin $ansible_user_name
+fi
+
+# Make user sudo entry
+
+if [ $(egrep '^ansible|^NOPASSWD' /etc/sudoers | wc -l) -eq 0 ];
+then
+    echo "$ansible_user_name ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers;
+fi
+
+#Directory Create
+
+for jino in $inventory_directory_windows $playbook_directory $host_directory_windows $host_directory_linux $inventory_directory_linux $roles_directory
+do
+	if [ ! -d "$jino" ];
+	then
+    	mkdir -p $jino
+        if [ "$jino" = "$playbook_directory" ];
+        then
+            chown -R $ansible_user_name:$ansible_user_name $playbook_directory
+
+		elif [ "$jino" = "$inventory_directory_linux" ];
+		then
+			chown -R $ansible_user_name:$ansible_user_name $inventory_directory_linux
+
+		elif [ "$jino" = "$inventory_directory_windows" ];
+		then
+			chown -R $ansible_user_name:$ansible_user_name $inventory_directory_windows
+
+        fi
+	fi
+done
+
+#logfile creation
+logfile=/var/log/ansible.log
+
+if [ ! -f "$logfile" ];
+then
+    touch $logfile
+    chown -R $ansible_user_name:$ansible_user_name $logfile
+fi
+
+
+echo "\[defaults\]"                                    >  $inventory_directory_windows
+echo "inventory            = $host_directory_windows"  >> $inventory_directory_windows
+echo "retry_files_enabled  = True"                     >> $inventory_directory_windows
+echo "host_key_checking    = False"                    >> $inventory_directory_windows
+echo "log_path             = /var/log/ansible.log"     >> $inventory_directory_windows
+echo "command_warnings     = False"                    >> $inventory_directory_windows
+echo "deprecation_warnings = False"                    >> $inventory_directory_windows
+
+
+#linux configuration file
+
+if [ ! -f "$linux_configfile" ];
+then
+    echo "localhost ansible_connection=local " >  $linux_configfile
+    echo "#node1 ansible_host=xxx.xxx.xxx.xxx" >> $linux_configfile
+    echo " " >> $linux_configfile
+    echo " " >> $linux_configfile
+    echo " " >> $linux_configfile
+    echo "[all:vars]"                              >> $hosts
+    echo "ansible_connection= ssh"                 >> $hosts
+    echo "ansible_user      = $ansible_user_name"  >> $hosts
+    sed -i 's/^#host_key_checking \=\ False/host_key_checking \=\ False/g' /etc/ansible/ansible.cfg
+else
+    echo "localhost ansible_connection=local " >  $linux_configfile
+    echo "#node1 ansible_host=xxx.xxx.xxx.xxx" >> $linux_configfile
+    echo " " >> $linux_configfile
+    echo " " >> $linux_configfile
+    echo " " >> $linux_configfile
+    echo "[all:vars]"                              >> $hosts
+    echo "ansible_connection= ssh"                 >> $hosts
+    echo "ansible_user      = $ansible_user_name"  >> $hosts
+    sed -i 's/^#host_key_checking \=\ False/host_key_checking \=\ False/g' /etc/ansible/ansible.cfg
+fi

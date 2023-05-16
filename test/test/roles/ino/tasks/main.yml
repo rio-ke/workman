@@ -1,0 +1,5 @@
+---
+- debug:
+    msg: "{{a}}-{{b}} {{ c | default('')}}"
+  when:
+  - (a is defined and b is defined or c is defined) or (a is defined and b is defined and c is defined)

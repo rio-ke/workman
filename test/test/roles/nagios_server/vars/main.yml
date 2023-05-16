@@ -1,0 +1,6 @@
+---
+nagios_server_packages:
+  - nagios
+  - python-passlib
+  - nagios-plugins-all
+  - nagios-plugins-nrpe
