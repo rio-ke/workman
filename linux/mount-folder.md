@@ -64,28 +64,42 @@ mkfs.ext4 /dev/sdb1
 ```cmd
 blkid
 ```
-copy the last UUID id 
+* copy the last UUID id 
 
+_Go to fstab file and add the UUID line below_
+
+```cmd
 vim /etc/fstab
+```
+_paste the copied UUID line here_
 
-paste the copied UUID line here
+```cmd
+#UUID= xxxxxxxxx   /mount-folder-name  ext4   defult  0  0 
+```
 
-UUID= xxxxxxxxx   /mount-folder-name  ext4   defult  0  0 
+_To check mount_
 
+```cmd
 mount -a
+```
 
+```cmd
 df -Th
+```
 
+```cmd
 reboot
+```
+_check partition_
 
+```cmd
 df -Th
+```
 
-check partition
-
-To check how many partition availabe 
-
+_To check how many partition availabe_
+```cmd
 sudo fdisk -l
-
+```
 
 
 https://superuser.com/questions/134734/how-to-mount-a-drive-from-terminal-in-ubuntu
