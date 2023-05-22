@@ -16,6 +16,20 @@ steps:
 4. Enter
 5. Enter
 6. w write table to disk and exit
+7. 
+--------------------------------------------
+_Generic_
+
+-   d   delete a partition
+-   F   list free unpartitioned space
+-   l   list known partition types
+-   n   add a new partition
+-   p   print the partition table
+-   t   change a partition type
+-   v   verify the partition table
+-   i   print information about a partition
+
+-------------------------------------------
 
 
 
