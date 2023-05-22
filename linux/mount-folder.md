@@ -10,12 +10,18 @@ _login as a root user for Authentication_
 ```cmd
 sudo -i
 ```
+_List information about block devices_
 
+```cmd
 lsblk
+```
 
+_create partitions_
+
+```cmd
 fdisk /dev/sdb
-
-steps:
+```
+_Follow the steps:_
 
 1. m (m for help)
 2. n   add a new partition
