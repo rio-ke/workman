@@ -49,19 +49,21 @@ _Check partitions_
 ```cmd
 lsblk
 ```
-_Create mount folder with `/`_
 
+_Create mount folder with `/`_
 
 ```cmd
 mkdir /mount-folder-name
 ```
+```cmd
 mkfs.ext4 /dev/sdb1
+```
+* mkfs (make-file-system)
+* sdb1 (new disk partition)
 
-mkfs (make-file-system)
-sdb1 (new disk partition)
-
+```cmd
 blkid
-
+```
 copy the last UUID id 
 
 vim /etc/fstab
