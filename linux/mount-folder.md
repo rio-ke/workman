@@ -1,6 +1,10 @@
 ## Mount folder
 
-df -Th
+To check mounted folders and storage
+
+```cmd 
+df -Th 
+```
 
 sudo -i
 
@@ -62,13 +66,7 @@ check partition
 
 To check how many partition availabe 
 
-sudo fdisk -l 
-
-
-
-
-
-
+sudo fdisk -l
 
 
 
