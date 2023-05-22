@@ -44,10 +44,17 @@ _Generic_
 
 -------------------------------------------
 
+_Check partitions_
+
+```cmd
 lsblk
+```
+_Create mount folder with `/`_
 
+
+```cmd
 mkdir /mount-folder-name
-
+```
 mkfs.ext4 /dev/sdb1
 
 mkfs (make-file-system)
