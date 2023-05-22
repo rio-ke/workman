@@ -1,12 +1,15 @@
 ## Mount folder
 
-To check mounted folders and storage
+_To check mounted folders and storage_
 
 ```cmd 
 df -Th 
 ```
+_login as a root user for Authentication_
 
+```cmd
 sudo -i
+```
 
 lsblk
 
