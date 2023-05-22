@@ -31,6 +31,43 @@ _Generic_
 
 -------------------------------------------
 
+lsblk
+
+mkdir /mount-folder-name
+
+mkfs.ext4 /dev/sdb1
+
+mkfs (make-file-system)
+sdb1 (new disk partition)
+
+blkid
+
+copy the last UUID id 
+
+vim /etc/fstab
+
+paste the copied UUID line here
+
+UUID= xxxxxxxxx   /mount-folder-name  ext4   defult  0  0 
+
+mount -a
+
+df -Th
+
+reboot
+
+df -Th
+
+check partition
+
+To check how many partition availabe 
+
+sudo fdisk -l 
+
+
+
+
+
 
 
 
