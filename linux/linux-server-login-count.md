@@ -16,7 +16,7 @@ W
 
 * find the users and it's counts
 
-**_kill the unwanted users _**
+**_kill the unwanted users_**
 
 ```bash
 pkill -u (user_name)
