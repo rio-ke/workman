@@ -1,8 +1,6 @@
+## How to customize dock panel on Ubuntu 20.04 Focal Fossa Linux
 
 
-
-
-# 
 ```cmd
 gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
 ```
