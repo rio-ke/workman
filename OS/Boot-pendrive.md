@@ -3,14 +3,14 @@
 
 - First Format the pendrive in windows laptop
 
-- the check pendrive in lunux lap for disk partition
+- The check pendrive in lunux lap for disk partition
 
 ```cmd
 lsblk
 ```
 * if its in -> sdb -> sdb1
 
-- delete extra sdb1 partion
+- Delete extra sdb1 partion
 
 ```cmd
 sudo fdisk /dev/sdb
@@ -22,21 +22,28 @@ d        # delete partition
 
 w        # save and exit
 ```
-then
 
-unplug the pendrive and reinsert it and
+Then
 
+- Unplug the pendrive and reinsert it
+
+```cmd
 lsblk
+```
 
-now go to OS dir
+- Now go to OS dir path
 
-/home/user/OS_folder_name/
+```bash
+cd /home/user/OS_folder_name/
+```
 
-then copy the OS_name
+- Then copy the OS_name
 
-kali-linux-2023.1-installer-everything-amd64.iso
+```cmd
+COPY #kali-linux-2023.1-installer-everything-amd64.iso
+```
+- Execute the cmd below
 
-execute the cmd below
-
+```cmd
 dd if=kali-linux-2023.1-installer-everything-amd64.iso of=/dev/sdb conv=fsync bs=4M
-
+```
