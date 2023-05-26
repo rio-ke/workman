@@ -1,3 +1,3 @@
-### Boot pendrive with dd commands in LInux termianl
+## Boot pendrive with dd commands in LInux termianl
 
 
