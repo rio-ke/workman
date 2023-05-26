@@ -10,16 +10,18 @@ lsblk
 ```
 * if its in -> sdb -> sdb1
 
-u should delete the sdb1 partion with
+- delete extra sdb1 partion
 
+```cmd
 sudo fdisk /dev/sdb
+```
+```bash
+m        # for help
 
-m
+d        # delete partition
 
-d
-
-w
-
+w        # save and exit
+```
 then
 
 unplug the pendrive and reinsert it and
