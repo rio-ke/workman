@@ -1,13 +1,14 @@
 ## Boot Pendrive with dd commands in LInux termianl
 
-* First Format the pendrive in windows laptop
 
-the check pendrive in lunux lap for disk partition
+- First Format the pendrive in windows laptop
+
+_the check pendrive in lunux lap for disk partition_
 
 with cmd
-
+```cmd
 lsblk
-
+```
 if its in -> sdb -> sdb1
 
 u should delete the sdb1 partion with
