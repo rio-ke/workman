@@ -3,13 +3,12 @@
 
 - First Format the pendrive in windows laptop
 
-_the check pendrive in lunux lap for disk partition_
+- the check pendrive in lunux lap for disk partition
 
-with cmd
 ```cmd
 lsblk
 ```
-if its in -> sdb -> sdb1
+* if its in -> sdb -> sdb1
 
 u should delete the sdb1 partion with
 
