@@ -1,4 +1,4 @@
-$Boot-Pendrive-with-dd-commands-in-LInux-termianl$
+## Boot Pendrive with dd commands in LInux termianl
 
 * First Format the pendrive in windows laptop
 
