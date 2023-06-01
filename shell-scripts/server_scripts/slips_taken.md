@@ -42,7 +42,6 @@ done
 
 #type2
 
-
 #!/usr/bin/env bash
 
 # Already bangalore folder created
@@ -51,9 +50,12 @@ done
 #lucknow
 #roba_slips
 
-#cat /var/scripts/radmus4.txt | while read LINE
-#do
+cat /var/scripts/radmus4.txt | while read LINE
+do
 
-#   scp admin@192.168.5.204:/RADMUS/$LINE  /webdata/host/pune_slips
+  scp admin@192.168.5.204:/RADMUS/$LINE  /webdata/host/pune_slips
+
+done
+
 
 ```
