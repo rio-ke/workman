@@ -9,7 +9,7 @@ echo "What region do you want to copy slips?"
 read REGION
 DIR="/webdata/host/$REGION"
 if [ -e "$DIR" ]; then
-    cat /var/scipts/radmus4.txt | while read -r LINE; do
+    cat /var/scripts/radmus4.txt | while read -r LINE; do
         scp admin@192.168.5.204:/RADMUS/"$LINE" "$DIR"
     done
 
