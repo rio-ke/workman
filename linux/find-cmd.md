@@ -9,3 +9,15 @@ _To find newer file_
 ```cmd
 find . -newer new_file.txt
 ```
+
+_To finding files by type_
+
+- Some of the file types are as follows:
+* f: regular file
+* d: directory
+* l: symbolic links
+* c: character devices
+* b: block devices
+```cmd
+find . -type d -name "*.bak"
+```
