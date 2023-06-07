@@ -1,0 +1,439 @@
+groups:
+- name: INSTANCES
+  rules:
+ # - alert: INSTANCE DOWN ALERT
+ #   expr: up == 0
+ #   for: 30s
+ #   labels:
+ #     service: DOWN ALERT
+ #     severity: CRITICAL
+ #   annotations:
+ #     summary: "`INSTANCE DOWN ALERT`"
+ #     description: "`{{$labels.instance}}` instance has been `down` for more than 30 Seconds"
+  - alert: INSTANCE DOWN
+    expr: up == 0
+    for: 60s
+    annotations:
+      identifier: '{{ $labels.instance }}'
+      description: '{{ $labels.job }} exporter job has been down for more than 1 minutes.'
+  
+  - alert: USER LOGIN ALERT
+    expr: node_logind_sessions{type!~"unspecified",instance!~"Bds-Server2"} > 0
+    labels:
+      service: LOGIN ALERT
+      severity: CRITICAL
+    annotations:
+      summary: "`USER LOGIN ALERT`"
+      description: '`{{$labels.instance}}` instance `user login` count is `{{ $value }}`'
+
+  - alert: LOAD 1MIN ALERT
+    expr:  avg_over_time(node_load1[5m]) > 30
+    for: 5m
+    labels:
+      service: LOAD 1M ALERT
+      severity: WARNING
+    annotations:
+      summary: "`LOAD 1MIN ALERT`"
+      description: '`{{$labels.instance}}` instance `1min` current value is `{{$value}}`'
+
+  - alert: LOAD 5MIN ALERT
+    expr:  avg_over_time(node_load5[5m]) > 40
+    for: 5m
+    labels:
+      service: LOAD 5M ALERT
+      severity: WARNING
+    annotations:
+      summary: "`LOAD 5MIN ALERT`"
+      description: '`{{$labels.instance}}` instance `5min` current value is `{{$value}}`'
+
+  - alert: LOAD 15MIN ALERT
+    expr: avg_over_time(node_load15[5m]) > 50
+    for: 5m
+    labels:
+      service: LOAD 15MIN ALERT
+      severity: WARNING
+    annotations:
+      summary: "`LOAD 15MIN ALERT`"
+      description: '`{{$labels.instance}}` instance `15min` current value is `{{$value}}`'
+
+  - alert: ROOT DISK ALERT
+    expr:  100 - ((node_filesystem_avail_bytes{mountpoint="/",fstype!="rootfs"} * 100) / node_filesystem_size_bytes{mountpoint="/",fstype!="rootfs"}) > 85
+    for: 5m
+    labels:
+      service: ROOT DISK ALERT
+      severity: CRITICAL
+    annotations:
+      summary: "`ROOT DISK ALERT`"
+      description: '`{{$labels.instance}}` instance `Root` value is `{{$value}}`%'
+
+  - alert: TCP LISTENING PORT ALERT
+    expr: node_tcp_connection_states{state="listen"} > 19
+    for: 1m
+    labels:
+      service: TCP LISTENING PORT ALERT
+      severity: CRITICAL
+    annotations:
+      summary: "`LISTENING PORT ALERT`"
+      description: '`{{$labels.instance}}` instance `listening port` current value is `{{ $value }}`'
+
+  - alert: TCP ESTABLISHED PORT ALERT
+    expr: node_tcp_connection_states{state="established"} > 400
+    for: 5m
+    labels:
+      service: TCP ESTABLISHED PORT ALERT
+      severity: CRITICAL
+    annotations:
+      summary: "`ESTABLISHED PORT ALERT`"
+      description: '`{{ $labels.instance }}` instance `established port` current value is `{{$value}}`'
+
+  - alert: TCP SYN_RECV PORT ALERT
+    expr: node_tcp_connection_states{state="syn_recv"} > 50
+    for: 1m
+    labels:
+      service: TCP SYN_RECV PORT ALERT
+      severity: CRITICAL
+    annotations:
+      summary: "`SYNC_RECEIVED PORT ALERT`"
+      description: '`{{$labels.instance}}` instance `sync received port` current value is `{{ $value }}`'
+
+  - alert: TCP LAST_ACK PORT ALERT
+    expr: node_tcp_connection_states{state="last_ack"} > 150
+    for: 1m
+    labels:
+      service: TCP LAST_ACK PORT ALERT
+      severity: WARNING
+    annotations:
+      summary: "`LAST_ACK PORT ALERT`"
+      description: '`{{ $labels.instance }}` instance `last ack port` current value is `{{$value}}`'
+
+  - alert: TCP FIN_WAIT1 PORT ALERT
+    expr: node_tcp_connection_states{state="fin_wait1"} > 150
+    for: 1m
+    labels:
+      service: TCP FIN_WAIT1 PORT ALERT
+      severity: WARNING
+    annotations:
+      summary: "`FIN_WAIT1 PORT ALERT`"
+      description: '`{{ $labels.instance }}` instance `fin wait1 port` current value is `{{$value}}`'
+
+  - alert: TCP FIN_WAIT2 PORT ALERT
+    expr: node_tcp_connection_states{state="fin_wait2"} > 150
+    for: 1m
+    labels:
+      service: TCP FIN_WAIT2 PORT ALERT
+      severity: WARNING
+    annotations:
+      summary: "`FIN_WAIT2 PORT ALERT`"
+      description: '`{{$labels.instance}}` instance `fin wait2 port` current value is `{{$value}}`'
+
+  - alert: TCP CLOSE_WAIT PORT ALERT
+    expr: node_tcp_connection_states{state="closing"} > 20
+    for: 5m
+    labels:
+      service: TCP CLOSE_WAIT PORT ALERT
+      severity: WARNING
+    annotations:
+      summary: "`CLOSE_WAIT PORT ALERT`"
+      description: '`{{$labels.instance}}` instance `close wait port` current value is `{{$value}}`'
+
+  - alert: TCP TIME_WAIT PORT ALERT
+    expr: node_tcp_connection_states{state="time_wait"} > 150
+    for: 5m
+    labels:
+      service: TCP TIME_WAIT PORT ALERT
+      severity: WARNING
+    annotations:
+      summary: "`TIME_WAIT PORT ALERT`"
+      description: '`{{$labels.instance}}` instance `time wait port` current value is `{{$value}}`'
+
+  - alert: TCP SOCKET USED PORT ALERT
+    expr: node_sockstat_sockets_used {instance!~ "Testing-Server", instance!~ "WebApp-server", instance!~ "Archive-Server",type!~"unspecified"} > 1000
+    for: 5m
+    labels:
+      service: TCP SOCKET USED PORT ALERT
+      severity: WARNING
+    annotations:
+      summary: "`SOCKET USED PORT ALERT`"
+      description: '`{{$labels.instance}}` instance `sockert used port` current value is `{{$value}}`'
+
+  - alert: MEMORY ALERT
+    expr:  ((node_memory_MemTotal_bytes - node_memory_MemFree_bytes)  / (node_memory_MemTotal_bytes)) * 100  > 99
+    for: 100m
+    labels:
+      service: MEMORY ALERT
+      severity: CRITICAL
+    annotations:
+      summary: "`MEMORY ALERT`"
+      description: '`{{$labels.instance}}` MEMORY value is `{{$value}}%`'
+
+  - alert: HIGH CPU USAGE ALERT
+    expr:  (100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 50 
+    for: 5m
+    labels:
+      service: HIGH CPU USAGE ALERT
+      severity: WARNING
+    annotations:
+      summary: "`HIGH CPU USAGE ALERT`"
+      description: '`{{$labels.instance}}` cpu usage value is `{{$value}}`'
+
+  - alert: HIGH 5MIN LOAD AVERAGE ALERT
+    expr: ((node_load5 / count without (cpu, mode) (node_cpu_seconds_total{mode="system"})) > 1) 
+    for: 2m
+    labels:
+      service: HIGH 5MIN LOAD AVERAGE ALERT
+      severity: WARNING
+    annotations:
+      summary: "`HIGH 5MIN LOAD AVERAGE ALERT`"
+      description: '`{{$labels.instance}}` 5min load value is `{{$value}}`'
+
+  - alert: HIGH SWAP USAGE ALERT
+    expr: (((node_memory_SwapTotal_bytes - node_memory_SwapFree_bytes)/node_memory_SwapTotal_bytes)*100) > 75
+    for: 10m
+    labels:
+      service: HIGH SWAP USAGE ALERT
+      severity: CRITICAL
+    annotations:
+      summary: "`HIGH SWAP USAGE ALERT`"
+      description: '`{{$labels.instance}}` SWAP USAGE value is `{{$value}}`'
+
+  - alert: LOW SPACE ALERT
+    expr: ((node_filesystem_size_bytes - node_filesystem_free_bytes ) / node_filesystem_size_bytes * 100) > 95
+    for: 15m
+    labels:
+      service: LOW SPACE ALERT
+      severity: CRITICAL
+    annotations:
+      summary: "`LOW SPACE ALERT`"
+      description: '`{{$labels.instance}}` disk value is `{{$value}}`'
+
+  - alert: DISK WILL FILL WITH IN 2HOURS
+    expr:  predict_linear(node_filesystem_free{fstype!~"rootfs|tmpfs|fuse.lxcfs"}[1h], 2*3600)
+    for: 10m
+    labels:
+      service: DISK WILL FILL WITH IN 2HOURS
+      severity: CRITICAL
+    annotations:
+      summary: "`DISK WILL FILL WITH IN 2HOURS`"
+      description: '`{{$labels.instance}}` disk value is `{{$value}}`'
+
+  - alert: DRBD CONNECION ALERT
+    expr: node_drbd_connected != 1 
+    for: 30s
+    labels:
+      service: DRBD CONNECION ALERT
+      severity: CRITICAL
+    annotations:
+      summary: "`INSTANCE DOWN ALERT`"
+      description: "`{{$labels.instance}}` instance `drbd connectivity` issue"
+
+#=========================================================================================================================#
+
+#
+#  - alert: Disk_warnings
+#    expr: min(node_filesystem_free_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs|shm|overlay"}/node_filesystem_size_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs|shm|overlay"})*100 < 16
+#    for: 5m
+#    labels:
+#      severity: warning
+#    annotations:
+#      description: 'Instance Name: {{ $labels.instance }} has been Filled 50% Disk. Action Required.(current value is: {{ $value }})'
+#      summary: 'Instance {{ $labels.instance }}.Kindly clear some space'
+#
+#  - alert: Disk_Critical
+#    expr: min(node_filesystem_free_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs|shm|overlay"}/node_filesystem_size_bytes{fstype!~"rootfs|selinuxfs|autofs|rpc_pipefs|tmpfs|shm|overlay"})*100 < 15 
+#    for: 5m
+#    labels:
+#      severity: Critical
+#    annotations:
+#      description: 'Instance Name: {{ $labels.instance }} has been Filled 50% Disk. Action Required.(current value is: {{ $value }})'
+#      summary: 'Instance {{ $labels.instance }}. Immidiate Action required.'
+#  
+#  - alert: Disk_Full_critical
+#    expr: sum(avg(node_filesystem_size_bytes{fstype=~"(ext.|xfs|vfat)"}) without (mountpoint)) without (device,fstype) / (1024/1024/1024) < 10
+#    for: 5m
+#    labels:
+#      severity: Critical
+#    annotations:
+#      description: 'Instance Name: {{ $labels.instance }} has been Filled almost 90% Disk. Action Required.(current value is: {{ $value }})'
+#      summary: 'Instance {{ $labels.instance }}. Immidiate Action required.'
+#
+#  - alert: ROOT_Disk
+#    expr: 100 - ((node_filesystem_avail_bytes{mountpoint="/",fstype!="rootfs"} * 100) / node_filesystem_size_bytes{mountpoint="/",fstype!="rootfs"}) > 90
+#    for: 5m
+#    labels:
+#      severity: Critical
+#    annotations:
+#      description: 'Instance Name: {{ $labels.instance }} has been Filled almost 90% Disk. Action Required.(current value is: {{ $value }})'
+#      summary: 'Instance {{ $labels.instance }}. Immidiate Action required.'
+#  
+#  - alert: ROOT_Disk
+#    expr: 100 - ((node_filesystem_avail_bytes{mountpoint="/",fstype!="rootfs"} * 100) / node_filesystem_size_bytes{mountpoint="/",fstype!="rootfs"}) > 90
+#    for: 5m
+#    labels:
+#      severity: Warnings
+#    annotations:
+#      description: 'Instance Name: {{ $labels.instance }} has been Filled almost 60% Disk. Action Required.(current value is: {{ $value }})'
+#      summary: 'Instance {{ $labels.instance }}. Immidiate Action required.'
+#
+#  - alert: AlertmanagerNotificationsFailing
+#    expr: rate(prometheus_notifications_alertmanagers_discovered[1m]) > 0
+#    labels:
+#      service: alertmanager
+#      severity: critical
+#    annotations:
+#      description: Alertmanager is seeing errors for integration {{$labels.integration}}
+#
+#  - alert: Login Alert
+#    expr: sum(node_logind_sessions) > 0
+#    labels:
+#      service: Login Success
+#      severity: critical
+#    annotations:
+#      description: 'Instance {{ $labels.instance }}. and (current value is: {{ $value }})'
+#  
+#  - alert: Establish_connection_high
+#    expr: node_tcp_connection_states{state="established"} > 200
+#    for: 2m
+#    labels:
+#      severity: Warnings
+#    annotations:
+#      description: 'Instance Name: {{ $labels.instance }} Establish connection is high.(current value is: {{ $value }})'
+#      summary: 'Instance {{ $labels.instance }}. Action required.'
+#
+#  - alert: Establish_connection_high_too
+#    expr: node_tcp_connection_states{state="established"} > 250
+#    for: 1m
+#    labels:
+#      severity: critical
+#    annotations:
+#      description: 'Instance Name: {{ $labels.instance }} Establish connection is high.(current value is: {{ $value }})'
+#      summary: 'Instance {{ $labels.instance }}. Immidiate Action required.'
+#  - alert: Time_Wait_connection
+#    expr: node_tcp_connection_states{state="time_wait"} > 450
+#    for: 2m
+#    labels:
+#      severity: Warnings
+#    annotations:
+#      description: 'Instance Name: {{ $labels.instance }} TIME_WAIT connection is high.(current value is: {{ $value }})'
+#      summary: 'Instance {{ $labels.instance }}. Action required.'
+#
+#  - alert: Tcp_connection_high_too
+#    expr: node_tcp_connection_states{state="time_wait"} > 650
+#    for: 1m
+#    labels:
+#      severity: critical
+#    annotations:
+#      description: 'Instance Name: {{ $labels.instance }} TIME_WAIT connection is high.(current value is: {{ $value }})'
+#      summary: 'Instance {{ $labels.instance }}. Immidiate Action required.'
+#  
+#  - alert: context_switches_high
+#    expr: rate(node_context_switches_total[5m]) > 15000
+#    for: 5m
+#    labels:
+#      severity: Warnings
+#    annotations:
+#      description: 'Instance Name: {{ $labels.instance }} context_switches_high is high.(current value is: {{ $value }})'
+#      summary: 'Instance {{ $labels.instance }}. Action required.'
+#
+#  - alert: Context Switches per Virtual CPU
+#    expr: (rate(node_context_switches_total[1m]) or irate(node_context_switches_total[5m])) / scalar(count(node_cpu_seconds_total{mode="user"})) > 650
+#    for: 5m
+#    labels:
+#      severity: critical
+#    annotations:
+#      description: 'Instance Name: {{ $labels.instance }} Context Switches Per Virtual_CPU is high.(current value is: {{ $value }})'
+#      summary: 'Instance {{ $labels.instance }}. Immidiate Action required.'
+#  
+#  - alert: Load_Average_High
+#    expr: node_load1 > 5 or node_load1 > 10 or node_load15 > 20
+#    for: 2m
+#    labels:
+#      severity: critical
+#    annotations:
+#      description: 'Instance Name: {{ $labels.instance }} Average Load time is high.(current value is: {{ $value }})'
+#      summary: 'Instance {{ $labels.instance }}. Immidiate Action required.'
+#  
+#  - alert: Load_CPU_High
+#    expr: node_cpu_seconds_total > 800000
+#    for: 2m
+#    labels:
+#      severity: critical
+#    annotations:
+#      description: 'Instance Name: {{ $labels.instance }} CPU Load time is high.(current value is: {{ $value }})'
+#      summary: 'Instance {{ $labels.instance }}. Immidiate Action required.'
+
+
+#    expr: avg_over_time(node_procs_blocked{instance=~"$server"}[5m]) > 4
+#    for: 2m
+#    labels:
+#      severity: "warning"
+#    annotations:
+#      summary: "{{$labels.instance}}: IO-Load is getting high"
+#      description: "{{$labels.instance}}: IO-Load usage usage is above  (current value is: {{ $value }})"
+  
+##  - alert: Node_MemUsage_warning
+#    expr: ((node_memory_MemTotal_bytes - node_memory_MemFree_bytes)  / (node_memory_MemTotal_bytes)) * 100 > 50
+#    for: 2m
+#    labels:
+#      severity: "warning" 
+#    annotations:
+#      summary: "{{$labels.instance}}: Mem usage detected"
+#      description: "{{$labels.instance}}: Memory usage is above 50% (current value is: {{ $value }})"
+#
+#  - alert: Down HTTP Service
+#    expr: node_systemd_unit_state{name="httpd.service",state="active"} == 0
+#    for: 30s
+#    labels:
+#      severity: "critical"
+#      job: Web-Service
+#    annotations:
+#      summary: "{{$labels.instance}}: Webservice service Failed"
+#      description: "{{$labels.instance}}: webservice Service Failed: {{ $value }})"
+#
+
+#  - alert: DailyTest
+#    expr: vector(1) > 0
+#    for: 1m
+#    labels:
+#      job: dailytest
+#    annotations:
+#      summary: "daily alert test"
+#      description: "daily alert test"
+
+
+#  - alert: CPU_Threshold_Exceeded
+#    expr: (100 * (1 - avg by(instance)(irate(node_cpu{mode='idle'}[1h])))) > 90
+#    for: 1h
+#    labels:
+#      severity: "critical"
+#    annotations:
+#      summary: "Instance {{ $labels.instance }} CPU usage is dangerously high"
+#      description: "This device's CPU usage has exceeded the thresold of 90% with a value of {{ $value }} for 1 hour."
+#
+#
+#  - alert: Instance_Low_Memory
+#    expr:  node_memory_MemAvailable < 268435456
+#    for: 10m
+#    labels:
+#      severity: "critical"
+#    annotations:
+#      summary: "Instance {{ $labels.instance }}: memory low "
+#      description:  "{{$labels.instance}} has less than 256M memory available"
+#
+#  
+#  - alert: Site_DOWN
+#    expr: probe_success < 1
+#    for: 1m
+#    labels:
+#      severity: "websiteDown"
+#    annotations:
+#      summary: "{{$labels.instance}} is down"
+#      description: "site {{$labels.instance}} is down/unreachable."
+# 
+#  - alert: Blackbox_Exporter_Down
+#    expr: count(up{job="blackbox"} == 1) < 1
+#    for: 1m
+#    labels:
+#      severity: "warning"
+#    annotations:
+#      summary: "blackbox_exporter is not up"
+#      description: "blackbox_exporter is not up for 1min."
