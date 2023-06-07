@@ -1,0 +1,113 @@
+cat prometheus.yml
+global:
+  scrape_interval:     20s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 20s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+       - localhost:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+   - "/etc/prometheus/alert_rules.yml"
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+        labels: 
+          instance: Prometheus
+
+  - job_name: 'docker'
+    static_configs:
+      - targets: ['192.168.5.204:8081']
+        labels: 
+          instance: Cadvisor
+
+  - job_name: 'linux systems'
+    static_configs:
+      - targets: ['192.168.1.241:9100']
+        labels: 
+          instance: DC1-node1
+      - targets: ['192.168.1.243:9100']
+        labels: 
+          instance: DC1-node2
+      - targets: ['localhost:9100']
+        labels: 
+          instance: Moniter-Server
+      - targets: ['192.168.5.100:9100']
+        labels: 
+          instance: Testing-Server
+      - targets: ['192.168.5.211:9100']
+        labels: 
+          instance: Bds-Server1
+      - targets: ['192.168.4.212:9100']
+        labels: 
+          instance: Bds-Server2
+      - targets: ['192.168.1.135:9100']
+        labels: 
+          instance: Host-Server
+      - targets: ['192.168.1.136:9100']
+        labels: 
+          instance: ATM-Server
+      - targets: ['192.168.5.207:9100']
+        labels: 
+          instance: Archive-Server
+      - targets: ['192.168.4.241:9100']
+        labels: 
+          instance: DC2-node1
+      - targets: ['192.168.4.243:9100']
+        labels: 
+          instance: DC2-node2
+      - targets: ['192.168.5.204:9100']
+        labels:
+          instance: WebApp-server
+      - targets: ['192.168.1.181:9100']
+        labels:
+          instance: new-rcms-server-one
+      - targets: ['192.168.1.184:9100']
+        labels:
+          instance: new-rcms-server-two
+      - targets: ['192.168.5.106:9100']
+        labels:
+          instance: new-test-server
+
+
+  - job_name: 'MySQL'
+    static_configs:
+      - targets: ['192.168.5.210:9104']
+        labels: 
+          instance: Bds-Server1
+      - targets: ['192.168.1.181:9104']
+        labels: 
+          instance: new-rcms-server-one
+      - targets: ['192.168.1.184:9104']
+        labels: 
+          instance: new-rcms-server-two
+      #- targets: ['192.168.5.212:9104']
+      #  labels: 
+      #    instance: Bds-Server2
+      #- targets: ['192.168.4.242:9104']
+      #  labels: 
+      #    instance: DC2-node1
+      #- targets: ['192.168.4.244:9104']
+      #  labels: 
+      #    instance: DC2-node2
+  - job_name: 'blackbox'
+    scrape_interval:     60s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+    metrics_path: /probe
+    params:
+      module: [http_2xx]  # Look for a HTTP 200 response.
+    static_configs:
+      - targets:
+        - http://192.168.5.207    # Target to probe with http.
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115
