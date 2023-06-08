@@ -17,7 +17,7 @@ In the Manage apps directory, search for Incoming WebHooks and add it to your Sl
 
 _alert-manager.yml_
 
-```cmd
+```yml
 global:
   resolve_timeout: 1m
   slack_api_url: 'https://hooks.slack.com/services/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'
