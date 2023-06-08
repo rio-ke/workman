@@ -55,7 +55,7 @@ curl
 wget 
 ```
 ```cmd
-mtr 
+mtr google.com
 ```
 ```cmd
 whois
