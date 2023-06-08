@@ -13,8 +13,7 @@ In the Manage apps directory, search for Incoming WebHooks and add it to your Sl
 ![image](https://github.com/rio-ke/workman/assets/88568938/379c33ef-2489-448f-806b-8c3c27b58a64)
 
 > Then you need to modify the alertmanager.yml file. First, open subfolder alert_manager in your code editor and fill out your alertmanager.yml based on the template below. Use the url that you have just copied as slack_api_url.
-
-
+*******************************************
 _alert-manager.yml_
 
 ```yml
