@@ -1,25 +1,31 @@
 # Basic Linux networking commands
 
 ```cmd
-ifconfig
+ifconfig eth0
 ```
 ```cmd
 ip add
 ```
+
+* To avoid the reverse DNS lookup, add -n in the command syntax.
 ```cmd
-traceroute google.in
+traceroute -n google.com
 ```
+
 ```cmd
 tracepath google.in
 ```
+
+* To limit the number of pockets
 ```cmd
-ping google.in or ip add
+ping -c google.in or ip add
 ```
 ```cmd
-netstat -s
+netstat -p
 ```
 ```cmd
-ss -tulpn
+ss -t4 state established
+ss dst 192.168.xxx.xxx
 ```
 ```cmd
 dig google.in
