@@ -67,5 +67,6 @@ ifplugstatus
 iftop
 ```
 ```cmd
-tcpdum
+tcpdum -i <network_device> tcp
+tcpdump -i <network_device> port 80
 ```
