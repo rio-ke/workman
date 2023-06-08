@@ -21,7 +21,7 @@ _alert-manager.yml_
 global:
   resolve_timeout: 1m
   slack_api_url: 'https://hooks.slack.com/services/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'
-
+                           #paste newly generated slack token in slack_api_url
 route:
   receiver: 'slack-notifications'
 
