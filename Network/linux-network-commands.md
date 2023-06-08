@@ -1,1 +1,38 @@
+# Basic Linux networking commands
 
+```cmd
+ifconfig
+```
+```
+ip
+```
+```
+traceroute
+```
+```
+tracepath
+```
+```
+ping
+```
+```
+netstat
+```
+```
+ss
+```
+```
+dig
+nslookup
+route
+host
+arp
+iwconfig
+hostname
+curl or wget
+mtr
+whois
+ifplugstatus
+iftop
+tcpdum
+```
