@@ -3,60 +3,63 @@
 ```cmd
 ifconfig
 ```
+```cmd
+ip add
 ```
-ip
+```cmd
+traceroute google.in
 ```
+```cmd
+tracepath google.in
 ```
-traceroute
+```cmd
+ping google.in or ip add
 ```
+```cmd
+netstat -s
 ```
-tracepath
+```cmd
+ss -tulpn
 ```
+```cmd
+dig google.in
 ```
-ping
+```cmd
+nslookup 
 ```
+```cmd
+route -n
 ```
-netstat
-```
-```
-ss
-```
-```
-dig
-```
-```
-nslookup
-```
-```
-route
-```
-```
+```cmd
 host
 ```
+```cmd
+arp 
 ```
-arp
+```cmd
+iwconfig 
 ```
+```cmd
+hostname 
 ```
-iwconfig
+```cmd
+curl 
 ```
+```cmd
+wget 
 ```
-hostname
+```cmd
+mtr 
 ```
-```
-curl or wget
-```
-```
-mtr
-```
-```
+```cmd
 whois
 ```
-```
+```cmd
 ifplugstatus
 ```
-```
+```cmd
 iftop
 ```
-```
+```cmd
 tcpdum
 ```
