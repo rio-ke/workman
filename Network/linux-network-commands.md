@@ -40,7 +40,7 @@ route -n
 host
 ```
 ```cmd
-arp 
+arp -n
 ```
 ```cmd
 iwconfig 
