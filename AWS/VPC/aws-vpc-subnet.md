@@ -1,5 +1,7 @@
 # AWS VPC creation
 
+**VPC**
+
 _First choose the region_
 
 * Go to consle page and click region 
@@ -28,3 +30,7 @@ Fill
 And then click create-vpc
 
 ![vpc-page](https://github.com/rio-ke/workman/assets/88568938/d32d6b2a-dc92-40c9-a002-4c7d1ad47112)
+
+**SUBNET**
+
+
