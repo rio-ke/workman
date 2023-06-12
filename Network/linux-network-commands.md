@@ -13,7 +13,7 @@ traceroute -n google.com
 ```
 
 ```cmd
-nmap ip-add
+nmap
 sudo  nmap 192.168.3.xxx -O
 nmap -sn 192.168.3.2/24
 ```
