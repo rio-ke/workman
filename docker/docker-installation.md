@@ -43,8 +43,7 @@ echo \
 _**Install Docker Engine**_
 
 ```bash
- sudo apt update
- sudo apt install docker-ce docker-ce-cli containerd.io -y
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
 _**Start the Docker**_
