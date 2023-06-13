@@ -95,5 +95,6 @@ sudo usermod -aG docker username
 ```
 * **reboot the system**
 
+[ubuntu](https://docs.docker.com/engine/install/ubuntu/#uninstall-docker-engine)
 
 docker document reference pls visit --> https://docs.docker.com/reference/
