@@ -4,8 +4,8 @@ _Docker installation on ubuntu_
 _**Setup the repository**_
 
 ```bash
-  sudo apt-get update
-  sudo apt-get install \
+  sudo apt update
+  sudo apt install \
     ca-certificates \
     curl \
     gnupg \
@@ -28,8 +28,8 @@ echo \
 _**Install Docker Engine**_
 
 ```bash
- sudo apt-get update
- sudo apt-get install docker-ce docker-ce-cli containerd.io -y
+ sudo apt update
+ sudo apt install docker-ce docker-ce-cli containerd.io -y
 ```
 
 _**Start the Docker**_
