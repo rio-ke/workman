@@ -1,6 +1,21 @@
 _Docker installation on ubuntu_
 ---
 
+_The unofficial packages to uninstall are_
+
+    docker.io
+    docker-compose
+    docker-doc
+    podman-docker
+
+* Moreover, Docker Engine depends on containerd and runc. Docker Engine bundles these dependencies as one bundle: containerd.io. If you have installed the containerd or runc previously, uninstall them to avoid conflicts with the versions bundled with Docker Engine.
+
+_Run the following command to uninstall all conflicting packages_
+
+ ```cmd
+ for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt remove $pkg; done
+```
+
 _**Setup the repository**_
 
 ```bash
