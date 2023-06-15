@@ -10,3 +10,7 @@
 ![image](https://github.com/rio-ke/workman/assets/88568938/f1e42737-c80d-4056-a3ef-8fd64e6b2afd)
 
 ![image](https://github.com/rio-ke/workman/assets/88568938/acdbdc8d-80cc-4870-a139-c0094edc06b5)
+
+_refer_
+
+https://d1.awsstatic.com/architecture-diagrams/ArchitectureDiagrams/lattice-use-cases-ra.pdf?did=wp_card&trk=wp_card
