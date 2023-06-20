@@ -2,7 +2,6 @@
 
 
 ```yml
----
 - name: fetch files from remote nodes
   hosts: virtual #inventory-host
   become: yes
@@ -19,6 +18,6 @@
 
 _excecution_
 
-``yml
+```yml
 ansible-playbook virtual fetch.yml
 ```
