@@ -1,5 +1,14 @@
 # Basic Linux networking commands
 
+_To check server's ipv4 and ipv6_
+
+```cmd
+curl ifconfig.me
+```
+```cmd
+curl icanhazip.com
+```
+
 ```cmd
 ifconfig eth0
 ```
