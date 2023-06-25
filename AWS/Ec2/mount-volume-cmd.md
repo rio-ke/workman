@@ -1,4 +1,3 @@
-![Screenshot from 2023-06-25 13-22-32](https://github.com/rio-ke/workman/assets/88568938/6a162914-a74e-4666-a509-b8fa5ba167db)
 **command line for attach an ebs volume**
 
 _To check attach volume_
@@ -39,3 +38,5 @@ sudo mount -a
 ```cmd
 lsblk & df -h
 ```
+
+![Screenshot from 2023-06-25 13-22-32](https://github.com/rio-ke/workman/assets/88568938/6a162914-a74e-4666-a509-b8fa5ba167db)
