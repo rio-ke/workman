@@ -17,7 +17,10 @@ _Create mount folder_
 sudo mkdir -p /webdata
 ```
 ```cmd
-cd / & ls -ltrh
+cd /
+```
+```cmd
+ls -ltrh
 ```
 
 _To  create a file system as xfs_
@@ -36,7 +39,10 @@ _Check_
 sudo mount -a
 ```
 ```cmd
-lsblk & df -h
+lsblk
+```
+```cmd
+df -h
 ```
 
 ![Screenshot from 2023-06-25 13-22-32](https://github.com/rio-ke/workman/assets/88568938/6a162914-a74e-4666-a509-b8fa5ba167db)
