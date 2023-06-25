@@ -36,7 +36,9 @@
 ```cmd
 lsblk
 ```
-
+```cmd
+sudo fdisk /dev/xvdk
+```
 ![Image](https://github.com/januo-org/proof-of-concepts/assets/88568938/93b29fde-1f73-4dbc-976f-5e573b9aa531)
 
 
