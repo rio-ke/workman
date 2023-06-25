@@ -18,10 +18,11 @@
     lsblk
 
 * Note the name of the newly attached volume (e.g., /dev/xvdf).
+```
+Run the following command Format the disk:
 
-16. Run the following command to create a file system on the volume:
+Do not use this command while restoring snapshots
 
-```cmd
 sudo mkfs -t ext4 /dev/xvdf Replace /dev/xvdf with the appropriate device name.
 ```
 17. Create a directory where you want to mount the volume. For example:
