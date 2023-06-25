@@ -18,13 +18,18 @@
     lsblk
 
 * Note the name of the newly attached volume (e.g., /dev/xvdf).
+
 16. Run the following command to create a file system on the volume:
+
 ```cmd
 sudo mkfs -t ext4 /dev/xvdf Replace /dev/xvdf with the appropriate device name.
 ```
 17. Create a directory where you want to mount the volume. For example:
+
 ```cmd
 sudo mkdir /mnt/myvolume 18. Mount the volume to the directory:
+```
+```cmd
 sudo mount /dev/xvdf /mnt/myvolume Again, replace /dev/xvdf with the appropriate device name.
 ```
 19. Verify that the volume is mounted by running the following command:
