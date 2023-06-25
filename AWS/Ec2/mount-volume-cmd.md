@@ -1,4 +1,4 @@
-**command line for attach an ebs volume**
+**command line for To mount folder to attached an ebs volume**
 
 _To check attach volume_
 
