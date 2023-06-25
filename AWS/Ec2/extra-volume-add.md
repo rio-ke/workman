@@ -29,5 +29,15 @@
 ![Image](https://github.com/januo-org/proof-of-concepts/assets/88568938/9ed3b68e-1fe6-44ae-81f6-1cb58108e809)
 
 
+**Command line in ubuntu instance**
+
+*Extra-volume check*
+
+```cmd
+lsblk
+```
+
+![Image](https://github.com/januo-org/proof-of-concepts/assets/88568938/93b29fde-1f73-4dbc-976f-5e573b9aa531)
+
 
 
