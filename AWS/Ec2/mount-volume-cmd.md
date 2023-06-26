@@ -23,9 +23,11 @@ cd /
 ls -ltrh
 ```
 
-_To  create a file system as xfs_
+```bash
+# To format the disk use this command
+# Do not use this command while restoring snapshot
+# /dev/disk_name
 
-```cmd
 sudo mkfs -t xfs /dev/xvdk
 ```
 _To mount existing folder on partition /dev/xvdk_
