@@ -24,5 +24,9 @@ mkdir -p $USER/{1,2,3}
 
 **files**
 
+```cmd
 sudo touch file{1..50}.txt
+```
+```cmd
 sudo touch file{1,2,3,4}.txt
+```
