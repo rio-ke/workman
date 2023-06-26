@@ -11,6 +11,6 @@ Content-Disposition: attachment; filename="cloud-config.txt"
 cloud_final_modules:
 -[users-roups,once]
 users:
-  - name:ubuntu
+  - name:default-username
     ssh-authorized-keys:
-     - 
+     - publickey pair
