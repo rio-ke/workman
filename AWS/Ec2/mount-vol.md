@@ -30,8 +30,9 @@ sudo mkfs -t ext4 /dev/xvdf      #Replace /dev/xvdf with the appropriate device 
 ```cmd
 sudo mkdir /mnt/myvolume 18. Mount the volume to the directory:
 ```
+- Again replace /dev/xvdf with the appropriate device name
 ```cmd
-sudo mount /dev/xvdf /mnt/myvolume      #Agai replace /dev/xvdf with the appropriate device name.
+sudo mount /dev/xvdf /mnt/myvolume
 ```
 19. Verify that the volume is mounted by running the following command:
 ```cmd
