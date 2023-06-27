@@ -23,7 +23,7 @@
 # Run the following command to Format the disk and then utilized to make a file system :
 # Do not use this command while restoring or creating volumes from snapshots
 
-sudo mkfs -t ext4 /dev/xvdf # Replace /dev/xvdf with the appropriate device name.
+sudo mkfs -t ext4 /dev/xvdf      #Replace /dev/xvdf with the appropriate device name.
 ```
 17. Create a directory where you want to mount the volume. For example:
 
