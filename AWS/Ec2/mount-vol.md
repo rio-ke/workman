@@ -19,7 +19,7 @@
 
 * Note the name of the newly attached volume (e.g., /dev/xvdf).
 ```
-Run the following command Format the disk and To make a File System:
+Run the following command Format the disk and then utilized to make a file system :
 
 Do not use this command while restoring snapshots
 
