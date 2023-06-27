@@ -24,7 +24,7 @@ ls -ltrh
 ```
 
 ```bash
-# Use this command to format and make a File System the disk use this command
+# Use this command to format and make a File System the disk
 # Do not use this command while restoring snapshot
 # /dev/disk_name
 
