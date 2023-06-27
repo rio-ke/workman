@@ -20,8 +20,8 @@
 * Note the name of the newly attached volume (e.g., /dev/xvdf).
 
 ```bash
-# Run the following command Format the disk and then utilized to make a file system :
-# Do not use this command while restoring snapshots
+# Run the following command to Format the disk and then utilized to make a file system :
+# Do not use this command while restoring or creating volumes from snapshots
 
 sudo mkfs -t ext4 /dev/xvdf # Replace /dev/xvdf with the appropriate device name.
 ```
@@ -38,7 +38,7 @@ sudo mount /dev/xvdf /mnt/myvolume Again, replace /dev/xvdf with the appropriate
 df -h You should see the mounted volume listed.
 ```
 20. (Optional) Configure the volume to be automatically mounted on system boot. Open the /etc/fstab file:
-```bash
+```vim
 # sudo vim /etc/fstab 21. Add the following line to the end of the file:
 # /dev/xvdf /mnt/myvolume ext4 defaults 0 0 Replace /dev/xvdf and /mnt/myvolume with the appropriate device name and mount directory, respectively.
 # blkid , to take uid 
