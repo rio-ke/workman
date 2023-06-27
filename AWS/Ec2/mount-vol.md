@@ -39,7 +39,7 @@ df -h You should see the mounted volume listed.
 ```
 20. (Optional) Configure the volume to be automatically mounted on system boot. Open the /etc/fstab file:
 ```bash
-# sudo nano /etc/fstab 21. Add the following line to the end of the file:
+# sudo vim /etc/fstab 21. Add the following line to the end of the file:
 # /dev/xvdf /mnt/myvolume ext4 defaults 0 0 Replace /dev/xvdf and /mnt/myvolume with the appropriate device name and mount directory, respectively.
 # blkid , to take uid 
 
