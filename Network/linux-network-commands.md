@@ -55,7 +55,8 @@ nslookup
 route -n
 ```
 ```cmd
-host
+host ip-add
+```
 ```
 ```cmd
 arp -n
@@ -89,6 +90,3 @@ tcpdum -i <network_device> tcp
 tcpdump -i <network_device> port 80
 ```
 
-```cmd
-host ip-add
-```
