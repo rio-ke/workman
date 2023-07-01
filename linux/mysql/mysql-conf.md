@@ -307,52 +307,42 @@ UPDATE employees SET email = 'mary.patterson@classicmodelcars.com' WHERE employe
 _Backup single database to Mysql_
 
 ```sql
-
-
 mysqldump -u root -p user1data > /home/deva/Mysql_bak/user1data_bak.sql
-
 ```
 
-then create multiple databases backup in single comment
+* Then create multiple databases backup in single comment
 
 ```sql
-
 mysqldump -u root -p --databases user1data user2data user3data > /home/deva/Mysql_bak/alldatabase_bak.sql
-
 ```
-
-and Next create back in single Table
+* All database backup commands
 
 ```sql
+mysqldump -u root -p --all-databases > all-db-backup.sql
+```
+* And Next create back in single Table
 
+```sql
 mysqldump -u root -p user1data A >/home/deva/Table_bak/single_bak.sql
-
 ```
-
-and next Multiple table in single command
+* Next Multiple table in single command
 
 ```sql
-
 mysqldump -u root -p user1data A B C >/home/deva/Table_bak/all_bak.sql
-
 ```
 
 _**Restore**_
 
-in this section how to restore the bacup tables in single file
+* In this section how to restore the bacup tables in single file
 
 ```sql
-
 mysql -u root -p user3data < /home/username/Table_bak/a3_bak.sql
-
 ```
 
-Multiple table restore
+* Multiple table restore
 
 ```sql
-
 mysql -u root -p user3data < /home/username/Table_bak/all3_bak.sql
-
 ```
 
 in this section restore single data base in mysql
