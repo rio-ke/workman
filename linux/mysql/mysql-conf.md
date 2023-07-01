@@ -118,14 +118,15 @@ flush privileges;
 
 ```
 
-Restting the root password
+* Resetting the root password
 
 ```sql
-
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'test';
-
 ```
-
+* How to change root password and stop root-logins without password
+```cmd
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'test';
+```
 _Revoke Permmission_
 
 ```sql
