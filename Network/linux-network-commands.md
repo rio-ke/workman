@@ -90,3 +90,7 @@ tcpdum -i <network_device> tcp
 tcpdump -i <network_device> port 80
 ```
 
+mac add find
+```cmd
+cat /sys/class/net/*/address
+```
