@@ -52,7 +52,7 @@ chroot_local_user=NO
 chroot_list_enable=YES
 
 # need to change below dir
-user_config_dir=/etc/vsftpd/users_group #for users directory path 
+user_config_dir=/etc/vsftpd/users_group           #for users directory path 
 
 allow_writeable_chroot=YES
 secure_chroot_dir=/var/run/vsftpd/empty
