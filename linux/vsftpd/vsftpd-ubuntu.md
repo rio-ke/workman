@@ -45,9 +45,15 @@ data_connection_timeout=120
 ascii_upload_enable=YES
 ascii_download_enable=YES
 ftpd_banner=Welcome to FTP service.
+
+# this is for localuser to use only given path not others
 chroot_local_user=NO
+# users under vsftpd.chroot_list need to enable
 chroot_list_enable=YES
+
+# need to change below dir
 user_config_dir=/etc/vsftpd/users_group #for users directory path 
+
 allow_writeable_chroot=YES
 secure_chroot_dir=/var/run/vsftpd/empty
 pam_service_name=vsftpd
