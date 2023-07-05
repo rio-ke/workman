@@ -94,8 +94,13 @@ _create the user_
 | --------- | -------- | -------------- | -------- |
 | developer | password | localhost      | apps     |
 
+_Localhost-users_
 ```sql
-CREATE USER 'developer'@'localhost' IDENTIFIED BY 'password';
+CREATE USER 'kendanic'@'localhost' IDENTIFIED BY 'password';
+```
+_Remote-host-users_
+```sql
+CREATE USER 'kendanic'@'%' IDENTIFIED BY 'password';
 ```
 
 **_Resetting the root password_**
