@@ -1,13 +1,12 @@
-### mysql CLI command for databases access 
+# mysql CLI command for databases access 
+
 
 **MYSQL Config process**
 
-First, use this command to run security processes such as passwords, privileges, and so on.
+* First, use this command to run security processes such as passwords, privileges, and so on.
 
 ```sql
-
 sudo mysql_secure_installation
-
 ```
 
 - Change the password for root ? ((Press y|Y for Yes, any other key for No) :
@@ -18,7 +17,7 @@ sudo mysql_secure_installation
 
 **_Mysql user,datebase,table creation & set privileges_**
 
-We'll create a user, a database, a table, and permissions in this section. first of all enter with ur root user and password using this comment
+* We'll create a user, a database, a table, and permissions in this section. first of all enter with ur root user and password using this comment
 
 ```sql
 
