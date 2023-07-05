@@ -76,6 +76,10 @@ _Remote-host-users_
 ```sql
 CREATE USER 'kendanic'@'%' IDENTIFIED BY 'password';
 ```
+_Userpassword-change_
+```sql
+ALTER USER 'ken'@'%' IDENTIFIED WITH mysql_native_password BY 'new_password';
+```
 
 **_Resetting the root password_**
 
