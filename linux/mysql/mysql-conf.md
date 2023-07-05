@@ -95,12 +95,21 @@ _create the user_
 | developer | password | localhost      | apps     |
 
 ```sql
-
 CREATE USER 'developer'@'localhost' IDENTIFIED BY 'password';
-
 ```
 
-_Grant ALL privileges to user_
+**_Resetting the root password_**
+
+```sql
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'test';
+```
+* How to change root password and stop root-logins without password
+
+```cmd
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'test';
+```
+
+__Grant ALL privileges to user__
 
 ```sql
 
@@ -108,61 +117,47 @@ GRANT ALL PRIVILEGES ON *.* TO 'user'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
 ```
-
-_Assign selected privileges to user_
-
-```sql
-
-GRANT (Permission) ON *.* TO 'developer'@'localhost';
-flush privileges;
-
-```
-
-* Resetting the root password
-
-```sql
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'test';
-```
-* How to change root password and stop root-logins without password
-```cmd
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'test';
-```
-_Revoke Permmission_
-
-```sql
-
-REVOKE ALL PRIVILEGES ON *.* FROM 'developer'@'localhost';
-or
-REVOKE permission ON *.* FROM 'developer'@'localhost';
-FLUSH PRIVILEGES;
-
-```
-
-**_view the user permissions_**
-
-_Local-users_
-```sql
-SHOW GRANTS FOR 'developer'@'localhost';
-```
-
-
-
-_list out the all mysql users_
-
-```sql
-SELECT user FROM mysql.user;
-```
-
-
-_Query statements_
+**_Query statements_**
 
 - Select
 - Insert
 - Update
 - delete
 
+_Assign selected privileges to user_
 
-_Deleting a MySQL User Accounts_
+```sql
+GRANT (Permission) ON *.* TO 'developer'@'localhost';
+flush privileges;
+```
+
+_Revoke Permmission_
+
+```sql
+REVOKE ALL PRIVILEGES ON *.* FROM 'developer'@'localhost';
+or
+REVOKE permission ON *.* FROM 'developer'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+**_view the user permissions_**
+
+_Local-users_
+```sql
+SHOW GRANTS FOR 'ken'@'localhost';
+```
+_Remote-users_
+```sql
+SHOW GRANTS FOR 'ken'@'%';
+
+**_list out the all mysql users_**
+
+```sql
+SELECT user FROM mysql.user;
+```
+
+
+**_Deleting a MySQL User Accounts_**
 
 _listout user and host_
 
