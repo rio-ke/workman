@@ -86,10 +86,10 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'test';
 __Grant ALL privileges to user__
 
 ```sql
-
 GRANT ALL PRIVILEGES ON *.* TO 'user'@'localhost' WITH GRANT OPTION;
+```
+```sql
 FLUSH PRIVILEGES;
-
 ```
 **_Query statements_**
 
