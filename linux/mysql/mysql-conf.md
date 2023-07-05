@@ -139,6 +139,7 @@ FLUSH PRIVILEGES;
 ```
 
 **_view the user permissions_**
+
 _Local-users_
 ```sql
 SHOW GRANTS FOR 'developer'@'localhost';
@@ -146,7 +147,7 @@ SHOW GRANTS FOR 'developer'@'localhost';
 
 
 
-**_list out the all mysql users_**
+_list out the all mysql users_
 
 ```sql
 SELECT user FROM mysql.user;
