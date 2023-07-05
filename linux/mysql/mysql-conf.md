@@ -20,9 +20,7 @@ sudo mysql_secure_installation
 * We'll create a user, a database, a table, and permissions in this section. first of all enter with ur root user and password using this comment
 
 ```sql
-
 mysql -u root -p
-
 ```
 
 **_User Create with Remote Access_**
@@ -33,7 +31,6 @@ First Edit Mysql config file
 #sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
 
 bind-address        = 0.0.0.0 or your ip
-
 ```
 
 Restart the service
@@ -45,24 +42,18 @@ sudo systemctl stop mysql && sudo systemctl start mysql
 _Remote user Creation_
 
 ```sql
-
 CREATE USER 'username'@'remote_server_ip' IDENTIFIED BY 'password';
-
 ```
 
-- Note If you don't know the User IP address, replace this symbol for it in the ip address **%**
+* Note If you don't know the User IP address, replace this symbol for it in the ip address `%`
 
 _User Login Command_
 
 ```sql
-
 mysql -u username -h database_server_ip -p
-
 ```
 
----
-
-_create the user_
+**_create the user_**
 
 | username  | password | server address | database |
 | --------- | -------- | -------------- | -------- |
@@ -111,6 +102,8 @@ _Assign selected privileges to user_
 
 ```sql
 GRANT (Permission) ON *.* TO 'developer'@'localhost';
+```
+```sql
 flush privileges;
 ```
 
@@ -118,8 +111,11 @@ _Revoke Permmission_
 
 ```sql
 REVOKE ALL PRIVILEGES ON *.* FROM 'developer'@'localhost';
-or
+```
+```sql
 REVOKE permission ON *.* FROM 'developer'@'localhost';
+```
+```sql
 FLUSH PRIVILEGES;
 ```
 
