@@ -138,13 +138,13 @@ FLUSH PRIVILEGES;
 
 ```
 
-_view the user permissions_
-
+**_view the user permissions_**
+_Local-users_
 ```sql
-
 SHOW GRANTS FOR 'developer'@'localhost';
-
 ```
+
+
 
 **_list out the all mysql users_**
 
