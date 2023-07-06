@@ -1,1 +1,1 @@
-$$study meterials$$
+$study-meterials$
