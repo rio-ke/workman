@@ -1,17 +1,18 @@
-# Dockerfile for build images
+# Dockerfile for build images(docker-images-building-commands)
 
-#### ADD – Defines files to copy from the Host file system onto the Container
 
-   - ADD ./local/config.file /etc/service/config.file
-#### CMD – This is the command that will run when the Container starts
-- CMD [“nginx”, “-g”, “daemon off;”]
-#### ENTRYPOINT – Sets the default application used every time a Container is created from the Image. If used in conjunction with CMD, you can remove the application and just define the arguments there
-- CMD Hello World!
-- ENTRYPOINT echo
-#### ENV – Set/modify the environment variables within Containers created from the Image.
+ADD – Defines files to copy from the Host file system onto the Container
+
+ADD ./local/config.file /etc/service/config.file
+CMD – This is the command that will run when the Container starts
+CMD [“nginx”, “-g”, “daemon off;”]
+ENTRYPOINT – Sets the default application used every time a Container is created from the Image. If used in conjunction with CMD, you can remove the application and just define the arguments there
+CMD Hello World!
+ENTRYPOINT echo
+ENV – Set/modify the environment variables within Containers created from the Image.
 - ENV VERSION 1.0
-#### EXPOSE – Define which Container ports to expose
-- EXPOSE 80
+EXPOSE – Define which Container ports to expose
+EXPOSE 80
 FROM – Select the base image to build the new image on top of
 FROM ubuntu:latest
 LABEL maintainer – Optional field to let you identify yourself as the maintainer of this image. This is just a label (it used to be a dedicated Docker directive).
