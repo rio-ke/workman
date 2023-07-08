@@ -26,26 +26,21 @@ _**Setup the repository**_
     gnupg \
     lsb-release -y
 ```
-_**Add Docker’s official GPG key**_
+_**Import the Docker repository GPG key**_
 
 ```bash
-sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 ```
-_**set up the stable repository**_
+_**Docker repository to the system's list of sources**_
 
 ```bash
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu jammy stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
 _**Install Docker Engine**_
 
 ```bash
-sudo apt-get update
- sudo apt-get install docker-ce docker-ce-cli containerd.io -y
+sudo apt-get update && sudo apt-get install docker-ce docker-ce-cli containerd.io -y
 ```
 
 _**Start the Docker**_
