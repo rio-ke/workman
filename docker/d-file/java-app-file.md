@@ -1,8 +1,8 @@
 ```Dockerfile
 FROM openjdk:11
-WORKDIR /home/ubuntu/cantainer/java
-COPY . /home/ubuntu/cantainer/java
-RUN javac main.java
+WORKDIR /var/www/html
+COPY Main.java /var/www/html
+RUN javac Main.java
 CMD ["java", "Main"]
 ```
 
