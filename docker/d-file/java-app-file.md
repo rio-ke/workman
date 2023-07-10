@@ -15,3 +15,7 @@ public class main {
     }
 }
 ```
+
+```cmd
+docker build -t java-app .
+```
