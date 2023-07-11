@@ -5,7 +5,7 @@
 * if you want to restrict user qrtest to the "qr" and "scan" folders, create a file named /etc/vsftpd/user_conf/john with the following content:
 
 
-- [ ] sudo vim /etc/vsftpd/vsftpd.com
+- [ ] sudo vim /etc/vsftpd/vsftpd.conf
 
 ```cnf
 user_config_dir=/etc/vsftpd/user_conf
