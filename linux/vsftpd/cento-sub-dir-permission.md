@@ -37,13 +37,17 @@ _add user to vsftps_user_list_
 ```cmd
 vim vsftpd.userlist 
 ```
-add 
+add in the vsftpd_userlist
+
 ```bash
 qrtest
-``
+```
+_file permission_
 
-
-
+```cmd
+chown qrtest:rio -R /webdata/test-qr
+chmod 755 -R /webdata/test-qr
+```
 
 
 
