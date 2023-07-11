@@ -1,9 +1,52 @@
-In this configuration, we've added the "user_config_dir" option, which specifies the directory where user-specific configuration files will be stored. Create the directory /etc/vsftpd/user_conf and create separate configuration files for each user inside it.
+**VSFTPD-CONF**
 
-For example, if you want to restrict user "john" to the "qr" and "scan" folders, create a file named /etc/vsftpd/user_conf/john with the following content:
+* In this configuration, we've added the "user_config_dir" option, which specifies the directory where user-specific configuration files will be stored. Create the directory `/etc/vsftpd/user_conf` and create separate configuration files for each user inside it.
 
-javascript
-Copy code
+* if you want to restrict user qrtest to the "qr" and "scan" folders, create a file named /etc/vsftpd/user_conf/john with the following content:
+
+
+- [ ] sudo vim /etc/vsftpd/vsftpd.com
+
 ```cnf
-local_root=/webdata/qr, /webdata/scan
+user_config_dir=/etc/vsftpd/user_conf
 ```
+- [ ] sudo vim /etc/vsftpd/user_conf/qrtest
+
+```cmd
+sudo mkdir /etc/vsftpd/user_conf
+```
+
+```cnf
+local_root=/webdata/qr
+```
+
+```cmd
+sudo systemctl restart vsftpd
+```
+
+**USER**
+
+```cmd
+useradd qrtest
+```
+```cmd
+passwd qrtest
+```
+_add user to vsftps_user_list_
+
+```cmd
+vim vsftpd.userlist 
+```
+add 
+```bash
+qrtest
+``
+
+
+
+
+
+
+
+
+
