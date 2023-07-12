@@ -45,7 +45,7 @@ qrtest
 _file permission_
 
 ```cmd
-chown qrtest:rio -R /webdata/test-qr
+chown user:group -R /webdata/test-qr
 chmod 755 -R /webdata/test-qr
 ```
 
