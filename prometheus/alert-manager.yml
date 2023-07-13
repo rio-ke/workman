@@ -39,8 +39,8 @@ receivers:
         {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
         {{ end }}
       {{ end }}
-- name: 'email_managers'
-  email_configs:
-  - to: 'jinojoe@gmail.com'
-    require_tls: false
-    send_resolved: true
+# - name: 'email_managers'
+#   email_configs:
+#   - to: 'jinojoe@gmail.com'
+#     require_tls: false
+#     send_resolved: true
