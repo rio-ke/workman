@@ -41,7 +41,7 @@ passwd qrtest
 _add user to vsftps_user_list_
 
 ```cmd
-vim vsftpd.userlist 
+vim /etc/vsftpd.userlist 
 ```
 add in the vsftpd_userlist
 
