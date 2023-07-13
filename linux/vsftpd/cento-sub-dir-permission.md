@@ -42,6 +42,10 @@ _add user to existing main-group_
 ```cmd
 sudo usermod -g kenny qrtest
 ```
+_user group check_
+```cmd
+groups username
+```
 
 _add user to vsftps_user_list_
 
