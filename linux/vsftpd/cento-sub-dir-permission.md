@@ -13,9 +13,15 @@ user_config_dir=/etc/vsftpd/user_conf
 - [ ] sudo vim /etc/vsftpd/user_conf/qrtest
 
 ```cmd
-sudo mkdir /etc/vsftpd/user_conf
+sudo mkdir -p /etc/vsftpd/user_conf
+```
+- [ ] create file as `username` under user_conf dir
+
+```cmd
+touch kenny
 ```
 
+_add this line_ 
 ```cnf
 local_root=/webdata/qr
 ```
