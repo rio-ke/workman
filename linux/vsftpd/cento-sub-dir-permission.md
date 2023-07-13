@@ -38,6 +38,11 @@ useradd qrtest
 ```cmd
 passwd qrtest
 ```
+_add user to existing main-group_
+```cmd
+sudo usermod -g kenny qrtest
+```
+
 _add user to vsftps_user_list_
 
 ```cmd
@@ -49,6 +54,12 @@ add in the vsftpd_userlist
 qrtest
 ```
 _file permission_
+
+main user
+```cmd
+chown -R kenny:kenny /webdata
+chmod -R 777 /webdata/
+```
 
 ```cmd
 chown user:group -R /webdata/test-qr
