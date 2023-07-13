@@ -49,7 +49,11 @@ chown user:group -R /webdata/test-qr
 chmod 755 -R /webdata/test-qr
 ```
 
+ftp dir permisson
 
+```cmd
+setsebool -P allow_ftpd_full_access on
+```
 
 
 
