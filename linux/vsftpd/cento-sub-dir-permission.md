@@ -63,7 +63,7 @@ chmod -R 777 /webdata/
 
 ```cmd
 chown user:group -R /webdata/test-qr
-chmod 755 -R /webdata/test-qr
+chmod 757 -R /webdata/test-qr
 ```
 
 ftp dir permisson
