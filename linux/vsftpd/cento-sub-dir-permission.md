@@ -18,7 +18,7 @@ sudo mkdir -p /etc/vsftpd/user_conf
 - [ ] create file as `username` under user_conf dir
 
 ```cmd
-touch kenny
+sudo vim /etc/vsftpd/user_conf/kenny
 ```
 
 _add this line_ 
