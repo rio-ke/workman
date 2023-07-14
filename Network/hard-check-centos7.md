@@ -29,3 +29,7 @@ sudo mdadm --detail /dev/mdX
 
 5. Additionally, you can examine the /proc/mdstat file for RAID status:
 
+```cmd
+cat /proc/mdstat
+```
+
