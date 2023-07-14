@@ -1,6 +1,5 @@
 ## 
 
-
 1.lscpu: This command provides detailed information about the CPU architecture, model, cores, threads, and other relevant details.
 
 ```cmd
@@ -33,3 +32,8 @@ sudo mdadm --detail /dev/mdX
 cat /proc/mdstat
 ```
 
+6. How to find network card details
+
+```cmd
+lspci
+```
