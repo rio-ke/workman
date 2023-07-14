@@ -1,6 +1,5 @@
 ## 
 
-
 1.lscpu: This command provides detailed information about the CPU architecture, model, cores, threads, and other relevant details.
 
 ```cmd
@@ -30,6 +29,7 @@ sudo mdadm --detail /dev/mdX
 
 5. Additionally, you can examine the /proc/mdstat file for RAID status:
 
+<<<<<<< HEAD
 ||||||| c87f80a... Update hard-check-centos7.md
 
 4. To check RAID information, you can use the mdadm command:
@@ -41,3 +41,15 @@ sudo mdadm --detail /dev/mdX
 ```
 =======
 >>>>>>> parent of c87f80a... Update hard-check-centos7.md
+||||||| 04ebc51
+=======
+```cmd
+cat /proc/mdstat
+```
+
+6. How to find network card details
+
+```cmd
+lspci
+```
+>>>>>>> 0450db6c264d3691d326a5c044db293c8699b310
