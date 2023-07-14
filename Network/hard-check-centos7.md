@@ -18,6 +18,7 @@ cat /proc/cpuinfo
 ```cmd
 sudo dmidecode -t processor
 ```
+<<<<<<< HEAD
 
 4. To check RAID information, you can use the mdadm command:
 
@@ -29,3 +30,14 @@ sudo mdadm --detail /dev/mdX
 
 5. Additionally, you can examine the /proc/mdstat file for RAID status:
 
+||||||| c87f80a... Update hard-check-centos7.md
+
+4. To check RAID information, you can use the mdadm command:
+
+* Replace /dev/mdX with the appropriate RAID device path (e.g., /dev/md0).
+
+```cmd
+sudo mdadm --detail /dev/mdX
+```
+=======
+>>>>>>> parent of c87f80a... Update hard-check-centos7.md
