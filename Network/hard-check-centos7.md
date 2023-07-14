@@ -18,3 +18,11 @@ cat /proc/cpuinfo
 ```cmd
 sudo dmidecode -t processor
 ```
+
+4. To check RAID information, you can use the mdadm command:
+
+* Replace /dev/mdX with the appropriate RAID device path (e.g., /dev/md0).
+
+```cmd
+sudo mdadm --detail /dev/mdX
+```
