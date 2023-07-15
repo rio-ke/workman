@@ -1,3 +1,4 @@
+```cnf
 # Example config file /etc/vsftpd/vsftpd.conf
 #
 # The default compiled in settings are fairly paranoid. This sample file
@@ -133,3 +134,4 @@ allow_writeable_chroot=YES
 user_sub_token=$USER
 local_root=/webdata/
 
+```
