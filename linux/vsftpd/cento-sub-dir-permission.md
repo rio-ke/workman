@@ -64,10 +64,19 @@ main user
 chown -R kenny:kenny /webdata
 chmod -R 777 /webdata/
 ```
+_or_ 
+```cmd
+chmod +x file or folder-name
+```
 
 ```cmd
 chown user:group -R /webdata/test-qr
 chmod 757 -R /webdata/test-qr
+```
+_or_
+
+```cmd
+chmod +x /webdata/test-qr
 ```
 
 ftp dir permisson
