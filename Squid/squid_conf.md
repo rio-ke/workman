@@ -1,0 +1,5 @@
+## squid configuration
+
+```cnf
+
+```
