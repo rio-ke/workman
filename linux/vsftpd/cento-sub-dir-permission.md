@@ -62,24 +62,17 @@ _file permission_
 main user
 ```cmd
 chown -R kenny:kenny /webdata
-chmod -R 777 /webdata/
-```
-_or_ 
-```cmd
-chmod +x file or folder-name
+chmod -R 755 /webdata/
 ```
 
 ```cmd
 chown user:group -R /webdata/test-qr
-chmod 757 -R /webdata/test-qr
+chmod 755 -R /webdata/test-qr
 ```
-_or_
+* The umask is a mask that is applied to the default permissions of newly created files to restrict certain permissions from being set.
+* It works by subtracting the umask value from the default permissions (usually 666 for files) to determine the actual permissions for new files
 
-```cmd
-chmod +x /webdata/test-qr
-```
-
-ftp dir permisson
+_ftp dir permisson_
 
 ```cmd
 setsebool -P allow_ftpd_full_access on
