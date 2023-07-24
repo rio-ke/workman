@@ -69,9 +69,19 @@ chmod -R 755 /webdata/
 chown user:group -R /webdata/test-qr
 chmod 755 -R /webdata/test-qr
 ```
+
+_File upload permission error in fileZilla_
+```
 * The umask is a mask that is applied to the default permissions of newly created files to restrict certain permissions from being set.
 * It works by subtracting the umask value from the default permissions (usually 666 for files) to determine the actual permissions for new files
+* if the umask is set to 022, the default permissions for new files would be calculated as follows:
 
+Default permissions (666) - Umask (022) = Actual permissions for new files (644)
+
+# Configure the umask for the FTP server
+local_umask=000
+
+```
 _ftp dir permisson_
 
 ```cmd
