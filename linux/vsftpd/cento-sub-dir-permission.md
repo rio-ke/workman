@@ -72,11 +72,15 @@ sudo chmod -R 775 /webdata
 
 ```cmd
 sudo chown user:group -R /webdata/test-qr
-sudo chmod -R 777 /webdata/test-qr
 sudo chmod -R 775 /webdata/qr-test/
+```
+_or_
+```cmd
+sudo chmod -R 777 /webdata/test-qr/
 ```
 
 _File upload permission error in fileZilla_
+
 ```
 * The umask is a mask that is applied to the default permissions of newly created files to restrict certain permissions from being set.
 * It works by subtracting the umask value from the default permissions (usually 666 for files) to determine the actual permissions for new files
