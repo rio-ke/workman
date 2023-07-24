@@ -62,12 +62,12 @@ _file permission_
 main user
 ```cmd
 chown -R kenny:kenny /webdata
-chmod -R 755 /webdata/
+sudo chmod 775 /webdata
 ```
 
 ```cmd
 chown user:group -R /webdata/test-qr
-chmod 755 -R /webdata/test-qr
+chmod 777 -R /webdata/test-qr
 ```
 
 _File upload permission error in fileZilla_
@@ -79,7 +79,7 @@ _File upload permission error in fileZilla_
 Default permissions (666) - Umask (022) = Actual permissions for new files (644)
 
 # Configure the umask for the FTP server
-local_umask=000
+local_umask=002
 
 ```
 _ftp dir permisson_
