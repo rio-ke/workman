@@ -42,9 +42,14 @@ _add user to existing main-group_
 ```cmd
 sudo usermod -g kenny qrtest
 ```
-_user group check_
 ```cmd
-groups username
+sudo usermod -aG webdatausers otheruser
+```
+
+_user group check_
+
+```cmd
+groups otheruser
 ```
 
 _add user to vsftps_user_list_
@@ -61,13 +66,14 @@ _file permission_
 
 main user
 ```cmd
-chown -R kenny:kenny /webdata
-sudo chmod 775 /webdata
+sudo chown -R kenny:kenny /webdata
+sudo chmod -R 775 /webdata
 ```
 
 ```cmd
-chown user:group -R /webdata/test-qr
-chmod 777 -R /webdata/test-qr
+sudo chown user:group -R /webdata/test-qr
+sudo chmod -R 777 /webdata/test-qr
+sudo chmod -R 775 /webdata/qr-test/
 ```
 
 _File upload permission error in fileZilla_
