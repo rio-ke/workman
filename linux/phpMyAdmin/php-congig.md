@@ -1,13 +1,29 @@
 **_Method#1_**
 
+Install phpmyadmin
+```cmd
+sudo apt install phpmyadmin -y
+```
+-  Choose either Apache for your preferred web server
 
+- Create a symbolic link (Optional): If you chose Apache as your web server during the phpMyAdmin installation, it should automatically create the necessary configuration. However, if you want to create a symbolic link, you can do it as follows:
 
+```cmd
+sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
+```
+_Enable PHP extensions_
+```cmd
+sudo phpenmod mysqli && sudo phpenmod gd
+```
+_Restart webserver_
+```cmd
+sudo systemctl restart apache2.service
+```
+_Check in browser_
 
-
-
-
-
-
+```bsdh
+http://192.168.1.2/phpmyadmin
+```
 
 _**method#2**_
 
