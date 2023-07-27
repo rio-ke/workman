@@ -42,9 +42,14 @@ _add user to existing main-group_
 ```cmd
 sudo usermod -g kenny qrtest
 ```
-_user group check_
 ```cmd
-groups username
+sudo usermod -aG webdatausers otheruser
+```
+
+_user group check_
+
+```cmd
+groups otheruser
 ```
 
 _add user to vsftps_user_list_
@@ -61,16 +66,33 @@ _file permission_
 
 main user
 ```cmd
-chown -R kenny:kenny /webdata
-chmod -R 777 /webdata/
+sudo chown -R kenny:kenny /webdata
+sudo chmod -R 775 /webdata
 ```
 
 ```cmd
-chown user:group -R /webdata/test-qr
-chmod 757 -R /webdata/test-qr
+sudo chown user:group -R /webdata/test-qr
+sudo chmod -R 775 /webdata/qr-test/
+```
+_or_
+```cmd
+sudo chmod -R 777 /webdata/test-qr/
 ```
 
-ftp dir permisson
+_File upload permission error in fileZilla_
+
+```
+* The umask is a mask that is applied to the default permissions of newly created files to restrict certain permissions from being set.
+* It works by subtracting the umask value from the default permissions (usually 666 for files) to determine the actual permissions for new files
+* if the umask is set to 022, the default permissions for new files would be calculated as follows:
+
+Default permissions (666) - Umask (022) = Actual permissions for new files (644)
+
+# Configure the umask for the FTP server
+local_umask=002
+
+```
+_ftp dir permisson_
 
 ```cmd
 setsebool -P allow_ftpd_full_access on

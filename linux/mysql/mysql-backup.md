@@ -97,5 +97,22 @@ mysqldump --user=$MYSQL_USER -p$MYSQL_PASSWORD --skip-lock-tables --quick --sing
 done
 ```
 
+_backup database every 2 mins_
+
+```sql
+#!/usr/bin/env bash
+
+set -x
+#set database name
+database=kendanic
+ 
+user=ken
+passwd=password
+backup_dir="/home/rcms-lap-173/backup/"
+TIMESTAMP=$(date +%Y%m%d%H%M%S)
+backup_file="$backup_dir/kendanic-$TIMESTAMP.sql
+
+sudo mysqldump --no-tablespaces -u$user -p$passwd $database > $backup_file
+```
 
 

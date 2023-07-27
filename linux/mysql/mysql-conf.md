@@ -128,7 +128,7 @@ SHOW GRANTS FOR 'ken'@'localhost';
 _Remote-users_
 ```sql
 SHOW GRANTS FOR 'ken'@'%';
-
+```
 **_list out the all mysql users_**
 
 ```sql
