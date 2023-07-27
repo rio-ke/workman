@@ -1,3 +1,16 @@
+**_Method#1_**
+
+
+
+
+
+
+
+
+
+
+_**method#2**_
+
 ```bash
 sudo apt install -y phpmyadmin
 phpmyadmin --version
