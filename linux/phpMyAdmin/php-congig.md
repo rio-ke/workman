@@ -27,6 +27,12 @@ http://192.168.1.2/phpmyadmin
 
 _**method#2**_
 
+* Download the phpmyadmin file,
+* Extract the file in server,
+* change the name and move to webserver document root location 
+
+_**method#3**_
+
 ```bash
 sudo apt install -y phpmyadmin
 phpmyadmin --version
@@ -52,3 +58,4 @@ sudo cat config-db.php
 sudo vim config-db.php 
 sudo systemctl reload apache2.service 
 ```
+
