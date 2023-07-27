@@ -1,3 +1,4 @@
+```bash
 sudo apt install -y phpmyadmin
 phpmyadmin --version
 cd /etc/phpmyadmin/
@@ -21,3 +22,4 @@ ll
 sudo cat config-db.php 
 sudo vim config-db.php 
 sudo systemctl reload apache2.service 
+```
