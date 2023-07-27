@@ -66,15 +66,15 @@ We can create a directory in the default path and modify the ownership and permi
 
 ```bash
 
-sudo mkdir /var/www/dodo-found.tk
-sudo chmod -R 755 /var/www/dodo-found.tk
+sudo mkdir /var/www/html/domain
+sudo chmod -R 755 /var/www/html/domain/
 
 ```
 Then create html file for website index page
 
 ```bash
 
-echo "dodo-found.tk domain" | sudo tee  /var/www/dodo-found.tk/index.html
+echo "domain" | sudo tee  /var/www/html/domain/index.html
 
 ```
 
@@ -104,7 +104,7 @@ create the domain in the name of domain
 
 ```bash
 
-sudo vim /etc/apache2/sites-available/dodo-found.tk.conf
+sudo vim /etc/apache2/sites-available/domain.conf
 
 ```
 
@@ -114,9 +114,9 @@ use this conf file
 
 <VirtualHost *:80>
 
-        ServerAdmin webmaster@dodo-found.tk
-        Servername dodo-found.tk
-        DocumentRoot /var/www/dodo-found.tk
+        ServerAdmin webmaster@domain
+        Servername domain
+        DocumentRoot /var/www/html/domain/
 
         ErrorLog ${APACHE_LOG_DIR}/dodo-found.tk.error.log
         CustomLog ${APACHE_LOG_DIR}/dodo-found.tk.access.log combined
@@ -177,13 +177,13 @@ copy and past the below configuration in this file
 
 <VirtualHost *:80>
 
-        ServerAdmin webmaster@dodo-found.tk
-        Servername dodo-found.tk
-        DocumentRoot /var/www/dodo-found.tk
-        Redirect permanent / https://dodo-found.tk/
+        ServerAdmin webmaster@domain.com
+        Servername domain.com
+        DocumentRoot /var/www/html/domain
+        Redirect permanent / https://domain.com/
 
-        ErrorLog ${APACHE_LOG_DIR}/dodo-found.tk.error.log
-        CustomLog ${APACHE_LOG_DIR}/dodo-found.tk.access.log combined
+        ErrorLog ${APACHE_LOG_DIR}/domain.com.error.log
+        CustomLog ${APACHE_LOG_DIR}/domain.com.access.log combined
         
 </VirtualHost>                 
 
@@ -191,9 +191,9 @@ copy and past the below configuration in this file
 
 <VirtualHost *:443>
 
-        ServerAdmin  webmaster@dodo-found.tk
-        Servername   dodo-found.tk
-        DocumentRoot /var/www/dodo-found.tk
+        ServerAdmin  webmaster@domian.com
+        Servername   domain.com
+        DocumentRoot /var/www/html/domain
         
         # HTTP TO HTTPS REDIRECTION
         SSLEngine                on
