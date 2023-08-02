@@ -70,6 +70,7 @@ hostname
 ```cmd
 curl 
 ```
+_To download the file in url_
 ```cmd
 wget 
 ```
