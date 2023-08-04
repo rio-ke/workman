@@ -12,3 +12,8 @@ _Syntax_:
 ```cmd
 openssl rsa -in <path-to-key-file> -text <path-to-PEM-file>
 ```
+_Example_:
+
+```cmd
+openssl rsa -in ~/aws/scanslips-private.key -text > ~/aws/scanslips-private.pem
+```
