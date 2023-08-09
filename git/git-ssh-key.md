@@ -18,6 +18,15 @@ find public key in local server folder
 cat ~/.ssh/id_rsa.pub
 ```
 
+* If you have multiple SSH keys and repositories, you might need to configure your SSH config file (~/.ssh/config) to specify which key to use for a specific host
+
+```javascript
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/my_new_key
+```
+
 - copy the public key and go to git repository settings folder
 
 - then `settings` go to general
