@@ -26,6 +26,7 @@ Host github.com
     User git
     IdentityFile ~/.ssh/my_new_key
 ```
+Then clone ssh repo
 
 - copy the public key and go to git repository settings folder
 
