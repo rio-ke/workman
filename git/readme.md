@@ -8,3 +8,5 @@
 **_Git-Ref_**
 
 https://git-scm.com/doc
+
+[git-server](https://git-scm.com/book/en/v2/Git-on-the-Server-Getting-Git-on-a-Server#_getting_git_on_a_server)
