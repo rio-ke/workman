@@ -55,7 +55,7 @@ rm -rf etc/nginx/sites-available/default
 ```
 _vhost configuration_
 
-`/etc/nginx/sites-enabled/fourtimes.ml.conf`
+`/etc/nginx/sites-available/fourtimes.ml.conf`
 
 ```conf
 
