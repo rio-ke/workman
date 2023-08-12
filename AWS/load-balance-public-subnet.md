@@ -1,4 +1,4 @@
-### Implementing load balancers in the public subnet to distribute traffic to your web servers or application servers in the private subnet
+# Implementing load balancers in the public subnet to distribute traffic to your web servers or application servers in the private subnet
 
 **_create application load balanceing_**
 
