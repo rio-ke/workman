@@ -31,3 +31,8 @@ openssl pkcs8 -inform DER -in private.key -outform PEM -out private.pem
 openssl x509 -in ca_bundle.crt -out ca_bundle.pem -outform PEM
 ```
 
+* If your certificate.crt file is not in PEM format and you want to convert it to PEM format, you can use the following command:
+
+```bash
+openssl x509 -in certificate.crt -out certificate.pem -outform PEM
+```
