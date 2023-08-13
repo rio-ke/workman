@@ -17,3 +17,10 @@ _Example_:
 ```cmd
 openssl rsa -in ~/aws/scanslips-private.key -text > ~/aws/scanslips-private.pem
 ```
+
+```bash
+openssl rsa -inform DER -in private.key -outform PEM -out private.pem
+```
+```bash
+openssl pkcs8 -inform DER -in private.key -outform PEM -out private.pem
+```
