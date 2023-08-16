@@ -5,13 +5,17 @@ create hostbath in webdata
 mkdir TEST-ACEMONEY
 ```
 
-
+**only build image**
+```cmd
 docker build -t rcms/prod_acemoney:v1 -f Dockerfile.PROD_ACEMONEY .
+```
+**Don't run docker container after building images**
 
+```cmd
 docker run -d -p 80:80 --name acemoney-container rcms/prod_acemoney
 
 docker run -d -p 8074:80 --name prod-acemoney rcms/prod_acemoney:v1
-
+```
 ```cnf
 server {
     listen 80;
@@ -51,7 +55,10 @@ location / {
 
 ```
 
-
+**go to Dockerfile location**
+```cmd
+sudo vim docker-compose.yml
+```
 ```yml
 version: '3.2'
 networks:
@@ -73,6 +80,6 @@ services:
 
 ```
 
-
+run docker 
 
 
