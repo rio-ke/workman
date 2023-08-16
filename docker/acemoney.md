@@ -20,7 +20,7 @@ docker run -d -p 8074:80 --name prod-acemoney rcms/prod_acemoney:v1
 server {
     listen 80;
     listen [::]:80;
-    server_name qr.scanslips.in;
+    server_name liveace.scanslips.in;
     return 301 https://$host$request_uri;
 }
 
@@ -28,7 +28,7 @@ server {
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
-    server_name qr.scanslips.in;
+    server_name liveace.scanslips.in;
     
     # year 2023-2024
     ssl_certificate /etc/ssl/certs/certificates-upto-2024/scanslips-2023-2024.crt;
@@ -40,16 +40,16 @@ server {
     #ssl_certificate_key /etc/ssl/certs/certificates-upto-2023/scanslips-2022-2023.key;
     #ssl_trusted_certificate /etc/ssl/certs/certificates-upto-2023/ca-bundle-client.crt;
     
-    access_log /var/log/nginx/qrcode_access.log;
-    error_log /var/log/nginx/qrcode_error.log;
+    access_log /var/log/nginx/liveace_access.log;
+    error_log /var/log/nginx/liveace_error.log;
 
 location / {
-    proxy_pass http://localhost:8089;
+    proxy_pass http://localhost:8074;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_redirect http://qr.scanslips.in https://qr.scanslips.in;
+    proxy_redirect http://liveace.scanslips.in https://liveace.scanslips.in;
     }
 }
 
