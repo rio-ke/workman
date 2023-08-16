@@ -40,7 +40,7 @@ while true; do
     _escaped_address=$(printf '%s' "$_address" | sed "s/'/''/g")
 
     # MySQL query
-    mysql -u your_username -p'your_password' your_database << EOF
+    mysql -u root -p'test' somedata << EOF
     INSERT INTO your_table (name, lastname, address, telephone)
     VALUES ("$_escaped_name", "$_escaped_lastname", "$_escaped_address", "$_tel");
     EOF
