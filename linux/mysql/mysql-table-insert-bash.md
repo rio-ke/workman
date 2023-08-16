@@ -1,4 +1,4 @@
-```sql
+```bash
 #!/bin/bash -x
 _name="KJ"
 _lastname="linx-ad"
