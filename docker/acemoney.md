@@ -4,6 +4,7 @@ create hostbath in webdata
 ```cmd
 mkdir TEST-ACEMONEY
 ```
+* create dockerfile in /home/admin/liveace
 
 **only build image**
 ```cmd
@@ -80,6 +81,8 @@ services:
 
 ```
 
-run docker 
+docker-compose up -d 
+
+go to
 
 
