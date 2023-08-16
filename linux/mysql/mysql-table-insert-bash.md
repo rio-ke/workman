@@ -11,8 +11,8 @@ _escaped_lastname=$(printf '%s' "$_lastname" | sed "s/'/''/g")
 _escaped_address=$(printf '%s' "$_address" | sed "s/'/''/g")
 
 # Use double quotes for variable references in the SQL query
-mysql -u your_username -p your_database << EOF
-INSERT INTO your_table (name, lastname, address, telephone)
+mysql -u root -p'test' somedata << EOF
+INSERT INTO TABLENAME (name, lastname, address, telephone)
 VALUES ("$_escaped_name", "$_escaped_lastname", "$_escaped_address", "$_tel");
 EOF
 ```
