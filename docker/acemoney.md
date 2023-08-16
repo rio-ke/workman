@@ -57,7 +57,7 @@ version: '3.2'
 networks:
   acemoney:
 services:
-  qrcode:
+  acemoney:
     container_name: prod-acemoney
     hostname: prod-acemoney
     image: rcms/prod_acemoney:v1
@@ -70,6 +70,7 @@ services:
       - acemoney
     labels:
       org.label-schema.group: "monitoring"
+
 ```
 
 
