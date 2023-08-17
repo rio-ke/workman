@@ -83,6 +83,10 @@ services:
 
 docker-compose up -d 
 
-go to
+Check cantainer
+```docker
+docker ps -a
+```
+
 
 
