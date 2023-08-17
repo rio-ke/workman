@@ -21,7 +21,7 @@ docker run -d -p 8074:80 --name prod-acemoney rcms/prod_acemoney:v1
 server {
     listen 80;
     listen [::]:80;
-    server_name liveace.scanslips.in;
+    server_name ken.domain.in;
     return 301 https://$host$request_uri;
 }
 
@@ -29,28 +29,28 @@ server {
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
-    server_name liveace.scanslips.in;
+    server_name ken.domain.in;
     
     # year 2023-2024
-    ssl_certificate /etc/ssl/certs/certificates-upto-2024/scanslips-2023-2024.crt;
-    ssl_certificate_key /etc/ssl/certs/certificates-upto-2024/scanslips-2023-2024.key;
+    ssl_certificate /etc/ssl/certs/certificates-upto-2024/domain-2023-2024.crt;
+    ssl_certificate_key /etc/ssl/certs/certificates-upto-2024/domain-2023-2024.key;
     ssl_trusted_certificate /etc/ssl/certs/certificates-upto-2024/ca-bundle-client.crt;
 
     # year 2022-2023
-    #ssl_certificate /etc/ssl/certs/certificates-upto-2023/scanslips-2022-2023.crt;
-    #ssl_certificate_key /etc/ssl/certs/certificates-upto-2023/scanslips-2022-2023.key;
+    #ssl_certificate /etc/ssl/certs/certificates-upto-2023/domain-2022-2023.crt;
+    #ssl_certificate_key /etc/ssl/certs/certificates-upto-2023/domain-2022-2023.key;
     #ssl_trusted_certificate /etc/ssl/certs/certificates-upto-2023/ca-bundle-client.crt;
     
-    access_log /var/log/nginx/liveace_access.log;
-    error_log /var/log/nginx/liveace_error.log;
+    access_log /var/log/nginx/ken_access.log;
+    error_log /var/log/nginx/ken_error.log;
 
 location / {
-    proxy_pass http://localhost:8074;
+    proxy_pass http://localhost:8072;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_redirect http://liveace.scanslips.in https://liveace.scanslips.in;
+    proxy_redirect http://domain.in https://domain.in;
     }
 }
 
