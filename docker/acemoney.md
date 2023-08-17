@@ -88,5 +88,14 @@ Check cantainer
 docker ps -a
 ```
 
+* Creating test cantainer with Already created Image 
+
+_Go to dir path_
+
+```cmd
+cd /home/admin/Test-ACE/
+```
+
+
 
 
