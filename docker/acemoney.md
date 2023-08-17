@@ -96,6 +96,15 @@ _Go to dir path_
 cd /home/admin/Test-ACE/
 ```
 
+_create compose file with some midification_
+
+* change container_name
+* change hostname
+* change port number
+* change volumes /webdata/TEST-ACEMONEY
+
+
+
 
 
 
