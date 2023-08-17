@@ -17,6 +17,9 @@ docker run -d -p 80:80 --name acemoney-container rcms/prod_acemoney
 
 docker run -d -p 8074:80 --name prod-acemoney rcms/prod_acemoney:v1
 ```
+
+**_Go to nginx conf file location_**
+
 ```cnf
 server {
     listen 80;
