@@ -103,7 +103,25 @@ _create compose file with some midification_
 * change port number
 * change volumes /webdata/TEST-ACEMONEY
 
-
+```yml
+version: '3.2'
+networks:
+  acemoney:
+services:
+  acemoney:
+    container_name: test-acemoney
+    hostname: test-acemoney
+    image: rcms/prod_acemoney:v1
+    restart: unless-stopped
+    ports:
+      - "8072:80"
+    volumes:
+      - /webdata/TEST-ACEMONEY:/var/www/html
+    networks:
+      - acemoney
+    labels:
+      org.label-schema.group: "monitoring"
+```
 
 
 
