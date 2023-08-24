@@ -126,6 +126,12 @@ services:
       org.label-schema.group: "monitoring"
 ```
 
+give permissions to /folder 
+
+```cmd
+chown datatx.datatx TEST-ACEMONEY
+```
+
 
 
 
