@@ -91,5 +91,16 @@ scp -o StrictHostKeyChecking=no root@remoteip:/home/source_dir/sample_example.tx
 
 ```
 
+_**copy local to AWS**_
+
+```cmd
+scp -i /path/to/your/private-key.pem -r /path/to/local/files ubuntu@ec2-instance-public-ip:/path/on/ec2/instance
+```
+
+**remote to aws**
+
+```cmd
+scp -i /path/to/your/private-key.pem -r user@remote-server:/path/to/remote/files /path/on/ec2/instance
+```
 
 
