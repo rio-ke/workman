@@ -77,9 +77,10 @@ scp username@userip:home/Source_dir/sample_example.txt  root@remoteip:/home/Dest
 * Pull Method - File is receive from `remote server to user`
  
 ```bash
-
 scp root@remoteip:/home/source_dir/sample_example.txt username@userip:home/Destination_dir/
-
+```
+```cmd
+scp -r user1@remote_server1:/path/to/source_folder user2@remote_server2:/path/to/destination_folder
 ```
 
 * If you Ignore Hostkey checking use this option **`-o StrictHostKeyChecking=no`**
