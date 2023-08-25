@@ -2,13 +2,13 @@
 
 
 ADD – Defines files to copy from the Host file system onto the Container
-
+```
 ADD ./local/config.file /etc/service/config.file
-
+```
 CMD – This is the command that will run when the Container starts
-
+```
 CMD [“nginx”, “-g”, “daemon off;”]
-
+```
 ENTRYPOINT – Sets the default application used every time a Container is created from the Image. If used in conjunction with CMD,
 you can remove the application and just define the arguments there
 
@@ -24,9 +24,9 @@ EXPOSE – Define which Container ports to expose
 EXPOSE 80
 
 FROM – Select the base image to build the new image on top of
-
+```
 FROM ubuntu:latest
-
+```
 LABEL maintainer – Optional field to let you identify yourself as the maintainer of this image. This is just a label (it used to be a dedicated Docker directive).
 
 LABEL maintainer=someone@xyz.xyz”
