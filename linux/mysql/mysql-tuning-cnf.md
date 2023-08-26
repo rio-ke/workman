@@ -26,13 +26,14 @@ _check mode inside mysql_
 SELECT @@sql_mode;
 ```
 
-**Adding variable in sql_mode
-**
+**Adding variable in sql_mode**
+
+_using sql query_
 ```sql
 SET @@sql_mode = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
 ```
 
+_config edit_
 
 ```cnf
 sql_mode = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
@@ -40,14 +41,8 @@ sql_mode = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SU
 
 
 
-
-
-
-
-
-
-
-**centos-server-mysql-my.cnf-tuing**
+centos-server-mysql-my.cnf-tuing
+--
 
 ```cnf
 [client]
