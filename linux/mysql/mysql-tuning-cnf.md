@@ -1,5 +1,23 @@
 ## mysql tuning exple:
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**centos-server-mysql-my.cnf-tuing**
+
 ```cnf
 [client]
 port                             = 3306
