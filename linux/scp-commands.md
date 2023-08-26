@@ -105,7 +105,7 @@ scp -i /path/to/your/private-key.pem -r user@remote-server:/path/to/remote/files
 
 _remote to aws ec2 with local help_
 
-- [ ] Copy the File from the Remote Server to Your Local Machine:
+- [ ] Copy the File from the Remote Server to Your Local Machine(in local_machine):
 
 ```cmd
 scp user@remote-server-ip:/path/to/remote/file /path/on/local/server
