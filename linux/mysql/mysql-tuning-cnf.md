@@ -1,5 +1,20 @@
 ## mysql tuning exple:
 
+**mysql sql_mode disable**
+
+_In aws_
+
+Using SQL Query (Temporary Change):
+
+```sql
+SET sql_mode = '';
+```
+
+Using Configuration (Permanent Change):
+```sql
+[mysqld]
+sql_mode = ''
+```
 
 
 
