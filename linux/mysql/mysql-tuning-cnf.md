@@ -2,25 +2,41 @@
 
 **mysql sql_mode disable**
 
-_In aws_
+_In aws EC2 ubuntu server_
 
-Using SQL Query (Temporary Change):
-
+- [ ] Using SQL Query (Temporary Change):
 ```sql
 SET sql_mode = '';
 ```
 
-Using Configuration (Permanent Change):
+- [ ] Using Configuration (Permanent Change):
 ```sql
 [mysqld]
 sql_mode = ''
 ```
 
+_service restart_
+
+```cmd
+sudo systemctl restart mysql
+````
+
+_check mode inside mysql_
+```sql
+SELECT @@sql_mode;
+```
+
+**Adding variable in sql_mode
+**
+```sql
+SET @@sql_mode = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+``
 
 
-
-
-
+```cnf
+sql_mode = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+```
 
 
 
