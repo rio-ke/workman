@@ -10,13 +10,16 @@ Ansible modules are the building blocks of Ansible automation. They are small, r
 
 1. Shell Modules:
 
-`command` Executes a shell command on the target host.
+`command`: Executes a shell command on the target host.
+
 `shell`: Similar to command but runs the command through a shell, allowing the use of shell features and redirection.
 
 2. File Modules:
 
 `copy`: Copies files from the Ansible control machine to the target host.
+
 `file`: Manages file and directory attributes on the target host.
+
 `template`: Uses Jinja2 templates to copy files with variables and conditionals.
 
 3. Package Modules:
@@ -38,32 +41,39 @@ Ansible modules are the building blocks of Ansible automation. They are small, r
 6. System Modules:
 
 `hostname`: Manages the system's hostname.
+
 `reboot`: Reboots the target host.
 
 7. Networking Modules:
 
 `ios_command, ios_config, nxos_command, nxos_config, etc`.: Modules for managing network devices.
+
 `ping`: Sends ICMP ping requests to hosts to check their availability.
 
 8. Database Modules:
 
 `mysql_db, postgresql_db`: Manages databases.
+
 `mysql_user, postgresql_user`: Manages database users.
 
 9. Cloud Modules:
 
 `ec2`: Manages Amazon EC2 instances.
+
 `azure_rm`: Manages resources in Microsoft Azure.
+
 `gcp_compute`: Manages Google Cloud Platform resources.
 
 10. Container Modules:
 
 `docker_container`: Manages Docker containers.
+
 `k8s`: Manages Kubernetes resources.
 
 11. Monitoring Modules:
 
 `nagios`: Manages Nagios hosts and services.
+
 `zabbix_*`: Modules for managing Zabbix hosts, items, and triggers.
 
 12. Custom Modules:
