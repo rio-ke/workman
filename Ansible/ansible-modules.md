@@ -10,7 +10,7 @@ Ansible modules are the building blocks of Ansible automation. They are small, r
 
 1. Shell Modules:
 
-`command`: Executes a shell command on the target host.
+`command` Executes a shell command on the target host.
 `shell`: Similar to command but runs the command through a shell, allowing the use of shell features and redirection.
 
 2. File Modules:
