@@ -10,59 +10,62 @@ Ansible modules are the building blocks of Ansible automation. They are small, r
 
 1. Shell Modules:
 
-command: Executes a shell command on the target host.
-shell: Similar to command but runs the command through a shell, allowing the use of shell features and redirection.
-File Modules:
+`command`: Executes a shell command on the target host.
+`shell`: Similar to command but runs the command through a shell, allowing the use of shell features and redirection.
 
-copy: Copies files from the Ansible control machine to the target host.
-file: Manages file and directory attributes on the target host.
-template: Uses Jinja2 templates to copy files with variables and conditionals.
+2. File Modules:
 
-2. Package Modules:
+`copy`: Copies files from the Ansible control machine to the target host.
+`file`: Manages file and directory attributes on the target host.
+`template`: Uses Jinja2 templates to copy files with variables and conditionals.
 
-apt, dnf, yum, zypper, pkgng, homebrew, etc.: Package managers for various operating systems. Used to manage software packages.
+3. Package Modules:
 
-3. Service Modules:
+`apt, dnf, yum, zypper, pkgng, homebrew, etc.:` Package managers for various operating systems. Used to manage software packages.
 
-service: Manages services on the target host. Can start, stop, enable, or disable services.
-User Modules:
+4. Service Modules:
 
-user: Manages user accounts on the target host. Can create, modify, or delete users.
+`service`: Manages services on the target host. Can start, stop, enable, or disable services.
 
-4. Group Modules:
+5. User Modules:
 
-group: Manages groups on the target host. Can create, modify, or delete groups.
-System Modules:
+`user`: Manages user accounts on the target host. Can create, modify, or delete users.
 
-hostname: Manages the system's hostname.
-reboot: Reboots the target host.
+5. Group Modules:
 
-5. Networking Modules:
+`group`: Manages groups on the target host. Can create, modify, or delete groups.
 
-ios_command, ios_config, nxos_command, nxos_config, etc.: Modules for managing network devices.
-ping: Sends ICMP ping requests to hosts to check their availability.
+6. System Modules:
 
-6. Database Modules:
+`hostname`: Manages the system's hostname.
+`reboot`: Reboots the target host.
 
-mysql_db, postgresql_db: Manages databases.
-mysql_user, postgresql_user: Manages database users.
+7. Networking Modules:
 
-7. Cloud Modules:
+`ios_command, ios_config, nxos_command, nxos_config, etc`.: Modules for managing network devices.
+`ping`: Sends ICMP ping requests to hosts to check their availability.
 
-ec2: Manages Amazon EC2 instances.
-azure_rm: Manages resources in Microsoft Azure.
-gcp_compute: Manages Google Cloud Platform resources.
+8. Database Modules:
 
-8. Container Modules:
+`mysql_db, postgresql_db`: Manages databases.
+`mysql_user, postgresql_user`: Manages database users.
 
-docker_container: Manages Docker containers.
-k8s: Manages Kubernetes resources.
+9. Cloud Modules:
 
-9. Monitoring Modules:
+`ec2`: Manages Amazon EC2 instances.
+`azure_rm`: Manages resources in Microsoft Azure.
+`gcp_compute`: Manages Google Cloud Platform resources.
 
-nagios: Manages Nagios hosts and services.
-zabbix_*: Modules for managing Zabbix hosts, items, and triggers.
+10. Container Modules:
 
-10. Custom Modules:
+`docker_container`: Manages Docker containers.
+`k8s`: Manages Kubernetes resources.
+
+11. Monitoring Modules:
+
+`nagios`: Manages Nagios hosts and services.
+`zabbix_*`: Modules for managing Zabbix hosts, items, and triggers.
+
+12. Custom Modules:
 
 You can create custom modules in Python or other languages to extend Ansible's functionality for your specific needs.
