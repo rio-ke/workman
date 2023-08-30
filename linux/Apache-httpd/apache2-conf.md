@@ -122,8 +122,11 @@ use this conf file
         CustomLog ${APACHE_LOG_DIR}/dodo-found.tk.access.log combined
         
 </VirtualHost>
-
 ```
+_**apache2 config file test**_
+
+```cmd
+apachectl 
 
 Then enable your site, disable the old one, and restart the Apache2 server.
 
