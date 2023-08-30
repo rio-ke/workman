@@ -220,13 +220,14 @@ copy and past the below configuration in this file
         
 </VirtualHost>
 ```
-
-then reload Apache2 server
+_test config file_
+```cmd
+apache2ctl configtest
+```
+_then reload Apache2 server_
 
 ```bash
-
-sudo systemctl reload apache2
-
+sudo systemctl restart apache2
 ```
 
 Using your web browser, examine the output result
