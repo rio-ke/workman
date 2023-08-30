@@ -9,4 +9,6 @@ sudo mke2fs -t ext4 -L mylabel /dev/sdb
 
 lsblk
 
+[web-reference](https://recoverit.wondershare.com/flashdrive-recovery/linux-format-usb.html)
+
 ![image](https://github.com/rio-ke/workman/assets/88568938/fb299fa5-ff39-4b69-bf33-0f5eeb9e2558)
