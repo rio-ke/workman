@@ -126,7 +126,11 @@ use this conf file
 _**apache2 config file test**_
 
 ```cmd
-apachectl 
+apache2ctl -t
+```
+```cmd
+apache2ctl configtest
+```
 
 Then enable your site, disable the old one, and restart the Apache2 server.
 
