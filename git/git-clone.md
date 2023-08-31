@@ -1,5 +1,7 @@
 # how to clone git-hub repo in linux command terminal
 
+* For server clone if the repo is already exits plz remove it and add git clone functions.
+
 _**git clone**_
 
 ```git
