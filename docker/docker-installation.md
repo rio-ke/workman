@@ -36,6 +36,14 @@ _**Docker repository to the system's list of sources**_
 ```bash
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu jammy stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
+**If Docker GPG key error show**
+
+```cmd
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7EA0A9C3F273FCD8
+```
+```cmd
+sudo apt update
+```
 
 _**Install Docker Engine**_
 
