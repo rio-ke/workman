@@ -48,7 +48,7 @@ sudo apt update
 _**Install Docker Engine**_
 
 ```bash
-sudo apt-get update && sudo apt-get install docker-ce docker-ce-cli containerd.io -y
+sudo apt update && sudo apt install docker-ce docker-ce-cli containerd.io -y
 ```
 
 _**Start the Docker**_
