@@ -1,0 +1,13 @@
+FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt update && \
+    apt install -y apache2 php php-mysql vim openssl && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN ln -sf /dev/stdout /var/log/apache2/access_log
+RUN ln -sf /dev/stderr /var/log/apache2/error_log
+
+EXPOSE 80
+
+CMD ["apache2ctl", "-D", "FOREGROUND"]
