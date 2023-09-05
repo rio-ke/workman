@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  prod-web:
+    image: server-test
+    container_name: test002
+    restart: unless-stopped
+    ports:
+      - "8061:80"
+    volumes:
+      - /tmp/index:/var/www/html
+      - /tmp/conf/test002.conf:/etc/apache2/sites-available
+    networks:
+      - prod-network  # Define the network name here
+
+networks:
+  prod-network:  # Define the network
