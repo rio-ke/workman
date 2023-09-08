@@ -88,3 +88,14 @@ chmod 600 /etc/vsftpd/ssl/private/vsftpd.pem
 sudo systemctl restart vsftpd.service
 ```
 
+**Error-log**
+
+```cmd
+sudo journalctl -xe | grep vsftpd
+```
+```cmd
+telnet ip--add 21
+```
+```cmd
+ss -tuln | grep "21"
+```
