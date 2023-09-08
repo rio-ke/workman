@@ -72,7 +72,10 @@ pasv_max_port=40100
 
 To check config
 ```cmd
-sudo vim vsftpd.conf
+sudo vsftpd vsftpd.conf
 ```
 
-
+```cmd
+chown rvlpro:rvlpro /etc/vsftpd/ssl/private/vsftpd.pem 
+chmod 600 /etc/vsftpd/ssl/private/vsftpd.pem
+```
