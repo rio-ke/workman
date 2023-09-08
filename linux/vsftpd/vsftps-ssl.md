@@ -3,6 +3,11 @@
 ```cmd
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/vsftpd/ssl/private/vsftpd.pem -out /etc/vsftpd/ssl/private/vsftpd.pem
 ```
+_Verify Certificate and Key Files:_
+```cmd
+openssl x509 -in /etc/vsftpd/ssl/private/vsftpd.pem -text -noout
+openssl rsa -in /etc/vsftpd/ssl/private/vsftpd.pem -check
+```
 
 ```cnf
 sudo vim /etc/vsftpd.conf
@@ -72,10 +77,14 @@ pasv_max_port=40100
 
 To check config
 ```cmd
-sudo vsftpd vsftpd.conf
+sudo vsftpd /etc/vsftpd.conf
 ```
 
 ```cmd
 chown rvlpro:rvlpro /etc/vsftpd/ssl/private/vsftpd.pem 
 chmod 600 /etc/vsftpd/ssl/private/vsftpd.pem
 ```
+```cmd
+sudo systemctl restart vsftpd.service
+```
+
