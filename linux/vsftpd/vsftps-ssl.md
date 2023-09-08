@@ -91,6 +91,9 @@ sudo systemctl restart vsftpd.service
 **Error-log**
 
 ```cmd
+sudo tail /var/log/vsftpd.log
+```
+```cmd
 sudo journalctl -xe | grep vsftpd
 ```
 ```cmd
