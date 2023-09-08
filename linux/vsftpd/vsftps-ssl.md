@@ -1,9 +1,14 @@
+Generate SSL/TLS Certificates For AWS vsftpd dev
+---
 
+* To enable FTP over TLS, you'll need an SSL/TLS certificate. You can either obtain a certificate from a trusted Certificate Authority (CA) or create a self-signed certificate for testing purposes.
 
 ```cmd
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/vsftpd/ssl/private/vsftpd.pem -out /etc/vsftpd/ssl/private/vsftpd.pem
 ```
+
 _Verify Certificate and Key Files:_
+
 ```cmd
 openssl x509 -in /etc/vsftpd/ssl/private/vsftpd.pem -text -noout
 openssl rsa -in /etc/vsftpd/ssl/private/vsftpd.pem -check
