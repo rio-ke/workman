@@ -48,7 +48,7 @@ pasv_enable=YES
 pasv_min_port=64000
 pasv_max_port=64321
 #port_enable=YES
-#pasv_address=15.206.8.175
+#pasv_address= # public-ipadd
 #pasv_addr_resolve=NO
 ##
 #ssl
