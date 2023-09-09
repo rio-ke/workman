@@ -1,5 +1,3 @@
-```cnf
-
 ```bash
 # sudo vim /etc/vsftpd.conf
 listen=YES
