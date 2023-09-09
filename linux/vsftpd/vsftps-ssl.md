@@ -86,14 +86,14 @@ sudo vsftpd /etc/vsftpd.conf
 ```
 
 ```cmd
-chown rvlpro:rvlpro /etc/vsftpd/ssl/private/vsftpd.pem 
+chown user:user /etc/vsftpd/ssl/private/vsftpd.pem 
 chmod 600 /etc/vsftpd/ssl/private/vsftpd.pem
 ```
 ```cmd
 sudo systemctl restart vsftpd.service
 ```
 
-**Error-log**
+**To check Error and log**
 
 ```cmd
 sudo tail /var/log/vsftpd.log
