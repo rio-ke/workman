@@ -1,4 +1,4 @@
-```bash
+```cnf
 # sudo vim /etc/vsftpd.conf
 listen=YES
 listen_ipv6=NO
