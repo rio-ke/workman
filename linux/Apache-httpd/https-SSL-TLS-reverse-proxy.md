@@ -122,12 +122,18 @@ sudo systemctl restart apache2
     SSLCertificateKeyFile /etc/apache2/ssl/your_private_key.key
     SSLCertificateChainFile /etc/apache2/ssl/your_certificate_chain.crt
 
-    # Reverse Proxy Configuration (if needed)
+    # Reverse Proxy Configuration (if needed) #backendserver=ip-add-of-the-server
     # ProxyPass / http://backend_server/
     # ProxyPassReverse / http://backend_server/
 </VirtualHost>
 ```
-
+**Enable proxy modules**
+```cmd
+sudo a2enmod ssl
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo systemctl restart apache2
+```
 
 
 
