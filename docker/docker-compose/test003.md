@@ -20,5 +20,4 @@ networks:
 
 ```cmd
 docker-compose -p myproject up -d
-
 ```
