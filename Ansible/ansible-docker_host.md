@@ -32,13 +32,13 @@ _Write a Playbook for configuring the containers_
     - name: Launch a new container
       docker_container:
         name: my-container
-        image: cankush625/centos-ssh:v2
+        image: ansible/centos-ssh:v2
         state: started
         detach: yes
         interactive: yes
         tty: yes
         ports:
-          - "80:80"
+          - "8010:80"
 
     - name: Container details
       docker_container_info:
