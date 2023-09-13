@@ -1,0 +1,23 @@
+---
+- name: Copy Backup from Docker Container to Local Server
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Get a list of running containers
+      shell: docker ps --format "{{.Names}}"
+      register: docker_containers
+      changed_when: false
+
+    - name: Copy backup from each container to local server
+      docker_container:
+        name: "{{ item }}"
+        command: ["tar", "-czvf", "/path/to/backup/{{ item }}.tar.gz", "-C", "/path/to/container/data", "."]
+        remove_on_exit: yes  # Removes the container after execution
+      with_items: "{{ docker_containers.stdout_lines }}"
+
+    - name: Copy backup files from containers to local server
+      fetch:
+        src: "/path/to/backup/{{ item.item }}.tar.gz"
+        dest: "/path/on/local/server/{{ item.item }}.tar.gz"
+        flat: yes
+      with_items: "{{ ansible_play_batch }}"
