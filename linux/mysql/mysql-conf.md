@@ -56,7 +56,17 @@ GRANT USAGE ON database_2.* TO 'new_user'@'remote_host';
 GRANT USAGE ON database_3.* TO 'new_user'@'remote_host';
 GRANT USAGE ON database_4.* TO 'new_user'@'remote_host';
 ```
+_Grant DELETE Permission_
 
+```sql
+GRANT DELETE ON database_5.* TO 'new_user'@'remote_host';
+```
+
+_Revoke DELETE Permission_
+
+```sql
+REVOKE DELETE ON database_5.* FROM 'new_user'@'remote_host';
+```
 
 * Note If you don't know the User IP address, replace this symbol for it in the ip address `%`
 
