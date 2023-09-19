@@ -44,6 +44,12 @@ _Remote user Creation_
 ```sql
 CREATE USER 'username'@'remote_server_ip' IDENTIFIED BY 'password';
 ```
+_Grant Specific Permissions on the 5th Database_
+
+```sql
+GRANT SELECT, INSERT, UPDATE, CREATE, ALTER, INDEX, EXECUTE, LOCK TABLES ON database_5.* TO 'new_user'@'remote_host';
+```
+
 
 * Note If you don't know the User IP address, replace this symbol for it in the ip address `%`
 
