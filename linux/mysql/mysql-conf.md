@@ -47,7 +47,14 @@ CREATE USER 'username'@'remote_server_ip' IDENTIFIED BY 'password';
 _Grant Specific Permissions on the 5th Database_
 
 ```sql
-GRANT SELECT, INSERT, UPDATE, CREATE, ALTER, INDEX, EXECUTE, LOCK TABLES ON database_5.* TO 'new_user'@'remote_host';
+GRANT SELECT, INSERT, UPDATE, CREATE, ALTER, INDEX, EXECUTE, LOCK TABLES ON database_1.* TO 'new_user'@'remote_host';
+```
+_**Grant USAGE Privilege for Other Databases**_
+
+```sql
+GRANT USAGE ON database_2.* TO 'new_user'@'remote_host';
+GRANT USAGE ON database_3.* TO 'new_user'@'remote_host';
+GRANT USAGE ON database_4.* TO 'new_user'@'remote_host';
 ```
 
 
