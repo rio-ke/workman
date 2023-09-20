@@ -1,6 +1,6 @@
 ## How to Extend/Reduce LVM’s (Logical Volume Management) in Linux
 
-* - [ ] To reduce the size of a mounted folder in LVM and allocate the freed space to a new folder
+- [ ] To reduce the size of a mounted folder in LVM and allocate the freed space to a new folder
 
 * `Backup Your Data`: Before making any changes, ensure you have a backup of all the data in the mounted folder. Data loss is possible when resizing filesystems
 
@@ -45,7 +45,20 @@ _Create a Filesystem on the New Logical Volume_
  ```cmd
 mkfs.ext4 /dev/vg_name/new_lv_name
 ```
+_Mount the New Logical Volume_
 
+* Mount the new logical volume to your desired location
+
+```cmd
+mount /dev/vg_name/new_lv_name /path/to/new_mounted_folder
+```
+_Update /etc/fstab_ 
+
+- To ensure the new logical volume is mounted at boot, update your /etc/fstab file with the appropriate entry. Add a line
+
+```cmd
+/dev/vg_name/new_lv_name   /path/to/new_mounted_folder   ext4    defaults    0 0
+```
 
 
 
@@ -64,6 +77,7 @@ mkfs.ext4 /dev/vg_name/new_lv_name
 
 
 [centos](https://www.tecmint.com/extend-and-reduce-lvms-in-linux/)
+
 [ubuntu](https://packetpushers.net/ubuntu-extend-your-default-lvm-space/#:~:text=To%20use%20up%20that%20free,to%20make%20sure%20it%20changed.)
 
 
