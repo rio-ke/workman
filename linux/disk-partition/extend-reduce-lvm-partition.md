@@ -62,19 +62,8 @@ _Update /etc/fstab_
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+Reference
+---
 
 [centos](https://www.tecmint.com/extend-and-reduce-lvms-in-linux/)
 
