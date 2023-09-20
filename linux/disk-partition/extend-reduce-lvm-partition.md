@@ -30,8 +30,21 @@ _`For-XFS`_
 xfs_growfs /path/to/mounted_folder
 ```
 
+_**Create a New Logical Volume**_
 
+- Use the freed 100 GB to create a new logical volume. First, create a new logical volume within the same volume group
 
+```cmd
+lvcreate -L 100G -n new_lv_name vg_name
+```
+
+_Create a Filesystem on the New Logical Volume_
+
+- Create a filesystem on the new logical volume. For example, for ext4
+
+ ```cmd
+mkfs.ext4 /dev/vg_name/new_lv_name
+```
 
 
 
