@@ -9,7 +9,7 @@ _Unmount the Filesystem_
 ```cmd
 umount /path/to/mounted_folder
 ```
-`Resize the Logical Volume`: 
+_`Resize the Logical Volume`_
 
 - Use the lvresize command to reduce the size of the logical volume. In your case, you want to reduce it from 100 GB to 80 GB
 
@@ -17,16 +17,19 @@ umount /path/to/mounted_folder
 lvresize -L -20G /dev/vg_name/lv_name
 ```
 
-`Resize the Filesystem`:
+_`Resize the Filesystem`_
+
 - After resizing the logical volume, you must resize the filesystem to match the new size. The command to do this depends on the filesystem type. _`For ext4`_, you can use:
 
 ```cmd
 resize2fs /dev/vg_name/lv_name
 ```
-_For XFS_
+_`For-XFS`_
+
 ```cmd
 xfs_growfs /path/to/mounted_folder
 ```
+
 
 
 
