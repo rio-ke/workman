@@ -250,6 +250,7 @@ pcs resource create lvm ocf:heartbeat:LVM volgrpname=drbd-vg
 pcs resource create webdata Filesystem device="/dev/drbd-vg/drbd-webdata" directory="/drbd-webdata" fstype="xfs"
 pcs resource create dbdata Filesystem device="/dev/drbd-vg/drbd-dbdata" directory="/drbd-dbdata" fstype="xfs"
 pcs resource create virtualip ocf:heartbeat:IPaddr2 ip=192.168.1.155 cidr_netmask=24
+# disable httpd or apache2 in both servers
 pcs resource create webserver ocf:heartbeat:apache configfile=/etc/httpd/conf/httpd.conf statusurl="http://localhost/server-status"
 pcs resource group add resourcegroup virtualip lvm webdata dbdata  webserver
 pcs constraint order promote drbd_clusterdb_clone then start resourcegroup  # INFINITY
