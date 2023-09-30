@@ -1,3 +1,7 @@
+we don't restart or stop httpd and mysql service in drbd pcs cluster
+---
+
+
 ## Active-Passive cluster
 
 change hostname to both server
