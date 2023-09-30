@@ -1,5 +1,5 @@
-we don't restart or stop httpd and mysql service in drbd pcs cluster
----
+* we don't restart or stop httpd and mysql service in drbd pcs cluster
+* we have check and give correct partition `like disk /dev/sdb;` in drbd conf file 
 
 
 ## Active-Passive cluster
