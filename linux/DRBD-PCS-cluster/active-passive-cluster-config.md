@@ -1,6 +1,6 @@
 * we don't restart or stop httpd and mysql service in drbd pcs cluster
-* we have check and give correct partition `like disk /dev/sdb;` in drbd conf file
-
+* we have check and give correct partition `like disk /dev/sdb` in drbd conf file
+* if external mount space not using for drbd then u need to create partion with /dev/sda with new partition for /dev/sda3 or 4 in os disk free space
 * once mysql resources started we can't change the my.cnf file we have cp my.cnf my.cnf.backup and edit my.cnf
 
 
