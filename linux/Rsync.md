@@ -31,9 +31,7 @@ _**rsync command option:**_
    * sync a single file on a local machine from one location to another location.
 
 ```bash
-
 rsync options source destination
-
 ```
 
 **_Copy/Sync Files and Directory Locally_**
@@ -51,24 +49,20 @@ rsync -rzavh ~/folder_name/*  ~/backup
 
 
 ```bash
-
 rsync local-file user@remote-host:/destination_directory
-
 ```
+
 *_Syntax of rsync:_*
 
 ```bash
 rsync -ravh ~/hardlink/hulk dodo@192.168.0.113:/backup
-
 ```
 
 **_Copy/rsync file from Remote server to a Local Machine_**
 
 
 ```bash
-
 rsync -ravbh remote-user-name@192.168.0.113:/home/remote-user/file-name  /home/local-user/file-path
-
 ```
 
 **_Use of –include and –exclude Options_**
@@ -77,12 +71,14 @@ rsync -ravbh remote-user-name@192.168.0.113:/home/remote-user/file-name  /home/l
 This command is used to remove the content of a destination file that has already been copied and restore the content of a new copy of the file.
 
 ```bash
-
 rsync -azvhr --delete-excluded source_file/ kendanick@192.168.0.104:/destination
-
 ```
 
+_Exclude some files_
 
+```cmd
+rsync -av --exclude='dbbackup_*' --exclude='data_*' --exclude=''app*.sh' /var/scripts/ ubuntu@192.168.1.100:~/scripts/
+```
 
 
 
