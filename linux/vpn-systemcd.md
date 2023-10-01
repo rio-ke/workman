@@ -19,14 +19,14 @@ _create the systemd service_
 
 ```bash
 [Unit]
-Description=rits-vpn service
+Description=dc2-vpn service
 After=syslog.target network.target
 
 [Service]
 Type=simple
 # Type=forking
 
-ExecStart=sudo openvpn --config /etc/vpn/rits/pandi.conf --auth-user-pass /etc/vpn/rits/rits.txt
+ExecStart=sudo openvpn --config /etc/vpn/dc2/dc2.conf --auth-user-pass /etc/vpn/dc2/dc2.txt
 ExecStop=kill -9 $(pidof openvpn)
 
 User=root
