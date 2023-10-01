@@ -1,5 +1,7 @@
 * we don't restart or stop httpd and mysql service in drbd pcs cluster
-* we have check and give correct partition `like disk /dev/sdb;` in drbd conf file 
+* we have check and give correct partition `like disk /dev/sdb;` in drbd conf file
+
+* once mysql resources started we can't change the my.cnf file we have cp my.cnf my.cnf.backup and edit my.cnf
 
 
 ## Active-Passive cluster
