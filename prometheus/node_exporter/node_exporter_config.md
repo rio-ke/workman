@@ -35,6 +35,10 @@ https://github.com/rio-ke/workman/blob/main/prometheus/node_exporter/systemd_ser
 _Enable and Start Node Exporter Service_
 
 ```cmd
+sudo systemctl daemon-reload
+```
+
+```cmd
 sudo systemctl enable node_exporter
 sudo systemctl start node_exporter
 ```
