@@ -29,6 +29,10 @@ sudo chmod +x /usr/local/bin/node_exporter
 
 **_Create a systemd Service Unit_**
 
+```cmd
+vim /etc/systemd/system/node_exporter.service
+```
+
 * Refe the systemd file from path here
 https://github.com/rio-ke/workman/blob/main/prometheus/node_exporter/systemd_service.md
 
