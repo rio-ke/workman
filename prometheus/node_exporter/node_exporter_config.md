@@ -18,7 +18,7 @@ _Move Node Exporter Binary_
 - [ ] By moving it to /usr/local/bin/, you ensure that Node Exporter is in your system's executable path
   
 ```cmd
-sudo mv node_exporter*/node_exporter /usr/local/bin/
+sudo mv /home/ubuntu/Downloads/node_exporter-1.6.1.linux-amd64 /usr/local/bin/
 ```
 
 _Set Permissions (Optional)_
