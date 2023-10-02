@@ -25,6 +25,11 @@ _Move Node Exporter Binary_
 ```cmd
 sudo mv /home/ubuntu/Downloads/node_exporter-1.6.1.linux-amd64 /usr/local/bin/
 ```
+_check binry file_
+
+```cmd
+ls -l /usr/local/bin/node_exporter
+```
 
 _Set Permissions (Optional)_
 
