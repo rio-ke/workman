@@ -12,6 +12,11 @@ _Extract the Archive_
 ```cmd
 tar xvfz node_exporter-1.6.1.linux-arm64.tar.gz
 ```
+_User-creaion_
+
+```cmd
+sudo useradd -c "Monitoring user" -d /home/node_exporter -s /bin/false node_exporter
+```
 
 _Move Node Exporter Binary_
 
