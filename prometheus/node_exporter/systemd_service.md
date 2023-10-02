@@ -12,7 +12,7 @@ ExecStart=/usr/local/bin/node_exporter --web.listen-address="0.0.0.0:9100" --col
 WantedBy=multi-user.target
 ```
 
-```bash
+```cnf
 [Unit]
 Description=Node Exporter
 After=network.target
@@ -47,7 +47,7 @@ ExecStart=/usr/local/bin/node_exporter --web.listen-address="0.0.0.0:9100" --col
 WantedBy=multi-user.target
 ```
 
-```bash
+```cnf
 [Unit]
 Description=Prometheus node exporter
 After=network.target auditd.service
