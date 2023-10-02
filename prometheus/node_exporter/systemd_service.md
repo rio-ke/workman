@@ -49,11 +49,11 @@ WantedBy=multi-user.target
 
 ```cnf
 [Unit]
-Description=Prometheus node exporter
+Description=node exporter
 After=network.target auditd.service
 
 [Service]
-User=prometheus
+User=node_exporter
 ExecStart=/usr/local/bin/node_exporter \
 --web.listen-address=0.0.0.0:9100 \
 --collector.tcpstat \
