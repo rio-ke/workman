@@ -13,6 +13,9 @@ ssh user_name@192.168.++++
 ```bash
 W
 ```
+```cmd
+users
+```
 
 * find the users and it's counts
 
