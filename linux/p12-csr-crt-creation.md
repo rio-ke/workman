@@ -1,4 +1,28 @@
- openssl pkcs12 -export -out CLIENT_DOMAINNAME.p12 -inkey wsaxis.key -in <<AXIS_SIGNED_certfile.crt>> -name <<aliasname>> -certfile SakshamAPIClientRootCert.crt -certfile SakshamAPIClientIntermediateCertificate.crt
+[Certificate Key Matcher](https://www.https.in/support/certificate-key-matcher)
+
+_Key file_
+```cmd
+openssl genrsa -aes128 -out keyfile.key 2048
+```
+_csr_
+```cmd
+openssl req -new -key keyfile.key -out csrfile.csr
+```
+
+
+_key-pem_
+```cmd
+openssl genpkey -algorithm RSA -out private-key.pem
+```
+_csr-pem_
+```cmd
+openssl req -new -key private-key.pem -out certificate.csr
+```
+
+
+
+```bash
+openssl pkcs12 -export -out CLIENT_DOMAINNAME.p12 -inkey wsaxis.key -in <<AXIS_SIGNED_certfile.crt>> -name <<aliasname>> -certfile SakshamAPIClientRootCert.crt -certfile SakshamAPIClientIntermediateCertificate.crt
  
  
  
@@ -19,5 +43,5 @@ Lemon@22
   
 openssl rsa -noout -modulus -in axis.key | openssl md5
   
-  
 openssl req -noout -modulus -in axis.csr | openssl md5
+```
