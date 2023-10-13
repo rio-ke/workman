@@ -3,6 +3,12 @@
 
 - First Format the pendrive in windows laptop
 
+_Use mkfs command_
+
+```
+sudo mkfs.ext4 /dev/sdb
+``` 
+
 - The check pendrive in lunux lap for disk partition
 
 ```cmd
