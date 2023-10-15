@@ -1,4 +1,5 @@
 $$SCP$$
+
 ---
 
 SCP (Secure Copy Protocol) is a network protocol used to securely copy files/folders between Linux (Unix) systems on a network.SCP protects your data while copying across an SSH (Secure Shell) connection by encrypting the files and the passwords. 
