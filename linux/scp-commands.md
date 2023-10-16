@@ -117,3 +117,8 @@ scp user@remote-server-ip:/path/to/remote/file /path/on/local/server
 scp -i /path/to/aws/key.pem /path/on/local/server/file ubuntu@ec2-instance-ip:/path/on/ec2/
 ```
 
+- [ ] Copy the File from the EC2 aws Server to Your Local laptop:
+
+```cmd
+scp -i rcms-main-key-admin.pem -r ubuntu@43.205.162.192:/home/ubuntu/backup /home/ubuntu/
+```
