@@ -27,7 +27,11 @@ _Access the MySQL 5.7 Container:_
 docker exec -it mysql57 bash
 ```
 
+* Access the MySQL client in your Docker container:
 
+```cmd
+docker exec -it mysql57 mysql -u root -p
+```
 
 
 
