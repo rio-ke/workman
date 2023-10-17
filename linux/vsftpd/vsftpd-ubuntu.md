@@ -63,7 +63,7 @@ pam_service_name=vsftpd
 #chroot_list_file=/etc/vsftpd.chroot_list 
 userlist_enable=YES
 userlist_file=/etc/vsftpd.chroot_list
-userlist_deny=NO
+#userlist_deny=NO
 ```
 
 **_create folder for vsftpd-group and users_**
