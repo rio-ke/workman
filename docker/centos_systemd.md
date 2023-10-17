@@ -19,3 +19,7 @@ CMD ["/usr/sbin/init"]
 ```cmd
 docker build --rm -t local/c7-systemd-httpd .
 ```
+
+```cmd
+docker run -ti -v /sys/fs/cgroup:/sys/fs/cgroup:ro -p 8065:80 local/c7-systemd-httpd
+```
