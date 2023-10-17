@@ -21,3 +21,9 @@ _Remove unused data_
 ```cmd
 docker system prune
 ```
+
+To find nerwork
+```bash
+docker network ls
+docker network
+```
