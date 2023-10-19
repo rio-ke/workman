@@ -37,4 +37,17 @@ _To finding files by type_
 find . -type d -name "*.bak"
 ```
 
+_To find the file with the oldest access time:_
+
+```cmd
+find /path/to/directory -type f -exec stat --format='%X %n' {} \; | sort -n | head -n 1
+```
+
+_To find the file with the oldest modification time:_
+
+```cmd
+find /path/to/directory -type f -exec stat --format='%Y %n' {} \; | sort -n | head -n 1
+```
+
+
 
