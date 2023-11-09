@@ -162,7 +162,7 @@ GRANT ALL PRIVILEGES ON my_database.* TO 'ken'@'localhost';
 * To grant super privileges on individual tables within a database
 
 ```sql
-GRANT ALL PRIVILEGES ON my_database.users TO 'ken'@'localhost';
+GRANT ALL PRIVILEGES ON database_name.table_name TO 'ken'@'localhost';
 ```
 
 **_view the user permissions_**
