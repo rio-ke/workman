@@ -148,7 +148,12 @@ REVOKE permission ON *.* FROM 'developer'@'localhost';
 ```sql
 FLUSH PRIVILEGES;
 ```
-__Grant Super privileges to user__
+
+_**Grant Super privileges to user**_
+
+```sql
+GRANT SUPER ON *. * TO 'ken'@'%';
+```
 
 
 **_view the user permissions_**
