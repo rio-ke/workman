@@ -148,6 +148,8 @@ REVOKE permission ON *.* FROM 'developer'@'localhost';
 ```sql
 FLUSH PRIVILEGES;
 ```
+__Grant Super privileges to user__
+
 
 **_view the user permissions_**
 
@@ -188,58 +190,48 @@ DROP USER 'username'@'host';
 Create a database on the Root User account and grant specific permissions to this account's users.
 
 ```sql
-
 create database apps;
 show databases;
-
 ```
 
 _In the database, set user permissions_
 
 ```sql
-
 GRANT all ON apps.* TO 'developer'@'localhost';
 flush privileges;
-
 ```
 
 _connected to particular database_
 
 ```sql
-
 use apps;
 #  To view the current database name
 status;
 # exit the database
 exit;
-
 ```
 
 **Create table in the databases**
 
 | table name |
 | ---------- |
-| users      |
+|  users     |
 
 _create table_
 
 ```sql
-
 use apps;
 CREATE TABLE users (
  name varchar(50),
  age int,
  address varchar(50)
 );
-
 ```
 
 _Remove the Table Data_
 
 ```sql
-
 TRUNCATE TABLE tablename;
-
 ```
 
 _view the table structure_
