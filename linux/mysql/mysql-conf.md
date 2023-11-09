@@ -1,7 +1,7 @@
-# mysql CLI command for databases access 
+## mysql CLI command for databases access
+---
 
-
-**MYSQL Config process**
+_**MYSQL Config process**_
 
 * First, use this command to run security processes such as passwords, privileges, and so on.
 
