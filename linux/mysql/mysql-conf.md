@@ -168,6 +168,7 @@ GRANT ALL PRIVILEGES ON my_database.users TO 'ken'@'localhost';
 **_view the user permissions_**
 
 _Local-users_
+
 ```sql
 SHOW GRANTS FOR 'ken'@'localhost';
 ```
