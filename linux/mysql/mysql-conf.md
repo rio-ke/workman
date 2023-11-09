@@ -154,7 +154,16 @@ _**Grant Super privileges to user**_
 ```sql
 GRANT SUPER ON *. * TO 'ken'@'%';
 ```
+* To grant super privileges for particular databases in MySQL
 
+```sql
+GRANT ALL PRIVILEGES ON my_database.* TO 'ken'@'localhost';
+```
+* To grant super privileges on individual tables within a database
+
+```sql
+GRANT ALL PRIVILEGES ON my_database.users TO 'ken'@'localhost';
+```
 
 **_view the user permissions_**
 
