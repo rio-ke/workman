@@ -1,6 +1,6 @@
 **_playbook_**
 
-- **Version**   - Docker compose file format
+- **Version**   - Docker compose file format for api call
 - **Service**   - Services are the containers that run your application components
 - **ldap**   -  Name of the services and its used as a host-name in docker network, to communicate the the docker container 
 - **image**  - refer to docker images name, Specifies the Docker image to be used for the 'ldap' service
