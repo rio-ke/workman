@@ -11,11 +11,11 @@
 - **ports**  - Exposes port 389 on the host and maps it to port 389 in the 'ldap' service container.
 - **environment**  -  Sets an environment variable STORAGE_DIR and its value 
 - **volumes**  -  Mounts two volumes, mapping host directories to directories in the 'ldap' service container. These volumes are used for persisting LDAP data and configuration.
-- There are use three types of mounts in your Docker storage, i.e., Volume mount, Bind mount, and tmpfs mounts.
-
-- There is a significant difference between the mount types. Volumes have a filesystem on the host, and you can control it through the Docker CLI.
-
-- On the other hand, bind mounts use available host filesystem. Whereas tmfs, utilizes the host memory
+    * There are use three types of mounts in your Docker storage, i.e., Volume mount, Bind mount, and tmpfs mounts.
+    
+    * There is a significant difference between the mount types. Volumes have a filesystem on the host, and you can control it through the Docker CLI.
+    
+    * On the other hand, bind mounts use available host filesystem. Whereas tmfs, utilizes the host memory
 
 - **db**  - Service 
 - **POSTGRES_DB** -  Specifies the name of the PostgreSQL database as pacsdb.
