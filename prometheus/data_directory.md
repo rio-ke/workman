@@ -12,3 +12,7 @@ sudo vim /etc/systemd/system/prometheus.service
 ```bash
 ExecStart=/path/to/prometheus --config.file=/path/to/prometheus.yml --storage.tsdb.path=/path/to/custom_data_directory
 ```
+
+```bash
+sudo systemctl daemon-reload
+```
