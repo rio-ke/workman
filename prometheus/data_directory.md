@@ -1,3 +1,6 @@
+**_To check data^dir Location_**
+
+
 **_Create Data_Dir with CLI_**
 
 ```cmd
