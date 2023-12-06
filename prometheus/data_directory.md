@@ -1,5 +1,10 @@
-**_To check data^dir Location_**
+**_To check data*dir Location_**
 
+```yml
+storage:
+  local:
+    path: /path/to/prometheus/data
+```
 
 **_Create Data_Dir with CLI_**
 
