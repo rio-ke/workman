@@ -16,3 +16,6 @@ ExecStart=/path/to/prometheus --config.file=/path/to/prometheus.yml --storage.ts
 ```bash
 sudo systemctl daemon-reload
 ```
+```bash
+sudo systemctl restart prometheus
+```
