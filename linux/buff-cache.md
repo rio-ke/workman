@@ -30,6 +30,7 @@ _To run command as a user(non-root)_
 sudo sh -c 'echo 1 > /proc/sys/vm/drop_caches'
 
 ```
+_run command as a root user_
 
 ```bash
 su -c "echo 3 > '/proc/sys/vm/drop_caches' && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'" root
