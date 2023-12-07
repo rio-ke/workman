@@ -31,6 +31,11 @@ sudo sh -c 'echo 1 > /proc/sys/vm/drop_caches'
 
 ```
 
+```bash
+su -c "echo 3 > '/proc/sys/vm/drop_caches' && swapoff -a && swapon -a && printf '\n%s\n' 'Ram-cache and Swap Cleared'" root
+```
+
+
 _To check the RAM_
 
 ```cmd 
