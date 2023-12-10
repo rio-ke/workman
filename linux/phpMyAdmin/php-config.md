@@ -12,14 +12,16 @@ sudo apt install phpmyadmin -y
 sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
 ```
 _Enable PHP extensions_
+
 ```cmd
 sudo phpenmod mysqli && sudo phpenmod gd
 ```
 _Restart webserver_
+
 ```cmd
 sudo systemctl restart apache2.service
-````
-Method_two`
+```
+`Method_two`
 
 _go to apache.conf_
 
