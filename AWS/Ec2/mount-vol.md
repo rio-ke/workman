@@ -47,9 +47,10 @@ sudo vim /etc/fstab
 # /dev/xvdf /mnt/myvolume ext4 defaults 0 0 Replace /dev/xvdf and /mnt/myvolume with the appropriate device name and mount directory, respectively.
 # blkid , to take uid 
 
-UUID="29437e83-c9ef-433b-8514-1003224d39ca"   /extra-vol  ext4  default  0 0
+UUID="5ba5b9dd-b772-4873-9020-ce4c61cd0425"   /volume-name   xfs   default    0 0
 ```
 21. Save the file and exit the editor.
-22. You can now access and use the attached volume at the specified mount directory (/mnt/myvolume in this example).
+
+23. You can now access and use the attached volume at the specified mount directory (/mnt/myvolume in this example).
 
 Remember to adjust the device name and mount directory according to your specific configuration.
