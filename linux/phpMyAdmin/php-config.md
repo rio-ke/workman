@@ -18,7 +18,20 @@ sudo phpenmod mysqli && sudo phpenmod gd
 _Restart webserver_
 ```cmd
 sudo systemctl restart apache2.service
+````
+Method_two`
+
+_go to apache.conf_
+
+```cmd
+sudo vim /etc/apache2/apache2.conf
 ```
+
+```cmd
+Include /etc/phpmyadmin/apache.conf
+```
+
+
 _Check in browser_
 
 ```bsdh
