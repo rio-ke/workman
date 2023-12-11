@@ -76,11 +76,21 @@ _**vsftpd installation**_
 ```sh
 sudo apt update
 sudo apt install vsftpd -y
-sudo adduser rvltest # password - Password@123
+sudo adduser ftptest # password - Password@123
 sudo mkdir -p /etc/vsftpd/users /var/www/html/test
 sudo chown -R rvltest:rvltest /var/www/html/test
-echo "local_root=/var/www/html/test" | sudo tee -a /etc/vsftpd/users/test
-echo "rvltest" | sudo tee /etc/vsftpd.chroot_list
+echo "local_root=/var/www/html/test" | sudo tee -a /etc/vsftpd/users/ftptest
+echo "ftptest" | sudo tee /etc/vsftpd.chroot_list
+```
+
+**_Change the user's shell to no_login via ssh_**
+
+```cmd
+sudo usermod -s /bin/false ftpuser
+```
+_OR_
+```cmd
+sudo usermod -s /usr/sbin/nologin ftpuser
 ```
 
 _**vsftpd configuraion**_
@@ -175,9 +185,9 @@ sudo systemctl start mysql
 sudo systemctl status mysql
 ```
 ```sql
-CREATE USER 'demouser'@'%' IDENTIFIED BY '5JK@RHpYS3';
+CREATE USER 'dmuser'@'%' IDENTIFIED BY '5JK@RHpYS3';
 CREATE DATABASE demo_test;
-GRANT ALL PRIVILEGES ON dm_test.* TO 'testuser'@'%';
+GRANT ALL PRIVILEGES ON demo_test.* TO 'dmuser'@'%';
 FLUSH PRIVILEGES;
 ```
 
