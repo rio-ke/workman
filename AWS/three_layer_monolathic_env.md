@@ -174,7 +174,7 @@ sudo systemctl start mysql
 sudo systemctl status mysql
 ```
 ```sql
-CREATE USER 'testrvluser'@'%' IDENTIFIED BY '5JK@RHpYS3';
+CREATE USER 'demouser'@'%' IDENTIFIED BY '5JK@RHpYS3';
 CREATE DATABASE demo_test;
 GRANT ALL PRIVILEGES ON dm_test.* TO 'testuser'@'%';
 FLUSH PRIVILEGES;
