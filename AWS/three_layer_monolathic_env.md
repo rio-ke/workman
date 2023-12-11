@@ -7,6 +7,7 @@ _Test Environment AWS Lamp_stack_
 ![rvl-test-env.](https://github.com/rcms-org/documentation/assets/91359308/399a9309-a25d-4af9-a7b5-3b677a8cccf7)
 
 _**dependencies installation in webserver**_
+
 ```sh
 sudo apt install -y apache2 mod_ssl awscli openssl php php-common php-mbstring  php-xml php-mysqlnd php-gd php-mcrypt php-pdo  php-curl php-cli php-opcache php-zip wget unzip
 ```
