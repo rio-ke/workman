@@ -1,12 +1,10 @@
-## RVL Test Environment
+_Test Environment AWS Lamp_stack_
+---
+---
 
-**`Architecture of test env`**
+**_Architecture of test env_**
 
 ![rvl-test-env.](https://github.com/rcms-org/documentation/assets/91359308/399a9309-a25d-4af9-a7b5-3b677a8cccf7)
-
-**`WORKFLOW:-`**
-
-![test-env](https://github.com/rcms-org/documentation/assets/91359308/766edfa5-0757-4403-b67a-c626fb16ec9f)
 
 _**dependencies installation in webserver**_
 ```sh
