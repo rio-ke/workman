@@ -82,7 +82,6 @@ sudo chown -R rvltest:rvltest /var/www/html/test
 echo "local_root=/var/www/html/test" | sudo tee -a /etc/vsftpd/users/ftptest
 echo "ftptest" | sudo tee /etc/vsftpd.chroot_list
 ```
-
 **_Change the user's shell to no_login via ssh_**
 
 ```cmd
@@ -91,6 +90,13 @@ sudo usermod -s /bin/false ftpuser
 _OR_
 ```cmd
 sudo usermod -s /usr/sbin/nologin ftpuser
+```
+_Verify the change_
+```cmd
+grep ftpuser /etc/passwd
+```
+```cmd
+ftpuser:x:1001:1001::/home/ftpuser:/bin/false
 ```
 
 _**vsftpd configuraion**_
