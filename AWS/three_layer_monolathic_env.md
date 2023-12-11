@@ -23,30 +23,33 @@ sudo systemctl status apache2
 sudo mkdir -p /var/www/html/rvl-test
 ```
 _**apache configuration**_
-```sh
-# sudo vim /etc/apache2/sites-available/rvltest.conf
 
+```cmd
+sudo vim /etc/apache2/sites-available/domain_test.conf
+```
+
+```sh
 <VirtualHost *:80>
-        ServerAdmin   webmaster@rvldemo.scanslips.in
-        Servername    rvldemo.scanslips.in
-        DocumentRoot  /var/www/html/rvl-test
-        Redirect permanent / https://rvldemo.scanslips.in/
+        ServerAdmin   webmaster@domainriok.in
+        Servername    domainriok.in
+        DocumentRoot  /var/www/html/domainriok/
+        Redirect permanent / https://domainriok.in/
 </VirtualHost>                 
 
 <VirtualHost *:443>
 
-       ServerAdmin  webmaster@rvldemo.scanslips.in
-       Servername    rvldemo.scanslips.in
-       DocumentRoot /var/www/html/rvl-test
+       ServerAdmin  webmaster@domainriok.in
+       Servername    domainriok.in
+       DocumentRoot /var/www/html/demo_test
        
        # HTTP TO HTTPS REDIRECTION
        SSLEngine on
-       SSLCertificateFile       /etc/apache2/ssl/rvl-test/test-rvl-scanslips-certificate.crt
-       SSLCertificateKeyFile    /etc/apache2/ssl/rvl-test/test-rvl-scanslips-private.key
-       SSLCertificateChainFile  /etc/apache2/ssl/rvl-test/ca-bundle-client.crt
+       SSLCertificateFile       /etc/apache2/ssl/test/test-domainriok-certificate.crt
+       SSLCertificateKeyFile    /etc/apache2/ssl/test/test-domainriok-private.key
+       SSLCertificateChainFile  /etc/apache2/ssl/test/ca-bundle-client.crt
        # APACHE2 LOGS
-       ErrorLog  ${APACHE_LOG_DIR}/rvldemo.scanslips.in.error.log
-       CustomLog ${APACHE_LOG_DIR}/rvldemo.scanslips.in.access.log combined
+       ErrorLog  ${APACHE_LOG_DIR}/domainriok.in.error.log
+       CustomLog ${APACHE_LOG_DIR}/domainriok.in.access.log combined
       
        <Location "/">
          Require all granted
