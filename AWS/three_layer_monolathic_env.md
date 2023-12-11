@@ -20,7 +20,7 @@ sudo systemctl status apache2
 ```
 **_Document Root_**
 ```sh
-sudo mkdir -p /var/www/html/rvl-test
+sudo mkdir -p /var/www/html/domain_test
 ```
 _**apache configuration**_
 
@@ -28,7 +28,7 @@ _**apache configuration**_
 sudo vim /etc/apache2/sites-available/domain_test.conf
 ```
 
-```sh
+```conf
 <VirtualHost *:80>
         ServerAdmin   webmaster@domainriok.in
         Servername    domainriok.in
@@ -64,29 +64,26 @@ apachectl configtest
 ```
 **link the apache2 configuration file**
 ```sh
-sudo ln -s /etc/apache2/sites-available/rvltest.conf /etc/apache2/sites-enabled/
+sudo ln -s /etc/apache2/sites-available/domaintest.conf /etc/apache2/sites-enabled/
 ```
-**disable the apache2 default configuration file**
+**_disable the apache2 default configuration file_**
+
 ```sh
 sudo a2dissite 000-default.conf
 sudo service apache2 reload
 ```
 _**vsftpd installation**_
+
 ```sh
 sudo apt update
-
 sudo apt install vsftpd -y
-
 sudo adduser rvltest # password - Password@123
-
-sudo mkdir -p /etc/vsftpd/users /var/www/html/rvl-test
-
-sudo chown -R rvltest:rvltest /var/www/html/rvl-test
-
-echo "local_root=/var/www/html/rvl-test" | sudo tee -a /etc/vsftpd/users/rvltest
-
+sudo mkdir -p /etc/vsftpd/users /var/www/html/test
+sudo chown -R rvltest:rvltest /var/www/html/test
+echo "local_root=/var/www/html/test" | sudo tee -a /etc/vsftpd/users/test
 echo "rvltest" | sudo tee /etc/vsftpd.chroot_list
 ```
+
 _**vsftpd configuraion**_
 
 ```cmd
@@ -131,6 +128,7 @@ pasv_address=********* # aws public ip
 pasv_addr_resolve=NO
 ```
 **_restart the vsftpd service_**
+
 ```sh
 sudo systemctl restart vsftpd.service
 sudo systemctl status vsftpd.service
@@ -138,11 +136,11 @@ sudo systemctl status vsftpd.service
 ```cmd
 sudo ss -tulpn | grep 21
 ```
-_**configure the remote database details in my remote phpmyadmin file**_
+**_configure the remote database details in my remote phpmyadmin file_**
 
 * find the phpmyadmin configuration file
 ```cmd
-cd /var/www/html/rvl-test/phpmyadmin
+cd /var/www/html/test/phpmyadmin
 ```
 ```cmd
 ls -lh | grep config
@@ -153,7 +151,7 @@ sudo mv config.sample.inc.php config.inc.php
 **_Add the mysql remote configuration in remote phpmyadmin server_**
 
 ```cmd
-sudo vim /var/www/html/rvl-test/phpmyadmin/config.inc.php
+sudo vim /var/www/html/test/phpmyadmin/config.inc.php
 ```
 
 ```conf
@@ -165,7 +163,7 @@ $cfg['Servers'][$i]['connect_type']  = 'tcp';
 $cfg['Servers'][$i]['extension']     = 'mysql';
 $cfg['Servers'][$i]['compress']      = FALSE;
 $cfg['Servers'][$i]['auth_type']     = 'config';
-$cfg['Servers'][$i]['user']          = 'testrvluser';
+$cfg['Servers'][$i]['user']          = 'testuser';
 $cfg['Servers'][$i]['password']      = '5JK@RHpYS3';
 $cfg['Servers'][$i]['AllowNoPassword'] = false;
 ```
@@ -198,6 +196,6 @@ sudo systemctl restart mysql
 ```
 ## OUTPUT:
 
-1. Paste the url in the browser - [http://rvldemo.scanslips.in](https://rvldemo.scanslips.in/)
+1. Paste the url in the browser - [http://domainriok.in](https://domainriok.in/)
 
-2. Paste the url for the phpmyadmin in browser - https://rvldemo.scanslips.in/phpmyadmin/
+2. Paste the url for the phpmyadmin in browser - https://domainriok.in/phpmyadmin/
