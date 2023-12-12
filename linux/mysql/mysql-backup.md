@@ -1,14 +1,17 @@
-# backup format in local-server
+# backup format in mysql-server
 
-#### Go to linux server terminal and type command below to backup the wanted datas
+* Go to linux server terminal and type command below to backup the wanted datas
 
 _backup data_
 
-```bash
+```sql
 mysqldump -u root[username] -p database | gzip -9 > data_name.sql.gz
 ```
+```sql
+sudo mysqldump -u root -p db_name > db_dbdata.sql
+```
 
- #### Now login mysql root `sudo mysql -u root -p` then comand below
+* Now login mysql root `sudo mysql -u root -p` then comand below
 
 _Remove the Table Data_
 
