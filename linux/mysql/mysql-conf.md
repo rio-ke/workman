@@ -309,9 +309,7 @@ to refer for more ---> https://dev.mysql.com/doc/refman/8.0/en/alter-table.html
 _To update the Table_
 
 ```sql
-
 UPDATE employees SET email = 'mary.patterson@classicmodelcars.com' WHERE employeeNumber = 1056;
-
 ```
 
 ---
@@ -379,14 +377,17 @@ mysql -u root -p uset1 < /home/username/Mysql_bak/alldatabase_bak.sql
 
 ```
 
-restore single and mutiple restore process cmd is same.
+* restore single and mutiple restore process cmd is same.
 
-to check the restore database table record
+_To check the restore database table record_
 
 ```sql
-
 select count(*) from data_2;
-
+```
+```sql
+SELECT SUM(table_rows) AS total_rows
+FROM information_schema.tables
+WHERE table_schema = 'your_database_name';
 ```
 
 ---
