@@ -23,3 +23,14 @@
     - When a VPC is created, it comes with a default route table as its ‘main table.’ However, we want our public-rtb to serve as the main table, so select the public-rtb from the ‘Route tables’ dashboard and set it as the main table under the ‘Actions’ dropdown menu.
 
 * Create a NAT Gateway (public)
+
+![image](https://github.com/rio-ke/workman/assets/88568938/92a1b7e6-872a-4854-a34a-eee361d080d7)
+
+* _Configure private route tables_
+    - create one route table for private subnet
+    - we can associate this table with all four private subnets (-subnet-private1, -subnet-private2, -subnet-private-3, -subnet-private4)
+     ![image](https://github.com/rio-ke/workman/assets/88568938/a5c97b4d-429c-423b-944c-f41ac7bcd484)
+
+    - add a new route to our NAT gateway
+    ![image](https://github.com/rio-ke/workman/assets/88568938/868b976c-9990-49f1-a1ba-cb33831ac815)
+
