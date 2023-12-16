@@ -11,3 +11,7 @@
 2. Alert Manager
 
 [web-ref](https://github.com/prometheus/alertmanager/blob/main/docs/configuration.md)
+
+3. monitor_tool_config
+
+https://cloudvesna.com/monitoring-linux-servers-with-prometheus-node-exporter-and-grafana-a9e1a14f0ec9
