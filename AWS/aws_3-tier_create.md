@@ -41,6 +41,7 @@ _**Tier 1: Web tier**_
 1. A web server launch template to define what kind of EC2 instances will be provisioned for the application.
 2. An Auto Scaling Group (ASG) that will dynamically provision EC2 instances.
 3. An Application Load Balancer (ALB) to help route incoming traffic to the proper targets.
+
 ![image](https://github.com/rio-ke/workman/assets/88568938/61512a0a-abba-4472-a863-60ad995be2e4)
 
 * EC2 
@@ -48,13 +49,17 @@ _**Tier 1: Web tier**_
    - Create webserver security group to allow 22,80,443
  
  * Application load balancer (ALB)
-    - We’ll need an ALB to distribute incoming HTTP traffic to the proper targets (our EC2s). The ALB will be named, ‘webServer-alb.’ We want this ALB to be ‘Internet-facing,’ so it can listen for HTTP/S requests
-    - ![image](https://github.com/rio-ke/workman/assets/88568938/161a8247-7ec5-436c-a292-32d5581452b3)
-    - Creating an ALB From the ASG interface automatically attaches the default security group to our ALB. We need the webServer-sg, so after the ASG is complete, we need to go back to the load balancer and make sure the proper security group is attached.
-    - The ALB needs to ‘listen’ over HTTP on port 80 and a target group that routes to our EC2 instances.
-    - ![image](https://github.com/rio-ke/workman/assets/88568938/2447d661-0905-4d28-a785-cdaa0f9d6a9f)
-    - ![image](https://github.com/rio-ke/workman/assets/88568938/d69219d3-de55-4b61-a548-847a88e0c35c)
-    - ![image](https://github.com/rio-ke/workman/assets/88568938/8d578567-f8a7-462e-a90d-3e779c8c6cf1)
+    * We’ll need an ALB to distribute incoming HTTP traffic to the proper targets (our EC2s). The ALB will be named, ‘webServer-alb.’ We want this ALB to be ‘Internet-facing,’ so it can listen for HTTP/S requests
+ ![image](https://github.com/rio-ke/workman/assets/88568938/161a8247-7ec5-436c-a292-32d5581452b3)
+
+    * Creating an ALB From the ASG interface automatically attaches the default security group to our ALB. We need the webServer-sg, so after the ASG is complete, we need to go back to the load balancer and make sure the proper security group is attached.
+    * The ALB needs to ‘listen’ over HTTP on port 80 and a target group that routes to our EC2 instances.
+    * Create target group for alb and then add two pub subnet
+      
+ ![image](https://github.com/rio-ke/workman/assets/88568938/2447d661-0905-4d28-a785-cdaa0f9d6a9f)
+ ![image](https://github.com/rio-ke/workman/assets/88568938/d69219d3-de55-4b61-a548-847a88e0c35c)
+      
+ ![image](https://github.com/rio-ke/workman/assets/88568938/8d578567-f8a7-462e-a90d-3e779c8c6cf1)
 
 * SSH
     - Test ssh into the webservers
