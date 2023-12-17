@@ -67,5 +67,29 @@ _**Tier 1: Web tier**_
 
 
 
+**_Tier 3- Database tier_**
 
 
+* A database security group that allows outbound and inbound mySQL requests to and from our app servers.
+* A DB subnet group to ensure the database is created in the proper subnets.
+* An RDS database with MySql.
+
+* Create a database security group
+
+  - Our application servers need a way to access the database, so let’s first create a security group that allows inbound traffic from the application servers.
+
+![image](https://github.com/rio-ke/workman/assets/88568938/7009bbf6-6046-48ba-b768-304b14edd17e)
+
+  - we need to add inbound AND outbound rules that allow MySQL requests to and from the application servers on port 3306.
+
+![image](https://github.com/rio-ke/workman/assets/88568938/6172cf00-b77d-4cf2-a28c-071d40f9582c)
+![image](https://github.com/rio-ke/workman/assets/88568938/8cfd77a7-92ec-431f-89b9-9c8f9fbd0206)
+
+  - We’ll need to do the same for the brainiac-appServer-sg.
+
+![image](https://github.com/rio-ke/workman/assets/88568938/fb2117f0-9cdc-4ab9-a6a8-3d919460c1bc)
+![image](https://github.com/rio-ke/workman/assets/88568938/c6f7941b-ec0a-4ac5-a22e-2d6151ab5dbd)
+
+* Create a DB subnet group
+
+  
