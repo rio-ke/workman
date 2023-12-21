@@ -1,0 +1,29 @@
+---
+- hosts: node
+  gather_facts: yes
+
+  vars:
+    keepalived_priority: 100
+    keepalived_state: MASTER
+    keepalived_vip: 192.168.1.1
+    keepalived_vrid: 10
+    keepalived_vrrp_instance_name: "HA_10"
+  tasks:
+    - name: Install Keepalived
+      apt:
+        name: keepalived
+        state: present
+      become: true
+      become_user: root
+
+    - name: Add Keepalived config file
+      template:
+        dest: /etc/keepalived/keepalived.conf
+        remote_src: /etc/keepalived/keepalived.conf.j2
+  #     notify: Restart Keepalived
+
+  # handlers:
+    - name: Restart Keepalived
+      service:
+        name: keepalived
+        state: restarted

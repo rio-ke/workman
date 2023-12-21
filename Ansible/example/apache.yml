@@ -1,0 +1,79 @@
+---
+# - name: simple playbook
+#   hosts: node
+#   become: true
+#   # become_user: root
+#   # become_method: sudo
+
+#   tasks:
+#     - name: ping the server
+#       ping:
+
+#     # - name: Install update (Ubuntu)
+#     #   tags: always
+#     #   apt:
+#     #     upgrade: dist
+#     #     update_cache: yes
+
+#     - name: Install Apache web-server httpd
+#       apt:
+#         name: apache2
+#         state: present
+#         dpkg_options: force-confdef
+
+#     - name: Enabling httpd service
+#       service:
+#         name: httpd
+#         enabled: yes
+        
+#     - name: Stop the if installed "nginx" web-server service
+#       service:
+#         name: nginx
+#         state: stopped
+
+#     - name: start the web-server service
+#       service:
+#         name: apache2
+#         state: started
+
+
+- hosts: aws
+  become: yes
+  tasks:
+    - name: update
+      apt: update_cache=yes
+
+    - name: install apache2
+      apt: name=apache2 state=latest
+
+    - name: enabled mod_rewrite
+      apache2_module: name=rewrite state=present
+
+    - name: enabled proxy
+      apache2_module: name=proxy state=present
+
+    - name: enabled proxy_http
+      apache2_module: name=proxy_http state=present
+
+    - name: enabled ssl
+      apache2_module: name=ssl state=present
+
+    - name: enabled socache_shmcb
+      apache2_module: name=socache_shmcb state=present
+
+    - name: enabled mpm_event
+      apache2_module: name=mpm_event state=present
+
+    - name: Check Apache2 homepage
+      uri:
+        url: http://localhost/
+        status_code: 200
+
+    - name: Check Apache2 status
+      debug:
+        msg: "{{ lookup('command', 'apachectl status') }}"
+
+  handlers:
+    - name: restart apache2
+      service: name=apache2 state=restarted
+

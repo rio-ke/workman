@@ -1,0 +1,37 @@
+---
+- name: find out the continent with variable
+  hosts: k
+  become: true
+  #ignore_error: true
+  vars:
+    continents: [Africa, Asia, South America, North America, Europe]
+  # vars:
+  #   continents:
+  #     - Asia
+  #     - Africa
+  #     - Europe
+  #     - Narth America
+  #     - South America
+
+  tasks:
+    # - name: find our continents
+    #   debug:
+    #     msg: "{{ continents [1]}}"
+
+    - name: ansible array variables example
+      debug:
+        msg: "{{ item }}"
+      loop:
+        # - Asia
+        # - Africa
+        # - Europe
+        # - Narth America
+        # - South America
+        - "{{ continents }}"
+      when: item != "Asia"
+      register: w_cont
+    # - name: skipped
+    # loop: "{{ w_cont.results }}"
+    # when:
+    # - not item | skipped
+    # - item.exists == false

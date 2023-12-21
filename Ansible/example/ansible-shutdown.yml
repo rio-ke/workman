@@ -1,0 +1,11 @@
+---
+- name: shutdown remote instance with ansible-playbok
+  hosts: j
+  become: true
+  become_user: root
+  become_method: sudo 
+  tasks:
+- name: Delay shutting down the remote node
+  shutdown:
+  when: ansible_facts['os_family'] == "ubuntu"
+    # delay: 60

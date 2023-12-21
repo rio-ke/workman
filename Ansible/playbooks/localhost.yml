@@ -1,0 +1,19 @@
+---
+- name: Ping hosts
+  hosts: all  # Replace with the target hosts or group you want to ping
+  # become: true
+  # become_method: 
+  # become_user: sudo
+  gather_facts: no
+  tasks:
+    - name: Ping the hosts
+      ping:
+
+- name: "checking"
+  hosts: localhost
+  tasks:
+    - name: "just execute a ls -lrt command"
+      shell: "ls -lrt"
+      register: output
+
+    - debug: var=output.stdout_lines

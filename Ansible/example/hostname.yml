@@ -1,0 +1,32 @@
+---
+- name: calling the remote_server's hostname with playbook
+  hosts: n
+  gather_facts: yes
+  connection: local
+
+  tasks:
+    
+    - name: Get hostname
+      shell: echo $HOSTNAME
+      register: result
+
+    - name: Print the var
+      debug:
+        msg: "{{ result }}"
+
+    - name: set hostname to {{ inventory_hostname }}
+      hostname:
+        name: "{{ node }}"
+
+    - name: Here we are checking inventory_hostname
+      debug:
+        msg: "hostname is {{ inventory_hostname }}"
+
+    - name: Here we are displaying the inventory_hostname and ansible_hostname values.
+      debug:
+        msg: "ansible_hostname = {{ ansible_hostname }} and  inventory_hostname = {{ inventory_hostname }}"
+    
+    - name: Here we are copying the Jinja2 template to remote machines
+      template:
+        src: host_names.j2
+        dest: /var/tmp/host_names

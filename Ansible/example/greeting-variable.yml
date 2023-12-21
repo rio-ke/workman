@@ -1,0 +1,13 @@
+---
+
+- hosts: k
+  become: true
+  vars:
+     greetings: hello world
+  
+  tasks:
+    - name: example for variables
+      debug:
+        msg: "{{ greetings }}"  
+      
+  

@@ -1,0 +1,37 @@
+---
+# - name: testing the variables in localhost
+#   hosts: localhost
+#   var: greeting
+
+#   task:
+#     - name: print testing
+#       debug:
+#         msg: "{{var}}"
+  
+
+# - hosts: localhost
+#   vars:
+#     - hostname: ken
+#     - home: /home/ubuntu
+
+#   tasks:
+#     - name: Print message
+#       debug:
+#         msg: "Hello Ansible World"
+
+#     - name: print the variables
+#       ansible.builtin.debug:
+#           msg: "server's: {{hostname}} and Home dir: {{home}}"
+
+- hosts: aws
+  vars:
+    extra_add:
+      # - hostname: ken
+      #   home: /home/ubuntu
+      #   des: linux-admin
+        - { hostname: abcd, home: /abs/centos, des: deovps}  
+  tasks:
+    - name: print the variables
+      ansible.builtin.debug:
+          msg: "server name should be: {{item.hostname}} and it's home dir: {{item.home}}, work is: {{item.des}}"
+      loop: "{{extra_add}}"

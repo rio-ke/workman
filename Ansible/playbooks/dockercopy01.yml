@@ -1,0 +1,25 @@
+---
+- name: Copy Backup from Docker Container to Local Server
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Get a list of running containers
+      shell: docker ps -a
+      register: docker_containers
+      changed_when: false
+
+    - name: Extract container names from the result
+      set_fact:
+        container_names: "{{ docker_containers.stdout_lines }}"
+
+    - name: Debug container names
+      debug:
+        var: container_names
+
+    - name: Create backup in each container
+      shell: docker exec {{ item }} tar -czvf /var/www/html/{{ item }}.tar.gz -C /var/www/html/ .
+      with_items: ["test002", "test003"]
+
+    - name: Copy backup from each container to local server
+      shell: docker cp {{ item }}:/var/www/html/{{ item }}.tar.gz /home/ubuntu/docker/bkup
+      with_items: ["test002", "test003"]

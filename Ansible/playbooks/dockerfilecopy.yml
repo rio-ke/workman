@@ -1,0 +1,53 @@
+# ---
+# - name: Copy Backup from Docker Container to Local Server
+#   hosts: localhost
+#   gather_facts: no
+#   tasks:
+#     - name: Get a list of running containers
+#       # docker_container_info:
+#       community.docker.docker_container:
+#         filters:
+#           status: running
+#       register: docker_containers
+
+#     - name: Extract container names from the result
+#       set_fact:
+#         container_names: "{{ docker_containers.containers | map(attribute='Names') | list }}"
+
+#     - name: Debug container names
+#       debug:
+#         var: container_names
+
+#     # Add the rest of your tasks here
+
+---
+- name: Copy Backup from Docker Container to Local Server
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Get a list of running containers
+      shell: docker ps -a "{{..Names}}"
+      register: docker_containers
+      changed_when: false
+
+    - name: Extract container names from the result
+      set_fact:
+        container_names: "{{ docker_containers.stdout_lines }}"
+
+    - name: Debug container names
+      debug:
+        var: container_names
+
+    - name: Copy backup from each container to local server
+      docker_container:
+        name: "{{ item }}"
+        command: ["tar", "-czvf", "/var/www/html{{ item }}.tar.gz", "-C", "/var/www/html/", "."]
+        remove_on_exit: no  # Removes the container after execution
+      with_items: "{{ docker_containers.stdout_lines }}"
+
+    - name: Copy backup files from containers to local server
+      fetch:
+        src: "/var/www/html{{ item.item }}.tar.gz"
+        dest: "/home/ubuntu/docker/bkup{{ item.item }}.tar.gz"
+        flat: yes
+      with_items: "{{ ansible_play_batch }}"

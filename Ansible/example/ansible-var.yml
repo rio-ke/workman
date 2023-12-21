@@ -1,0 +1,17 @@
+---
+- hosts: n
+
+  tasks:
+    - name: print inventory_hostname
+      ansible.builtin.debug:
+        var: inventory_hostname
+    - name: print ansible_hostame
+      ansible.builtin.debug:
+        var: group_names
+    - name: print ansible_fqdn
+      ansible.builtin.debug:
+        var: ansible_fqdn
+    - name: print ansible_fqdn
+      ansible.builtin.debug:
+        var: ansible_check_mode
+

@@ -1,0 +1,11 @@
+---
+- name: runing commands in remote host with command parameters
+  hosts: all
+  tasks:
+    - name: make dir in host server
+      command: mkdir -p /home/server/kendanic-ansible-check
+
+    - name: remove folder
+      ansible.builtin.shell:
+        rm -rf kendanic-ansible-check
+  

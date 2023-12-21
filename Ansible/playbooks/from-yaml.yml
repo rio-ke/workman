@@ -1,0 +1,12 @@
+---
+- name: to find out how to read from_json and from_yml
+  hosts: 
+  become: yes
+  tasks:
+    - name: Register JSON output as a variable
+      ansible.builtin.shell: cat /home/server/file.yaml
+      register: result
+
+    - name: Set a variable
+      ansible.builtin.set_fact:
+        myvar: "{{ result.stdout | from_yaml }}"

@@ -1,0 +1,9 @@
+---
+- name: module find 
+  hosts: k
+  vars: 
+     number: [1,2,4,5,6]
+  tasks:
+   - name: command mdules
+     debug:
+       msg: "{{number}}"

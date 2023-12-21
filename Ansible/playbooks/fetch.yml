@@ -1,0 +1,15 @@
+---
+- name: fetch file from local to remote
+  hosts: node
+  # ignore_errors: false
+  become: yes
+
+  tasks:
+    
+    - name: copy file to remote server
+      fetch:
+         src: "/home/server/admin/file.txt"
+         dest: "/home/rcms-lap-173/Public"
+        #  flat: yes
+      when: ansible_host == 'node'
+        

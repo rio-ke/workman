@@ -1,0 +1,14 @@
+---
+- hosts: n
+
+  tasks:
+    - name: check ansible_remote_hostname
+      shell:
+        "hostname"
+      register: done
+    - name: print the results
+      ansible.builtin.debug:
+        msg: "{{ done.stdout }}"
+    - name: Reboot a Linux machine 
+      ansible.builtin.reboot:
+        reboot_timeout: 1800

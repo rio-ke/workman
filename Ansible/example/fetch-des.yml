@@ -1,0 +1,15 @@
+---
+- name: moving the src backup file in two different servers with ansible host 
+  hosts: node
+  become: yes
+  #become_user: root
+  become_method: sudo 
+  #ignore_unreachable: no
+  #ignore_errors: yes
+
+  tasks:
+    - name: Store file into /tmp folder from local ansible copy file
+      ansible.builtin.copy:
+        src: "/home/rcms-lap-173/vscode/index.yml"
+        dest: "/tmp/"
+

@@ -1,0 +1,17 @@
+---
+- name: host user find
+  hosts: node
+  become: true
+  tasks:
+    - name: host reach
+      ping:
+    - name: Add several users
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: present
+        groups: "root"
+      loop:
+        - rcms1
+        - rcms2
+      # when: ansible_user_shell" == "/bin/bash"
+# if server already exit delete with code

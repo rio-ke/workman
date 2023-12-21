@@ -1,0 +1,31 @@
+---
+- hosts: k
+  become: true
+  become_user: root
+  become_method: sudo
+  ignore_errors: true
+  # remote_user: server
+  tasks:
+    - name: Chenking ping
+      ping:
+    #   # - name: Ensure apache is installed and updated
+    #   #   yum:
+    #   #     name: httpd
+    #   #     state: latest
+    #   #   become: yes
+
+    # - name: Install apache httpd  (state=present is optional)
+    #   apt:
+    #     name: apache2
+    #     state: present
+    - name: Install package "nginx" to latest version using ansible server
+      apt:
+        name: "nginx"
+        state: present
+        dpkg_options: force-confdef
+    - name: Enable service to start on boot up
+      service:
+        name: nginx.service
+        state: started
+    #     # default_release: squeeze-backports
+    #     # update_cache: yes

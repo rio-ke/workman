@@ -1,0 +1,44 @@
+---
+- name: finding file in the directory
+  hosts: k
+  become: true
+  #become_method: sudo
+  # remote_user: server
+
+  tasks:
+    - name: Get stats of a file
+      ansible.builtin.stat:
+        path: /home/server/file/index
+      register: hen
+    # - debug:
+    #     msg: "{{ hen.stat.exists }}"
+    - name: if value is not found
+      debug:
+        msg: "file not found"
+      when: hen.stat.exists == false
+    - name: if value is found
+      debug:
+        msg: "file found"
+      when: hen.stat.exists == true
+    - name: Print
+      shell: "{{ item }}"
+      loop:
+        - hostname
+        - uname -r
+      register: _details
+    - debug:
+        # msg: '{{ _details | json_query([].results) }}'
+        msg: '{{ _details | json_query(item[].results) }}'
+    # - name: Fail if the file does not belong to 'root'
+    #   ansible.builtin.fail:
+    #     msg: "Whoops! file ownership has changed"
+    #   when: st.stat.pw_name != 'root'
+
+    # - name: Get stats of the FS object
+    #   stat:
+    #     path: /path/to/something
+    #     register: p
+    # - name: Print a debug message
+    #   debug:
+    #     msg: "Path exists and is a directory"
+    #   when: p.stat.isdir is defined and p.stat.isdir

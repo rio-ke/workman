@@ -1,0 +1,32 @@
+---
+- name: setup apache2 and open firewall port
+  hosts: k
+  become: true
+
+  tasks:
+
+    - name: ping the hosts server 
+      ping:
+      
+    - name: Install apache2 package
+      ansible.builtin.apt:
+        name: apache2
+        state: latest
+
+    - name: Reload the apache2 service 
+      ansible.builtin.service:
+        name: apache2
+        state: restarted
+
+    - name: Allow everything and enable UFW
+      community.general.ufw:
+        state: enabled
+        policy: allow
+
+    - name: Allow all access to tcp port 80 and 443
+      community.general.ufw:
+        rule: allow
+        port: '80'
+        port: '443'
+        proto: tcp
+

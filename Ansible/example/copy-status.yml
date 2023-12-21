@@ -1,0 +1,31 @@
+- name: copy files to destination
+  hosts: v
+  become: ture
+  # connection: local
+  tasks:
+    - block:
+        - name: get properties of src.txt
+          stat:
+            path: files/src.txt
+            checksum_algorithm: sha1
+          register: src_info
+
+        - name: copy src.txt to dest.txt
+          copy:
+            src: files/src.txt
+            dest: files/dest.txt
+            force: yes
+            checksum:
+          register: copy_out
+
+        - name: Fail if copy was a failure
+          fail:
+            msg: "Copy failed!"
+          when: src_info.stat.checksum != copy_out.checksum
+
+        - name: Print Copy successful
+          debug:
+            msg: "Copy Successful!"
+
+      tags:
+        - checksum

@@ -1,0 +1,40 @@
+---
+- name: Install software in containers
+  hosts: containers
+  tasks:
+    - name: Update package cache
+      apt:
+        update_cache: yes
+      become: yes
+
+#     - name: Install webserver in docker 
+#       apt:
+#         name: nginx
+#         state: present
+#       become: yes
+
+#         vars:
+#           ansible_ssh_private_key_file: /home/demo/.ssh/id_rsa
+
+- name: Ping hosts
+  hosts: aws  # Replace with the target hosts or group you want to ping
+  tasks:
+    - name: Ping the hosts
+      ping:
+
+- name: Install software in containers
+  hosts: aws
+  tasks:
+    - name: Update package cache
+      apt:
+        update_cache: yes
+      become: yes
+
+    - name: Install webserver in docker 
+      apt:
+        name: nginx
+        state: present
+      become: yes
+
+  # vars:
+  #   ansible_ssh_private_key_file: /home/demo/.ssh/id_rsa

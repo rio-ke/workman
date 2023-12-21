@@ -1,0 +1,9 @@
+---
+- name: Manage Docker container
+  hosts: localhost  # Assuming you run Ansible on the Docker host
+  tasks:
+    - name: Ensure a Docker container is running
+      docker_container:
+        name: test004
+        image: server-test
+        state: started

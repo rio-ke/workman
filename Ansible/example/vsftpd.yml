@@ -1,0 +1,27 @@
+---
+- name: install vsftpd and enable port 21 in firewalld
+  hosts: node
+  become: yes
+  ignore_errors: true
+
+  tasks:
+    - name: install vftpd service in ubuntu machine
+      apt:
+        name: vsftpd
+        state: present
+
+    - name: start the servise
+      ansible.builtin.service:
+        name: vsftpd
+        state: started
+
+    - name: enable por 21 for access ftp
+      ansible.posix.firewalld:
+        service: ftp
+        state: enabled
+        permanent: true
+
+    - name: restart firewalld service
+      ansible.builtin.service:
+        name: firewalld
+        state: reloaded

@@ -1,0 +1,21 @@
+---
+- hosts: n
+  gather_facts: yes
+
+  tasks:
+    - name: changing the remote_server's hostname via ansible-playbook
+      hostname:
+        name: "NODEKUBE"
+      become: true #excecuting the command as sudo
+    - name: restart machine
+      command: shutdown -r now "Ansible updates triggered"
+      async: 0
+      poll: 0
+      ignore_errors: True
+      when: reboot is defined
+    - name: check ansible_remote_hostname
+      shell: "hostname"
+      register: done
+    - name: print the results
+      ansible.builtin.debug:
+        msg: "{{ done.stdout }}"
