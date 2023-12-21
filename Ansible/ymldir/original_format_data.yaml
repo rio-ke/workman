@@ -1,25 +1,23 @@
 ---
 
-name: "Vikram"
-address: "Bangalore, India"
+name: "kendanic"
+address: "Chennai, India"
 age: 28
 is_working: true
 certifications: 8
 hobbies:
- - blogging
- - cricket
- - graphics_design
- - teaching
+ - football
+ - basketball
+ - watching mobile
+ - comedian
 work_experience:
  company_01:
     years: 2
-    role: "Junior DevOps Engineer"
+    role: "Server Engineer"
  company_02:
-    years: 4
-    role: "Senior DevOps Engineer"
- company_03:
-    years: 3.5
-    role: "DevOps Architect"
+    years: 1
+    role: "DevOps Engineer"
 social_accounts:
- facebook: 1
+ facebook: 0
  youtube: 2
+ 
