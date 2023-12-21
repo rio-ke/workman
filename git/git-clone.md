@@ -5,7 +5,7 @@
 _**git clone**_
 
 ```git
-git clone ssh key fot the repostry
+git clone ssh key for the repostry
 ```
 
 ```
