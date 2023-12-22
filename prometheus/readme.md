@@ -15,3 +15,7 @@
 3. monitor_tool_config
 
 https://cloudvesna.com/monitoring-linux-servers-with-prometheus-node-exporter-and-grafana-a9e1a14f0ec9
+
+4. prometheus
+
+https://www.linode.com/docs/guides/how-to-install-prometheus-and-grafana-on-ubuntu/#how-to-import-a-grafana-dashboard
