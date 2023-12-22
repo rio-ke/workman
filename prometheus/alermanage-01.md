@@ -57,4 +57,4 @@ global:
           {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
           {{ end }}
         {{ end }}
-```s
+```
