@@ -18,4 +18,6 @@ https://cloudvesna.com/monitoring-linux-servers-with-prometheus-node-exporter-an
 
 4. prometheus
 
+https://www.linode.com/docs/guides/how-to-install-prometheus-and-grafana-on-ubuntu/
+
 https://www.linode.com/docs/guides/how-to-install-prometheus-and-grafana-on-ubuntu/#how-to-import-a-grafana-dashboard
