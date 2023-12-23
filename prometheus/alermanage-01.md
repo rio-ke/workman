@@ -25,18 +25,17 @@ routes:
 
 ```yml
 global:
-    resolve_timeout: 1m
-    slack_api_url: 'https://hooks.slack.com/services/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'
+  resolve_timeout: 1m
+  slack_api_url: 'https://hooks.slack.com/services/0000000/00000000000/0000000000000'
 
-   route:
-    receiver: 'slack-notifications'
+route:
+  receiver: 'slack-notifications'
 
-   receivers:
-   - name: 'slack-notifications'
+receivers:
+  - name: 'slack-notifications'
     slack_configs:
-    - channel: '#monitoring-instances'
-      send_resolved: true
-      icon_url: https://avatars3.githubusercontent.com/u/3380462
+    - channel: '#general'
+      send_resolved: true     
       title: |-
         [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }} for {{ .CommonLabels.job }}
         {{- if gt (len .CommonLabels) (len .GroupLabels) -}}
