@@ -1,157 +1,147 @@
-## Prometheus moniter configuration
+### _Configure Prometheus, Grafana, and Node Exporter_
 
-**Update the server** 
-```cmd
-sudo yum update
-```
-**Install wget module**
-```cmd
-sudo yum install wget -y
-```
-
-**_Create user for prometheus_**
+**_`Install Prometheus`_**
 
 ```cmd
-sudo useradd --system --no-create-home --shell /usr/sbin/nologin prometheus
+wget https://github.com/prometheus/prometheus/releases/download/v2.49.0-rc.1/prometheus-2.49.0-rc.1.linux-amd64.tar.gz
+tar xvfz prometheus-*.tar.gz
+sudo mkdir /etc/prometheus /var/lib/prometheus
+cd prometheus-2.37.6.linux-amd64
+sudo mv prometheus promtool /usr/local/bin/
+sudo mv prometheus.yml /etc/prometheus/prometheus.yml
+sudo mv consoles/ console_libraries/ /etc/prometheus/
 ```
----
-
-check user details
-```cmd
-cat /etc/passwd
-```     
-_go to Download dir_
-```cmd
-cd ~/Downloads
-```
-**Download prometheus form third repo**
-```cmd
-wget https://github.com/prometheus/prometheus/releases/download/v2.28.0/prometheus-2.28.0.linux-amd64.tar.gz
-```
-Check downloaded file
-```
-ls -ltrh
-```
-_extract the downloaded file_
-```cmd
-tar xvzf prometheus-2.28.0.linux-amd64.tar.gz
-``` 
-
-- move the prometheus-2.28.0.linux-amd64 directory to /opt/ directory and rename it to prometheus 
-```cmd
-sudo mv -v prometheus-2.28.0.linux-amd64 /opt/prometheus
-```     
-* Change the user and group of all the files and directories of the /opt/prometheus/ directory to root
+_`Prometheus user config`_
 
 ```cmd
-sudo chown -Rfv root:root /opt/prometheus
+sudo useradd -rs /bin/false prometheus
+sudo chown -R prometheus: /etc/prometheus /var/lib/prometheus
 ```
 
-* Fix the file and directory permissions of all the files and directories of the /opt/prometheus/ directory
-```cmd
-sudo chmod -Rfv 0755 /opt/prometheus
-```      
-* The configuration file of Prometheus is /opt/prometheus/prometheus.yml.
-
-```cmd
-sudo vim /opt/prometheus/prometheus.yml
-```
-
-* (optional) If you want, you can remove the comment lines from the configuration file /opt/prometheus/prometheus.yml with the following command:
-
-```cmd
-egrep -v '(^[ ]*#)|(^$)' /opt/prometheus/prometheus.yml | sudo tee /opt/prometheus/prometheus.yml
-```
-
-* Prometheus needs a directory where it can store the metrics that it had collected. In this article, I will store it in the /opt/prometheus/data/ directory.
-
-* create a new directory data/ in the /opt/prometheus/ directory as follows
-
-```cmd
-sudo mkdir -v /opt/prometheus/data
-```
-
-```cmd
-sudo chown -Rfv prometheus:prometheus /opt/prometheus/data
-```
+_`Configure Prometheus systemd service`_
 
 ```cmd
 sudo vim /etc/systemd/system/prometheus.service
 ```
+```service
+[Unit]
+Description=Prometheus
+Wants=network-online.target
+After=network-online.target
 
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+Restart=on-failure
+RestartSec=5s
+ExecStart=/usr/local/bin/prometheus \
+    --config.file /etc/prometheus/prometheus.yml \
+    --storage.tsdb.path /var/lib/prometheus/ \
+    --web.console.templates=/etc/prometheus/consoles \
+    --web.console.libraries=/etc/prometheus/console_libraries \
+    --web.listen-address=0.0.0.0:9090 \
+    --web.enable-lifecycle \
+    --log.level=info
+
+[Install]
+WantedBy=multi-user.target
+```
 ```cmd
 sudo systemctl daemon-reload
+sudo systemctl enable prometheus
+sudo systemctl start prometheus
+sudo systemctl status prometheus
 ```
-```cmd
-sudo systemctl start prometheus.service
-sudo systemctl enable prometheus.service
-sudo systemctl status prometheus.service
-```
+_check config_
 
 ```cmd
-hostname -I
-ip a
-cat /etc/hosts
+ss -tulpn | grep 9090
+curl -i http://localhost:9090/status
+```
+
+`_**Configure Node Exporter in remote server**_`
+
+```cmd
+wget https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz
+tar -xvfz node_exporter-*.tar.gz
+sudo mv node_exporter-1.5.0.linux-amd64/node_exporter /usr/local/bin
+node_exporter
+sudo useradd -rs /bin/false node_exporter
 ```
 ```cmd
-wget https://github.com/prometheus/node_exporter/releases/download/v1.1.2/node_exporter-1.1.2.linux-amd64.tar.gz
+sudo vim /etc/systemd/system/node_exporter.service
 ```
+```service
+[Unit]
+Description=Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+Restart=on-failure
+RestartSec=5s
+ExecStart=/usr/local/bin/node_exporter
+
+[Install]
+WantedBy=multi-user.target
+```
+```cmd
+sudo systemctl daemon-reload
+sudo systemctl enable node_exporter
+sudo systemctl start node_exporter
+sudo systemctl status node_exporter
+```
+_To add remote-server to prometheus.yml_
+
+```cmd
+sudo vi /etc/prometheus/prometheus.yml
+```
+```yml
+- job_name: "riok_server"
+  scrape_interval: 10s
+  static_configs:
+    - targets: ["remote-aws_pub_ip:9100"]
+```
+```cmd
+sudo systemctl restart prometheus.service
+```
+
+**`_Grafana_`**
+
+```cmd
+sudo apt-get install -y adduser libfontconfig1
+wget https://dl.grafana.com/oss/release/grafana_10.0.2_amd64.deb
+sudo dpkg -i grafana_10.0.2_amd64.deb
+sudo /bin/systemctl start grafana-server
+```
+_Login and change password_
+
 ```bash
-tar xzf node_exporter-1.1.2.linux-amd64.tar.gz
+http://pub_ip:3000
 ```
-```sudo mv -v node_exporter-1.1.2.linux-amd64/node_exporter /usr/local/bin/
-sudo chown root:root /usr/local/bin/node_exporter
-node_exporter --version
-sudo vim /etc/systemd/system/node-exporter.servic
-sudo systemctl daemon-reload 
-sudo systemctl start node-exporter.service
-sudo vim /etc/systemd/system/node-exporter.servic
-sudo nano /etc/systemd/system/node-exporter.service
-sudo vim /etc/systemd/system/node-exporter.service
-sudo systemctl daemon-reload 
-sudo systemctl start node-exporter.service
+* To create a Prometheus data source in Grafana
+  - Open the Configuration menu.
+  - Click on “Data Sources”.
+  - Click on “Add data source”.
+  - Select “Prometheus” as the type.
+  - In setting http use private ip for better 
+  - Set the appropriate Prometheus server URL 
+  -  for example
+      - http://public_ipv4_address:9090/
+      - http://localhost:9090/
+      - http://localhost:9090/ 
+      - Save & Exit.
+* import the pre-built dashboard   
+   - Go to /dashboards and select New > Import
+   -  give 1860 in import via grafana.com
+   - Load and select the Prometheus data source. Finally, Import
+   
+**`Alert manager use url below`**
+
+```url
+https://github.com/januo-org/proof-of-concepts/blob/main/prometheus/alert-manager.md
 ```
-```cmd
-cd /etc/
-cd systemd/system/
-ll
-sudo rm node-exporter.servic
-ll
-```
-
-```cmd
-sudo systemctl status node-exporter.service 
-sudo systemctl enable node-exporter.service
-sudo systemctl status node-exporter.service 
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
