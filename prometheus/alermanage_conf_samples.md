@@ -1,3 +1,5 @@
+**SLACK**
+
 ```yml
 global:
   slack_api_url: https://hooks.slack.com/services/XXXXXXXX/XXXXXXXX/XXXXXXXX
@@ -22,6 +24,8 @@ routes:
     severity: warning
   receiver: email
 ```
+
+**SLACK_002**
 
 ```yml
 global:
@@ -57,3 +61,37 @@ receivers:
           {{ end }}
         {{ end }}
 ```
+
+_**MAIL-001**_
+
+```yml
+global:
+ smtp_smarthost: 'smtp.gmail.com:587'
+ smtp_from: 'infosec@gmail.com'
+ smtp_auth_username: 'infosec@gmail.com'
+ smtp_auth_password: 'xxxxxxxx'
+ smtp_require_tls: true
+ smtp_hello: 'localhost'
+ smtp_auth_identity: 'infosec@gmail.com'
+
+route:
+ group_by: ['alertname']
+ group_wait: 30s
+ group_interval: 30s
+ repeat_interval: 1m # Change the repeat_interval to 1 minute
+ receiver: team-X-mails
+
+ routes:
+ - match:
+   job: dailytest
+  receiver: team-X-mails
+  repeat_interval: 30m # Repeat every 30 minutes for the 'dailytest' job
+
+receivers:
+- name: 'team-X-mails'
+ email_configs:
+ - to: 'infosec@gmail.com'
+  # Other email configurations...
+```
+* For mail smtp mail alert plz enable Less Secure Apps:
+    - Ensure that you have allowed access for "Less secure app access" in your Gmail account settings. This is required for applications like Prometheus Alertmanager to use your Gmail account for sending emails.
