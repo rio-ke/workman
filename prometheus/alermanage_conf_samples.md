@@ -97,3 +97,4 @@ receivers:
 
 * For mail smtp mail alert plz enable Less Secure Apps:
     - Ensure that you have allowed access for "Less secure app access" in your Gmail account settings. This is required for applications like Prometheus Alertmanager to use your Gmail account for sending emails.
+    - [Less secure app access page url](https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4P3jd58sY_iLF7otYRv6t6fpPF79ZgJhlPF2WGjjbZxdFEmnHrhzP3VQ0FQS8kOnzaSy2GKsQyOq5HkewSXpzwbWYQi7AdJ9o6x2GlOjiXPvcOCIAA)
