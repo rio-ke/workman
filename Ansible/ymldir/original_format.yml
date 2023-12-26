@@ -1,1 +1,30 @@
 
+---
+- name: person details 
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Gather the data
+      ansible.builtin.set_fact:
+        data: "{{ lookup('file', 'original_format_data.yaml') | from_yaml }}"
+
+    - name: Display name and address
+      ansible.builtin.debug:
+        msg: "Name: {{ data.name }}, Address: {{ data.address }}"
+
+    - name: Display age and working status
+      ansible.builtin.debug:
+        msg: "Age: {{ data.age }}, Is Working: {{ data.is_working }}"
+
+    - name: Display certifications and hobbies
+      ansible.builtin.debug:
+        msg: "Certifications: {{ data.certifications }}, Hobbies: {{ data.hobbies }}"
+    
+    - name: Display work experience
+      ansible.builtin.debug:
+        msg: "Years: {{ item.value.years }}, Role: {{ item.value.role }}"
+      loop: "{{ data.work_experience | dict2items }}"
+
+    - name: Display social accounts
+      ansible.builtin.debug:
+        msg: "Facebook: {{ data.social_accounts.facebook }}, YouTube: {{ data.social_accounts.youtube }}"
