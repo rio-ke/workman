@@ -35,4 +35,8 @@ _Check EC2 Instance Connection_
 ```cmd
 ssh -i ~/.ssh/ansible-key.pem ubuntu@public_ip
 ```
+```hosts
+[web_servers]
+ec2_instance ansible_ssh_host=your_ec2_instance_ip ansible_ssh_user=ec2-user ansible_ssh_private_key_file=/path/to/your/private-key.pem
+```
  
