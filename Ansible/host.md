@@ -1,6 +1,10 @@
+```bash
+#[my_server]
+#localhost ansible_connection=local
 
-
-
+[remote_server]
+reser ansible_host=192.168.1.9 ansible_user=server ansible_password=.
+```
 
 *  **ansible_host**: – Name of the server you want to connect to
 *  **ansible_connection**: – This is the connection type you want to use; default is SSH, but below are the other options if you SSH don’t work in your*
