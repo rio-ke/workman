@@ -1,15 +1,12 @@
+### Managing host key checking
 
-
-_inventory_
-
-* Add the following.
-
-```conf
-ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-```
-_host_
+**_inventory_** `OR` **_host_**
 
 * Add the following.
-```conf
+
+```bash
 ansible_ssh_extra_args='-o StrictHostKeyChecking=no'
 ```
+
+$$OR$$
+
