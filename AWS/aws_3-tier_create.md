@@ -1,3 +1,7 @@
+Building a 3-tier web application architecture
+---
+
+[Web-link](https://medium.com/@aaloktrivedi/building-a-3-tier-web-application-architecture-with-aws-eb5981613e30)
 
 ![image](https://github.com/rio-ke/workman/assets/88568938/92b6bb1f-f8b8-4e35-9576-f3a90fc0f85e)
 
