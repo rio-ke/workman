@@ -1,4 +1,4 @@
-### Managing host key checking
+# Managing host key checking
 
 **_inventory_** `OR` **_host_**
 
