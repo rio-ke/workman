@@ -1,0 +1,29 @@
+---
+- name: Generate and create random users
+  hosts: aws
+  gather_facts: no
+  become: true
+
+  vars:
+    num_random_users: 5  # Adjust the number of random users as needed
+
+  tasks:
+    - name: Install pwgen on Ubuntu
+      apt:
+        name: pwgen
+        state: present
+      
+    - name: Generate random usernames
+      shell: pwgen -1 -N {{ num_random_users }}
+      register: random_usernames
+
+    - name: Create random users in AWS instance
+      user:
+        name: "{{ item }}"
+        shell: /bin/bash
+        state: present
+      loop: "{{ random_usernames.stdout_lines }}"
+    
+    - name: show output
+      debug:
+        var: random_usernames.stdout_lines

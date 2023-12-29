@@ -1,0 +1,49 @@
+---
+- name: finding users
+  hosts: aws
+  gather_facts: no
+  become: true
+
+  vars:
+    user_list:
+      - ken
+      - rio
+
+  tasks:
+    - name: create user
+      user:
+        name: "{{ item }}"
+        shell: /bin/bash
+        state: present
+      loop:
+        - kenny
+        - kent
+
+    - name: create users in aws instance
+      user:
+        name: "{{ item }}"
+        shell: /bin/bash
+        state: present
+      loop: "{{ user_list }}"
+
+    - name: show user output
+      shell: cat /etc/passwd
+      register: users_result
+
+    - name: show output of all created users
+      debug:
+        var: users_result.stdout_lines
+
+    - name: remove users
+      user:
+        name: "{{item}}"
+        state: absent
+      loop:
+        - kenny
+        - kent
+        - "{{user_list}}"
+
+    - name: show output of removed users-list
+      debug:
+        var: users_result.stdout_lines
+
