@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S3 Bucket Index</title>
+</head>
+<body>
+    <h1>S3 Bucket Index</h1>
+    <ul id="objectList"></ul>
+    <script>
+        // Fetch and display objects in the bucket
+        fetch('http://ken2023.s3-website-us-east-1.amazonaws.com/?list-type=2')
+            .then(response => response.json())
+            .then(data => {
+                const objectList = document.getElementById('objectList');
+                data.Contents.forEach(obj => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = obj.Key;
+                    objectList.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error fetching objects:', error));
+    </script>
+</body>
+</html>
