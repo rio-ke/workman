@@ -25,3 +25,9 @@
 * Default encryption
 
     - Bucket Key => Disable
+
+* finally select $$
+create bucket
+$$
+
+*Uploading Data to S3*
