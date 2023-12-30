@@ -1,6 +1,6 @@
 ## Create S3 Bucket in AWS
 
-*create bucket*
+$Create bucket$
 
 * General purpose buckets click `create-bucket`
 
@@ -26,8 +26,6 @@
 
     - Bucket Key => Disable
 
-* finally select $$
-create bucket
-$$
+* finally select *create bucket*
 
 *Uploading Data to S3*
