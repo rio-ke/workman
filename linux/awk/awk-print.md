@@ -14,3 +14,7 @@ awk 'NR==2 {print $1}' file
 awk 'NR==4 {print $1, $2}' file
 ```
 
+* To print rows that's containing more than 50 letters
+```cmd
+awk 'length > 50' file
+```
