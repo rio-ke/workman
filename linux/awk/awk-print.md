@@ -1,0 +1,12 @@
+AWK
+---
+
+* If you have 10 lines and to print 2nd row s first colume
+
+```cmd
+awk 'NR==2row {print $colume}' file_name
+```
+```cmd
+awk 'NR==2 {print $1}' file
+```
+
