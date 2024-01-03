@@ -1,23 +1,15 @@
 # readme.md
 
-![image](https://user-images.githubusercontent.com/88568938/236438671-71ff8f40-aa3c-429f-ba9b-401bbecccd9c.png)
+$Docs$
 
+[alertmanager01](https://github.com/prometheus/alertmanager/blob/main/docs/configuration.md)
 
-1. Grafana
+[prometheus01](https://www.linode.com/docs/guides/how-to-install-prometheus-and-grafana-on-ubuntu/)
 
-[web-ref](https://linuxhint.com/install-configure-prometheus-alert-manager-ubuntu/)
+[grafana01](https://www.linode.com/docs/guides/how-to-install-prometheus-and-grafana-on-ubuntu/#how-to-import-a-grafana-dashboard)
 
+[grafana02](https://cloudvesna.com/monitoring-linux-servers-with-prometheus-node-exporter-and-grafana-a9e1a14f0ec9)
 
-2. Alert Manager
+[grafana03](https://linuxhint.com/install-configure-prometheus-alert-manager-ubuntu/)
 
-[web-ref](https://github.com/prometheus/alertmanager/blob/main/docs/configuration.md)
-
-3. monitor_tool_config
-
-https://cloudvesna.com/monitoring-linux-servers-with-prometheus-node-exporter-and-grafana-a9e1a14f0ec9
-
-4. prometheus
-
-https://www.linode.com/docs/guides/how-to-install-prometheus-and-grafana-on-ubuntu/
-
-https://www.linode.com/docs/guides/how-to-install-prometheus-and-grafana-on-ubuntu/#how-to-import-a-grafana-dashboard
+[template](https://hodovi.cc/blog/creating-awesome-alertmanager-templates-for-slack/)
