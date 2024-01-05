@@ -15,23 +15,26 @@
 
 ---
 
-```conf
+~~~bash
+
 sudo apt-get update
 sudo apt-get install linux-headers-$(uname -r)
 sudo apt-get install keepalived
-```
+
+~~~
 
 **_Configuration_**
 
-* Now create or edit Keepalived configuration `/etc/keepalived/keepalived.conf` file on LB1
+Now create or edit Keepalived configuration `/etc/keepalived/keepalived.conf` file on LB1
 
-```bash
+~~~bash
 vim /etc/keepalived/keepalived.conf
-```
+~~~
 
-***Configuration File for MASTER FILE***
+Configuration File for MASTER FILE
 
-```conf
+~~~bash
+
 
 global_defs {
    notification_email {
@@ -57,12 +60,17 @@ vrrp_instance VI_1 {
         192.168.10.105/32
     }
 }
-```
+
+~~~
+
+
+---
 
 Configuration File for backup file
 
 
-```conf
+~~~bash
+
 
 global_defs {
    notification_email {
@@ -89,21 +97,22 @@ vrrp_instance VI_1 {
     }
 }
 
-```
+~~~
 
 **Start keepalived service**
-```bash
+~~~bash
 sudo service keepalived start
-```
+~~~
 
 * Then, for future reference, configure the apache2 service once more.--> https://github.com/dodo-foundation/linux-learns/blob/main/apache2-vhost-configuration.md
 
 
 * Host entry:--> `sudo vim /etc/hosts`
 
-```host
+~~~bash
 
 192.168.0.101 fourtimes.ml
 192.168.0.102 fourtimes.ml
 192.168.0.105 fourtimes.ml
-```
+
+~~~
