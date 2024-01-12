@@ -1,0 +1,26 @@
+# FROM ubuntu:latest
+# RUN apt-get update && \
+#     apt-get install -y wget && \
+#     wget https://github.com/google/cadvisor/releases/download/v0.38.5/cadvisor -O /usr/local/bin/cadvisor && \
+#     chmod +x /usr/local/bin/cadvisor
+
+# ENV CADVISOR_ARGS="--storage_driver=db2 --collector=cpu --collector=memory --collector=diskstats"
+# RUN adduser --system --no-create-home --disabled-password --group nonroot
+# USER nonroot
+# HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD curl --fail http://localhost:8080/healthz || exit 1
+# EXPOSE 8085
+# CMD ["/usr/local/bin/cadvisor", "--port=8085", "--docker_only=true", "--storage_driver=db2", "--collector=cpu", "--collector=memory", "--collector=diskstats"]
+
+FROM ubuntu:latest
+
+RUN apt update && apt install -y wget && rm -rf /var/lib/apt/lists/*
+RUN wget https://github.com/google/cadvisor/releases/download/v0.38.5/cadvisor -O /usr/local/bin/cadvisor && \
+    chmod +x /usr/local/bin/cadvisor
+
+# RUN adduser --system --no-create-home --disabled-password --group nonroot
+# USER nonroot
+ENV CADVISOR_ARGS="--storage_driver=db2 --collector=cpu --collector=memory --collector=diskstats"
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD curl --fail http://localhost:8080/healthz || exit 1
+EXPOSE 8070
+
+CMD ["/usr/local/bin/cadvisor", "--port=8070"]

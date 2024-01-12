@@ -1,0 +1,105 @@
+version: "3"
+
+services:
+  prometheus:
+    image: prometheus:v1
+    container_name: promo
+    build:
+      context: .
+      dockerfile: Dockerfile.prometheus
+    ports:
+      - "9090:9090"
+    # volumes:
+    #   - /home/ubuntu/monitor/prometheus:/etc/prometheus
+    networks:
+      - monitor
+
+  alertmanager:
+    image: alertmanager:v1
+    container_name: alertman
+    build:
+      context: .
+      dockerfile: Dockerfile.alertmanager
+    ports:
+      - "9093:9093"
+    # volumes:
+    #   - /home/ubuntu/monitor/alertmanager:/etc/alertmanager
+    networks:
+      - monitor
+
+  cadvisor:
+    image: cadvisor:v1
+    container_name: cadvisor
+    build:
+      context: .
+      dockerfile: Dockerfile.cadvisor
+    ports:
+      - "8081:8080"
+    # volumes:
+    #   - /home/ubuntu/monitor/cadvisor:/rootfs:ro
+    #   - /var/run:/var/run:rw
+    #   - /sys:/sys:ro
+    #   - /var/lib/docker:/var/lib/docker:ro
+    networks:
+      - monitor
+
+  node-exporter:
+    image: node-exporter:v1
+    container_name: nodexpo
+    build:
+      context: .
+      dockerfile: Dockerfile.node-exporter
+    ports:
+      - "9100:9100"
+    # volumes:
+    #   - /home/ubuntu/monitor/node-exporter:/host/proc:ro
+    #   - /home/ubuntu/monitor/node-exporter:/host/sys:ro
+    networks:
+      - monitor
+
+  app1:
+    image: app1:v1
+    container_name: nxapp1
+    build:
+      context: .
+      dockerfile: Dockerfile.app1
+    ports:
+      - "8082:80"
+    volumes:
+      - /home/ubuntu/monitor/app1/index.html:/var/www/html/
+    networks:
+      - monitor
+
+  app2:
+    image: app2:v1
+    container_name: nxapp2
+    build:
+      context: .
+      dockerfile: Dockerfile.app2
+    ports:
+      - "8083:80"
+    volumes:
+      - /home/ubuntu/monitor/app2/index.html:/var/www/html/
+    networks:
+      - monitor
+
+  app3:
+    image: app3:v1
+    container_name: nxapp3
+    build:
+      context: .
+      dockerfile: Dockerfile.app3
+    ports:
+      - "8084:80"
+    volumes:
+      - /home/ubuntu/monitor/app2/index.html:/var/www/html/
+    networks:
+      - monitor
+
+networks:
+  monitor:
+    driver: bridge
+
+    
+# docker-compose build
+# docker-compose up -d

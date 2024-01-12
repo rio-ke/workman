@@ -1,0 +1,49 @@
+FROM ubuntu:latest
+ENV VERSION=2.33.1
+RUN apt-get update && \
+    apt-get install -y wget && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN wget https://github.com/prometheus/prometheus/releases/download/v${VERSION}/prometheus-2.33.1.linux-amd64.tar.gz && \
+    tar -xzf prometheus-2.33.1.linux-amd64.tar.gz && \
+    mv prometheus-2.33.1.linux-amd64/* /usr/local/bin/ && \
+    rm -rf prometheus-2.33.1.linux-amd64.tar.gz prometheus-2.33.1.linux-amd64
+
+RUN mkdir -p /etc/prometheus
+COPY prometheus/prometheus.yml /etc/prometheus/prometheus.yml
+EXPOSE 9090
+CMD ["prometheus", "--config.file=/etc/prometheus/prometheus.yml"]
+
+#
+#conf-tew
+
+# # Use Ubuntu as the base image
+# FROM ubuntu:latest
+
+# # Install necessary dependencies
+# RUN apt-get update && \
+#     apt-get install -y wget
+
+# # Create Prometheus directory
+# RUN mkdir -p /opt/prometheus
+
+# # Download and extract Prometheus binaries
+# WORKDIR /opt/prometheus
+# RUN wget https://github.com/prometheus/prometheus/releases/download/v2.33.1/prometheus-2.33.1.linux-amd64.tar.gz && \
+#     tar -xzf prometheus-2.33.1.linux-amd64.tar.gz && \
+#     rm prometheus-2.33.1.linux-amd64.tar.gz
+
+# # Create Prometheus configuration directory
+# RUN mkdir -p /etc/prometheus
+
+# # Copy Prometheus configuration file
+# COPY prometheus/prometheus.yml /etc/prometheus/prometheus.yml
+
+# # Expose Prometheus port
+# EXPOSE 9090
+
+# # Set the working directory
+# WORKDIR /opt/prometheus/prometheus-2.33.1.linux-amd64
+
+# # CMD instruction with the configured arguments
+# CMD ["./prometheus", "--config.file=/etc/prometheus/prometheus.yml"]

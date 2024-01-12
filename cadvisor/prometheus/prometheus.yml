@@ -1,0 +1,41 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  scrape_timeout: 10s
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+        labels:
+          alias: "prometheus"
+
+  - job_name: "cadvisor"
+    static_configs:
+      - targets: ["localhost:8070"]
+        labels:
+          alias: "cadvisor"
+
+  - job_name: "nodexpo"
+    static_configs:
+      - targets: ["localhost:9100"]
+        labels:
+          alias: "cadvisor"
+
+  - job_name: "app1"
+    static_configs:
+      - targets: ["localhost:8081"]
+        labels:
+          alias: "app1"
+
+  # - job_name: "app2"
+  #   static_configs:
+  #     - targets: ["localhost:8083"]
+  #       labels:
+  #         alias: "app2"
+          
+  # - job_name: 'app3'
+  #   static_configs:
+  #   - targets: ['nxapp3:8084']
+  #     labels:
+  #       alias: 'app3'

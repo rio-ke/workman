@@ -1,0 +1,5 @@
+FROM prom/node-exporter:latest
+
+EXPOSE 9100
+
+CMD ["--path.procfs=/host/proc", "--path.sysfs=/host/sys", "--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)"]

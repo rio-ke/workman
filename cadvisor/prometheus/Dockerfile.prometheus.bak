@@ -1,0 +1,11 @@
+# Use a specific version of Prometheus
+FROM prom/prometheus:latest
+
+# Copy Prometheus configuration file
+COPY prometheus/prometheus.yml /etc/prometheus/prometheus.yml
+
+# Expose Prometheus port
+EXPOSE 9090
+
+# CMD instruction with the configured arguments
+CMD ["--config.file=/etc/prometheus/prometheus.yml"]

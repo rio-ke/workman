@@ -1,0 +1,117 @@
+---
+version: "3"
+
+services:
+  prometheus:
+    image: prometheus:1.0
+    container_name: promo
+    restart: always
+    build:
+      context: .
+      dockerfile: prometheus/Dockerfile.prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/alert.rules:/etc/prometheus/alert.rules
+    networks:
+      - monitor
+
+  alertmanager:
+    image: alertmanager:1.0
+    container_name: alertman
+    restart: always
+    build:
+      context: .
+      dockerfile: alertmanager/Dockerfile.alertmanager
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager/config.yml:/etc/alertmanager/config.yml
+    networks:
+      - monitor
+
+  cadvisor:
+    image: cadvisor:1.0
+    container_name: cadvisor
+    build:
+      context: .
+      dockerfile: cadvisor/Dockerfile.cadvisor
+    restart: always
+    ports:
+      - "8070:8070"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    # # cadvisor:
+    # #   image: google/cadvisor:latest
+    # #   container_name: cadvisor
+    networks:
+      - monitor
+
+  node-exporter:
+    image: node-exporter:1.0
+    container_name: nodexpo
+    restart: always
+    build:
+      context: ./node-exporter
+      dockerfile: Dockerfile.node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+    ports:
+      - "9100:9100"
+
+    privileged: true
+    networks:
+      - monitor
+
+  app1:
+    image: app1:1.0
+    container_name: appone
+    restart: always
+    build:
+      context: .
+      dockerfile: app1/Dockerfile.app1
+    ports:
+      - "8081:80"
+    volumes:
+      - ./app1/index.html:/var/www/html/index.html
+    networks:
+      - monitor
+
+networks:
+  monitor:
+    name: monitor
+    driver: bridge
+
+  # app2:
+  #   image: app2:v1
+  #   container_name: nxapp2
+  #   restart: always
+  #   build:
+  #     context: .
+  #     dockerfile: app2/Dockerfile.app2
+  #   ports:
+  #     - "8083:80"
+  #   volumes:
+  #     - ./app2/index.html:/var/www/html/index.html
+  #   networks:
+  #     - monitor
+
+  # app3:
+  #   image: app3:v1
+  #   container_name: nxapp3
+  #   restart: always
+  #   build:
+  #     context: .
+  #     dockerfile: app3/Dockerfile.app3
+  #   ports:
+  #     - "8084:80"
+  #   volumes:
+  #     - ./app3/index.html:/var/www/html/index.html
+  #   networks:
+  #     - monitor

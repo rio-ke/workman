@@ -1,0 +1,17 @@
+# Use Ubuntu as the base image
+FROM ubuntu:latest
+
+# Install Nginx and other dependencies
+RUN apt-get update && \
+    apt-get install -y nginx && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy your Nginx configuration files and application files
+# COPY app1/nginx.conf /etc/nginx/nginx.conf
+COPY app1/index.html /var/www/html/
+
+# Expose the necessary ports
+EXPOSE 8081
+
+# CMD instruction to start Nginx
+CMD ["nginx", "-g", "daemon off;"]
