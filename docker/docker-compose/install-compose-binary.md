@@ -1,4 +1,5 @@
 $$To-install-Docker-Compose-as-a binary-on-Linux-ubuntu$$
+---
 
 **_Download the Docker Compose binary_**
 
