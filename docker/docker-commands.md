@@ -42,6 +42,9 @@ docker rm -f containerID or Name
 ```
 _To stop and remove all the containe in same commands_
 ```cmd
+docker stop $(docker ps -q)
+```
+```cmd
 docker stop $(docker ps -q) && docker rm $(docker ps -aq)
 ```
 To remove Images
