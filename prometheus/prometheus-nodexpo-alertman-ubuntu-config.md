@@ -139,6 +139,7 @@ http://pub_ip:3000
    - Go to /dashboards and select New > Import
    -  give 1860 in import via grafana.com
    - Load and select the Prometheus data source. Finally, Import
+
    
 **`Alert manager use url below`**
 
