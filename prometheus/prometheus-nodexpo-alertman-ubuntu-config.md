@@ -61,6 +61,9 @@ curl -i http://localhost:9090/status
 ```
 _**`Alert manager services`**_
 
+```service
+# need to config
+```
 
 **_`Configure Node Exporter in remote server`_**
 
