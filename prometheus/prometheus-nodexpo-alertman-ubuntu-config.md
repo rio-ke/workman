@@ -59,8 +59,10 @@ _check config_
 ss -tulpn | grep 9090
 curl -i http://localhost:9090/status
 ```
+_**`Alert manager services`**_
 
-`_**Configure Node Exporter in remote server**_`
+
+**_`Configure Node Exporter in remote server`_**
 
 ```cmd
 wget https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz
