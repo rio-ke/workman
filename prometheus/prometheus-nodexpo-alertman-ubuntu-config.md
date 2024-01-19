@@ -84,8 +84,10 @@ Group=node_exporter
 Type=simple
 Restart=on-failure
 RestartSec=5s
-#ExecStart=/usr/local/bin/node_exporter
-ExecStart=/usr/local/bin/node_exporter --web.listen-address=0.0.0.0:9100 --collector.textfile --collector.diskstats --collector.filesystem --collector.loadavg --collector.node-meta
+# for local server node expoter
+ExecStart=/usr/local/bin/node_exporter
+#For aws other server node exporter services
+#ExecStart=/usr/local/bin/node_exporter --web.listen-address=0.0.0.0:9100 --collector.textfile --collector.diskstats --collector.filesystem --collector.loadavg --collector.node-meta
 
 [Install]
 WantedBy=multi-user.target
