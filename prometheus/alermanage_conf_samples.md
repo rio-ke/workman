@@ -1,5 +1,47 @@
 **SLACK**
 
+**`LIVE_YML`**
+
+```yml
+global:
+  resolve_timeout: 10s
+  slack_api_url: 'https://hooks.slack.com/services/0000000/00000000000/0000000000000'
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 1m
+  repeat_interval: 5m
+  receiver: 'slack_alerts_channel'
+  routes:
+  - match:
+      severity: 'warning'
+    receiver: 'slack_alerts_channel'
+  - match:
+      severity: 'critical'
+    receiver: 'slack_alerts_channel'
+receivers:
+  - name: 'slack_alerts_channel'
+    slack_configs:
+      - send_resolved: true
+        channel: '#kendanic'
+        title: '{{ .Status | toUpper }}{{ if eq .Status "firing" }} - {{ .Alerts.Firing | len }}{{ end }} | Kendanic Ops Alerts'
+        text: >-
+          {{ range .Alerts }}
+            *Alert:* {{ .Annotations.summary }}
+            *State:* `{{ .Labels.severity }}`
+            *Description:* {{ .Annotations.description }}
+            *Graph:* <{{ .GeneratorURL }}|:chart_with_upwards_trend:>
+            *Details:*
+            {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+            {{ end }}
+            *Instance:* `{{ query "node_meta{instance='" .Labels.instance "'}" }}`
+          {{ end }}
+
+
+```
+
+**SLACK_001**
 ```yml
 global:
   slack_api_url: https://hooks.slack.com/services/XXXXXXXX/XXXXXXXX/XXXXXXXX
