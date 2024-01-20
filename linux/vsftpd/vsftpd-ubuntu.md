@@ -19,7 +19,16 @@ sudo adduser rio
 passwd rio
 ```
 
+**_create user without login into server_**
 
+```cmd
+sudo useradd -m -s /usr/sbin/nologin kendanick
+```
+_**User without /home dir**_
+
+```cmd
+sudo useradd -M -s /usr/sbin/nologin kendanick
+```
 ```bash
 sudo cp /etc/vsftpd.conf /etc/vsftpd.conf.original
 ```
