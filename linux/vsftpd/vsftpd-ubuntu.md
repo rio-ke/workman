@@ -8,7 +8,9 @@ sudo apt install vsftpd -y
 **_creating users_**
 
 ```bash
-sudo adduser ken
+sudo useradd ken
+```
+```cmd
 passwd ken
 ```
 
@@ -16,6 +18,7 @@ passwd ken
 sudo adduser rio
 passwd rio
 ```
+
 
 ```bash
 sudo cp /etc/vsftpd.conf /etc/vsftpd.conf.original
