@@ -1,3 +1,54 @@
+_**`conf_1`**_
+
+```cnf
+listen=YES
+listen_ipv6=NO
+anonymous_enable=NO
+local_enable=YES
+write_enable=YES
+local_umask=022
+dirmessage_enable=YES
+use_localtime=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+xferlog_file=/var/log/vsftpd.log
+xferlog_std_format=NO
+idle_session_timeout=600
+data_connection_timeout=120
+ascii_upload_enable=YES
+ascii_download_enable=YES
+ftpd_banner= Hi this is rioke file sharing workspace.
+chroot_local_user=YES
+chroot_list_enable=NO
+user_config_dir=/etc/vsftpd/users
+allow_writeable_chroot=YES
+secure_chroot_dir=/var/run/vsftpd/empty
+pam_service_name=vsftpd
+ssl_enable=YES
+rsa_cert_file=/etc/vsftpd/ssl/private/vsftpd.pem
+rsa_private_key_file=/etc/vsftpd/ssl/private/vsftpd.pem
+
+# Allow only secure TLS connections
+ssl_tlsv1=YES
+
+# Enable passive mode
+pasv_enable=YES
+pasv_min_port=40000
+pasv_max_port=40100
+
+chroot_list_file=/etc/vsftpd.chroot_list
+userlist_enable=YES
+userlist_file=/etc/vsftpd.chroot_list
+userlist_deny=NO
+pasv_enable=YES
+pasv_min_port=64000
+pasv_max_port=64321
+port_enable=YES
+pasv_address=184.73.11.91 #aws-instance-ip
+pasv_addr_resolve=NO
+```
+_**`conf_2`**_
+
 ```cnf
 # sudo vim /etc/vsftpd.conf
 listen=YES
