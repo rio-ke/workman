@@ -90,8 +90,8 @@ sudo mkdir -p /etc/vsftpd/users_group #(users group must for every conf)
 ```bash
 sudo mkdir -p /webdata
 sudo chown -R ken:ken /webdata
-echo "local_root=/webdata" | sudo tee /etc/vsftpd/users_group/kendanick```
-
+echo "local_root=/webdata" | sudo tee /etc/vsftpd/users_group/kendanick
+```
 `user-2`
 
 ```bash
