@@ -44,7 +44,7 @@ pasv_enable=YES
 pasv_min_port=64000
 pasv_max_port=64321
 port_enable=YES
-pasv_address=184.73.11.91 #aws-instance-ip
+pasv_address= #aws-instance-ip
 pasv_addr_resolve=NO
 ```
 _**`conf_2`**_
