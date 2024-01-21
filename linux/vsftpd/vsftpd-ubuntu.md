@@ -88,37 +88,38 @@ sudo mkdir -p /etc/vsftpd/users_group #(users group must for every conf)
 `user-1`
 
 ```bash
-sudo mkdir -p /var/www/html/domain.html
-sudo chown -R ken:ken /var/www/html/domain.html
-echo "local_root=/var/www/html/domain.html" | sudo tee  /etc/vsftpd/users_group/ken
-```
+sudo mkdir -p /webdata
+sudo chown -R ken:ken /webdata
+echo "local_root=/webdata" | sudo tee /etc/vsftpd/users_group/kendanick```
 
 `user-2`
 
 ```bash
 sudo mkdir -p /var/www/html/domain.hml
 sudo chown -R rio:rio /var/www/html/domain.hml
-echo "local_root=/var/www/html/domain.hml" | sudo tee /etc/vsftpd/users_group/rio
+echo "local_root=/webdata" | sudo tee -a /etc/vsftpd/users_group/kendanick
 ```
 
 **_allow users to access_**
 
 `user-1`
-```bash
-echo "ken" | tee  /etc/vsftpd.chroot_list
+```cmd
+echo "ken" | sudo tee /etc/vsftpd.chroot_list
 ```
 `user-2`
 
-```bash
-echo "rio" | tee -a /etc/vsftpd.chroot_list
+```cmd
+echo "rio" | sudo tee -a /etc/vsftpd.chroot_list
+```
+
+```cmd
+sudo systemctl restart vsftpd
+```
+```cmd
+sudo systemctl status vsftpd
 ```
 
 ```bash
-systemctl restart vsftpd
-systemctl status vsftpd
-```
-
-```bash
-sudo ss -tulpn | grep 21
+ss -tulpn | grep 21
 ```
 
