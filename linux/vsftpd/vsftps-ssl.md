@@ -19,6 +19,7 @@ sudo vim /etc/vsftpd.conf
 ```
 ```cnf
 listen=YES
+isten_ipv4=yes
 listen_ipv6=NO
 anonymous_enable=NO
 local_enable=YES
