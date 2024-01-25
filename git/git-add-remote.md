@@ -26,3 +26,7 @@ git add .
 git commit -m "Initial commit"
 git push -u origin main
 ```
+
+![image](https://github.com/rio-ke/workman/assets/88568938/c49455e7-9784-458b-879e-838d2fa32296)
+![image](https://github.com/rio-ke/workman/assets/88568938/3f931451-c83b-4336-9cf5-81b0cc463138)
+
