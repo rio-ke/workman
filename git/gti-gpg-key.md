@@ -31,3 +31,17 @@ gpg --armor --export 1234ABCD
 
 * Click `New GPG key` and paste your GPG key
 
+*Configure Git to Use the GPG Key*
+
+```cmd
+git config --global user.signingkey 1234ABCD
+git config --global commit.gpgSign true
+```
+
+```cmd
+git commit -S -m "Your commit message"
+```
+
+```cmd
+git config --global commit.gpgSign true
+```
