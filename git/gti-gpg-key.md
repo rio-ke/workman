@@ -45,3 +45,7 @@ git commit -S -m "Your commit message"
 ```cmd
 git config --global commit.gpgSign true
 ```
+
+```cmd
+git log --show-signature
+```
