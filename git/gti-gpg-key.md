@@ -49,3 +49,48 @@ git config --global commit.gpgSign true
 ```cmd
 git log --show-signature
 ```
+
+***Remove GPG Key Locally***
+
+* To remove a GPG key from both your local machine and your GitHub account
+
+
+*List GPG Keys*
+
+```cmd
+gpg --list-secret-keys --keyid-format LONG
+```
+
+*Delete GPG Key*
+
+```cmd
+gpg --delete-secret-key KEY_ID_replace
+```
+
+Remove GPG Public Key
+
+```cmd
+gpg --delete-key KEYID
+```
+
+***Remove GPG Key from GitHub***
+
+* Go to GitHub `Settings`
+
+* Click on `SSH and GPG keys`
+
+* Locate the GPG key you want to remove and click `Delete`
+
+
+***Update Git Configuration***
+
+*Remove GPG Configuration*
+
+```cmd
+git config --global --unset user.signingkey
+git config --global --unset commit.gpgSign
+```
+
+```cmd
+gpgconf --kill gpg-agent
+```
