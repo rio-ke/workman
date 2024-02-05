@@ -257,7 +257,7 @@ pcs resource create webserver ocf:heartbeat:apache configfile=/etc/httpd/conf/ht
 pcs resource group add resourcegroup virtualip lvm webdata dbdata  webserver
 pcs constraint order promote drbd_clusterdb_clone then start resourcegroup  # INFINITY
 pcs constraint colocation add resourcegroup  with master drbd_clusterdb_clone INFINITY
-pcs resource create ftpserver systemd:vsftpd --group resourcegroup
+#pcs resource create ftpserver systemd:vsftpd --group resourcegroup
 ```
 
 **MySQL integrated with pcs cluster**
