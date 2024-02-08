@@ -11,10 +11,11 @@ pcs constraint colocation add radiantgroup  with master drbd_clusterdb_clone INF
 pcs status
 ```
 
-order
+**_order_**
 
+```bash
 virtualip lvm webfsone  webfstwo  webfsthree webserver dbserver
-
+```
 
 
 
