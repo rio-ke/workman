@@ -29,6 +29,8 @@ _if your Ubuntu cloud instance is provisioned with cloud-init, you’ll need to 
 ```cmd
 sudo vim /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
 ```
+_Add below line in the `99-disable-network-config.cfg`_
+
 ```cnf
 network: {config: disabled}
 ```
