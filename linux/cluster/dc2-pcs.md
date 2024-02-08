@@ -17,7 +17,10 @@ pcs status
 virtualip lvm webfsone  webfstwo  webfsthree webserver dbserver
 ```
 
-```dc1
+* * If any one the resources is blocked plz restart the servers with standby
+
+**_dc1_**
+```bash
 pcs resource group add resourcegroup virtualip lvm webdata dbdata  webserver
 pcs resource group update resourcegroup virtualip lvm webdata dbdata  webserver
 pcs constraint colocation add resourcegroup  with master drbd_clusterdb_clone INFINITY
