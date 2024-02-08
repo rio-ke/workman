@@ -17,12 +17,8 @@ pcs status
 virtualip lvm webfsone  webfstwo  webfsthree webserver dbserver
 ```
 
-
-
-
-
+```dc1
 pcs resource group add resourcegroup virtualip lvm webdata dbdata  webserver
-
 pcs resource group update resourcegroup virtualip lvm webdata dbdata  webserver
-
 pcs constraint colocation add resourcegroup  with master drbd_clusterdb_clone INFINITY
+```
