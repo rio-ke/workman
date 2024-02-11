@@ -1,3 +1,5 @@
+## Active-Passive cluster
+
 _**`NOTEs`**_
 
 _**Read before config**_
@@ -9,9 +11,7 @@ _**Read before config**_
 * once mysql resources started we can't change the my.cnf file we have cp my.cnf my.cnf.backup and edit my.cnf
 
 
-## Active-Passive cluster
-
-change hostname to both server
+* change hostname to both server
 
 ```bash
 hostnamectl set-hostname node1
