@@ -1,4 +1,4 @@
-```cmd
+```bash
 <VirtualHost *:80>
     ServerAdmin admin@example.com
     DocumentRoot /var/www/html
