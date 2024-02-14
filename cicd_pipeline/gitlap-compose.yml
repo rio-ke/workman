@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ee:latest
+    container_name: gitlab
+    restart: always
+    hostname: gitlab.example.com
+    ports:
+      - "127.0.0.1:8080:80"  # Forward to port 8080 locally to avoid conflicts with Nginx
+    volumes:
+      - /path/to/gitlab/config:/etc/gitlab
+      - /path/to/gitlab/logs:/var/log/gitlab
+      - /path/to/gitlab/data:/var/opt/gitlab
+    environment:
+      - GITLAB_OMNIBUS_CONFIG=\
+          external_url 'http://gitlab.example.com'; \
+          gitlab_rails['gitlab_shell_ssh_port'] = 22
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '2G'
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    container_name: gitlab-runner
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /path/to/runner/config:/etc/gitlab-runner
+    environment:
+      - CI_SERVER_URL=http://gitlab:80  # Update to match your GitLab container
+      - RUNNER_TOKEN=<YOUR_REGISTRATION_TOKEN>
+      - RUNNER_EXECUTOR=docker
+      - DOCKER_IMAGE=your-custom-docker-image:latest
+      - RUNNER_DESCRIPTION=My_Custom_Runner
+      - RUNNER_TAGS=custom,linux,x86_64
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: '512M'
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /path/to/nginx/config:/etc/nginx/conf.d
+      - /path/to/nginx/ssl:/etc/nginx/ssl  # For SSL certificates
+    depends_on:
+      - gitlab
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: '512M'
+
+networks:
+  gitlab-net:
+    driver: bridge
