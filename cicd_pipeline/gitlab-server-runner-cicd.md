@@ -1,4 +1,4 @@
-## Setup Local GitLab Server, Runner, CI/CD, and Nginx Configuration
+## Setup Local GitLab Server, Runner, CI/CD, and Nginx Configuration in Docker container
 
 ```cmd
 docker pull gitlab/gitlab-ee:latest
