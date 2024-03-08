@@ -15,49 +15,61 @@ yum install -y openssh-server
 
 Edit the /etc/ssh/sshd_config file to tweak the SSH server settings at your preference. I generally disable Password Authentication (you may need to uncomment the line) and Challenge Response Authentication:
 
+```bash
 # Change to yes to enable challenge-response passwords (beware issues with
 # some PAM modules and threads)
 ChallengeResponseAuthentication no
 # Change to no to disable tunnelled clear text passwords
 PasswordAuthentication no
+```
 
+* Start or restart the ssh daemon to accept the new configuration:
 
-Start or restart the ssh daemon to accept the new configuration:
-
+```cmd
 cd /etc/init.d/
 service sshd restart
+```
 
+* Authorized Keys configuration
 
-Authorized Keys configuration
-
-The public keys of the authorized entities who can login through ssh must be collected in the authorized_keys file under the ~/.ssh folder.
+* The public keys of the authorized entities who can login through ssh must be collected in the authorized_keys file under the ~/.ssh folder.
 
 
 # Adding a user to install/administer the private git server
 
+```cmd
 adduser git   # create user git
 passwd git    # change passwd
+```
 
+```cmd
 sudo su git  # switch as git user
-
+```
 
 # Installing git
 
+```cmd
 sudo yum install -y git
-
+```
 
 # Create a .ssh folder in home directory and set its permissions (see the ssh man (1) page for explanations on permissions of the .ssh folder and its content):
 
+```cmd
 mkdir .ssh
 chmod 700 .ssh
+```
 
-Create an authorized_keys file under the ~/.ssh folder and append to it the public keys of the authorized git users:
+* Create an authorized_keys file under the ~/.ssh folder and append to it the public keys of the authorized git users:
 
-vi .ssh/authorized_keys
+```cmd
+vim .ssh/authorized_keys
+```
 
-Set the proper permissions for the authorized_keys file:
+* Set the proper permissions for the authorized_keys file:
 
+```cmd
 chmod 600 .ssh/authorized_keys
+```
 
 ```bash
 
@@ -84,19 +96,21 @@ The key's randomart image is:
 +-----------------+
 ```
 # Appending publick key to authorized_keys file
-A possible way to populate the authorized_keys file, from a user on the same machine as the “git” user would be (appends the public key of the current user at the end of the authorized_keys file of the “git” user, command issued from the home directory):
 
+* A possible way to populate the authorized_keys file, from a user on the same machine as the “git” user would be (appends the public key of the current user at the end of the authorized_keys file of the “git” user, command issued from the home directory):
+
+```cmd
 sudo bash -c "cat .ssh/id_rsa.pub >> ../git/.ssh/authorized_keys"
-
-
+```
 
 # Creating and initializing a bare git repo
 
+```cmd
 cd /opt/git
 mkdir project.git
 cd project.git
 git --bare init
-
+```
 ## The server configuration is done.
 
 
@@ -133,20 +147,22 @@ The key's randomart image is:
 * Append .ssh/id_rsa.pub of client's to Server's .ssh/authorized_keys
 
 * On client machine:
-
+ 
+```git
 cd myproject
 git init
 git add .
 git commit -m 'initial commit'
 git remote add origin git@gitserver:/opt/git/project.git   
 git push origin master
-
+```
 * At this point, the others can clone it down and push changes back up just as easily:
 
+```cmd
 git clone git@gitserver:/opt/git/project.git
 cd project
 vim README
 git commit -am 'fix for the README file'
 git push origin master
-
+```
 * With this method, you can quickly get a read/write Git server up and running for a handful of developers.
