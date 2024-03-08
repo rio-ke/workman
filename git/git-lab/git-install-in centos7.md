@@ -1,19 +1,22 @@
-http://thealarmclocksixam.wordpress.com/2013/01/06/git-repo-tutoria/
-http://www.saintsjd.com/2011/01/what-is-a-bare-git-repository/
-http://git-scm.com/book/en/Git-on-the-Server-Setting-Up-the-Server
+**_Ref_**
+
+1. http://thealarmclocksixam.wordpress.com/2013/01/06/git-repo-tutoria/
+2. http://www.saintsjd.com/2011/01/what-is-a-bare-git-repository/
+3. http://git-scm.com/book/en/Git-on-the-Server-Setting-Up-the-Server
 
 
 # SSH Server configuration
 
-The machine that will host the git repository needs to be accessed by clients. A possible way to access a machine remotely is through SSH.
-SSH supports both password and public/private keys authentication. In this tutorial I will use RSA keys.
+* The machine that will host the git repository needs to be accessed by clients. A possible way to access a machine remotely is through SSH.
+* SSH supports both password and public/private keys authentication. In this tutorial I will use RSA keys.
 
-Install and configure an SSH server on the machine that will host the git repository:
+* Install and configure an SSH server on the machine that will host the git repository:
 
+```cmd
 yum install -y openssh-server
+```
 
-
-Edit the /etc/ssh/sshd_config file to tweak the SSH server settings at your preference. I generally disable Password Authentication (you may need to uncomment the line) and Challenge Response Authentication:
+* Edit the /etc/ssh/sshd_config file to tweak the SSH server settings at your preference. I generally disable Password Authentication (you may need to uncomment the line) and Challenge Response Authentication:
 
 ```bash
 # Change to yes to enable challenge-response passwords (beware issues with
