@@ -59,6 +59,7 @@ Set the proper permissions for the authorized_keys file:
 
 chmod 600 .ssh/authorized_keys
 
+```bash
 
 [git@ip-xxxxx test]$ ssh-keygen -t rsa -C "Comment Here bhalothia@gmail.com"
 Generating public/private rsa key pair.
@@ -81,7 +82,7 @@ The key's randomart image is:
 |            .  . |
 |                 |
 +-----------------+
-
+```
 # Appending publick key to authorized_keys file
 A possible way to populate the authorized_keys file, from a user on the same machine as the “git” user would be (appends the public key of the current user at the end of the authorized_keys file of the “git” user, command issued from the home directory):
 
@@ -91,10 +92,10 @@ sudo bash -c "cat .ssh/id_rsa.pub >> ../git/.ssh/authorized_keys"
 
 # Creating and initializing a bare git repo
 
-$ cd /opt/git
-$ mkdir project.git
-$ cd project.git
-$ git --bare init
+cd /opt/git
+mkdir project.git
+cd project.git
+git --bare init
 
 ## The server configuration is done.
 
@@ -102,10 +103,10 @@ $ git --bare init
 ## Client configuration:
 
 
-The remaining part of the tutorial refers to operations to be done on the client who wants to access the git repository that we have prepared. In order to use the Secure SHell connection, the client needs a pair of public/private keys.
+P The remaining part of the tutorial refers to operations to be done on the client who wants to access the git repository that we have prepared. In order to use the Secure SHell connection, the client needs a pair of public/private keys.
 
 
-
+```bash
 [client@ip-xxxxx test]$ ssh-keygen -t rsa -C "bhalothia@gmail.com"
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/jboss/.ssh/id_rsa): 
@@ -128,24 +129,24 @@ The key's randomart image is:
 |       o . . o.oo|
 |          .     E|
 +-----------------+
+```
+* Append .ssh/id_rsa.pub of client's to Server's .ssh/authorized_keys
 
-Append .ssh/id_rsa.pub of client's to Server's .ssh/authorized_keys
+* On client machine:
 
-On client machine:
+cd myproject
+git init
+git add .
+git commit -m 'initial commit'
+git remote add origin git@gitserver:/opt/git/project.git   
+git push origin master
 
-$ cd myproject
-$ git init
-$ git add .
-$ git commit -m 'initial commit'
-$ git remote add origin git@gitserver:/opt/git/project.git   
-$ git push origin master
+* At this point, the others can clone it down and push changes back up just as easily:
 
-At this point, the others can clone it down and push changes back up just as easily:
+git clone git@gitserver:/opt/git/project.git
+cd project
+vim README
+git commit -am 'fix for the README file'
+git push origin master
 
-$ git clone git@gitserver:/opt/git/project.git
-$ cd project
-$ vim README
-$ git commit -am 'fix for the README file'
-$ git push origin master
-
-With this method, you can quickly get a read/write Git server up and running for a handful of developers.
+* With this method, you can quickly get a read/write Git server up and running for a handful of developers.
