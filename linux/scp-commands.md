@@ -122,3 +122,7 @@ scp -i /path/to/aws/key.pem /path/on/local/server/file ubuntu@ec2-instance-ip:/p
 ```cmd
 scp -i rcms-main-key-admin.pem -r ubuntu@43.205.162.192:/home/ubuntu/backup /home/ubuntu/
 ```
+_From ec2 to local_
+```cmd
+scp -i test_key.pem -r ubuntu@54.92.179.123:/home/ubuntu/Kendanic.ovpn /home/mike/
+```
