@@ -9,3 +9,4 @@ $Docs$
 5. [grafana02](https://cloudvesna.com/monitoring-linux-servers-with-prometheus-node-exporter-and-grafana-a9e1a14f0ec9)
 6. [template](https://hodovi.cc/blog/creating-awesome-alertmanager-templates-for-slack/)
 7. [alert_rule_examp-01](https://samber.github.io/awesome-prometheus-alerts/rules.html#prometheus-self-monitoring)
+8. [prome-provising](https://grafana.com/docs/grafana/latest/alerting/set-up/provision-alerting-resources/file-provisioning/)
