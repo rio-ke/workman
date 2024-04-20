@@ -11,3 +11,6 @@ _xtrace (execution trace) mode to check steps_
 ```bash
 bash -x
 ```
+_Identifying Unset Variables like (variable spelling mistakes)_
+```bash
+bash -u
