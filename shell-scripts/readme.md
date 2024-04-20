@@ -1,13 +1,13 @@
 
 # shell scripts
 
-_Debug_
+**_Debug_**
 
+_To debug the the .sh file👽_ 
 ```bash
-# To debug the the .sh file 
 bash -v
 ```
+_xtrace (execution trace) mode to check steps_
 ```bash
-# xtrace (execution trace) mode to check steps
 bash -x
 ```
