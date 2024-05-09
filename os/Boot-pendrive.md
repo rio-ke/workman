@@ -53,6 +53,13 @@ COPY #kali-linux-2023.1-installer-everything-amd64.iso
 ```cmd
 dd if=kali-linux-2023.1-installer-everything-amd64.iso of=/dev/sdb conv=fsync bs=4M
 ```
+**BS Size**
+```bash
+1M
+4M
+8M
+16M
+```
 
 _the modified command with `ddrescue`_
 
