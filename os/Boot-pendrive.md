@@ -14,6 +14,12 @@ mke2fs 1.46.5 (30-Dec-2021)
 /dev/sdb1 is mounted; will not make a filesystem here!
 ```
 
+```cmd
+sudo umount /dev/sdb
+```
+
+```cmd
+sudo lsof /dev/sdb
 ```
 
 _Use mkfs command_
