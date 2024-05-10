@@ -3,6 +3,19 @@
 
 - First Format the pendrive in windows laptop
 
+**`ERROR`**
+
+```bash
+root@rad-it-l13:~# sudo mkfs.ext4 /dev/sdb
+mke2fs 1.46.5 (30-Dec-2021)
+/dev/sdb is apparently in use by the system; will not make a filesystem here!
+root@rad-it-l13:~# sudo mkfs.ext4 /dev/sdb1
+mke2fs 1.46.5 (30-Dec-2021)
+/dev/sdb1 is mounted; will not make a filesystem here!
+```
+
+```
+
 _Use mkfs command_
 
 ```
