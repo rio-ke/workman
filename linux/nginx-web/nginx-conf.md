@@ -52,6 +52,13 @@ sudo unlink /etc/nginx/sites-enabled/default
 ```cmd
 sudo systemctl reload nginx
 ```
+_To re-enable the default Nginx configuration file after disabling it_
+
+```cmd
+cd /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/default
+sudo systemctl reload nginx
+```
 
 _remove the default domain_
 
