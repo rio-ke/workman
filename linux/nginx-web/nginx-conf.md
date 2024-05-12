@@ -44,6 +44,14 @@ sudo mkdir -p /var/www/fourtimes.ml
 sudo vim /var/www/fourtimes.ml/index.html
 
 ```
+_To remove the symbolic link to the default configuration file_
+
+```cmd
+sudo unlink /etc/nginx/sites-enabled/default
+```
+```cmd
+sudo systemctl reload nginx
+```
 
 _remove the default domain_
 
