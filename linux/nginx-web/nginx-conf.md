@@ -64,7 +64,7 @@ _remove the default domain_
 
 Take a backup before deleting the default package.
 
-```bash
+```cmd
 rm -rf etc/nginx/sites-enabled/default
 rm -rf etc/nginx/sites-available/default
 ```
@@ -118,9 +118,9 @@ systemctl status nginx.service
 
 _ssl and http to https redirection_
 
-`/etc/nginx/sites-enabled/fourtimes.ml.conf`
+`vim /etc/nginx/sites-enabled/fourtimes.ml.conf`
 
-```bash
+```conf
 
 server {
     listen       80;
