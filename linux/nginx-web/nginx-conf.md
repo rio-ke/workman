@@ -104,12 +104,16 @@ nginx -t
 
 _restart the service_
 
-```bash
+```cmd
 systemctl stop nginx
 systemctl start nginx 
 ```
+```cmd
+systemctl restart nginx.service
+systemctl status nginx.service
+```
 
-It will give your domain insecure access. We can get to http://fourtimes.ml using a browser.
+* It will give your domain insecure access. We can get to http://fourtimes.ml using a browser.
 
 
 _ssl and http to https redirection_
