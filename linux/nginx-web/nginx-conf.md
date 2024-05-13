@@ -159,6 +159,10 @@ nginx -t
 
 _restart the service_
 
+```cmd
+systemctl restart nginx.service
+systemctl status nginx.service
+```
 ```bash
 systemctl stop nginx
 systemctl start nginx 
