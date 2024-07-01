@@ -7,25 +7,31 @@ git clone <repository_url>
 **_Stage Changes for Commit_**
 ```cmd
 git add <file(s)>
-
- Commit Changes
+```
+**_Commit Changes_**
+```cmd
 git commit -m "Commit message"
-
- Push Changes to the Remote Repository
+```
+**_Push Changes to the Remote Repository_**
+```cmd
 git push
-
- Force Push Changes (use with caution)
+```
+**_Force Push Changes (use with caution)_**
+```cmd
 git push --force
-
- Reset Working Directory to Last Commit
+```
+**_Reset Working Directory to Last Commit_**
+```cmd
 git reset --hard
-
- Create a New Branch
+```
+**_Create a New Branch_**
+```cmd
 git branch <branch_name>
-
- Switch to a Different Branch
+```
+**_Switch to a Different Branch_**
+```cmd
 git checkout <branch_name>
-
+```
  Merge Changes from Another Branch
 git merge <branch_name>
 
