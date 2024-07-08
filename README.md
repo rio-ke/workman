@@ -91,7 +91,7 @@
        * Code Build and deploy
 
 
-> Linux + shell script <> prometheus <> git <> ansible (yaml format) 
+> Linux + shell script + prometheus + git + ansible (yaml format) 
 > > cloud (aws, azure)
 > > > python script
 > > > > terraform 
