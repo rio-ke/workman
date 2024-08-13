@@ -48,9 +48,7 @@ scp /home/source_dir/  username@ip:/home/Destination Dir
 * Pull Method - File is receive from `remote server to localhost`
 
 ```bash
-
-scp remote ip:/home/source_dir/  home/Destination_dir 
-
+scp username@remote_server_ip:/path/to/remote/file /path/to/local/destination
 ```
 
 In this scenario, I'll copy the localhost `backup` folder to the server side.
