@@ -222,5 +222,5 @@ CREATE USER 'kendanic'@'%' IDENTIFIED BY 'Ken@1234';
 GRANT ALL PRIVILEGES ON rcmsdata.* TO 'kendanic'@'%';
 FLUSH PRIVILEGES;
 ```
---------------------------------
-*** the end ***
+--------
+*** _The-End_ ***
