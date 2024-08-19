@@ -101,6 +101,71 @@ Service Restart_
 sudo systemctl restart nginx
 ```
 
+**_PHP-FPM_**
+
+_Install_
+
+```cmd
+sudo apt install php-fpm -y
+```
+_install fpm-modules_
+
+```cmd
+sudo apt install php-mysql php-db php-cli php-common php-db php-curl php-zip php-xml -y
+```
+_Configure Nginx to Use PHP-FPM_
+
+* Add this in vhost conf file 
+```cmd
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+
+        #fastcgi_buffers 16 16k;
+        #fastcgi_buffer_size 32k;
+        #fastcgi_connect_timeout 60s;
+        #fastcgi_send_timeout 120s;
+        #fastcgi_read_timeout 120s;	
+        
+	    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+```
+
+_check and customize the default fpm pool_
+```cmd
+sudo vim /etc/php/8.1/fpm/pool.d/www.conf
+```
+* check below details there..(values are not accurate)
+
+```conf
+listen = /var/run/php/php8.1-fpm.sock
+listen.owner = www-data
+listen.group = www-data 
+pm = dynamic 
+pm.max_children = 30 
+pm.start_servers = 5  
+pm.process_idle_timeout = 20s
+```
+```cmd
+sudo systemctl status php8.1-fpm.service
+```
+```cmd
+sudo systemctl reload nginx
+```
+
+_Create a PHP Test File_
+```cmd
+echo "<?php phpinfo(); ?>" | sudo tee /var/www/php-app/info.php
+```
+
+**Test webpage**
+
+* Use https:domain.com/info.php
+
+
+
+
 
 
 
