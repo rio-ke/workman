@@ -163,19 +163,64 @@ echo "<?php phpinfo(); ?>" | sudo tee /var/www/php-app/info.php
 
 * Use https:domain.com/info.php
 
+**_Mysql_**
 
+_Install MySQL_
 
+```cmd
+sudo apt install mysql-server -y
+```
+_Start Service_
+```cmd
+sudo systemctl start mysql; sudo systemctl enable mysql
+sudo systemctl status mysql
+```
 
+_SecureMySQL_
+```cmd
+sudo mysql_secure_installation
+```
+* Follow the steps
+  - Set a root password: If you haven’t set it already.
+  - Remove anonymous users: Recommended for security.
+  - Disallow root login remotely: Recommended to avoid remote access to the root user.
+  - Remove the test database: Recommended to avoid unnecessary exposure.
+  - Reload privilege tables: Apply the changes made.
 
+**Conf**
 
+```cmd
+cd /etc/mysql/mysql.conf.d
+```
+```cmd
+sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
+```
+```conf
+bind-address = 0.0.0.0
+```
+_sql-mode_(optional)
+* check mode
+* sudo mysql -u user -p
 
-
-
-
-
-
-
-
-
-
-
+```mysql
+SELECT @@sql_mode;
+```
+```cmd
+sql_mode = "STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,ERROR_FOR_DIVISION_BY_ZERO,TRADITIONAL,NO_ZERO_DATE,NO_ZERO_IN_DATE"
+```
+_Restart service_
+```cmd
+sudo systemctl restart mysql
+```
+* Create and Configure Databases and Users for Work-db
+```mysql
+CREATE DATABASE rcmsdata;
+```
+Create a sql-user and Grant Privileges
+```mysql
+CREATE USER 'kendanic'@'%' IDENTIFIED BY 'Ken@1234';
+GRANT ALL PRIVILEGES ON rcmsdata.* TO 'kendanic'@'%';
+FLUSH PRIVILEGES;
+```
+--------------------------------
+*** the end ***
