@@ -20,3 +20,8 @@ _Set Group Ownership_
 sudo chown -R root:vsftpdGroup /path/to/directory
 sudo chmod g+s /path/to/directory
 ```
+_*Restart the service_
+
+```cmd
+sudo systemctl restart vsftpd
+```
