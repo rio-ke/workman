@@ -25,3 +25,15 @@ _*Restart the service_
 ```cmd
 sudo systemctl restart vsftpd
 ```
+
+
+```bash
+#!/bin/bash
+
+WATCH_DIR="/path/to/directory"
+inotifywait -m -r -e create --format '%w%f' "$WATCH_DIR" | while read NEWFILE
+do
+    chown root:vsftpdGroup "$NEWFILE"
+    chmod 0755 "$NEWFILE"
+done
+```
