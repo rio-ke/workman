@@ -131,6 +131,6 @@ db.dailycollect.updateMany(
   { $set: { email: "updated-email@example.com" } } 
 )
 ```
-_Updated-output_
+_Output_
 ![Image](https://github.com/user-attachments/assets/69055896-43e0-4baf-947e-d854573ef981)
 
