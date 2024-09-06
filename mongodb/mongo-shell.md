@@ -122,3 +122,15 @@ _Output_
 
 _Updated-output_
 ![Image](https://github.com/user-attachments/assets/5565c143-822e-4f9a-92ba-af578358114c)
+
+**_Update Multiple Documents_**
+
+```JavaScript
+db.dailycollect.updateMany(
+  { age: { $lt: 27 } }, 
+  { $set: { email: "updated-email@example.com" } } 
+)
+```
+_Updated-output_
+![Image](https://github.com/user-attachments/assets/69055896-43e0-4baf-947e-d854573ef981)
+
