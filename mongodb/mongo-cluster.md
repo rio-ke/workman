@@ -55,19 +55,46 @@ _Initiating cluster via conf-file_
 
 * MongoDB Configuration Files (/etc/mongod.conf) on both servers to enable replica sets
 
+```cmd
+sudo vim /etc/mongod.conf
+```
 
+* Locate the replication section and enable the replica set by adding it.
 
+```yml
+replication:
+  replSetName: "rcms-org-clus"
+```
 
+```cmd
+sudo systemctl restart mongod
+```
 
+```cmd
+sudo ufw disable
+```
+```cmd
+mongosh
+```
 
+```javascript
+rs.initiate({
+  _id :  "rcms-org-clus",
+  members: [
+    { _id:  0, host:  "mongodb0.10.0.0.36:27017" },
+    { _id:  1, host:  "mongodb1.10.0.0.4:27017" },
+    { _id:  2, host:  "ip-mongodb2.10.0.0.7:27017" }
+  ]
+})
+```
+_View the replica set configuration_
 
+```javascript
+rs.conf()
+```
+_Ensure that the replica set has a primary_
 
-
-
-
-
-
-
-
-
+```javascript
+rs.status()
+```
 
