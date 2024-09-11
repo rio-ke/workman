@@ -97,6 +97,10 @@ _Ensure that the replica set has a primary_
 ```javascript
 rs.status()
 ```
+_Monitoring the Sync Process_
+```javascript
+rs.printSecondaryReplicationInfo()
+```
 
 **_Testing and Managing Failover_**
 
