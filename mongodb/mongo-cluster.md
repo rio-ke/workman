@@ -39,3 +39,35 @@ security:
 sudo systemctl restart mongod
 ```
 
+**Steps for replica**
+
+ _Initiating cluster via command-line_ (optional)
+
+ ```cmd
+mongod --configsvr --replSet <configReplSetName> --dbpath <path> --port 27019 --bind_ip localhost,<hostname(s)|ip address(es)>
+mongod --configsvr --replSet clus-name --dbpath /.../.../dbdata --port 27019 --bind_ip localhost
+```
+```cmd
+mongod --configsvr --replSet configReplSet --dbpath /var/lib/mongo-config --port 27019 --bind_ip localhost
+```
+
+_Initiating cluster via conf-file_
+
+* MongoDB Configuration Files (/etc/mongod.conf) on both servers to enable replica sets
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
