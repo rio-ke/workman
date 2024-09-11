@@ -98,3 +98,17 @@ _Ensure that the replica set has a primary_
 rs.status()
 ```
 
+**_Testing and Managing Failover_**
+
+_Test Failover_
+
+* Stop MongoDB on the primary server to see if the secondary becomes the new primary.
+* Check the status on the secondary to confirm it has become the primary.
+
+```cmd
+sudo systemctl stop mongod
+```
+_DB-collection check_
+
+* Create DB and collections and insert data in primary and check all the replicas
+
