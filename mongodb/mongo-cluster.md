@@ -13,3 +13,29 @@
 
 * MongoDB requires a key file for authentication between members of the replica set. This key file must be the same on all nodes (servers) in the replica set.
 * We have create key file in primary and scp to all the secondary server nodes.
+
+_To generate the key file_
+
+```cmd
+openssl rand -base64 756 > /etc/mongo-cluster-key
+```
+_File permissions_
+
+```cmd
+sudo chmod 400 /etc/mongo-cluster-key
+sudo chown mongodb:mongodb /etc/mongo-cluster-key
+```
+
+_Configure the Key File in MongoDB_
+
+```cmd
+sudo vim /etc/mongod.conf
+```
+```yml
+security:
+  keyFile: /etc/mongo-keyfile
+```
+```cmd
+sudo systemctl restart mongod
+```
+
