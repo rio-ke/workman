@@ -35,8 +35,14 @@ sudo vim /etc/mongod.conf
 security:
   keyFile: /etc/mongo-keyfile
 ```
+_To check the conf validatation_
+```cmd
+sudo -u mongodb /usr/bin/mongod --config /etc/mongod.conf
+```
+
 ```cmd
 sudo systemctl restart mongod
+sudo systemctl status mongod
 ```
 
 **Steps for replica**
@@ -68,6 +74,7 @@ replication:
 
 ```cmd
 sudo systemctl restart mongod
+sudo systemctl status mongod
 ```
 
 ```cmd
@@ -96,10 +103,6 @@ _Ensure that the replica set has a primary_
 
 ```javascript
 rs.status()
-```
-_Monitoring the Sync Process_
-```javascript
-rs.printSecondaryReplicationInfo()
 ```
 
 **_Testing and Managing Failover_**
