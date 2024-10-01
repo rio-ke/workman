@@ -16,6 +16,9 @@ Match User hulk
     AllowTcpForwarding no
     PasswordAuthentication yes
 ```
+```cmd
+sudo sshd -t
+```
 
 ```cmd
 sudo mkdir -p /var/www/sftp/hulk
