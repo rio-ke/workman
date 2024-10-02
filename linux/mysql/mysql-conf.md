@@ -340,6 +340,15 @@ mysqldump -u root -p user1data A >/home/deva/Table_bak/single_bak.sql
 ```sql
 mysqldump -u root -p user1data A B C >/home/deva/Table_bak/all_bak.sql
 ```
+**Backup_table with zp file**
+```cmd
+sudo mysqldump -u sqladmin -p database daily_table | gzip > daily_table.sql.gz
+```
+`Restore`
+
+```cmd
+gunzip < daily_table.sql.gz | mysql -u sqluser -p database
+```
 
 _**Restore**_
 
