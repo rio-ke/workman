@@ -1,3 +1,11 @@
+#!/bin/env bash
+
+set -x
+
+#Change these two lines:
+sender="kendanicrio@gmail.com"
+recepient="riochamp3603@gmail.com"
+
 if [ "$PAM_TYPE" != "close_session" ]; then
     host="`hostname`"
     subject="SSH Login: $PAM_USER from $PAM_RHOST on $host"
